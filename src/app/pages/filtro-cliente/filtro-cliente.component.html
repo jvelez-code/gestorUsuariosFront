@@ -1,0 +1,30 @@
+<router-outlet></router-outlet>
+<!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
+    <div  class="center">
+<form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()">
+      <mat-card class="mat-card">
+        <mat-card-header class="mat-card-header">
+          <mat-card-title class="mat-card-content">Información del Aportante</mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Tipo Documento</mat-label>
+            <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
+              <mat-option *ngFor="let p of (  tipoDocumento$ | async )" [value]="p.tipoDoc">
+                {{p.tipoDoc}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>      
+        
+    <mat-form-field appearance="fill">
+        <mat-label>Nro Documento</mat-label>
+        <input matInput placeholder="DOCUMENTO" type="number" required formControlName="nroDocumento">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary"  type="submit"  [disabled]="formBuscar.invalid" [routerLink]="['entrante']">
+        <mat-icon>call</mat-icon>
+        <span>Consultar</span>
+    </button>
+</form>
+</div >
