@@ -1,3 +1,5 @@
+
+
 .center {
     display: block;
     margin-left: auto;
@@ -91,4 +93,42 @@
   }
   
 
+    /*CARD*/
+
+  .example-card {
+    max-width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+
+    /*FORM*/
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
   
+  .example-full-width {
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+  
+     /*BOTTON*/
+
+  .button-row {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }

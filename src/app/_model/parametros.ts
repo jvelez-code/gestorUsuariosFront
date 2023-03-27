@@ -14,5 +14,6 @@ export interface Parametros {
       nroContacto?: number;
       estadoGestioP ?: number;
       estadoGestioH ?: number;
+      tipoLlamada ?: number;
   }
   //? cuando llame la interface se opcional

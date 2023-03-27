@@ -12,6 +12,9 @@ import { Parametros } from '../_model/parametros';
 export class ClienteService {
 
   private clienteCambio = new Subject<Cliente>();
+  private formCambio = new Subject<boolean>();
+  private mensajeCambio = new Subject<string>();
+
   private url:string = `${environment.HOST}/clientes`;
 
   constructor(
@@ -49,6 +52,25 @@ export class ClienteService {
     setClienteCambio(cliente: Cliente ){
       
       return this.clienteCambio.next(cliente );
+    }
+
+
+    getFormCambio(){
+
+      return this.formCambio.asObservable();
+    }
+
+    setFormCambio(cardCliente: any ){
+      
+      return this.formCambio.next(cardCliente);
+    }
+
+    getMensajeCambio(){
+      return this.mensajeCambio.asObservable();
+    }
+  
+    setMensajecambio(mensaje: string){
+      return this.mensajeCambio.next(mensaje);
     }
 
 }

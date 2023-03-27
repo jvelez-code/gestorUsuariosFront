@@ -1,13 +1,69 @@
 <router-outlet></router-outlet>
 <!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
-    <div  class="center">
-<form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()">
-      <mat-card class="mat-card">
-        <mat-card-header class="mat-card-header">
-          <mat-card-title class="mat-card-content">Información del Aportante</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+<div [hidden]="cardCliente">
+<mat-card class="example-card">
+  <mat-card-header>
+    <div class="center">
+    <mat-card-title>CLIENTE</mat-card-title></div>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="formAgente" #frmAgente="ngForm" >
+      <mat-form-field class="example-full-width">
+        <mat-label>Agente</mat-label>
+        <input matInput formControlName="agente" readonly>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Cliente</mat-label>
+        <input matInput disabled value="Cliente">
+      </mat-form-field>
+    
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Identificación</mat-label>
+          <input matInput disabled >
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Número</mat-label>
+          <input matInput disabled >
+        </mat-form-field></td>
+      </tr></table>
 
+      <mat-form-field class="example-full-width">
+        <mat-label>Estado</mat-label>
+        <input matInput disabled value="Estado">
+      </mat-form-field>
+
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Hora Inicio Estado</mat-label>
+          <input matInput disabled >
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Hora Actual</mat-label>
+          <input matInput disabled >
+        </mat-form-field></td>
+      </tr></table>
+    </form>
+    
+  </mat-card-content>
+  <mat-card-actions>
+      <div class="button-row">
+      <button mat-raised-button color="primary" >Consultar</button>
+      <button mat-raised-button color="accent" (click)="buscarManual()">Manual</button></div>
+  </mat-card-actions>
+</mat-card>
+
+</div>
+
+<!--  INGRESO MANUAL-->
+<div [hidden]="cardManual">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div class="center">
+      <mat-card-title>CLIENTE</mat-card-title></div>
+    </mat-card-header>
+    <mat-card-content>
+<form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()">
         <mat-form-field appearance="fill">
             <mat-label>Tipo Documento</mat-label>
             <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
@@ -27,4 +83,5 @@
         <span>Consultar</span>
     </button>
 </form>
-</div >
+</mat-card-content>
+  </mat-card>

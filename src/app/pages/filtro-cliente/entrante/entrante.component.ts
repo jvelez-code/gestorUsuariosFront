@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlContainer, FormControl, FormGroup } from '@angular/forms';
+import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -38,8 +38,7 @@ export class EntranteComponent implements OnInit {
   tipoDocumento !: string;
   nroDocumento  !: string;
   idEmpresa !: number;
-  idTipoCampana !: number;
-  idClienteP   !: any;
+  tipoLlamada !: number;
   idContactoP   !: number;
   gestionPadre !: number;
   gestionHijo !: number;
@@ -47,18 +46,28 @@ export class EntranteComponent implements OnInit {
   tipoGestionP !: number;
   tipoGestionH !: number;
 
-  parametros !: Parametros;
-  gestion !: Gestion;
-  cliente !: Cliente;
-
-  detalleGestion: DetalleGestion [] = [];
-
-  contacto: Contacto [] = [];
   nombreC !:String;
   correoC !:String;
   telPrincipalC !:String;
   telSecundarioC !:String;
   telCelularC !:String;
+  cardCliente : boolean= false ;
+
+  parametros !: Parametros;
+  gestion !: Gestion;
+  cliente !: Cliente;
+  estadoGestion !: EstadoGestion;
+
+  detalleGestion: DetalleGestion [] = [];
+  contacto : Contacto [] = [];
+
+
+  idClienteP   !: any;
+  idEstadoP   !: any;
+  idEstadoH   !: any;
+ 
+
+
 
 
 
@@ -89,10 +98,9 @@ export class EntranteComponent implements OnInit {
   ngOnInit(): void {
 
     this.clienteService.getClienteCambio().subscribe(data =>{
-      this.idClienteP=data.idCliente;
-      console.log('Pruebas cliente1',data.idCliente);
-      console.log('Pruebas cliente3',this.idClienteP);
-       //this.idClienteP= 252650;
+      console.log('Observable',data)
+    this.idClienteP= data.idCliente;
+    
     this.idContactoP= 13452797;
     this.clienteSelec();
     this.gestionHistorico();
@@ -112,7 +120,7 @@ export class EntranteComponent implements OnInit {
     });
 
     this.formContacto = new FormGroup({
-      'nombre': new FormControl(''),
+      'nombre': new FormControl('', [Validators.required]),
       'correo': new FormControl(''),
       'telPrincipal': new FormControl(''),
       'telSecundario': new FormControl(''),
@@ -157,28 +165,15 @@ buscar(){
 
     console.log('tipo',this.tipoDocumento);
     console.log('doc',this.nroDocumento);
-    this.idEmpresa= 1;
-    this.idTipoCampana= 3;
-    //this.tipoGestionP= 283755
+    this.idEmpresa= 3;
+    this.tipoLlamada= 0;
 
     const parametros= { nroDoc:this.nroDocumento, idEmpresa:this.idEmpresa, 
-                        idTipoCampana:this.idTipoCampana, idEstadoPadre:this.tipoGestionP,
+                        tipoLlamada:this.tipoLlamada, idEstadoPadre:this.tipoGestionP,
                         nroCliente:this.idClienteP }
-    
-    // this.detalleGestionService.detalleHistoricoS(parametros).subscribe( data =>{
-    //     console.log('Prueba Gestiones',data)
-    //     this.dataSource= new MatTableDataSource(data);
-    //    // console.log('tipo2',data.idCliente);
-    // });
-
-
-
-
 
     //TIPIFICACIÓN
    this.tipoGestion$=this.estadoGestionService.estadoGestionPadre(parametros);
-   
-   
 
     /*this.estadoGestionService.estadoGestionPadre(parametros).subscribe(data => {
       console.log(data);
@@ -188,9 +183,15 @@ buscar(){
 
   subtipoGestion(tipoGestionP:number){
 
-    console.log(tipoGestionP)
+    console.log("Hola TIpoGes",tipoGestionP)
 
-    const parametros= {  idEstadoPadre:this.tipoGestionP , idTipoCampana:this.idTipoCampana, }
+    this.idEstadoP= tipoGestionP;
+    this.idEstadoH= this.tipoGestionH;
+
+    console.log("Hola TIpoGes",this.idEstadoP)
+    console.log("Hola TIpoGe2",this.idEstadoH)
+
+    const parametros= {  idEstadoPadre:this.tipoGestionP , tipoLlamada:this.tipoLlamada, }
 
 
     this.subTipoGestion$=this.estadoGestionService.estadoGestionHijo(parametros);
@@ -218,6 +219,10 @@ buscar(){
     let cliente = new Cliente();
     cliente.idCliente = this.idClienteP;
     
+
+    let estadoGestion = new EstadoGestion();
+    estadoGestion.idEstadoGestion= this.idEstadoP;
+    
     
     let det = new DetalleGestion();
     det.observacion = this.formGuardar.value['observacionD'];
@@ -233,20 +238,42 @@ buscar(){
     this.contacto.push(cont);
 
 
-
     let gestion = new Gestion();
     gestion.cliente = cliente;
     gestion.listaDetalleGestion = this.detalleGestion;
     gestion.listaContacto = this.contacto;
-    
-    this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
-      console.log("guardar Gestiorn")
-    });
+    gestion.usuarioAct = 1560;
+    gestion.estadoGestion = estadoGestion;
 
+    this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
+      this.clienteService.setMensajecambio('SE REGISTRÓ');
+      this.clienteService.setFormCambio(this.cardCliente)
+    });
+    
     this.router.navigate(['filtroCliente']);
 
+  
   }
 
+
+  cancelarGestion(){
+    this.clienteService.setFormCambio(this.cardCliente)
+    this.clienteService.setMensajecambio('SE CANCELO');
+    this.router.navigate(['filtroCliente']);
+    this.snackBar.open("SE CANCELÓ", "Aviso", { duration: 2000 });
+
+      setTimeout(() => {
+        this.limpiarControles();
+      }, 2000);   
+      
+  }
+
+  limpiarControles() {
+    this.detalleGestion = [];
+    this.contacto = [];
+    this.idClienteP = null;
+    this.idEstadoP = null;
+    }
 
  
 

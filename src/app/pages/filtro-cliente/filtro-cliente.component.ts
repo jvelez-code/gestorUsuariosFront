@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlContainer, FormControl, FormGroup } from '@angular/forms';
+
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, withDisabledInitialNavigation } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AskEstadoExtension } from 'src/app/_model/askEstadoExtension';
+import { ControlContainer, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
 import { Cliente } from 'src/app/_model/cliente';
 import { Contacto } from 'src/app/_model/contactos';
 import { DetalleGestion } from 'src/app/_model/detalleGestion';
@@ -12,6 +16,7 @@ import { EstadoGestion } from 'src/app/_model/estadoGestion';
 import { Gestion } from 'src/app/_model/gestion';
 import { Parametros } from 'src/app/_model/parametros';
 import { TipoDocumento } from 'src/app/_model/tipoDocumento';
+import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { ContactoService } from 'src/app/_services/contacto.service';
 import { DetalleGestionService } from 'src/app/_services/detalle-gestion.service';
@@ -31,6 +36,7 @@ import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 
 export class FiltroClienteComponent implements OnInit{
 
+  formAgente!: FormGroup;
   formBuscar!: FormGroup;
 
   tipoDocumento !: string;
@@ -38,9 +44,12 @@ export class FiltroClienteComponent implements OnInit{
   idEmpresa !: number;
   idTipoCampana !: number;
   idCliente   !: number;
+  cardCliente !: boolean;
+  cardManual !: boolean;
 
   parametros !: Parametros;
   gestion !: Gestion;
+  askEstadoExtension !: AskEstadoExtension;
 
   detalleGestion: DetalleGestion [] = [];
 
@@ -54,8 +63,12 @@ export class FiltroClienteComponent implements OnInit{
     private gestionService :GestionService ,
     private estadoGestionService :EstadoGestionService,
     private contactoService :ContactoService,
+    private askEstadoExtensionService: AskEstadoExtensionService,
     private router: Router,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar) { 
+
+      this.buscarAgente();
+    }
 
 
 
@@ -63,26 +76,72 @@ export class FiltroClienteComponent implements OnInit{
 
   ngOnInit(): void {
 
+    this.clienteService.getFormCambio().subscribe(data =>{
+      this.cardCliente=data;
+
+    });
+
+    this.cardCliente=false;
+    this.cardManual=true;
 
     this.formBuscar = new FormGroup({
        'nroDocumento': new FormControl('')
     });
 
+    this.formAgente   = new FormGroup({
+      'agente': new FormControl('')
+
+    });
+
     this.tipoDocumento$=this.TipoDocumentoService.buscar();
+
+    this.clienteService.getMensajeCambio().subscribe(data => {
+      this.snackBar.open(data, 'AVISO', { duration: 2000 });
+    });
+  }
+
+  buscarAgente() {
+
+    const askEstadoExtension ={ nroDocumento :'1023026686' }
+
+    this.askEstadoExtensionService.buscarAgente(askEstadoExtension).subscribe(data =>{
+      console.log('Agente:',data)
+      this.formAgente   = new FormGroup({
+        'agente': new FormControl(data.loginAgente)
+  
+      });
+    });
+
+  }
+
+
+  buscarManual(){
+    this.cardCliente=true;
+    this.cardManual=false;
+
   }
 
   
   
 
-buscarCliente(){
+buscarCliente() {
 
-    const parametros= {tipoDoc:this.tipoDocumento, nroDoc: this.formBuscar.value['nroDocumento']}
+    this.cardManual=true;
+
+    const parametros= {tipoDoc:this.tipoDocumento, nroDoc: this.formBuscar.value['nroDocumento']}    
     
     this.clienteService.filtroCliente(parametros).subscribe( data =>{
-
       this.clienteService.setClienteCambio(data);
-
     });
+
+    this.formBuscar = new FormGroup({
+      'nroDocumento': new FormControl('')
+   });
+
+
+    //this.router.navigate(['entrante']);
+
+
 
     
 

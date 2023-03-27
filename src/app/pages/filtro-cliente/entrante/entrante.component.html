@@ -3,8 +3,8 @@
 <form class="example-container" [formGroup]="form" #frmPaciente="ngForm" >
 
 
-<div>
-  <mat-card-title class="mat-card-header">APORTANTE</mat-card-title>
+  <div>
+    <mat-card-title class="mat-card-header">APORTANTE</mat-card-title>
 
     <table mat-table [dataSource]="dataSourceCli" class="mat-elevation-z8">
 
@@ -62,7 +62,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>  
-
+</form>
    <!-- Historico de Gestiones -->
    <mat-card-title class="mat-card-header">HISTORICO</mat-card-title>
   <div>
@@ -94,20 +94,24 @@
     </table>
   </div>  
 
+  
 
 
 
 <!--Formulario de tipificacion-->
   
-        <mat-card-title class="mat-card-header">CONTACTO</mat-card-title>
-
- <div> 
+<mat-card class="example-card-cli">
+  <mat-card-header>
+    <div class="center">
+    <mat-card-title>CLIENTE</mat-card-title></div>
+  </mat-card-header>
+  <mat-card-content>
   <form [formGroup]="formContacto" #frmContacto="ngForm" > 
   <table class="example-full-width" cellspacing="0" ><tr>
     
     <td><mat-form-field class="example-full-width">
       <mat-label>Nombre del Contacto</mat-label>
-      <input matInput placeholder="Nombre" minlength="3" required formControlName="nombre" >
+      <input matInput placeholder="Nombre" formControlName="nombre" >
     </mat-form-field></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Correo del Contacto</mat-label>
@@ -127,15 +131,19 @@
     </mat-form-field></td>
     
   </tr></table>
-
-</form></div>
+</form>
+</mat-card-content>
+</mat-card>
 
 <!--Formulario de Guardar Gestiòn-->
 
-  <div>
+<mat-card class="example-card-cli">
+  <mat-card-header>
+    <div class="center">
+    <mat-card-title>TIPIFICACIÓN</mat-card-title></div>
+  </mat-card-header>
+  <mat-card-content>
     <form [formGroup]="formGuardar" #frmGuardar="ngForm" (ngSubmit)="guardarGestion()">
-  <div class="example-form">ESTADOS</div>
-  <div>
      <table ><tr> 
       <td></td>     
       <td><mat-form-field class="example-full-width">
@@ -150,7 +158,7 @@
         
         <td><mat-form-field class="example-full-width" >
           <mat-label>Subtipo Gestion</mat-label>
-          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionH" (selectionChange)="subtipoGestion($event.value)">
+          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionH" >
             <mat-option *ngFor="let p of (  subTipoGestion$ | async )" [value]="p.idEstadoGestion">
               {{p.nombre}}
             </mat-option>
@@ -158,8 +166,7 @@
         </mat-form-field></td> 
         <td></td>
       </tr></table>
-  </div>
-
+  
   <div >OBSERVACIÓN</div>
     <div>
           <mat-form-field class="example-full-width" appearance="outline">
@@ -176,14 +183,16 @@
           <mat-icon>call</mat-icon>
           <span>GUARDAR</span>
           </button>
-        <button mat-raised-button color="accent" routerLink="/filtroCliente" style="cursor: pointer">
+        <button mat-raised-button color="accent"  (click)="cancelarGestion()" style="cursor: pointer">
           CANCELAR</button>
       </div>
     </section>
-    <mat-divider></mat-divider>    
+    <mat-divider></mat-divider> 
+    </form>
+  </mat-card-content>
+</mat-card>   
     
         
       
 
-  </form></div>
   
