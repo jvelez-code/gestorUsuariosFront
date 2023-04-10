@@ -23,6 +23,7 @@ import { DetalleGestionService } from 'src/app/_services/detalle-gestion.service
 import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
+import * as moment from 'moment';
 
 
 
@@ -38,6 +39,7 @@ export class FiltroClienteComponent implements OnInit{
 
   formAgente!: FormGroup;
   formBuscar!: FormGroup;
+  formCliente!: FormGroup;
 
   tipoDocumento !: string;
   nroDocumento  !: string;
@@ -46,6 +48,7 @@ export class FiltroClienteComponent implements OnInit{
   idCliente   !: number;
   cardCliente !: boolean;
   cardManual !: boolean;
+  fechafin !: Date 
 
   parametros !: Parametros;
   gestion !: Gestion;
@@ -89,9 +92,19 @@ export class FiltroClienteComponent implements OnInit{
     });
 
     this.formAgente   = new FormGroup({
-      'agente': new FormControl('')
+      'agente': new FormControl(''),
+      'estado': new FormControl(''),
+      'numeroReal': new FormControl(''),
+      'horaInicio': new FormControl(''),
+      'horaActual': new FormControl(''),
 
     });
+
+    this.formCliente = new FormGroup({
+      'cliente': new FormControl('Dana'),
+      'tipoDoc': new FormControl('CC'),
+      'identificacion': new FormControl('8080')
+   });
 
     this.tipoDocumento$=this.TipoDocumentoService.buscar();
 
@@ -107,7 +120,11 @@ export class FiltroClienteComponent implements OnInit{
     this.askEstadoExtensionService.buscarAgente(askEstadoExtension).subscribe(data =>{
       console.log('Agente:',data)
       this.formAgente   = new FormGroup({
-        'agente': new FormControl(data.loginAgente)
+        'agente': new FormControl(data.loginAgente),
+        'estado': new FormControl(data.estadoAsk),
+        'numeroReal': new FormControl(data.numeroOrigen),
+        'horaInicio': new FormControl(data.fechahoraInicioEstado),
+        'horaActual': new FormControl(moment().format('YYYY-MM-DD HH:mm:ss')),
   
       });
     });
@@ -128,7 +145,7 @@ buscarCliente() {
 
     this.cardManual=true;
 
-    const parametros= {tipoDoc:this.tipoDocumento, nroDoc: this.formBuscar.value['nroDocumento']}    
+    const parametros= {tipoDoc:this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento']}    
     
     this.clienteService.filtroCliente(parametros).subscribe( data =>{
       this.clienteService.setClienteCambio(data);

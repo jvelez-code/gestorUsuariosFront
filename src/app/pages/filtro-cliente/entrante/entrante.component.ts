@@ -18,7 +18,7 @@ import { DetalleGestionService } from 'src/app/_services/detalle-gestion.service
 import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-entrante',
@@ -190,6 +190,7 @@ buscar(){
 
     console.log("Hola TIpoGes",this.idEstadoP)
     console.log("Hola TIpoGe2",this.idEstadoH)
+    console.log("Hola TIpoGe3",moment().format('YYYY-MM-DD HH:mm:ss'));
 
     const parametros= {  idEstadoPadre:this.tipoGestionP , tipoLlamada:this.tipoLlamada, }
 

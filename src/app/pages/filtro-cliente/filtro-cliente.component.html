@@ -12,37 +12,47 @@
         <mat-label>Agente</mat-label>
         <input matInput formControlName="agente" readonly>
       </mat-form-field>
+    
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Estado</mat-label>
+          <input matInput formControlName="estado" readonly>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Número</mat-label>
+          <input matInput  formControlName="numeroReal" readonly>
+        </mat-form-field></td>
+      </tr></table>
+      
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Hora Inicio Estado</mat-label>
+          <input matInput  formControlName="horaInicio" readonly>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Hora Actual</mat-label>
+          <input matInput  formControlName="horaActual" readonly>
+        </mat-form-field></td>
+      </tr></table>
+    </form>
+
+    <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm" >
       <mat-form-field class="example-full-width">
         <mat-label>Cliente</mat-label>
-        <input matInput disabled value="Cliente">
+        <input matInput formControlName="cliente" readonly>
       </mat-form-field>
     
       <table class="example-full-width" cellspacing="0"><tr>
         <td><mat-form-field class="example-full-width">
+          <mat-label>Tipo</mat-label>
+          <input matInput formControlName="tipoDoc"  readonly>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
           <mat-label>Identificación</mat-label>
-          <input matInput disabled >
-        </mat-form-field></td>
-        <td><mat-form-field class="example-full-width">
-          <mat-label>Número</mat-label>
-          <input matInput disabled >
+          <input matInput  formControlName="identificacion" readonly>
         </mat-form-field></td>
       </tr></table>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Estado</mat-label>
-        <input matInput disabled value="Estado">
-      </mat-form-field>
-
-      <table class="example-full-width" cellspacing="0"><tr>
-        <td><mat-form-field class="example-full-width">
-          <mat-label>Hora Inicio Estado</mat-label>
-          <input matInput disabled >
-        </mat-form-field></td>
-        <td><mat-form-field class="example-full-width">
-          <mat-label>Hora Actual</mat-label>
-          <input matInput disabled >
-        </mat-form-field></td>
-      </tr></table>
     </form>
     
   </mat-card-content>
