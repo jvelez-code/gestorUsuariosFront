@@ -1,0 +1,33 @@
+/*CARD*/
+
+.example-card {
+    max-width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+
+     /*BOTTON*/
+
+.button-row {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+ }
+      
+ .button-row .mat-mdc-button-base {
+        margin: 8px 8px 8px 0;
+ }
+
+
+
+.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        text-align: center;
+ }

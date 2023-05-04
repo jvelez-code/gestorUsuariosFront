@@ -17,5 +17,8 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
+    this.loginService.getMenuCambio().subscribe(data=>{
+          this.menus= data;
+    });
   }
 }

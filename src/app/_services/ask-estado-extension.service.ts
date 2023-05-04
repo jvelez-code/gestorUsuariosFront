@@ -15,6 +15,8 @@ export class AskEstadoExtensionService {
     private http: HttpClient,
     private router: Router ) { }
 
+    
+
     buscarAgente(askEstadoExtension :AskEstadoExtension) {
       console.log('parame',askEstadoExtension)  
       const headers = { 'content-type': 'application/json'}  
@@ -22,4 +24,17 @@ export class AskEstadoExtensionService {
       return this.http.post<AskEstadoExtension>(`${this.url}/buscar`,body,{'headers':headers});
 
     }
-}
+
+    buscarxAgentes(askEstadoExtension :AskEstadoExtension) {
+      console.log('parame',askEstadoExtension)  
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(askEstadoExtension);
+      return this.http.post<AskEstadoExtension>(`${this.url}/buscaraAgente`,body,{'headers':headers});
+
+    }
+
+
+
+
+  }
+

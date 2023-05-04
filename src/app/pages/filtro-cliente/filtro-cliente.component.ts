@@ -24,6 +24,9 @@ import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import * as moment from 'moment';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { LoginService } from 'src/app/_services/login.service';
+import { Usuarios } from 'src/app/_model/usuarios';
 
 
 
@@ -41,8 +44,9 @@ export class FiltroClienteComponent implements OnInit{
   formBuscar!: FormGroup;
   formCliente!: FormGroup;
 
+  
   tipoDocumento !: string;
-  nroDocumento  !: string;
+  nroDocumento  !: string
   idEmpresa !: number;
   idTipoCampana !: number;
   idCliente   !: number;
@@ -50,17 +54,25 @@ export class FiltroClienteComponent implements OnInit{
   cardManual !: boolean;
   fechafin !: Date 
 
+  
   parametros !: Parametros;
   gestion !: Gestion;
   askEstadoExtension !: AskEstadoExtension;
 
   detalleGestion: DetalleGestion [] = [];
 
+
+  tipoDocumento$ !: Observable<TipoDocumento[]>;
+  private usuarios !: string;
+
+
   
 
 
 
-  constructor( private TipoDocumentoService : TipoDocumentoService,
+  constructor( 
+    private LoginService: LoginService,
+    private TipoDocumentoService : TipoDocumentoService,
     private clienteService : ClienteService,
     private detalleGestionService : DetalleGestionService,
     private gestionService :GestionService ,
@@ -74,8 +86,6 @@ export class FiltroClienteComponent implements OnInit{
     }
 
 
-
-  tipoDocumento$ !: Observable<TipoDocumento[]>;
 
   ngOnInit(): void {
 
@@ -115,11 +125,14 @@ export class FiltroClienteComponent implements OnInit{
 
   buscarAgente() {
 
-    const askEstadoExtension ={ nroDocumento :'1023026686' }
+    this.LoginService.getUsuariosCambio().subscribe((data:any) =>{
+      this.usuarios=data;
+    });
 
-    this.askEstadoExtensionService.buscarAgente(askEstadoExtension).subscribe(data =>{
-      console.log('Agente:',data)
-      this.formAgente   = new FormGroup({
+    const askEstadoExtension ={ nroDocumento :'1023026686', loginAgente : this.usuarios }
+
+    this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
+        this.formAgente   = new FormGroup({
         'agente': new FormControl(data.loginAgente),
         'estado': new FormControl(data.estadoAsk),
         'numeroReal': new FormControl(data.numeroOrigen),

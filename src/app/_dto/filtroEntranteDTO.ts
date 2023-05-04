@@ -1,25 +1,26 @@
 export class filtroEntranteDTO {
 
     tipoDoc: string;
-	nroDoc: string;
-	nroCliente: string;
-	nroContacto: string;
-	idEmpresa: string;
-	idTipoCampana: string;
-	idEstadoPadre: string;
+	loginAgente: string;
+	nroDocumento: string;
+	idCliente: number;
+	idEmpresa: number;
+	idTipoCampana: number;
+	idEstadoPadre: number;
+	tipoLlamada: number;
 	
 	
-	
-	constructor(tipoDoc: string, nroDoc: string, nroCliente: string, nroContacto: string, idEmpresa: string,
-        idTipoCampana: string, idEstadoPadre: string) {
+	constructor(tipoDoc: string, loginAgente: string, nroDocumento: string, idCliente: number, 
+		idEmpresa: number, idTipoCampana: number, idEstadoPadre: number, tipoLlamada: number) {
             
 		this.tipoDoc = tipoDoc;
-		this.nroDoc = nroDoc;
-		this.nroCliente = nroCliente;
-		this.nroContacto = nroContacto;
+		this.loginAgente = loginAgente;
+		this.nroDocumento = nroDocumento;
+		this.idCliente = idCliente;
 		this.idEmpresa = idEmpresa;
 		this.idTipoCampana = idTipoCampana;
 		this.idEstadoPadre = idEstadoPadre;
+		this.tipoLlamada = tipoLlamada;
 	}
 
 }
