@@ -3,6 +3,7 @@ import { Cliente } from "./cliente";
 import { Contacto } from "./contactos";
 import { DetalleGestion } from "./detalleGestion";
 import { EstadoGestion } from "./estadoGestion";
+import { Usuario } from "./usuario";
 
 export class Gestion {
 
@@ -13,11 +14,40 @@ export class Gestion {
     estadoGestion ?: EstadoGestion ;
     listaContacto ?: Contacto [];
     listaDetalleGestion ?: DetalleGestion[] ;
-    agente ?: number ;
+    agente?: Usuario;
     fechaGestion ?: Date ;
-    valorCotizacion ?: number ;
+    idArchivoExclusion ?: string ;
     usuarioAct ?: number
-    flagGestionSucursal ?: number ;
+    ipAct ?: string ;
+    fechaHoraSis ?: Date ;    
+    flagGestionSucursal ?: Boolean ;
+    valorCotizacion ?: number ;
+    fechaAgenda ?: Date ;    
+    idGestionPadre ?: number ;
+    callId ?: string ;
 }
 
 let gestion : Gestion
+
+
+/*this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data =>{
+    this.agenteDtos=data;
+
+
+
+  
+  this.idUsuario=this.agenteDtos.idUsuario;
+  this.usuario=this.agenteDtos.usuario;
+  this.idCampanaE = this.agenteDtos.idCampanaE;
+  this.hostIp = this.agenteDtos.hostIp;
+   usuario   !: any;
+  nroDocumento   !: any;
+  primerNombre   !: any;
+  primerApellido   !: any;
+  idEmpresa   !: any;
+  pseudonimo   !: any;
+  descripcion   !: any;
+  idCampanaE   !: any;
+  nombreCamE   !: any;
+  tipoLlamadaCamE   !: any;
+  hostIp   !: any;*/

@@ -19,7 +19,6 @@ export class ContactoService {
 
 
     filtroContacto(parametros: Parametros):Observable<any>{
-      console.log('parameCon',parametros)  
        const headers = { 'content-type': 'application/json'}  
        const body=JSON.stringify(parametros);
        return this.http.post<Contacto>(`${this.url}/buscar`,body,{'headers':headers});

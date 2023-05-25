@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AgenteDTO } from '../_dto/agenteDTO';
+import { AgenteCampana } from '../_model/agenteCampana';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { Menu } from '../_model/menu';
 import { Usuarios } from '../_model/usuarios';
@@ -14,7 +16,12 @@ export class LoginService {
 
 
   private menuCambio = new Subject<Menu[]>();
-  private usuarioCambio = new BehaviorSubject<string> ('DEFAULT')
+  private agenteCampanaCambio = new Subject<AgenteDTO>();
+  private usuarioCambio = new BehaviorSubject<string> ('DEFAULT');
+  private extensionCambio = new BehaviorSubject<number> ( 0 )
+
+  AgenteDTO!: AgenteDTO;
+
 
   private url: string = `${environment.HOST}/oauth/token`
 
@@ -39,7 +46,19 @@ export class LoginService {
     this.menuCambio.next(menus);
   }
 
-  //captura el usaurio de logueo
+
+  //captura el usuario de logueo campana nombre completo
+  
+  getagenteCampanaCambio() {
+    return this.agenteCampanaCambio.asObservable();
+  }
+
+  setagenteCampanaCambio(agenteDTO: AgenteDTO) {
+    this.agenteCampanaCambio.next(agenteDTO);
+  }
+
+
+  //captura el usuario de logueo
 
 
    getUsuariosCambio() {
@@ -49,6 +68,21 @@ export class LoginService {
   setUsuariosCambio(usuario: string) {
     this.usuarioCambio.next(usuario);
   }
+
+    //captura la extension de logueo
+
+
+    getExtensionCambio() {
+      return this.extensionCambio.asObservable();
+    }
+  
+    setExtensionCambio(extension: number) {
+      this.extensionCambio.next(extension);
+    }
+  
+
+
+    
 
   estaLogueado(){
     let token = sessionStorage.getItem(environment.TOKEN_NAME);

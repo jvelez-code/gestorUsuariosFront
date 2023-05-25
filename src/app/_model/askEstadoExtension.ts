@@ -1,11 +1,13 @@
+import { AskEstado } from "./askEstado";
+
 export class AskEstadoExtension {
 
     idExtension ?: number;
     loginAgente ?: String;
-    estadoAsk ?: number;
+    askEstado ?: AskEstado;
     numeroOrigen ?: String;
     fechahoraUltimaLlamada ?: String;
-    fechahoraInicioEstado ?: String;
+    fechahoraInicioEstado ?: Date;
     nroDocumento ?: String;
     empresaAsk ?: String;
     activoAsk  ?: boolean;

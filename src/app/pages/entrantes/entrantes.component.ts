@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Cliente } from 'src/app/_model/cliente';
 import { Contacto } from 'src/app/_model/contactos';
 import { DetalleGestion } from 'src/app/_model/detalleGestion';
@@ -18,26 +18,39 @@ import { DetalleGestionService } from 'src/app/_services/detalle-gestion.service
 import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
+import { ThisReceiver } from '@angular/compiler';
+import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
+import { MatPaginator } from '@angular/material/paginator';
+import { LoginService } from 'src/app/_services/login.service';
+import { AgenteCampana } from 'src/app/_model/agenteCampana';
+import { AgenteCampanaService } from 'src/app/_services/agente-campana.service';
+import { UsuarioService } from 'src/app/_services/usuario.service';
 import * as moment from 'moment';
+import { AgenteDTO } from 'src/app/_dto/agenteDTO';
+import { Usuario } from 'src/app/_model/usuario';
+import { Campana } from 'src/app/_model/campanas';
+import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 
 @Component({
-  selector: 'app-entrante',
-  templateUrl: './entrante.component.html',
-  styleUrls: ['./entrante.component.css']
+  selector: 'app-entrantes',
+  templateUrl: './entrantes.component.html',
+  styleUrls: ['./entrantes.component.css']
 })
-export class EntranteComponent implements OnInit {
+export class EntrantesComponent implements OnInit, OnDestroy{
 
-  displayedColumns: string[] = ['razonSocial','tipoDocumento.tipoDoc','nroDocumento','divipola.nombre',
+  clienteColumns: string[] = ['razonSocial','tipoDocumento.tipoDoc','nroDocumento','divipola.nombre',
   'divipola.idZonapadre.nombre','correo','telefonoCelular','telefonoFijo','acciones'];
   dataSourceCli !: MatTableDataSource<Cliente>; 
 
-  detalleGestionColumns: string[] = ['observacion','fechaHoraSis','numRealMarcado'];
-  dataSource !: MatTableDataSource<Cliente>;
+  detalleGestionColumns: string[] = ['fecha','usuario','campana','tipo','subtipo','observacion','numero'];
+  dataSourceHisto !: MatTableDataSource<FiltroDetalleGestionDTO>;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  cantidad: number = 0;
 
 
+  private subscripcion : Subscription = new Subscription();
   tipoDocumento !: string;
-  nroDocumento  !: string;
-  idEmpresa !: number;
   tipoLlamada !: number;
   idContactoP   !: number;
   gestionPadre !: number;
@@ -60,12 +73,41 @@ export class EntranteComponent implements OnInit {
 
   detalleGestion: DetalleGestion [] = [];
   contacto : Contacto [] = [];
+  agenteDtos !: AgenteDTO;
+  AgenteDTO!: AgenteDTO;
 
 
   idClienteP   !: any;
   idEstadoP   !: any;
   idEstadoH   !: any;
- 
+  idUsuario   !: any;
+  usuario   !: any;
+  nroDocumento   !: any;
+  primerNombre   !: any;
+  primerApellido   !: any;
+  idEmpresa   !: any;
+  pseudonimo   !: any;
+  descripcion   !: any;
+  idCampanaE   !: any;
+  nombreCamE   !: any;
+  tipoLlamadaCamE   !: any;
+  hostIp   !: any;
+  extension !: any;
+  numRealMarcado !: any;
+  
+
+  
+  form!: FormGroup;
+  formGuardar!: FormGroup;
+  formContacto!: FormGroup;
+  formHist!: FormGroup;
+  id!: number;
+  edicion!: boolean;
+  tipoDocumento$ !: Observable<TipoDocumento[]>;
+  tipoGestion$ !: Observable<EstadoGestion[]>;
+  subTipoGestion$ !: Observable<EstadoGestion[]>;
+  gestion$ !: Observable<EstadoGestion[]>;
+  agenteCampanas!: any;
 
 
 
@@ -79,33 +121,41 @@ export class EntranteComponent implements OnInit {
     private gestionService :GestionService ,
     private estadoGestionService :EstadoGestionService,
     private contactoService :ContactoService,
+    private loginService :LoginService,
+    private usuarioService: UsuarioService,
+    private askEstadoExtensionService: AskEstadoExtensionService,
     private router: Router,
     private snackBar: MatSnackBar) { }
 
 
 
-  form!: FormGroup;
-  formGuardar!: FormGroup;
-  formContacto!: FormGroup;
-  id!: number;
-  edicion!: boolean;
-  tipoDocumento$ !: Observable<TipoDocumento[]>;
-  tipoGestion$ !: Observable<EstadoGestion[]>;
-  subTipoGestion$ !: Observable<EstadoGestion[]>;
-  gestion$ !: Observable<EstadoGestion[]>;
 
 
   ngOnInit(): void {
 
-    this.clienteService.getClienteCambio().subscribe(data =>{
-      console.log('Observable',data)
-    this.idClienteP= data.idCliente;
-    
-    this.idContactoP= 13452797;
-    this.clienteSelec();
-    this.gestionHistorico();
-    this.contactoUltimo();
+    this.loginService.getUsuariosCambio().subscribe((data:any) =>{
+      this.usuario=data;
+     });
+
+     let FiltroEntranteDTO ={ loginAgente: this.usuario }
+
+    this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data =>{
+      this.idCampanaE=data.idCampanaE;
+      this.idUsuario = data.idUsuario;   
+      this.idEmpresa = data.idEmpresa;
+      this.clienteSelec();
+      this.gestionHistorico();
+      this.contactoUltimo();
     });
+
+    const askEstadoExtension ={  loginAgente : this.usuario }
+
+    this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
+      this.extension=data.idExtension;
+      this.numRealMarcado=data.numeroOrigen;
+    });
+    
+   
 
     
 
@@ -127,15 +177,12 @@ export class EntranteComponent implements OnInit {
       'telCelular': new FormControl(''),
     });
 
+
+
+    
+
   }
 
-  
-buscar(){
- this.clienteSelec();
- this.gestionHistorico();
- this.contactoUltimo();
-
-}
   
 
   clienteSelec(){
@@ -144,58 +191,65 @@ buscar(){
     this.tipoGestionH = 0
     const parametros= { tipoDoc:this.tipoDocumento, nroDoc:this.nroDocumento, prueba:this.nroDocumento }
     
-    // this.clienteService.filtroCliente(parametros).subscribe( data =>{
-    //   console.log('CLiente: ', data)
-    //     this.dataSourceCli= new MatTableDataSource(data);
-    // });
+    this.clienteService.getClienteCambio().subscribe(data=>{
+      this.idClienteP= data
+      
+    
 
     const cliente= { idCliente:this.idClienteP }
-
     this.clienteService.clientePorId( cliente ).subscribe(data =>{
-        console.log('CLiente: ', data)
+      
         this.dataSourceCli= new MatTableDataSource(data);
 
     });
+
+  });
 
     
 
   }
 
+
+
+
+
   gestionHistorico(){
 
-    console.log('tipo',this.tipoDocumento);
-    console.log('doc',this.nroDocumento);
-    this.idEmpresa= 3;
+    
     this.tipoLlamada= 0;
-
     const parametros= { nroDoc:this.nroDocumento, idEmpresa:this.idEmpresa, 
-                        tipoLlamada:this.tipoLlamada, idEstadoPadre:this.tipoGestionP,
-                        nroCliente:this.idClienteP }
+      tipoLlamada:this.tipoLlamada, idEstadoPadre:this.tipoGestionP,
+      idCliente:this.idClienteP }
 
-    //TIPIFICACIÓN
+    //HISTORICO
+    this.detalleGestionService.detalleHistoricoS(parametros).subscribe(data =>{
+      this.dataSourceHisto= new MatTableDataSource(data);
+      this.dataSourceHisto.sort = this.sort;
+      this.dataSourceHisto.paginator = this.paginator;
+    });
+        //TIPIFICACIÓN
    this.tipoGestion$=this.estadoGestionService.estadoGestionPadre(parametros);
 
-    /*this.estadoGestionService.estadoGestionPadre(parametros).subscribe(data => {
-      console.log(data);
-    });*/
 
   }
 
-  subtipoGestion(tipoGestionP:number){
-
-    console.log("Hola TIpoGes",tipoGestionP)
-
+  tipoGestion(tipoGestionP:number){
     this.idEstadoP= tipoGestionP;
     this.idEstadoH= this.tipoGestionH;
-
-    console.log("Hola TIpoGes",this.idEstadoP)
-    console.log("Hola TIpoGe2",this.idEstadoH)
-    console.log("Hola TIpoGe3",moment().format('YYYY-MM-DD HH:mm:ss'));
-
     const parametros= {  idEstadoPadre:this.tipoGestionP , tipoLlamada:this.tipoLlamada, }
 
 
     this.subTipoGestion$=this.estadoGestionService.estadoGestionHijo(parametros);
+    
+    if(this.idEstadoH==0)
+    {
+      this.idEstadoH=tipoGestionP;
+    }
+  }
+
+
+  subtipoGestion(tipoGestionH:number){
+    this.idEstadoH= tipoGestionH;
   }
 
 
@@ -215,18 +269,39 @@ buscar(){
     });
   }
 
-  guardarGestion(){
 
+
+
+
+  guardarGestion(){  
+
+
+    console.log(this.idEstadoH,'pruebas2s')
+
+    let campana = new Campana
+    campana.idCampana = this.idCampanaE
+
+    let usuario = new Usuario
+    usuario.idUsuario = this.idUsuario
+
+    
     let cliente = new Cliente();
     cliente.idCliente = this.idClienteP;
     
 
     let estadoGestion = new EstadoGestion();
     estadoGestion.idEstadoGestion= this.idEstadoP;
+
+    let estadoGestionH = new EstadoGestion();
+    estadoGestionH.idEstadoGestion= this.idEstadoH;
     
     
     let det = new DetalleGestion();
     det.observacion = this.formGuardar.value['observacionD'];
+    det.usuario = usuario;
+    det.estadoGestion = estadoGestionH;
+    det.fechaGestion=new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    det.fechaHoraSis=new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     this.detalleGestion.push(det);
 
     let cont = new Contacto();
@@ -241,18 +316,21 @@ buscar(){
 
     let gestion = new Gestion();
     gestion.cliente = cliente;
+    gestion.agente = usuario;
     gestion.listaDetalleGestion = this.detalleGestion;
     gestion.listaContacto = this.contacto;
-    gestion.usuarioAct = 1560;
     gestion.estadoGestion = estadoGestion;
+    gestion.campana = campana;
+    gestion.fechaGestion= new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+  
 
     this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
       this.clienteService.setFormCambio(this.cardCliente)
     });
-    
+  
     this.router.navigate(['filtroCliente']);
-
+  
   
   }
 
@@ -276,8 +354,12 @@ buscar(){
     this.idEstadoP = null;
     }
 
- 
+    ngOnDestroy() {
+      // Desuscripción para evitar fugas de memoria
+      this.subscripcion.unsubscribe();
+    }
 
+ 
 
 
 

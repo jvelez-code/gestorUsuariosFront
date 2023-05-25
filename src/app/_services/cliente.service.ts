@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
 import { Cliente } from '../_model/cliente';
 import { Parametros } from '../_model/parametros';
 
@@ -11,7 +12,8 @@ import { Parametros } from '../_model/parametros';
 })
 export class ClienteService {
 
-  private clienteCambio = new Subject<Cliente>();
+  //private clienteCambio = new Subject<Cliente>();
+  private clienteCambio = new BehaviorSubject<string> ('000');
   private formCambio = new Subject<boolean>();
   private mensajeCambio = new Subject<string>();
 
@@ -23,10 +25,9 @@ export class ClienteService {
 
 
 
-      filtroCliente(parametros: Parametros):Observable<any>{
-      console.log('parame',parametros)  
+      filtroCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(parametros);
+      const body=JSON.stringify(filtroEntranteDTO);
       return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});
     }
 
@@ -49,9 +50,9 @@ export class ClienteService {
       return this.clienteCambio.asObservable();
     }
 
-    setClienteCambio(cliente: Cliente ){
+    setClienteCambio(idCliente: string ){
       
-      return this.clienteCambio.next(cliente );
+      return this.clienteCambio.next(idCliente );
     }
 
 

@@ -1,4 +1,5 @@
-import { Empresa } from "./Empresa";
+import { Empresa } from "./empresa";
+
 
 export class EstadoGestion {
     

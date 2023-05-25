@@ -18,18 +18,14 @@ export class GestionService {
     private router: Router ) { }
 
     gestionHistoricoS(parametros: Parametros):Observable<any>{
-      console.log('paramedetalle1',parametros)  
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(parametros);
-      console.log('paramedetalle2', body)  
       return this.http.post<Parametros>(`${this.url}/buscar`, body, headers);
     }
 
     guardarGestionS(gestion: Gestion):Observable<any>{
-      console.log('paramedetalle1',gestion)  
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(gestion);
-      console.log('parame Gestion', body)  
       return this.http.post<Gestion>(`${this.url}`, body, headers);
     }
 
