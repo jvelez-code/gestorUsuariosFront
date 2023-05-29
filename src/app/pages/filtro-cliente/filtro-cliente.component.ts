@@ -56,8 +56,10 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   cardCliente !: boolean;
   cardManual !: boolean;
   fechafin !: Date 
+
   colorExt !: any;
   idExt !: any;
+  documentoExt !: any;
 
   
   parametros !: Parametros;
@@ -77,7 +79,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
 
   constructor( 
     private loginService: LoginService,
-    private TipoDocumentoService : TipoDocumentoService,
+    private tipoDocumentoService : TipoDocumentoService,
     private clienteService : ClienteService,
     private detalleGestionService : DetalleGestionService,
     private gestionService :GestionService ,
@@ -148,7 +150,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
       'identificacion': new FormControl('')
    });
 
-    this.tipoDocumento$=this.TipoDocumentoService.buscar();
+    this.tipoDocumento$=this.tipoDocumentoService.buscar();
 
     this.clienteService.getMensajeCambio().subscribe(data => {
       this.snackBar.open(data, 'AVISO', { duration: 2000 });
@@ -168,6 +170,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
         this.colorExt=data.askEstado?.color;
         this.idExt=data.askEstado?.idEstado;
+        this.documentoExt=data.nroDocumento;
 
         this.formAgente   = new FormGroup({
         'agente': new FormControl(data.loginAgente),
@@ -183,12 +186,15 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
 
         if (this.idExt==3){
 
+          const filtroEntranteDTO ={  nroDocumento : this.documentoExt }
+          this.clienteService.asteriskCliente(filtroEntranteDTO).subscribe(data=>{       
+
           this.formCliente = new FormGroup({
-            'cliente': new FormControl('Dana'),
-            'tipoDoc': new FormControl('CC'),
-            'identificacion': new FormControl('8080')
+            'cliente': new FormControl(data.razonSocial),
+            'tipoDoc': new FormControl(data.tipoDocumento.tipoDoc),
+            'identificacion': new FormControl(data.nroDocumento)
          });
-          
+        });
         }
 
         console.log("total",n,this.idExt)   
@@ -231,10 +237,14 @@ buscarCliente() {
       const filtroEntranteDTO= {tipoDoc:this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento']}    
     
       this.clienteService.filtroCliente(filtroEntranteDTO).subscribe( data =>{
+      if(data){  
       this.idCliente =data.idCliente;
       this.clienteService.setClienteCambio(this.idCliente);
 
       this.router.navigate(['gestionEntrante']);     
+    } else {
+      this.router.navigate(['clientes']);    
+    }
     });
   }
 

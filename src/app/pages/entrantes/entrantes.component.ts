@@ -143,6 +143,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.idCampanaE=data.idCampanaE;
       this.idUsuario = data.idUsuario;   
       this.idEmpresa = data.idEmpresa;
+      this.hostIp = data.hostIp;
       this.clienteSelec();
       this.gestionHistorico();
       this.contactoUltimo();
@@ -274,10 +275,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
 
   guardarGestion(){  
-
-
-    console.log(this.idEstadoH,'pruebas2s')
-
     let campana = new Campana
     campana.idCampana = this.idCampanaE
 
@@ -300,8 +297,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     det.observacion = this.formGuardar.value['observacionD'];
     det.usuario = usuario;
     det.estadoGestion = estadoGestionH;
-    det.fechaGestion=new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
-    det.fechaHoraSis=new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    det.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    det.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    det.ip = this.hostIp;
+    det.usuarioAct = this.usuario;
     this.detalleGestion.push(det);
 
     let cont = new Contacto();

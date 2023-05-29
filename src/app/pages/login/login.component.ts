@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouterTestingHarness } from '@angular/router/testing/index.js';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AskEstadoExtension } from 'src/app/_model/askEstadoExtension';
+import { AgenteCampanaService } from 'src/app/_services/agente-campana.service';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { LoginService } from 'src/app/_services/login.service';
 import { MenuService } from 'src/app/_services/menu.service';
@@ -15,7 +15,7 @@ import '../../../assets/login-animation.js';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit, AfterViewInit {
 
   usuario!: string;
   clave!: string;
@@ -65,8 +65,18 @@ export class LoginComponent implements OnInit{
     });
 
   }
-
   ngAfterViewInit() {
-    (window as any).initialize();
+    const randomNumber = Math.floor(Math.random() * 13) + 1;
+    const bodyElement = document.getElementById('bodylogin');
+    const backgroundImage = `url('assets/fondos/fondo${randomNumber}.jpg')`;
+  
+    if (bodyElement) {
+      bodyElement.style.backgroundImage = backgroundImage;
+      bodyElement.style.backgroundRepeat = 'no-repeat';
+      bodyElement.style.backgroundSize = 'cover';
+    }
+    
   }
+  
+
 }

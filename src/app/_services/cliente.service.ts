@@ -25,21 +25,29 @@ export class ClienteService {
 
 
 
+    
+
+    guardarCliente(cliente: Cliente):Observable<any>{
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(Cliente);
+      return this.http.post<Parametros>(`${this.url}`,body,{'headers':headers});
+    }
+
       filtroCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(filtroEntranteDTO);
       return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});
     }
 
-    // clientePorId(cliente: Cliente):Observable<any>{
-    //   console.log('parame',cliente)  
-    //   const headers = { 'content-type': 'application/json'}  
-    //   const body=JSON.stringify(cliente);
-    //   return this.http.post<Cliente>(`${this.url}/buscarId`,body,{'headers':headers});
-    // }
-
+    
     clientePorId(cliente: Cliente){
       return this.http.post<Cliente[]>(`${this.url}/buscarId`, cliente);
+    }
+
+    asteriskCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(filtroEntranteDTO);
+      return this.http.post<FiltroEntranteDTO>(`${this.url}/buscarAsterisk`,body,{'headers':headers});
     }
 
 

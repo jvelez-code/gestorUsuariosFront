@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 /* colors */
-html {
+/* {
   width: 100%;
   height: 100%;
 }
@@ -150,8 +150,216 @@ form .inputGroup1 .helper1 {
   transition: transform .2s ease-out, opacity .2s linear, -webkit-transform .2s ease-out;
 }
 form .inputGroup1.focusWithText .helper {
-  /*input[type='email']:focus + .helper {*/
+  /*input[type='email']:focus + .helper {
   -webkit-transform: translate(1.4em, 2em) scale(0.65);
           transform: translate(1.4em, 2em) scale(0.65);
   opacity: 1;
 }
+*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
+
+*{
+    margin: 0; /*entre las cajas*/
+    padding: 0;/*del contenido de la caja a los bordes*/
+    box-sizing: border-box;
+    font-family:'Bowlby One SC', cursive ; /*letra de texto*/
+}
+
+body{
+  height: 100vh;
+  /*background-image: url('/assets/fondos/fondo1.jpg');*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+.login{
+  height: 750px;
+  left: 60%;
+  position: absolute;
+  z-index: 9999; /* Establece un valor alto para el z-index */
+}
+
+.empresa{
+    margin: 45% 50% 50% 10%;
+    background-color: #0000;
+}
+
+
+.formulario{
+    width: 400px; /*ancho del contenedor formulario*/
+    position: absolute; /* permite posicionar elementos de manera absoluta, esto es de manera definida por valores de los atributos top, left, bottom y right, que indican la distancia con respecto a un punto.*/
+    background-color: #e6dfdf;/*color de fondo del formulario*/
+    /*border: 4px solid #8f4790; Borde del formualrio y color */
+    border-radius: 10px; /*darle curvadura al borde*/
+    padding: 30px 60px; /*del contenido de la caja a los bordes*/
+    top: 260px; /*subir el formulario*/
+    left: 50%; /*lo mueve a la dechar npi*/
+    transform: translate(-50%); /*lo vuelve a dehjar donde estaba en el centro*/
+    text-align: center; /*alinear al centro*/
+}
+
+.formulario input,label,button{
+    display: block; /*que que todos se pongan en bloque a lo ancho*/
+    width: 100%; /*que cubran el 100 del ancho del contenedor*/
+    margin: 5px;/*entre las cajas*/
+}
+.formulario input{
+    height: 40px; /*altura de los input*/
+    border: 2px solid #080808; /*borde para los input*/
+    border-radius: 10px;/*curvatura para los input*/
+    padding: 0 8px;  /*del contenido de la caja a los bordes 0 en el eje y y 8 en el eje x*/
+}
+
+.formulario button{
+    margin-top: 20px; /*separalo de la otra caja 20 px de arriba*/
+    cursor: pointer;/*cambia el cursor*/
+    border: none; /*sin borde*/
+    height: 40px;/*altura del boton*/
+    background-color: #050505;/*color de fondo del boton*/
+    box-shadow: 1px 1px 2px #000;/*añade efectos de sombra alrededor del marco de un elemento.*/
+    color: #ffff;/*Cambiar color de letra*/
+}
+
+.formulario button:hover{
+    background-color: #11111165;/*cuando se pone el mouse encima cambia el tono de morado*/
+}
+
+footer{
+    width: 100%;
+    background: #0a0a0af5;
+    color: white;   
+    position: absolute;
+    height: 400px; 
+    margin-top: 55.5%;
+    padding-top: 5px;
+    
+  }
+  
+  .container-footer-all{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px;
+  }
+  
+  .container-body{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .colum1{
+    max-width: 400px;
+  }
+  
+  .colum1 h1{
+    font-size: 22px;
+  }
+  
+  .colum1 p{
+    font-size: 14px;
+    color: #C7C7C7;
+    margin-top: 20px;
+  }
+  
+  .colum2{
+    max-width: 400px;
+    
+  }
+  
+  .colum2 h1{
+    font-size: 22px;
+  }
+  
+  .row{
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  .row img{
+    width: 36px;
+    height: 36px;
+  }
+  
+  .row label{
+    margin-top: 10px;
+    margin-left: 20px;
+    color: #C7C7C7;
+  }
+  
+  .colum3{
+    max-width: 400px;
+  }
+  
+  .colum3 h1{
+    font-size: 22px;
+  }
+  
+  .row2{
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  .row2 img{
+    width: 36px;
+    height: 36px;
+  }
+  
+  .row2 label{
+    margin-top: 10px;
+    margin-left: 20px;
+    max-width: 140px;
+  }
+  
+  .container-footer{
+    width: 100%;  
+    background: #101010;
+  }
+  
+  .footer{
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;  
+    padding: 20px;
+  }
+  
+  
+  
+  .copyright{
+    color: #C7C7C7;
+  }
+  
+  .copyright a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .information a{
+    text-decoration: none;
+    color: #C7C7C7;
+  }
+  
+  
+  @media screen and (max-width: 1100px){
+    
+    .container-body{
+        flex-wrap: wrap;
+    }
+    
+    .colum1{
+        max-width: 100%;
+    }
+    
+    .colum2,
+    .colum3{
+        margin-top: 40px;
+    }
+  }

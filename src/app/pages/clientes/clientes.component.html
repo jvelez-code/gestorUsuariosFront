@@ -1,0 +1,68 @@
+<mat-card class="example-card-cli">
+    <mat-card-header>
+        <div class="center">
+        <mat-card-title>CLIENTES</mat-card-title></div>
+      </mat-card-header>
+    <mat-card-content>Nuevos</mat-card-content>
+    <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm" >
+        <table class="example-full-width" cellspacing="0">
+         <tr>
+          <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Tipo Documento</mat-label>
+            <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
+              <mat-option *ngFor="let p of (  tipoDocumento$ | async )" [value]="p.tipoDoc">
+                {{p.tipoDoc}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+            <mat-label>Documento</mat-label>
+            <input matInput formControlName="documento"  >
+          </mat-form-field></td>
+        </tr>
+         <tr>
+            <td><mat-form-field class="example-full-width">
+              <mat-label>Ciudades</mat-label>
+              <mat-select placeholder="SELECCCION" [(value)]="divipola">
+                <mat-option *ngFor="let d of (  divipola$ | async )" [value]="d.idZona">
+                  {{d.nombre}}{{d.departamento}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+             <mat-label>Razón Social</mat-label>
+             <input matInput formControlName="rsocial"  >
+            </mat-form-field></td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="direccion"  >
+          </mat-form-field></td>
+            </tr>
+
+        <tr>
+            <td><mat-form-field class="example-full-width">
+                <mat-label>Telefono</mat-label>
+                <input matInput formControlName="telefono"  >
+              </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+             <mat-label>Celular</mat-label>
+             <input matInput formControlName="celular"  >
+            </mat-form-field></td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label> # Empleados</mat-label>
+            <input matInput formControlName="empleados"  >
+          </mat-form-field></td>
+       </tr>
+
+        </table>    
+        <mat-card-actions>
+          <div class="button-row">
+          <button mat-raised-button color="primary" (click)="guardarCliente()">Guardar</button>
+          <button mat-raised-button color="accent"  (click)="cancelarCliente()">Manual</button></div>
+      </mat-card-actions>    
+    </form>
+</mat-card>
+
+
+  

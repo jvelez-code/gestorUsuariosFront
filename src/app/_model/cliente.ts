@@ -1,9 +1,12 @@
+import { TipoDocumento } from "./tipoDocumento";
+
 export class Cliente {
 
     idCliente ?: number;
-    tipoDoc ?: String;
+    tipoDoc ?: TipoDocumento;
     nroDoc ?: String;
     razonSocial ?: String;
+    ciudad ?: String;
     direccion ?: String;
     telCel ?: String;
     telFijo ?: String;

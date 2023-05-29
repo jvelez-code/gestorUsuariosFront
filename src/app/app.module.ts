@@ -16,6 +16,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { ExtadoExtComponent } from './pages/estado-ext/estado-ext.component';
 import { ServerErrorsInterceptor } from './shared/server-errors.interceptor';
 import { EntrantesComponent } from './pages/entrantes/entrantes.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 
 export function tokenGetter() {
@@ -30,7 +31,8 @@ export function tokenGetter() {
     FiltroSalienteComponent,
     FiltroSecretariaComponent,
     ExtadoExtComponent,
-    EntrantesComponent
+    EntrantesComponent,
+    ClientesComponent
   ],
   imports: [
     BrowserModule,
