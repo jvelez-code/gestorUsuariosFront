@@ -4,7 +4,7 @@
         <mat-card-title>CLIENTES</mat-card-title></div>
       </mat-card-header>
     <mat-card-content>Nuevos</mat-card-content>
-    <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm" >
+    <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm"  (ngSubmit)="guardarCliente()">
         <table class="example-full-width" cellspacing="0">
          <tr>
           <td>
@@ -18,8 +18,12 @@
           </mat-form-field></td>
         <td><mat-form-field class="example-full-width">
             <mat-label>Documento</mat-label>
-            <input matInput formControlName="documento"  >
-          </mat-form-field></td>
+            <input matInput type="text" formControlName="documento" [class.is-invalid]="nombreNoValido">
+            </mat-form-field>
+            <div *ngIf="nombreNoValido" class="error-message">
+              El nombre es obligatorio
+            </div>
+          </td>
         </tr>
          <tr>
             <td><mat-form-field class="example-full-width">
@@ -32,37 +36,57 @@
             </mat-form-field></td>
             <td><mat-form-field class="example-full-width">
              <mat-label>Razón Social</mat-label>
-             <input matInput formControlName="rsocial"  >
+             <input matInput type="text" formControlName="rsocial"  >
             </mat-form-field></td>
           <td><mat-form-field class="example-full-width">
             <mat-label>Dirección</mat-label>
-            <input matInput formControlName="direccion"  >
+            <input matInput type="text" formControlName="direccion"  >
           </mat-form-field></td>
             </tr>
 
         <tr>
             <td><mat-form-field class="example-full-width">
-                <mat-label>Telefono</mat-label>
-                <input matInput formControlName="telefono"  >
+                <mat-label>Teléfono</mat-label>
+                <input matInput type="number" formControlName="telefono"  >
               </mat-form-field></td>
             <td><mat-form-field class="example-full-width">
              <mat-label>Celular</mat-label>
-             <input matInput formControlName="celular"  >
+             <input matInput type="number" formControlName="celular"  >
             </mat-form-field></td>
-          <td><mat-form-field class="example-full-width">
-            <mat-label> # Empleados</mat-label>
-            <input matInput formControlName="empleados"  >
-          </mat-form-field></td>
        </tr>
+
+
+       <tr>
+        <td><mat-form-field class="example-full-width">
+         <mat-label>Correo</mat-label>
+         <input matInput type="text" formControlName="correo">
+        </mat-form-field></td>
+      <td><mat-form-field class="example-full-width">
+        <mat-label> # Empleados</mat-label>
+        <input matInput  type="number" formControlName="empleados"  >
+      </mat-form-field></td>
+   </tr>
 
         </table>    
         <mat-card-actions>
           <div class="button-row">
-          <button mat-raised-button color="primary" (click)="guardarCliente()">Guardar</button>
-          <button mat-raised-button color="accent"  (click)="cancelarCliente()">Manual</button></div>
+          <button mat-raised-button color="primary">Guardar</button>
+          <button mat-raised-button color="accent"  (click)="cancelarCliente()">Cancelar</button></div>
       </mat-card-actions>    
     </form>
 </mat-card>
+
+<hr>
+<pre>
+  estado del formulario:{{ formCliente.valid }}
+  <br>
+
+  estatus:{{ formCliente.status }}
+
+</pre>
+<pre>
+  estado del formulario:{{ formCliente.value | json  }}
+</pre>
 
 
   

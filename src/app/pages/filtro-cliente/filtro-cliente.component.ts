@@ -28,6 +28,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginService } from 'src/app/_services/login.service';
 import { Usuarios } from 'src/app/_model/usuarios';
 import { FiltroEntranteDTO } from 'src/app/_dto/filtroEntranteDTO';
+import { UsuarioService } from 'src/app/_services/usuario.service';
 
 
 
@@ -57,6 +58,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   cardManual !: boolean;
   fechafin !: Date 
 
+  nroExt !: any;
   colorExt !: any;
   idExt !: any;
   documentoExt !: any;
@@ -86,6 +88,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     private estadoGestionService :EstadoGestionService,
     private contactoService :ContactoService,
     private askEstadoExtensionService: AskEstadoExtensionService,
+    private usuarioService : UsuarioService,
     private router: Router,
     private snackBar: MatSnackBar) { 
 
@@ -108,8 +111,12 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     const askEstadoExtension ={  loginAgente : this.usuarios }
 
     this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
-      this.colorExt=data.askEstado?.color;
-        this.idExt=data.askEstado?.idEstado;
+      this.colorExt = data.askEstado?.color;
+      this.idExt = data.askEstado?.idEstado;
+      this.nroExt = data.idExtension;
+      this.usuarioService.setExtensionCambio(this.nroExt);
+
+        
 
         this.formAgente   = new FormGroup({
         'agente': new FormControl(data.loginAgente),
@@ -171,33 +178,24 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
         this.colorExt=data.askEstado?.color;
         this.idExt=data.askEstado?.idEstado;
         this.documentoExt=data.nroDocumento;
-
         this.formAgente   = new FormGroup({
         'agente': new FormControl(data.loginAgente),
         'estado': new FormControl(data.askEstado?.descripcion),
         'numeroReal': new FormControl(data.numeroOrigen),
         'horaInicio': new FormControl(moment(data.fechahoraInicioEstado).format('YYYY-MM-DD HH:mm:ss')),
         'horaActual': new FormControl(moment().format('YYYY-MM-DD HH:mm:ss')),
-  
+        
       });
-
-      
-       
-
-        if (this.idExt==3){
-
+        if (this.idExt===3){
           const filtroEntranteDTO ={  nroDocumento : this.documentoExt }
-          this.clienteService.asteriskCliente(filtroEntranteDTO).subscribe(data=>{       
-
-          this.formCliente = new FormGroup({
+          this.clienteService.asteriskCliente(filtroEntranteDTO).subscribe(data=>{   
+             this.formCliente = new FormGroup({
             'cliente': new FormControl(data.razonSocial),
             'tipoDoc': new FormControl(data.tipoDocumento.tipoDoc),
             'identificacion': new FormControl(data.nroDocumento)
          });
         });
         }
-
-        console.log("total",n,this.idExt)   
       });
 
     });

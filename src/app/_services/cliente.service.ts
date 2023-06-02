@@ -28,12 +28,13 @@ export class ClienteService {
     
 
     guardarCliente(cliente: Cliente):Observable<any>{
-      const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(Cliente);
-      return this.http.post<Parametros>(`${this.url}`,body,{'headers':headers});
+      const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
+      const body=JSON.stringify(cliente);
+      console.log(body);
+      return this.http.post<Cliente>(`${this.url}`, body, headers);
     }
 
-      filtroCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
+     filtroCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(filtroEntranteDTO);
       return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});

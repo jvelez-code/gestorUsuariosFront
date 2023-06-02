@@ -35,19 +35,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   iniciarSesion() {
-    this.loginService.login(this.usuario, this.clave).subscribe(data =>{
+
+      sessionStorage.clear();
+   
+      this.loginService.login(this.usuario, this.clave).subscribe(data =>{
       sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
 
       const helper = new JwtHelperService();
 
       let decodedToken = helper.decodeToken(data.access_token);
       this.loginService.setUsuariosCambio(decodedToken.user_name);
-
-      const FiltroEntranteDTO ={  loginAgente : decodedToken.user_name }
-        this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data=>{
-        this.loginService.setagenteCampanaCambio(data);
-        this.loginService.AgenteDTO=data;
-      });    
 
       this.menuService.listarPorUsuario(decodedToken.user_name).subscribe(data=>{
         this.loginService.setMenuCambio(data);        
@@ -64,6 +61,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
       
     });
 
+  }
+
+  logoutPreviousSession() {
+    // Lógica para cerrar la sesión anterior, si es necesario
+    // Por ejemplo, realizar una solicitud al backend para invalidar la sesión anterior
+
+    console.log('HOLA MUNDO')
   }
   ngAfterViewInit() {
     const randomNumber = Math.floor(Math.random() * 13) + 1;

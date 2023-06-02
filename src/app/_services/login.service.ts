@@ -24,11 +24,20 @@ export class LoginService {
 
 
   private url: string = `${environment.HOST}/oauth/token`
+  private urls: string = `${environment.HOST}/usuarios/cerrar`
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) { }
+
+    cerrarLogin(usuario: string){
+    const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
+    const body=JSON.stringify(usuario);
+    console.log('cerrar cesion otro equipo3',usuario)
+    return this.http.post<any>(`${this.url}`, body);
+  }
+
 
   login(usuario: string, contrasena: string){
     const body = `grant_type=password&username=${encodeURIComponent(usuario)}&password=${encodeURIComponent(contrasena)}`;
@@ -104,6 +113,7 @@ export class LoginService {
   }
 
   enviarCorreo(correo: string){
+    console.log(correo, 'este es correo');
     return this.http.post<number>(`${environment.HOST}/login/enviarCorreo`, correo, {
       headers: new HttpHeaders().set('Content-Type', 'text/plain')
     });

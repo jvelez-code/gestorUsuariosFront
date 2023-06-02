@@ -36,16 +36,14 @@ export class GuardService implements CanActivate {
 
         //url -> /consulta
         let url = state.url;
-        console.log(url,'url GUARD')
-
         this.loginService.getUsuariosCambio().subscribe((data:any) =>{
           this.usuarios=data;
         });
 
         //const decodedToken = helper.decodeToken(token: Promise<string>);
-        console.log(this.usuarios,'USUARIOS GUARD')
+
         return this.menuService.listarPorUsuario(this.usuarios).pipe(map( (data: Menu[]) => {
-          console.log(data,' data GUARD')
+
           this.loginService.setMenuCambio(data);
 
           let cont = 0;

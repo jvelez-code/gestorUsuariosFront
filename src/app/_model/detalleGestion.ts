@@ -1,4 +1,5 @@
 import { EstadoGestion } from "./estadoGestion";
+import { Extension } from "./extension";
 import { Usuario } from "./usuario";
 
 export class DetalleGestion {
@@ -10,7 +11,7 @@ export class DetalleGestion {
     numRealMarcado?: String;
     usuario?: Usuario;
     estadoGestion?: EstadoGestion;
-    extension?: String;
+    extension?: Extension;
     empresa ?: String;
     fechaGestion ?: Date; //2020-09-05T11:30:05 ISODate || moment.js
     fechaHoraSis  ?: Date;

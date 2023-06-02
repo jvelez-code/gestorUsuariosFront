@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
@@ -18,17 +18,20 @@ import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 export class ClientesComponent implements OnInit{
 
   formCliente!: FormGroup;
+
   tipoDocumento$ !: Observable<TipoDocumento[]>;
   divipola$ !: Observable<DivipolaDTO[]>;
   tipoDocumento !: string;
-  divipola !: string;
+  divipola !: number;
 
 
   constructor(
     private clienteService : ClienteService,
     private tipoDocumentoService : TipoDocumentoService,
-    private divipolaService : DivipolaService
+    private divipolaService : DivipolaService,
+    private fb : FormBuilder
   ){
+    this.crearFormulario();
 
   }
 
@@ -38,7 +41,7 @@ export class ClientesComponent implements OnInit{
     this.divipola$= this.divipolaService.buscar();
 
 
-    this.formCliente   = new FormGroup({
+    /*this.formCliente   = new FormGroup({
       'tipoDoc': new FormControl(''),
       'documento': new FormControl(''),
       'ciudad': new FormControl(''),
@@ -48,21 +51,50 @@ export class ClientesComponent implements OnInit{
       'celular': new FormControl(''),
       'empleados': new FormControl(''),
 
+    });     */
+  }
+
+
+  crearFormulario(){
+
+    this.formCliente = this.fb.group({
+      'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(15)]],
+      'rsocial': [''],
+      'direccion': [''],
+      'telefono': [''],
+      'celular': [''],
+      'correo': ['pruebas@gmail.com',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      'empleados': ['']
+
     });
 
-      
+  }
+
+  get nombreNoValido() {
+    return this.formCliente.get('documento')?.invalid && this.formCliente.get('documento')?.touched
   }
 
   guardarCliente(){
 
+  console.log(this.formCliente);
+
+    let tipo = new TipoDocumento
+    tipo.tipoDoc = this.formCliente.value['documento'];
+
+    let divi = new Divipola
+    divi.idZona = this.divipola;
+
+
     let cli = new Cliente();
-    cli.tipoDoc = this.formCliente.value[''];
-    cli.nroDoc = this.formCliente.value['documento'];
-    cli.ciudad = this.formCliente.value['ciudad'];
+    cli.tipoDocumento = tipo;
+    cli.nroDocumento = this.formCliente.value['documento'];
+    cli.ciudad = divi;
     cli.razonSocial = this.formCliente.value['rsocial'];
     cli.direccion = this.formCliente.value['direccion'];
-    cli.telFijo = this.formCliente.value['telefono'];
-    cli.telCel = this.formCliente.value['celular'];
+    cli.telefonoFijo = this.formCliente.value['telefono'];
+    cli.telefonoCelular = this.formCliente.value['celular'];
+    cli.correo = this.formCliente.value['correo'];
+    cli.cantidadEmpleados = this.formCliente.value['empleados'];
 
     this.clienteService.guardarCliente(cli).subscribe(() =>{
       this.clienteService.setMensajecambio('SE REGISTRÓ');

@@ -30,6 +30,7 @@ import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 import { Usuario } from 'src/app/_model/usuario';
 import { Campana } from 'src/app/_model/campanas';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
+import { Extension } from 'src/app/_model/extension';
 
 @Component({
   selector: 'app-entrantes',
@@ -167,7 +168,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     });
 
     this.formGuardar = new FormGroup({
-      'observacionD': new FormControl('')
+      'observacionD': new FormControl(''),
+      'numeroreal': new FormControl('')
     });
 
     this.formContacto = new FormGroup({
@@ -278,6 +280,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     let campana = new Campana
     campana.idCampana = this.idCampanaE
 
+    let ext = new Extension
+    ext.extension = this.extension;
+
+
     let usuario = new Usuario
     usuario.idUsuario = this.idUsuario
 
@@ -295,12 +301,15 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     
     let det = new DetalleGestion();
     det.observacion = this.formGuardar.value['observacionD'];
+    det.numRealMarcado = this.formGuardar.value['numeroreal'];
     det.usuario = usuario;
     det.estadoGestion = estadoGestionH;
     det.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     det.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     det.ip = this.hostIp;
     det.usuarioAct = this.usuario;
+    det.extension = ext;
+    console.log(this.extension,'pruebas ext')
     this.detalleGestion.push(det);
 
     let cont = new Contacto();
@@ -320,9 +329,14 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     gestion.listaContacto = this.contacto;
     gestion.estadoGestion = estadoGestion;
     gestion.campana = campana;
-    gestion.fechaGestion= new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    gestion.usuarioAct = this.usuario;
+    gestion.ipAct = this.hostIp
+    gestion.flagGestionSucursal = false
+    
+    gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
   
-
+console.log(gestion,'GESTIONNN');
     this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
       this.clienteService.setFormCambio(this.cardCliente)

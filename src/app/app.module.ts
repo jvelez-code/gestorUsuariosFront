@@ -17,6 +17,8 @@ import { ExtadoExtComponent } from './pages/estado-ext/estado-ext.component';
 import { ServerErrorsInterceptor } from './shared/server-errors.interceptor';
 import { EntrantesComponent } from './pages/entrantes/entrantes.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
+import { RecuperarComponent } from './pages/login/recuperar/recuperar.component';
+import { TokenComponent } from './pages/login/recuperar/token/token.component';
 
 
 export function tokenGetter() {
@@ -32,7 +34,9 @@ export function tokenGetter() {
     FiltroSecretariaComponent,
     ExtadoExtComponent,
     EntrantesComponent,
-    ClientesComponent
+    ClientesComponent,
+    RecuperarComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
 import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
@@ -9,6 +10,8 @@ import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
   providedIn: 'root'
 })
 export class UsuarioService {
+
+  private extensionCambio = new BehaviorSubject<number> ( 0 )
 
   private url:string = `${environment.HOST}/usuarios`;
 
@@ -22,4 +25,13 @@ export class UsuarioService {
       return this.http.post<AgenteDTO>(`${this.url}/buscarExt`,body,{'headers':headers});
 
     }
+
+    getExtensionCambio() {
+      return this.extensionCambio.asObservable();
+    }
+  
+    setExtensionCambio(extension: number) {
+      this.extensionCambio.next(extension);
+    }
+
 }
