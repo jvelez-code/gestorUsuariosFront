@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ControlContainer, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -126,6 +126,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     private usuarioService: UsuarioService,
     private askEstadoExtensionService: AskEstadoExtensionService,
     private router: Router,
+    private fb : FormBuilder,
     private snackBar: MatSnackBar) { }
 
 
@@ -184,6 +185,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
     
 
+  }
+
+  get nombreNoValido() {
+    return this.formContacto.get('nombre')?.invalid && this.formContacto.get('nombre')?.touched
   }
 
   
@@ -262,13 +267,20 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     const parametros= { idCliente: this.idClienteP }
 
     this.contactoService.filtroContacto(parametros).subscribe(data =>{
-     this.formContacto = new FormGroup({
+      this.formContacto = this.fb.group({
+      'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
+      'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telCelular': [data.telefonoCelular,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]]
+     });
+    /* this.formContacto = new FormGroup({
       'nombre': new FormControl(data.nombre),
       'correo': new FormControl(data.correoElectronico),
       'telPrincipal': new FormControl(data.numeroContacto),
       'telSecundario': new FormControl(data.telefonoDirecto),
       'telCelular': new FormControl(data.telefonoCelular)
-    });
+    });*/
     });
   }
 

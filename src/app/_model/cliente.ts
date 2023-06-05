@@ -17,7 +17,7 @@ export class Cliente {
     telefonoCelular ?: String;
     telefonoFijo ?: String;    
     ley1581  ?: Boolean;
-    ciudad ?: Divipola;
+    divipola ?: Divipola;
     
 
 }

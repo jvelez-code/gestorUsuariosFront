@@ -148,22 +148,24 @@
     <td><mat-form-field class="example-full-width">
       <mat-label>Nombre del Contacto</mat-label>
       <input matInput placeholder="Nombre" formControlName="nombre" >
-    </mat-form-field></td>
+    </mat-form-field><div *ngIf="nombreNoValido" class="error-message">
+      Debe ser mínimo  de 3 caracteres
+    </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Correo del Contacto</mat-label>
-      <input matInput placeholder="Correo" minlength="3" required formControlName="correo">
+      <input matInput placeholder="Correo"   formControlName="correo">
     </mat-form-field></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono (P)</mat-label>
-      <input matInput placeholder="Principal" minlength="3" required formControlName="telPrincipal">
+      <input matInput placeholder="Principal"  formControlName="telPrincipal">
     </mat-form-field></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono (S)</mat-label>
-      <input matInput placeholder="Secundario" minlength="3" required formControlName="telSecundario">
+      <input matInput placeholder="Secundario"  formControlName="telSecundario">
     </mat-form-field></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono Celular</mat-label>
-      <input matInput placeholder="Celular" minlength="3" required formControlName="telCelular">
+      <input matInput placeholder="Celular" formControlName="telCelular">
     </mat-form-field></td>
     
   </tr></table>

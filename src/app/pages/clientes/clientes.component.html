@@ -18,10 +18,10 @@
           </mat-form-field></td>
         <td><mat-form-field class="example-full-width">
             <mat-label>Documento</mat-label>
-            <input matInput type="text" formControlName="documento" [class.is-invalid]="nombreNoValido">
+            <input matInput type="text" formControlName="documento" [class.is-invalid]="documentoNoValido">
             </mat-form-field>
-            <div *ngIf="nombreNoValido" class="error-message">
-              El nombre es obligatorio
+            <div *ngIf="documentoNoValido" class="error-message">
+              Debe ser mínimo  de 4 caracteres
             </div>
           </td>
         </tr>
@@ -36,23 +36,35 @@
             </mat-form-field></td>
             <td><mat-form-field class="example-full-width">
              <mat-label>Razón Social</mat-label>
-             <input matInput type="text" formControlName="rsocial"  >
-            </mat-form-field></td>
+             <input matInput type="text" formControlName="rsocial" [class.is-invalid]="rsocialNoValido">
+            </mat-form-field>
+            <div *ngIf="rsocialNoValido" class="error-message">
+              Debe ser mínimo  de 3 caracteres
+            </div></td>
           <td><mat-form-field class="example-full-width">
             <mat-label>Dirección</mat-label>
-            <input matInput type="text" formControlName="direccion"  >
-          </mat-form-field></td>
+            <input matInput type="text" formControlName="direccion" [class.is-invalid]="direccionNoValido">
+          </mat-form-field>
+          <div *ngIf="direccionNoValido" class="error-message">
+            Debe ser mínimo  de 3 caracteres
+          </div></td>
             </tr>
 
         <tr>
             <td><mat-form-field class="example-full-width">
                 <mat-label>Teléfono</mat-label>
-                <input matInput type="number" formControlName="telefono"  >
-              </mat-form-field></td>
+                <input matInput  formControlName="telefono" (keypress)="validarNumeros($event)">
+              </mat-form-field>
+              <div *ngIf="telefonoNoValido" class="error-message">
+                Debe ser mínimo de 7 caracteres
+              </div></td>
             <td><mat-form-field class="example-full-width">
              <mat-label>Celular</mat-label>
-             <input matInput type="number" formControlName="celular"  >
-            </mat-form-field></td>
+             <input matInput  formControlName="celular" (keypress)="validarNumeros($event)">
+            </mat-form-field>
+            <div *ngIf="celularNoValido" class="error-message">
+              Debe ser mínimo de 10 caracteres
+            </div></td>
        </tr>
 
 
@@ -60,11 +72,17 @@
         <td><mat-form-field class="example-full-width">
          <mat-label>Correo</mat-label>
          <input matInput type="text" formControlName="correo">
-        </mat-form-field></td>
+        </mat-form-field>
+        <div *ngIf="correoNoValido" class="error-message">
+          Formato no valido
+        </div></td>
       <td><mat-form-field class="example-full-width">
         <mat-label> # Empleados</mat-label>
-        <input matInput  type="number" formControlName="empleados"  >
-      </mat-form-field></td>
+        <input matInput  formControlName="empleados" (keypress)="validarNumeros($event)">
+      </mat-form-field>
+      <div *ngIf="empleadosNoValido" class="error-message">
+      Debe ser mínimo de 4 caracteres
+      </div></td>
    </tr>
 
         </table>    

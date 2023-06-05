@@ -15,7 +15,7 @@
                 monster.src = "assets/idle/3.png";
               } else if (m.clientX > anchoMitad && m.clientY < altoMitad) {
                 monster.src = "assets/idle/5.png";
-              } else {
+              } else if (m.clientX > anchoMitad && m.clientY > altoMitad) {
                 monster.src = "assets/idle/4.png";
               }
             }

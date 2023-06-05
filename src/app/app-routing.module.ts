@@ -20,7 +20,7 @@ const routes: Routes = [
  },
   { path: 'gestionEntrante', component: EntrantesComponent },
   { path: 'filtroSaliente', component: FiltroSalienteComponent ,canActivate: [GuardService] },
-  { path: 'filtroSecretaria', component: FiltroSecretariaComponent, canActivate: [GuardService] },
+  { path: 'secretariaVirtual', component: FiltroSecretariaComponent, canActivate: [GuardService] },
   { path: 'estadoExtension', component: ExtadoExtComponent, canActivate: [GuardService] },
   { path: 'clientes', component: ClientesComponent },
   {

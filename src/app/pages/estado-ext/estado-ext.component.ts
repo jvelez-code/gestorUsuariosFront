@@ -20,6 +20,7 @@ export class ExtadoExtComponent implements OnInit {
   estadoExt !:number;
   idExt !:number;
   usuarioExt !:string;
+  llamada !:boolean;
   
   askEstados$ !: Observable<AskEstado[]>;
 
@@ -54,8 +55,30 @@ export class ExtadoExtComponent implements OnInit {
 
 
   }
+
+
+
+
   
   cambioExt(){
+    console.log('Hola Mundo en llamada1');
+    if(this.estadoExt===3){
+      console.log('Hola Mundo en llamada2');
+    }
+    else{
+      console.log('Hola Mundo en llamada3');
+
+    if(this.estadoExt===2){
+      this.llamada=true;
+
+      if(this.llamada){
+        console.log('Hola Mundo con logueo');
+
+      }else {
+        console.log('Hola Mundo sin logueo');
+      }
+      
+    }
     const askEstadoExtension ={ estadoAsk : this.estadoExt, idExtension : this.idExt, loginAgente: this.usuarioExt }
     this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(data=>{
       
@@ -65,7 +88,7 @@ export class ExtadoExtComponent implements OnInit {
         this.loginService.cerrarSesion(); 
         
               }
-        else if ( this.estadoExt == 2 || this.estadoExt == 11 || this.estadoExt == 15 || this.estadoExt == 16 ||
+        else if ( this.estadoExt == 11 || this.estadoExt == 15 || this.estadoExt == 16 ||
            this.estadoExt == 17 || this.estadoExt == 18 ){
 
           this.askEstadoService.setMensajecambio('SE ACTUALIZÓ')         
@@ -73,6 +96,6 @@ export class ExtadoExtComponent implements OnInit {
       
     
     });
-    
+  }
   }
 }
