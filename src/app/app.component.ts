@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Menu } from './_model/menu';
 import { AskEstadoExtensionService } from './_services/ask-estado-extension.service';
 import { LoginService } from './_services/login.service';
+import { LlamadaEntranteService } from './_services/llamada-entrante.service';
+import { AskEstadoService } from './_services/ask-estado.service';
+
 
 @Component({
   selector: 'app-root',
@@ -15,10 +18,13 @@ export class AppComponent {
   estadoExt !:number;
   idExt !:number;
   usuarioExt !:string;
+  enllamada !: boolean;
 
   constructor(
     public loginService: LoginService,
-    private askEstadoExtensionService : AskEstadoExtensionService
+    private askEstadoExtensionService : AskEstadoExtensionService,
+    private llamadaEntranteService : LlamadaEntranteService,
+    private askEstadoService : AskEstadoService
   ) { 
     this.loginService.getExtensionCambio().subscribe(data =>{
       this.idExt=data;
@@ -36,9 +42,32 @@ export class AppComponent {
   }
 
   cerrarApp(){
-    const askEstadoExtension ={ estadoAsk : 1 , idExtension : this.idExt, loginAgente: this.usuarioExt }
+
+
+    if(this.loginService.agenteDTO.idUsuario){
+    
+    const askEstadoExtension = 
+      { estadoAsk : 1 , idExtension : this.idExt, loginAgente: this.usuarioExt,
+      nroDocumento: this.loginService.agenteDTO.nroDocumento }
+
+    this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{      
+      this.enllamada=data;
+  
+    if(this.enllamada) {
+      this.askEstadoService.setMensajecambio('EN LLAMADA')
+
+
+    } else {
     this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(()=>{})
     
     this.loginService.cerrarSesion();
+    
+    }
+   })
+
+  }
+  else{
+    this.loginService.cerrarSesion();
+  }
   }
 }

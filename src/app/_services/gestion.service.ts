@@ -26,7 +26,6 @@ export class GestionService {
     guardarGestionS(gestion: Gestion):Observable<any>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(gestion);
-      console.log(body);
       return this.http.post<Gestion>(`${this.url}`, body, headers);
     }
 

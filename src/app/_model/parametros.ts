@@ -15,5 +15,9 @@ export interface Parametros {
       estadoGestioP ?: number;
       estadoGestioH ?: number;
       tipoLlamada ?: number;
+      MessageText?: string;
+      Type?: string;
+      FlashSMS?: number;
+      Devices?: string;
   }
   //? cuando llame la interface se opcional

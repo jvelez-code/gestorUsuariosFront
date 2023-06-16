@@ -31,6 +31,8 @@ import { Usuario } from 'src/app/_model/usuario';
 import { Campana } from 'src/app/_model/campanas';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { Extension } from 'src/app/_model/extension';
+import { MatAccordion } from '@angular/material/expansion';
+import { MensajeTextoService } from 'src/app/_services/mensaje-texto.service';
 
 @Component({
   selector: 'app-entrantes',
@@ -48,6 +50,9 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   cantidad: number = 0;
+
+
+  @ViewChild(MatAccordion) accordion !: MatAccordion;
 
 
   private subscripcion : Subscription = new Subscription();
@@ -127,7 +132,11 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     private askEstadoExtensionService: AskEstadoExtensionService,
     private router: Router,
     private fb : FormBuilder,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private mensajeTextoService: MensajeTextoService ) 
+    { 
+      this.crearFormulario()
+    }
 
 
 
@@ -142,7 +151,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
      let FiltroEntranteDTO ={ loginAgente: this.usuario }
 
     this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data =>{
-      this.idCampanaE=data.idCampanaE;
+      this.idCampanaE = data.idCampanaE;
       this.idUsuario = data.idUsuario;   
       this.idEmpresa = data.idEmpresa;
       this.hostIp = data.hostIp;
@@ -162,34 +171,36 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
     
 
+    
+
+    
+
+  }  
+
+  crearFormulario(){
     this.form = new FormGroup({
       'id': new FormControl(0),
       'razonSocial': new FormControl(''),
 
     });
 
-    this.formGuardar = new FormGroup({
-      'observacionD': new FormControl(''),
-      'numeroreal': new FormControl('')
+    this.formGuardar = this.fb.group({
+    'observacionD': ['', [Validators.required,Validators.minLength(4)]],
+    'numeroreal': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]]
     });
 
-    this.formContacto = new FormGroup({
-      'nombre': new FormControl('', [Validators.required]),
+
+      this.formContacto = new FormGroup({
+      'nombre': new FormControl(''),
       'correo': new FormControl(''),
       'telPrincipal': new FormControl(''),
-      'telSecundario': new FormControl(''),
+      'telSecundario':  new FormControl(''),
       'telCelular': new FormControl(''),
-    });
+     });
 
-
-
-    
-
+  
   }
 
-  get nombreNoValido() {
-    return this.formContacto.get('nombre')?.invalid && this.formContacto.get('nombre')?.touched
-  }
 
   
 
@@ -270,20 +281,42 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.formContacto = this.fb.group({
       'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
       'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]],
       'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-      'telCelular': [data.telefonoCelular,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]]
+      'telCelular': [data.telefonoCelular,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
      });
-    /* this.formContacto = new FormGroup({
-      'nombre': new FormControl(data.nombre),
-      'correo': new FormControl(data.correoElectronico),
-      'telPrincipal': new FormControl(data.numeroContacto),
-      'telSecundario': new FormControl(data.telefonoDirecto),
-      'telCelular': new FormControl(data.telefonoCelular)
-    });*/
     });
   }
 
+  get nombreNoValido() {
+    return this.formContacto.get('nombre')?.invalid && this.formContacto.get('nombre')?.touched
+  }
+  get correoNoValido() {
+    return this.formContacto.get('correo')?.invalid && this.formContacto.get('correo')?.touched
+  }
+  get telPrincipalNoValido() {
+    return this.formContacto.get('telPrincipal')?.invalid && this.formContacto.get('telPrincipal')?.touched
+  }
+  get telSecundarioNoValido() {
+    return this.formContacto.get('telSecundario')?.invalid && this.formContacto.get('telSecundario')?.touched
+  }
+  get telCelularNoValido() {
+    return this.formContacto.get('telCelular')?.invalid && this.formContacto.get('telCelular')?.touched
+  }
+  get observacionDNoValido() {
+    return this.formGuardar.get('observacionD')?.invalid && this.formGuardar.get('observacionD')?.touched
+  }
+  get numerorealNoValido() {
+    return this.formGuardar.get('numeroreal')?.invalid && this.formGuardar.get('numeroreal')?.touched
+  }
+
+  validarNumeros(event: KeyboardEvent) {
+    const input = event.key;
+    const regex = /[0-9]/;
+    if (!regex.test(input)) {
+      event.preventDefault();
+    }
+  }
 
 
 
@@ -321,7 +354,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     det.ip = this.hostIp;
     det.usuarioAct = this.usuario;
     det.extension = ext;
-    console.log(this.extension,'pruebas ext')
     this.detalleGestion.push(det);
 
     let cont = new Contacto();
@@ -348,22 +380,47 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
   
-console.log(gestion,'GESTIONNN');
     this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
       this.clienteService.setFormCambio(this.cardCliente)
     });
   
-    this.router.navigate(['filtroCliente']);
+    this.router.navigate(['filtroEntrante']);
   
   
+  }
+
+  MessageText : string = 'Hola soy GESTOR y esto es una prueba';
+  Type : string = 'MASSIVE';
+  FlashSMS : number = 1;
+  Devices : string = '3222863219';
+
+
+  mensajeTexto(){
+
+    console.log('Hola mundo')
+   
+
+    const parametros= { MessageText: this.MessageText, Type:this.Type, 
+                        FlashSMS: this.FlashSMS, Devices:this.Devices  }
+
+
+                        console.log('Hola mundo',parametros)
+
+    this.mensajeTextoService.gestionHistoricoS(parametros).subscribe(data=>{
+      console.log('Respuesta:', data);
+    }
+    )
+
+
+    
   }
 
 
   cancelarGestion(){
     this.clienteService.setFormCambio(this.cardCliente)
     this.clienteService.setMensajecambio('SE CANCELO');
-    this.router.navigate(['filtroCliente']);
+    this.router.navigate(['filtroEntrante']);
     this.snackBar.open("SE CANCELÓ", "Aviso", { duration: 2000 });
 
       setTimeout(() => {
@@ -384,6 +441,7 @@ console.log(gestion,'GESTIONNN');
       this.subscripcion.unsubscribe();
     }
 
+    
  
 
 

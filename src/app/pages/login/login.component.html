@@ -20,10 +20,12 @@
     <div class="login">
         <img src="assets/idle/1.png" id="monster">
         <form class="formulario"  #loginForm="ngForm">
-            
+            <div *ngIf="showError" class="error-message">
+                Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.
+            </div>            
             <label>Usuario</label>
             <!--<input type="email" placeholder="tucorreo@jaimetorres.net" autocomplete="off" id="input-usuario">-->
-            <input type="text" placeholder="tucorreo@jaimetorres.net" autocomplete="off" id="email" name="email" [(ngModel)]="usuario" class="email" maxlength="256" required>
+            <input type="text" placeholder="Usuario Gestor" autocomplete="off" id="email" name="email" [(ngModel)]="usuario" class="email" maxlength="256" required>
             <label>Contraseña</label>
             <!--<input type="password" placeholder="**************" autocomplete="off" id="input-clave">-->
             <input type="password" placeholder="**************" autocomplete="off"  id="password" name="password" [(ngModel)]="clave" class="password" required minlength="8" maxlength="16">

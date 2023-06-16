@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
@@ -21,27 +23,32 @@ export class ClientesComponent implements OnInit{
 
   tipoDocumento$ !: Observable<TipoDocumento[]>;
   divipola$ !: Observable<DivipolaDTO[]>;
-  tipoDocumento !: string;
-  divipola !: number;
+  tipoDocumento : string = 'CC';
+  divipola : number = 184;
 
 
   constructor(
     private clienteService : ClienteService,
     private tipoDocumentoService : TipoDocumentoService,
     private divipolaService : DivipolaService,
-    private fb : FormBuilder
+    private fb : FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
   ){
     this.crearFormulario();
 
   }
 
   ngOnInit(): void {
-    console.log('hola mundos');
-
-
     this.tipoDocumento$=this.tipoDocumentoService.buscar();
     this.divipola$= this.divipolaService.buscar();
+
+    this.clienteService.getMensajeCambio().subscribe(data =>{
+      this.snackBar.open(data, 'AVISO', { duration: 2000 });
+    });
   }
+
+  
 
 
   crearFormulario(){
@@ -50,8 +57,8 @@ export class ClientesComponent implements OnInit{
       'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
       'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
       'direccion': ['',[Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
-      'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-      'celular': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]],
+      'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'correo': ['',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       'empleados': ['',[Validators.required,Validators.minLength(1),Validators.maxLength(4),Validators.pattern('^[0-9]+$')]]
 
@@ -94,10 +101,7 @@ export class ClientesComponent implements OnInit{
   guardarCliente(){
   if ( this.formCliente.invalid ) {
 
-    return Object.values( this.formCliente.controls ).forEach( control => {
-      
-    });   
-      
+    console.log('El formulario es inválido. No se puede guardar.');
   } else {
 
    
@@ -120,6 +124,7 @@ export class ClientesComponent implements OnInit{
 
     this.clienteService.guardarCliente(cli).subscribe(() =>{
       this.clienteService.setMensajecambio('SE REGISTRÓ');
+      this.router.navigate(['filtroEntrante']);
     });
   }
   }

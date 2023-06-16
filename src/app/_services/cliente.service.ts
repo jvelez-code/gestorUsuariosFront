@@ -30,7 +30,6 @@ export class ClienteService {
     guardarCliente(cliente: Cliente):Observable<any>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(cliente);
-      console.log(body);
       return this.http.post<Cliente>(`${this.url}`, body, headers);
     }
 

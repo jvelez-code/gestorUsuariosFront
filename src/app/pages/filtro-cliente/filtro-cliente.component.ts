@@ -32,6 +32,7 @@ import { UsuarioService } from 'src/app/_services/usuario.service';
 
 
 
+
 @Component({
   selector: 'app-filtro-cliente',
   templateUrl: './filtro-cliente.component.html',
@@ -49,7 +50,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   formCliente!: FormGroup;
 
   
-  tipoDocumento !: string;
+  tipoDocumento : string = 'CC' ;
   nroDocumento  !: string
   idEmpresa !: number;
   idTipoCampana !: number;

@@ -28,7 +28,7 @@
          <tr>
             <td><mat-form-field class="example-full-width">
               <mat-label>Ciudades</mat-label>
-              <mat-select placeholder="SELECCCION" [(value)]="divipola">
+              <mat-select placeholder="Ciudades" [(value)]="divipola">
                 <mat-option *ngFor="let d of (  divipola$ | async )" [value]="d.idZona">
                   {{d.nombre}}{{d.departamento}}
                 </mat-option>
@@ -56,14 +56,14 @@
                 <input matInput  formControlName="telefono" (keypress)="validarNumeros($event)">
               </mat-form-field>
               <div *ngIf="telefonoNoValido" class="error-message">
-                Debe ser mínimo de 7 caracteres
+                Debe ser  7 caracteres
               </div></td>
             <td><mat-form-field class="example-full-width">
              <mat-label>Celular</mat-label>
              <input matInput  formControlName="celular" (keypress)="validarNumeros($event)">
             </mat-form-field>
             <div *ngIf="celularNoValido" class="error-message">
-              Debe ser mínimo de 10 caracteres
+              Debe ser  10 caracteres
             </div></td>
        </tr>
 
@@ -88,23 +88,12 @@
         </table>    
         <mat-card-actions>
           <div class="button-row">
-          <button mat-raised-button color="primary">Guardar</button>
+          <button mat-raised-button color="primary" [disabled]="formCliente.invalid">Guardar</button>
           <button mat-raised-button color="accent"  (click)="cancelarCliente()">Cancelar</button></div>
       </mat-card-actions>    
     </form>
 </mat-card>
 
-<hr>
-<pre>
-  estado del formulario:{{ formCliente.valid }}
-  <br>
-
-  estatus:{{ formCliente.status }}
-
-</pre>
-<pre>
-  estado del formulario:{{ formCliente.value | json  }}
-</pre>
 
 
   

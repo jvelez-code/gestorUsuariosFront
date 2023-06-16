@@ -2,10 +2,10 @@ export class FiltroEstadoDTO {
 
     idExtension?: number;
 	loginAgente?: string;
-	nroDocumento?: number;
+	nroDocumento?: string;
 	estadoAsk?: number;
 	
-	constructor(idExtension: number, loginAgente: string, nroDocumento: number, estadoAsk: number ) {
+	constructor(idExtension: number, loginAgente: string, nroDocumento: string, estadoAsk: number ) {
             
 		this.idExtension = idExtension;
 		this.loginAgente = loginAgente;

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   mensaje!: string;
   error!: string;
   loginAgente!: string;
+  showError: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       sessionStorage.clear();
    
       this.loginService.login(this.usuario, this.clave).subscribe(data =>{
+
       sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
 
       const helper = new JwtHelperService();
@@ -51,15 +53,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigate(['estadoExtension']);
       });
 
-
-
-      const askEstadoExtension ={ loginAgente : decodedToken.user_name }
+      const askEstadoExtension = { loginAgente : decodedToken.user_name }
+      const filtroEntranteDTO  = { loginAgente : decodedToken.user_name }
 
       this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe((data:any) =>{
          this.loginService.setExtensionCambio(data.idExtension);
       });
+
+      this.usuarioService.buscarAgenteCampana(filtroEntranteDTO).subscribe(data =>{
+        this.loginService.agenteDTO=data;
+      });
       
-    });
+     }
+    
+    );
 
   }
 
@@ -69,6 +76,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     console.log('HOLA MUNDO')
   }
+
+
+
+
+
   ngAfterViewInit() {
     const randomNumber = Math.floor(Math.random() * 13) + 1;
     const bodyElement = document.getElementById('bodylogin');

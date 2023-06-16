@@ -14,7 +14,7 @@ import { Not404Component } from './pages/not404/not404.component';
 import { GuardService } from './_services/guard.service';
 
 const routes: Routes = [
-  { path: 'filtroCliente', component: FiltroClienteComponent,canActivate: [GuardService], children:[
+  { path: 'filtroEntrante', component: FiltroClienteComponent, children:[
     { path: 'entrante', component: FiltroClienteComponent }
   ]
  },

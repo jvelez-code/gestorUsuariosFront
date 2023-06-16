@@ -147,26 +147,34 @@
     
     <td><mat-form-field class="example-full-width">
       <mat-label>Nombre del Contacto</mat-label>
-      <input matInput placeholder="Nombre" formControlName="nombre" >
+      <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
     </mat-form-field><div *ngIf="nombreNoValido" class="error-message">
-      Debe ser mínimo  de 3 caracteres
+      Debe ser mínimo  de 4 caracteres
     </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Correo del Contacto</mat-label>
       <input matInput placeholder="Correo"   formControlName="correo">
-    </mat-form-field></td>
+    </mat-form-field><div *ngIf="correoNoValido" class="error-message">
+      Formato no Valido
+    </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono (P)</mat-label>
-      <input matInput placeholder="Principal"  formControlName="telPrincipal">
-    </mat-form-field></td>
+      <input matInput placeholder="Principal"  formControlName="telPrincipal" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telPrincipalNoValido" class="error-message">
+      Debe ser mínimo  de 7 caracteres
+    </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono (S)</mat-label>
-      <input matInput placeholder="Secundario"  formControlName="telSecundario">
-    </mat-form-field></td>
+      <input matInput placeholder="Secundario"  formControlName="telSecundario" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telSecundarioNoValido" class="error-message">
+      Debe ser mínimo  de 7 caracteres
+    </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono Celular</mat-label>
-      <input matInput placeholder="Celular" formControlName="telCelular">
-    </mat-form-field></td>
+      <input matInput placeholder="Celular" formControlName="telCelular" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telCelularNoValido" class="error-message">
+      Debe ser mínimo  de 10 caracteres
+    </div></td>
     
   </tr></table>
 </form>
@@ -179,8 +187,8 @@
   <mat-card-header>
     <div class="center">
     <mat-card-title>TIPIFICACIÓN</mat-card-title></div>
-  </mat-card-header>
-  <mat-card-content>
+    </mat-card-header>
+    <mat-card-content>
     <form [formGroup]="formGuardar" #frmGuardar="ngForm" (ngSubmit)="guardarGestion()">
      <table ><tr> 
       <td></td>     
@@ -203,38 +211,113 @@
           </mat-select>
         </mat-form-field></td> 
         <td></td>
-      </tr></table>
-  
-  <div >OBSERVACIÓN</div>
-    <div>
+        </tr></table>
+        
+        <div >OBSERVACIÓN</div>
+        <div>
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Observaciones</mat-label>
-            <textarea matInput  formControlName="observacionD"></textarea>
-          </mat-form-field>
-       
-    </div>
+            <textarea matInput placeholder="Observación" formControlName="observacionD" [class.is-invalid]="observacionDNoValido"></textarea>
+          </mat-form-field><div *ngIf="observacionDNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div>
+        </div>
 
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Numero Real Marcado</mat-label>
-      <input matInput placeholder="Número Real" minlength="7" required formControlName="numeroreal">
-    </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Numero Real Marcado</mat-label>
+        <input matInput placeholder="Número Real" formControlName="numeroreal" (keypress)="validarNumeros($event)" >
+      </mat-form-field><div *ngIf="numerorealNoValido" class="error-message">
+        Debe ser mínimo  de 7 caracteres
+      </div>
 
   
-    <section class="example-form">
-      <div class="example-button-row">
-        <button mat-raised-button color="primary" type="submit" [disabled]="formContacto.invalid" >
+        <section class="example-form">
+          <div class="example-button-row">
+          <button mat-raised-button color="primary"  [disabled]="formContacto.invalid" [disabled]="formGuardar.invalid" >
           <mat-icon>call</mat-icon>
           <span>GUARDAR</span>
           </button>
         <button mat-raised-button color="accent"  (click)="cancelarGestion()" style="cursor: pointer">
           CANCELAR</button>
-      </div>
-    </section>
-    <mat-divider></mat-divider> 
+          </div>
+          </section>
+        <mat-divider></mat-divider> 
     </form>
   </mat-card-content>
-</mat-card>   
+</mat-card>  
+
+<!--API DE PILA-->
+<mat-card class="example-card-cli">
+  <mat-card-content>
+    <div class="example-button-row">
+      <button  mat-raised-button color="primary" mat-button (click)="accordion.openAll()">EXPANDIR</button>
+      <button  mat-raised-button color="accent" mat-button (click)="accordion.closeAll()">CONTRAER</button>
+      <mat-divider></mat-divider> 
+    </div>
     
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Mensaje de Texto
+          </mat-panel-title>
+          <mat-panel-description>
+            Observación y planilla
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+    
+        <table><tr>
+        <td> <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Mensaje</mat-label>
+          <textarea matInput placeholder="Observación" ></textarea>
+        </mat-form-field>
+        </td>
+        <td><mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Planilla</mat-label>
+          <input matInput>
+        </mat-form-field>
+        </td>
+        <td><button mat-raised-button color="warn" (click)="mensajeTexto()">
+            <mat-icon>call</mat-icon>
+            <span>ENVIAR</span>
+            </button>
+        </td>
+        </tr></table>
+       
+        
+    
+      </mat-expansion-panel>
+    
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Planillas
+          </mat-panel-title>
+          <mat-panel-description>
+            Información por periodos
+            <mat-icon>date_range</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <table><tr>
+          <td> <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Año</mat-label>
+            <input matInput>
+          </mat-form-field>
+          </td>
+          <td><mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Mes</mat-label>
+            <input matInput>
+          </mat-form-field></td>
+          </tr></table>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+    
+  </mat-card-content>
+</mat-card>
+
+
         
       
 

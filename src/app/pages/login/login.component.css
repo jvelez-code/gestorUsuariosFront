@@ -363,3 +363,8 @@ footer{
         margin-top: 40px;
     }
   }
+
+  .error-message {
+    color: red;
+    font-size: small;
+ }
