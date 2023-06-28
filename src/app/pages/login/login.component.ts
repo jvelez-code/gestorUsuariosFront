@@ -9,6 +9,8 @@ import { MenuService } from 'src/app/_services/menu.service';
 import { UsuarioService } from 'src/app/_services/usuario.service';
 import { environment } from 'src/environments/environment';
 import '../../../assets/login-animation.js';
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   error!: string;
   loginAgente!: string;
   showError: boolean = false;
+  fechaActual : Date = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+  fechaVencimiento !: Date;
 
   constructor(
     private loginService: LoginService,
@@ -35,38 +39,64 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
+
+
   iniciarSesion() {
 
-      sessionStorage.clear();
+    const filtroEntranteDTO = { loginAgente :this.usuario }
+
+    this.usuarioService.loginValidacion(filtroEntranteDTO).subscribe(data=>{
+      if(data === null){
+        this.mensaje='Comuniquese con el Administrador del Sistema';
+        return;
+
+      }
+      this.fechaVencimiento = new Date(moment(data.fechaCambio).format('YYYY-MM-DD HH:mm:ss'));
+
+      if(data.enabled === false){
+        this.mensaje='Comuniquese con el Administrador del Sistema';
+        return;
+               
+      }
+      else if(this.fechaVencimiento < this.fechaActual){
+        this.mensaje='Contraseña vencida debe actualizarla';
+        return;
+      }
+
+      else{
+        
+        sessionStorage.clear();
    
-      this.loginService.login(this.usuario, this.clave).subscribe(data =>{
-
-      sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
-
-      const helper = new JwtHelperService();
-
-      let decodedToken = helper.decodeToken(data.access_token);
-      this.loginService.setUsuariosCambio(decodedToken.user_name);
-
-      this.menuService.listarPorUsuario(decodedToken.user_name).subscribe(data=>{
-        this.loginService.setMenuCambio(data);        
-        this.router.navigate(['estadoExtension']);
-      });
-
-      const askEstadoExtension = { loginAgente : decodedToken.user_name }
-      const filtroEntranteDTO  = { loginAgente : decodedToken.user_name }
-
-      this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe((data:any) =>{
-         this.loginService.setExtensionCambio(data.idExtension);
-      });
-
-      this.usuarioService.buscarAgenteCampana(filtroEntranteDTO).subscribe(data =>{
-        this.loginService.agenteDTO=data;
-      });
+        this.loginService.login(this.usuario, this.clave).subscribe(data =>{   
+        sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
+  
+        const helper = new JwtHelperService();
+  
+        let decodedToken = helper.decodeToken(data.access_token);
+        this.loginService.setUsuariosCambio(decodedToken.user_name);
+        const askEstadoExtension = { loginAgente : decodedToken.user_name }
+        const filtroEntranteDTO  = { loginAgente : decodedToken.user_name }
+  
+        this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe((data:any) =>{
+           this.loginService.setExtensionCambio(data.idExtension);
+           this.loginService.agenteASK=data;
+        });
+  
+        this.usuarioService.buscarAgenteCampana(filtroEntranteDTO).subscribe(data =>{
+          this.loginService.agenteDTO=data;
+        });
+  
+        this.menuService.listarPorUsuario(decodedToken.user_name).subscribe(data=>{
+          this.loginService.setMenuCambio(data);        
+          this.router.navigate(['estadoExtension']);
+        });
+        
+       }
       
-     }
-    
-    );
+      );}
+    });
+
+      
 
   }
 

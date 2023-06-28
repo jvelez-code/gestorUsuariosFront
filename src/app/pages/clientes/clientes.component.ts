@@ -11,6 +11,7 @@ import { TipoDocumento } from 'src/app/_model/tipoDocumento';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { DivipolaService } from 'src/app/_services/divipola.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
+import { ValidadoresService } from 'src/app/_services/validadores.service';
 
 @Component({
   selector: 'app-clientes',
@@ -31,6 +32,7 @@ export class ClientesComponent implements OnInit{
     private clienteService : ClienteService,
     private tipoDocumentoService : TipoDocumentoService,
     private divipolaService : DivipolaService,
+    private validadoresService : ValidadoresService,
     private fb : FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router
@@ -54,7 +56,7 @@ export class ClientesComponent implements OnInit{
   crearFormulario(){
 
     this.formCliente = this.fb.group({
-      'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
+      'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)], this.validadoresService.existeUsuario],
       'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
       'direccion': ['',[Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
       'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]],

@@ -1,0 +1,25 @@
+<mat-card class="example-card-cli">
+    <mat-card-content>
+<div>
+    <mat-form-field>
+        <input matInput placeholder="Nombres" [(ngModel)]="cliente.razonSocial">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Direccion" [(ngModel)]="cliente.direccion">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Celular" [(ngModel)]="cliente.telefonoCelular" 
+        min="10" max="10" 
+        type="number">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Teléfono" [(ngModel)]="cliente.telefonoFijo" 
+         maxlength="7" 
+        type="number">
+    </mat-form-field>
+</div>
+<button mat-raised-button color="primary" (click)="operar()">Aceptar</button>
+<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>
+</mat-card-content>
+</mat-card>
+

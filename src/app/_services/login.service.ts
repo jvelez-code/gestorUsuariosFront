@@ -20,10 +20,10 @@ export class LoginService {
   private extensionCambio = new BehaviorSubject<number> ( 0 )
 
   agenteDTO!: AgenteDTO;
+  agenteASK!: AskEstadoExtension;
 
 
   private url: string = `${environment.HOST}/oauth/token`
-  private urls: string = `${environment.HOST}/usuarios/cerrar`
 
   constructor(
     private http: HttpClient,
@@ -44,6 +44,8 @@ export class LoginService {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8').set('Authorization', 'Basic ' + btoa(environment.TOKEN_AUTH_USERNAME + ':' + environment.TOKEN_AUTH_PASSWORD))
     });
   }
+
+
 
   getMenuCambio() {
     return this.menuCambio.asObservable();

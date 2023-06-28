@@ -1,9 +1,14 @@
+import { Rol } from "./rol";
+
 export class Usuarios {
 
 idUsuario !: number;
-estado !: boolean;
-clave !: string;
-nombre !: string
+username !: string;
+password !: string;
+enabled !: boolean;
+fechaCambio !: Date;
+email !: string;
+roles !: Rol
 
 }
 

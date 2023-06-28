@@ -6,14 +6,15 @@ import { environment } from 'src/environments/environment';
 import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
 import { Cliente } from '../_model/cliente';
 import { Parametros } from '../_model/parametros';
+import { GenericService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
+export class ClienteService { //extends GenericService{
 
-  //private clienteCambio = new Subject<Cliente>();
-  private clienteCambio = new BehaviorSubject<string> ('000');
+  private clienteCambio = new Subject<Cliente[]>();
+  private idClienteCambio = new BehaviorSubject<string> ('000');
   private formCambio = new Subject<boolean>();
   private mensajeCambio = new Subject<string>();
 
@@ -25,6 +26,13 @@ export class ClienteService {
 
 
 
+    modificar(cliente: Cliente) {
+      return this.http.put(this.url, cliente);
+    }
+
+    listarPorId(id: number) {
+      return this.http.get<Cliente>(`${this.url}/${id}`);
+    }
     
 
     guardarCliente(cliente: Cliente):Observable<any>{
@@ -54,13 +62,21 @@ export class ClienteService {
     //////// get, set ///////////////////
 
     getClienteCambio(){
-
       return this.clienteCambio.asObservable();
     }
+  
+    setClienteCambio(cliente: Cliente[]){
+      return this.clienteCambio.next(cliente);
+    }
 
-    setClienteCambio(idCliente: string ){
+    getIdClienteCambio(){
+
+      return this.idClienteCambio.asObservable();
+    }
+
+    setIdClienteCambio(idCliente: string ){
       
-      return this.clienteCambio.next(idCliente );
+      return this.idClienteCambio.next(idCliente );
     }
 
 

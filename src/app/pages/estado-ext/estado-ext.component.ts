@@ -2,7 +2,7 @@ import { ContentObserver } from '@angular/cdk/observers';
 import { Component, INJECTOR, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { AskEstado } from 'src/app/_model/askEstado';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { AskEstadoService } from 'src/app/_services/ask-estado.service';
@@ -69,13 +69,10 @@ export class ExtadoExtComponent implements OnInit {
   cambioExt(){
     const askEstadoExtension ={ estadoAsk : this.estadoExt, idExtension : this.idExt, 
       loginAgente: this.usuarioExt, 
-      nroDocumento: this.loginService.agenteDTO.nroDocumento }
-
-    
-
+      nroDocumento: this.loginService.agenteASK.nroDocumento }
+      
     this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{
-
-      this.enllamada=data;
+    this.enllamada=data;
   
     if(this.enllamada) {
 

@@ -32,7 +32,7 @@ export class RecuperarComponent {
         this.error = ''
         this.porcentaje = 100;
       }else{
-        this.error = "El usuario ingresado no existes";
+        this.error = "El usuario ingresado no existe";
         this.porcentaje = 0;
       }
     });

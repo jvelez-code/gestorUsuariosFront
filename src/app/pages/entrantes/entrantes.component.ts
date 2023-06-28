@@ -33,6 +33,8 @@ import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extensio
 import { Extension } from 'src/app/_model/extension';
 import { MatAccordion } from '@angular/material/expansion';
 import { MensajeTextoService } from 'src/app/_services/mensaje-texto.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ClienteDialogoComponent } from './cliente-dialogo/cliente-dialogo.component';
 
 @Component({
   selector: 'app-entrantes',
@@ -41,7 +43,7 @@ import { MensajeTextoService } from 'src/app/_services/mensaje-texto.service';
 })
 export class EntrantesComponent implements OnInit, OnDestroy{
 
-  clienteColumns: string[] = ['razonSocial','tipoDocumento.tipoDoc','nroDocumento','divipola.nombre',
+  clienteColumns = ['razonSocial','tipoDocumento.tipoDoc','nroDocumento','divipola.nombre',
   'divipola.idZonapadre.nombre','correo','telefonoCelular','telefonoFijo','acciones'];
   dataSourceCli !: MatTableDataSource<Cliente>; 
 
@@ -130,6 +132,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     private loginService :LoginService,
     private usuarioService: UsuarioService,
     private askEstadoExtensionService: AskEstadoExtensionService,
+    private dialog : MatDialog,
     private router: Router,
     private fb : FormBuilder,
     private snackBar: MatSnackBar,
@@ -144,6 +147,11 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
+    this.clienteService.getClienteCambio().subscribe(data =>{
+      console.log(data,'1')
+      this.dataSourceCli= new MatTableDataSource(data);
+    });
+ 
     this.loginService.getUsuariosCambio().subscribe((data:any) =>{
       this.usuario=data;
      });
@@ -160,20 +168,14 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.contactoUltimo();
     });
 
+
+
     const askEstadoExtension ={  loginAgente : this.usuario }
 
     this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
       this.extension=data.idExtension;
       this.numRealMarcado=data.numeroOrigen;
-    });
-    
-   
-
-    
-
-    
-
-    
+    });  
 
   }  
 
@@ -210,22 +212,27 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     this.tipoGestionH = 0
     const parametros= { tipoDoc:this.tipoDocumento, nroDoc:this.nroDocumento, prueba:this.nroDocumento }
     
-    this.clienteService.getClienteCambio().subscribe(data=>{
+    this.clienteService.getIdClienteCambio().subscribe(data=>{
       this.idClienteP= data
-      
-    
 
-    const cliente= { idCliente:this.idClienteP }
-    this.clienteService.clientePorId( cliente ).subscribe(data =>{
-      
+   const cliente= { idCliente:this.idClienteP }
+    this.clienteService.clientePorId( cliente ).subscribe(data =>{  
+        this.clienteService.setClienteCambio(data)
+        console.log(data);
         this.dataSourceCli= new MatTableDataSource(data);
+        console.log(data,'2')
 
     });
 
   });
+  }
 
-    
-
+  abrirDialogo(cliente ?: Cliente){
+    console.log(cliente,'CLIENTE')
+    this.dialog.open(ClienteDialogoComponent,{
+      width: '350px',
+      data: cliente
+    });
   }
 
 

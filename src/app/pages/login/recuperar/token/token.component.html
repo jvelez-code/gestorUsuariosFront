@@ -1,22 +1,63 @@
 <mat-toolbar *ngIf="!tokenValido">
     La petición no es válida o ha expirado :(</mat-toolbar>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="tokenValido">
-        <div class="example-container">
+<mat-card class="example-card">
+    <mat-card-header class="center">
+      <mat-card-title>Contraseña</mat-card-title>
+      <mat-card-subtitle>Validaciones</mat-card-subtitle>
+    </mat-card-header><br>
+    <mat-card-content>
+        {{validacionPass1}}<br>
+        {{validacionPass2}}<br>
+        {{validacionPass3}}<br>
+        {{validacionPass4}}<br>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="example-card">
+    <mat-card-content>
+    <form [formGroup]="formRecuperar" (ngSubmit)="onSubmit()" *ngIf="tokenValido">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+             <td>
             <mat-form-field>
                 <input matInput type="password" name="password" placeholder="Nueva contraseña" formControlName="password"
-                    [formGroup]="form" required>
+                    [formGroup]="formRecuperar">
             </mat-form-field>
-    
+            <div *ngIf="passwordNoValido" class="error-message">
+                No cumple las validaciones
+              </div></td>
+    <td>
             <mat-form-field>
                 <input matInput type="password" placeholder="Repetir contraseña" formControlName="confirmPassword"
-                    [formGroup]="form" required>
+                    [formGroup]="formRecuperar">
             </mat-form-field>
+            <div *ngIf="confirmPasswordNoValido" class="error-message">
+                Debe ser igual a la contraseña
+              </div></td>
+        <td>
     
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Cambiar contraseña</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="formRecuperar.invalid">
+                Cambiar contraseña</button>
+            </td>
+            </tr>
+        </table>
+        
             
             
             <mat-toolbar *ngIf="mensaje">{{mensaje}}</mat-toolbar>
             <mat-toolbar *ngIf="error">{{error}}</mat-toolbar>
-        </div>
+    
     </form>
+  </mat-card-content>
+  </mat-card>
+
+  <!--<hr>
+    <pre>
+        estado: {{formRecuperar.valid}}
+        <br>
+        Status: {{formRecuperar.status}}
+    </pre>
+    <pre>
+        {{formRecuperar.value | json }}
+    </pre>-->

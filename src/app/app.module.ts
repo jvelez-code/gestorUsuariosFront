@@ -19,6 +19,7 @@ import { EntrantesComponent } from './pages/entrantes/entrantes.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { RecuperarComponent } from './pages/login/recuperar/recuperar.component';
 import { TokenComponent } from './pages/login/recuperar/token/token.component';
+import { ClienteDialogoComponent } from './pages/entrantes/cliente-dialogo/cliente-dialogo.component';
 
 
 export function tokenGetter() {
@@ -36,7 +37,8 @@ export function tokenGetter() {
     EntrantesComponent,
     ClientesComponent,
     RecuperarComponent,
-    TokenComponent
+    TokenComponent,
+    ClienteDialogoComponent
   ],
   imports: [
     BrowserModule,

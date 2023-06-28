@@ -14,8 +14,12 @@ export class GestionService {
   private url:string = `${environment.HOST}/gestiones`;
 
   constructor(
-    private http: HttpClient,
-    private router: Router ) { }
+    protected http: HttpClient,
+    protected router: Router ) {
+      // super (
+      //   http,`${environment.HOST}/gestiones`
+      // );
+     }
 
     gestionHistoricoS(parametros: Parametros):Observable<any>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
@@ -26,6 +30,7 @@ export class GestionService {
     guardarGestionS(gestion: Gestion):Observable<any>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(gestion);
+      console.log(body);
       return this.http.post<Gestion>(`${this.url}`, body, headers);
     }
 

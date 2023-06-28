@@ -1,0 +1,9 @@
+   /*CARD*/
+   .example-card-cli {
+    max-width: 1200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }

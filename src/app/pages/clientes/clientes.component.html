@@ -18,10 +18,10 @@
           </mat-form-field></td>
         <td><mat-form-field class="example-full-width">
             <mat-label>Documento</mat-label>
-            <input matInput type="text" formControlName="documento" [class.is-invalid]="documentoNoValido">
+            <input matInput type="text"  placeholder="Ingrese documento" formControlName="documento" [class.is-invalid]="documentoNoValido">
             </mat-form-field>
             <div *ngIf="documentoNoValido" class="error-message">
-              Debe ser mínimo  de 4 caracteres
+              Debe ser entre 4 y 16 caracteres
             </div>
           </td>
         </tr>
@@ -39,14 +39,14 @@
              <input matInput type="text" formControlName="rsocial" [class.is-invalid]="rsocialNoValido">
             </mat-form-field>
             <div *ngIf="rsocialNoValido" class="error-message">
-              Debe ser mínimo  de 3 caracteres
+              Debe ser entre 3 y 64 caracteres
             </div></td>
           <td><mat-form-field class="example-full-width">
             <mat-label>Dirección</mat-label>
             <input matInput type="text" formControlName="direccion" [class.is-invalid]="direccionNoValido">
           </mat-form-field>
           <div *ngIf="direccionNoValido" class="error-message">
-            Debe ser mínimo  de 3 caracteres
+            Debe ser entre 3 y 32 caracteres
           </div></td>
             </tr>
 

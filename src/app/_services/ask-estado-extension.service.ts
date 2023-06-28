@@ -32,10 +32,10 @@ export class AskEstadoExtensionService {
 
     }
 
-    actualizarEstadoExt(filtroEstadoDTO :FiltroEstadoDTO) {
+    actualizarEstadoExt(askEstadoExtension :AskEstadoExtension) {
       const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(filtroEstadoDTO);
-      return this.http.post<FiltroEstadoDTO>(`${this.url}/actualizarEstado`,body,{'headers':headers});
+      const body=JSON.stringify(askEstadoExtension);
+      return this.http.post<AskEstadoExtension>(`${this.url}/actualizarEstado`,body,{'headers':headers});
   
     }
 

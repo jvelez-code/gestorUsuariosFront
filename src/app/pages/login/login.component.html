@@ -41,7 +41,7 @@
           
             </div>
             <!--<h5><a href="/cambiarcotnraseña">Restablecer contraseña</a></h5>-->
-            <mat-card *ngIf="mensaje">{{mensaje}}</mat-card>
+            <mat-card *ngIf="mensaje" class="error-message">{{mensaje}}</mat-card>
             <mat-card *ngIf="error">{{error}} </mat-card>     
             </form>
     </div>

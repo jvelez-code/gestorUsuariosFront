@@ -212,7 +212,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     
       this.clienteService.filtroCliente(filtroEntranteDTO).subscribe( data =>{
       this.idCliente =data.idCliente;
-      this.clienteService.setClienteCambio(this.idCliente);
+      this.clienteService.setIdClienteCambio(this.idCliente);
 
       this.router.navigate(['gestionEntrante']);
 
@@ -238,7 +238,7 @@ buscarCliente() {
       this.clienteService.filtroCliente(filtroEntranteDTO).subscribe( data =>{
       if(data){  
       this.idCliente =data.idCliente;
-      this.clienteService.setClienteCambio(this.idCliente);
+      this.clienteService.setIdClienteCambio(this.idCliente);
 
       this.router.navigate(['gestionEntrante']);     
     } else {

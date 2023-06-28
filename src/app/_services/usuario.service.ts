@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
 import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
+import { Usuarios } from '../_model/usuarios';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class UsuarioService {
       const body=JSON.stringify(filtroEntranteDTO);
       return this.http.post<AgenteDTO>(`${this.url}/buscarExt`,body,{'headers':headers});
 
+    }
+
+    loginValidacion(filtroEntranteDTO : FiltroEntranteDTO){
+      const headers = { 'content-type': 'application/json'} 
+      const body=JSON.stringify(filtroEntranteDTO);
+      return this.http.post<Usuarios>(`${this.url}/buscarLogin`, body,{'headers':headers});
     }
 
     getExtensionCambio() {
