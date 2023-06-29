@@ -246,11 +246,11 @@
   </mat-card-content>
 </mat-card>  
 
-<!--API DE PILA
+<!--API DE PILA MENSAJES-->
 <mat-card class="example-card-cli">
   <mat-card-content>
     <div class="example-button-row">
-      <button  mat-raised-button color="primary" mat-button (click)="accordion.openAll()">EXPANDIR</button>
+      <button  mat-raised-button color="primary" mat-button (click)="accordion.openAll()">SMS TEXTO</button>
       <button  mat-raised-button color="accent" mat-button (click)="accordion.closeAll()">CONTRAER</button>
       <mat-divider></mat-divider> 
     </div>
@@ -270,14 +270,10 @@
         <table><tr>
         <td> <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Mensaje</mat-label>
-          <textarea matInput placeholder="Observación" ></textarea>
+          <textarea matInput placeholder="Observación" [(ngModel)]="MessageText"></textarea>
         </mat-form-field>
         </td>
-        <td><mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Planilla</mat-label>
-          <input matInput>
-        </mat-form-field>
-        </td>
+        
         <td><button mat-raised-button color="warn" (click)="mensajeTexto()">
             <mat-icon>call</mat-icon>
             <span>ENVIAR</span>
@@ -289,6 +285,9 @@
     
       </mat-expansion-panel>
     
+<!--API DE PILA PLANILLA-->
+
+      <!--
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>

@@ -118,6 +118,13 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   agenteCampanas!: any;
 
 
+  MessageText : string = 'Hola soy GESTOR y esto es una prueba su planilla es 11111 y su valor 22222';
+  Type : string = 'MASSIVE';
+  FlashSMS : number = 0;
+  Devices !: string ;
+
+
+
 
 
 
@@ -397,22 +404,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   
   }
 
-  MessageText : string = 'Hola soy GESTOR y esto es una prueba';
-  Type : string = 'MASSIVE';
-  FlashSMS : number = 1;
-  Devices : string = '3222863219';
-
-
   mensajeTexto(){
 
-    console.log('Hola mundo')
-   
-
     const parametros= { MessageText: this.MessageText, Type:this.Type, 
-                        FlashSMS: this.FlashSMS, Devices:this.Devices  }
-
-
-                        console.log('Hola mundo',parametros)
+                        FlashSMS: this.FlashSMS, Devices:this.formContacto.value['telCelular']  }
 
     this.mensajeTextoService.gestionHistoricoS(parametros).subscribe(data=>{
       console.log('Respuesta:', data);

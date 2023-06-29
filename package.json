@@ -24,6 +24,7 @@
     "angular-jwt": "^0.1.11",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
+    "ng-hcaptcha": "^2.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.12.0"
