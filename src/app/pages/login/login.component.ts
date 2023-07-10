@@ -27,6 +27,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   showError: boolean = false;
   fechaActual : Date = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
   fechaVencimiento !: Date;
+  mensajecaptcha!: string;
+  captchaVerified: boolean = true;
+  captchaactivo: boolean = true;
+
+
 
   constructor(
     private loginService: LoginService,
@@ -37,6 +42,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  onVerify(token: string) {
+    console.log('El captcha es valido')
+    this.captchaVerified = true;
+  }
+
+  onExpired(response: any) {
+    console.log('se expiro el captcha')
+  }
+
+  onError(error: any) {
+    console.log('ocurrio un error con el captcha')
+  }
+
+  setMensajeInformativo(mensaje: string) {
+    this.mensajecaptcha = mensaje;
   }
 
 
@@ -63,7 +85,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      else{
+      else if (this.captchaVerified || !this.captchaactivo){
         
         sessionStorage.clear();
    
@@ -94,6 +116,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
        }
       
       );}
+      this.setMensajeInformativo('Por favor, complete el captcha.');
     });
 
       

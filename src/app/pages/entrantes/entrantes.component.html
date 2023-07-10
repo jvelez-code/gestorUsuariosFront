@@ -9,8 +9,6 @@
     <mat-card-subtitle>detalles</mat-card-subtitle></div>
   </mat-card-header>
     <mat-card-content>
-      <form class="example-container" [formGroup]="form" #frmPaciente="ngForm" >
-   
           <table mat-table [dataSource]="dataSourceCli" class="mat-elevation-z8">
       
             <ng-container matColumnDef="razonSocial">
@@ -66,9 +64,6 @@
             <tr mat-header-row *matHeaderRowDef="clienteColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: clienteColumns;"></tr>
           </table>
-        
-      </form>
-
     </mat-card-content>
 </mat-card>
 <br>
@@ -270,11 +265,11 @@
         <table><tr>
         <td> <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Mensaje</mat-label>
-          <textarea matInput placeholder="Observación" [(ngModel)]="MessageText"></textarea>
+          <textarea matInput placeholder="Observación" [(ngModel)]="MessageText" maxlength="160"></textarea>
         </mat-form-field>
         </td>
         
-        <td><button mat-raised-button color="warn" (click)="mensajeTexto()">
+        <td><button mat-raised-button color="warn" (click)="mensajeTexto()" [disabled]="MessageText === ''">
             <mat-icon>call</mat-icon>
             <span>ENVIAR</span>
             </button>
@@ -307,14 +302,33 @@
           <td><mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Mes</mat-label>
             <input matInput>
-          </mat-form-field></td>
+          </mat-form-field>
+        </td>
+          <td><button mat-raised-button color="warn" (click)="buscarPlanilla()" >
+            <mat-icon>call</mat-icon>
+            <span>ENVIAR</span>
+            </button>
+        </td>
+          
           </tr></table>
 
       </mat-expansion-panel>
     </mat-accordion>
     
   </mat-card-content>
-</mat-card>-->
+</mat-card>
+
+
+<hr>
+    <pre>
+        estado: {{formContacto.valid}}
+        <br>
+        Status: {{formContacto.status}}
+    </pre>
+    <pre>
+        {{formContacto.value | json }}
+    </pre>
+  -->
 
 
         

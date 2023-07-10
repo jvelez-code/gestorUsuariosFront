@@ -13,3 +13,5 @@ export class DivipolaDTO {
 
     }
 }
+
+let divipolaDTO : DivipolaDTO;

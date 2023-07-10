@@ -19,6 +19,7 @@ export class EstadoGestionService {
     estadoGestionPadre(parametros: Parametros):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametros);
+      console.log(parametros);
       return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});
     }
 

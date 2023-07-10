@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { MenuService } from './menu.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GuardService implements CanActivate {
+export class GuardService  {
 
   private usuarios !: string;
 

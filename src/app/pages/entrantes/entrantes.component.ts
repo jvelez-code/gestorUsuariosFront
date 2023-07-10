@@ -35,6 +35,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MensajeTextoService } from 'src/app/_services/mensaje-texto.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteDialogoComponent } from './cliente-dialogo/cliente-dialogo.component';
+import { PilaenlaceService } from 'src/app/_services/pilaenlace.service';
 
 @Component({
   selector: 'app-entrantes',
@@ -139,6 +140,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     private loginService :LoginService,
     private usuarioService: UsuarioService,
     private askEstadoExtensionService: AskEstadoExtensionService,
+    private PilaenlaceService: PilaenlaceService,
     private dialog : MatDialog,
     private router: Router,
     private fb : FormBuilder,
@@ -155,7 +157,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
 
     this.clienteService.getClienteCambio().subscribe(data =>{
-      console.log(data,'1')
       this.dataSourceCli= new MatTableDataSource(data);
     });
  
@@ -412,10 +413,11 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     this.mensajeTextoService.gestionHistoricoS(parametros).subscribe(data=>{
       console.log('Respuesta:', data);
     }
-    )
+    )    
+  }
 
+  buscarPlanilla(){
 
-    
   }
 
 

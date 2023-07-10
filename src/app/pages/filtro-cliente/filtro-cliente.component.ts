@@ -29,6 +29,7 @@ import { LoginService } from 'src/app/_services/login.service';
 import { Usuarios } from 'src/app/_model/usuarios';
 import { FiltroEntranteDTO } from 'src/app/_dto/filtroEntranteDTO';
 import { UsuarioService } from 'src/app/_services/usuario.service';
+import { CantidadGestionDTO } from 'src/app/_dto/CantidadGestionDTO ';
 
 
 
@@ -42,6 +43,9 @@ import { UsuarioService } from 'src/app/_services/usuario.service';
 
 
 export class FiltroClienteComponent implements OnInit, OnDestroy{
+
+  cantidadColumns: string[] = ['usuario', 'efectiva', 'cantidad'];
+  dataSourceCant !: MatTableDataSource<CantidadGestionDTO>; 
 
   
   private subscripcion : Subscription = new Subscription();
@@ -111,6 +115,10 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
 
     const askEstadoExtension ={  loginAgente : this.usuarios }
 
+    this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
+      this.dataSourceCant= new MatTableDataSource(data);
+    });
+
     this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
       this.colorExt = data.askEstado?.color;
       this.idExt = data.askEstado?.idEstado;
@@ -128,6 +136,10 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   
       });
     });
+
+
+
+  
     
     
 

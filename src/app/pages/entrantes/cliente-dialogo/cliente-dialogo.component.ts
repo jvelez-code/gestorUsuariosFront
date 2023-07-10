@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { switchMap } from 'rxjs';
 import { Cliente } from 'src/app/_model/cliente';
@@ -13,8 +14,10 @@ export class ClienteDialogoComponent implements OnInit{
   
   cliente !: Cliente;
   idCliente !: number;
+  formClienteMod !: FormGroup;
 
   constructor(
+    private fb : FormBuilder,
     private dialogRef: MatDialogRef<ClienteDialogoComponent>,
     @Inject(MAT_DIALOG_DATA) private data: Cliente,
     private clienteService: ClienteService
@@ -57,4 +60,31 @@ export class ClienteDialogoComponent implements OnInit{
   cerrar(){
     this.dialogRef.close();
   }
+
+  crearFormulario(){
+
+    this.formClienteMod = this.fb.group({
+      'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
+      'correo': ['',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]]     
+  });
+  }
+
+  get rsocialNoValido() {
+    return this.formClienteMod.get('rsocial')?.invalid && this.formClienteMod.get('rsocial')?.touched
+  }
+  get telefonoNoValido() {
+    return this.formClienteMod.get('telefono')?.invalid && this.formClienteMod.get('telefono')?.touched
+  }
+  get celularNoValido() {
+    return this.formClienteMod.get('celular')?.invalid && this.formClienteMod.get('celular')?.touched
+  }
+  get correoNoValido() {
+    return this.formClienteMod.get('correo')?.invalid && this.formClienteMod.get('correo')?.touched
+  }
+
+
+
+
 }

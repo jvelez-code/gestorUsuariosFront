@@ -20,6 +20,7 @@ import { ClientesComponent } from './pages/clientes/clientes.component';
 import { RecuperarComponent } from './pages/login/recuperar/recuperar.component';
 import { TokenComponent } from './pages/login/recuperar/token/token.component';
 import { ClienteDialogoComponent } from './pages/entrantes/cliente-dialogo/cliente-dialogo.component';
+import { NgHcaptchaModule } from 'ng-hcaptcha';
 
 
 export function tokenGetter() {
@@ -55,6 +56,12 @@ export function tokenGetter() {
         disallowedRoutes: [`http://${environment.HOST.substring(7)}/login/enviarCorreo`],
       },
     }),
+    NgHcaptchaModule.forRoot(      {
+        siteKey: '53b9bb7e-49a4-428f-ab81-5935daec8a8a',
+        languageCode: 'es', 
+        //theme: 'dark' // añade esta opción para el tema oscuro
+      }
+    )
     ],
   providers: [
     {
