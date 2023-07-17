@@ -1,6 +1,10 @@
 <router-outlet></router-outlet>
 <!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
 <div [hidden]="cardCliente">
+  <div class="container">
+    <div class="left-column">
+      <!-- Contenido del primer campo vertical -->
+
   <mat-card class="example-card">
     <mat-card-content>
       <table mat-table [dataSource]="dataSourceCant" class="mat-elevation-z8">
@@ -29,6 +33,10 @@
 </table>
     </mat-card-content>
   </mat-card>
+    </div>
+    <div class="right-column">
+      <!-- Contenido del segundo campo vertical -->
+
 
 <mat-card class="example-card" [style.background-color]="colorExt">
   <mat-card-header>
@@ -91,6 +99,10 @@
       <button mat-raised-button color="accent"  (click)="buscarManual()">Manual</button></div>
   </mat-card-actions>
 </mat-card>
+    </div>
+  </div>
+  
+
 
 </div>
 

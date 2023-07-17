@@ -19,5 +19,6 @@ export interface Parametros {
       Type?: string;
       FlashSMS?: number;
       Devices?: string;
+      
   }
   //? cuando llame la interface se opcional

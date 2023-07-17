@@ -8,8 +8,10 @@ import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
 import { Cliente } from 'src/app/_model/cliente';
 import { Divipola } from 'src/app/_model/divipola';
 import { TipoDocumento } from 'src/app/_model/tipoDocumento';
+import { Usuario } from 'src/app/_model/usuario';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { DivipolaService } from 'src/app/_services/divipola.service';
+import { LoginService } from 'src/app/_services/login.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
 
@@ -26,12 +28,14 @@ export class ClientesComponent implements OnInit{
   divipola$ !: Observable<DivipolaDTO[]>;
   tipoDocumento : string = 'CC';
   divipola : number = 184;
+  usuario   !: any;
 
 
   constructor(
     private clienteService : ClienteService,
     private tipoDocumentoService : TipoDocumentoService,
     private divipolaService : DivipolaService,
+    private loginService : LoginService,
     private validadoresService : ValidadoresService,
     private fb : FormBuilder,
     private snackBar: MatSnackBar,
@@ -42,6 +46,11 @@ export class ClientesComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+    this.loginService.getUsuariosCambio().subscribe((data:any) =>{
+      this.usuario=data;
+     });
+
     this.tipoDocumento$=this.tipoDocumentoService.buscar();
     this.divipola$= this.divipolaService.buscar();
 
@@ -59,7 +68,7 @@ export class ClientesComponent implements OnInit{
       'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)], this.validadoresService.existeUsuario],
       'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
       'direccion': ['',[Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
-      'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]],
+      'telefono': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'correo': ['',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       'empleados': ['',[Validators.required,Validators.minLength(1),Validators.maxLength(4),Validators.pattern('^[0-9]+$')]]
@@ -123,6 +132,10 @@ export class ClientesComponent implements OnInit{
     cli.telefonoCelular = this.formCliente.value['celular'];
     cli.correo = this.formCliente.value['correo'];
     cli.cantidadEmpleados = this.formCliente.value['empleados'];
+    cli.usuario = this.usuario;
+    cli.ley1581 = false;
+    cli.fechaHoraSistema = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    cli.ip = this.loginService.agenteDTO.hostIp;
 
     this.clienteService.guardarCliente(cli).subscribe(() =>{
       this.clienteService.setMensajecambio('SE REGISTRÓ');

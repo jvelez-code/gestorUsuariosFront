@@ -23,7 +23,6 @@ export class MensajeTextoService {
         'Authorization': 'Basic ' + btoa(username + ':' + password),
         'Content-Type': 'application/json' }) };  
       const body=JSON.stringify(parametros);
-      console.log(body,'mss');
       return this.http.post<Parametros>(this.url, body, headers);
     }
 

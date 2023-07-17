@@ -78,7 +78,7 @@
     <mat-card-subtitle>gestiones</mat-card-subtitle></div>
   </mat-card-header>
     <mat-card-content>
-       <table mat-table [dataSource]="dataSourceHisto" class="mat-elevation-z8">
+       <table mat-table [dataSource]="dataSourceHisto">
       
             <ng-container matColumnDef="fecha">
               <th mat-header-cell *matHeaderCellDef> FECHA </th>
@@ -107,8 +107,8 @@
             </ng-container>
           
             <ng-container matColumnDef="observacion">
-              <th mat-header-cell *matHeaderCellDef> OBSERVACIÓN </th>
-              <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
+              <th mat-header-cell *matHeaderCellDef > OBSERVACIÓN </th>
+              <td mat-cell *matCellDef="let element" > {{element.observacion}} </td>
             </ng-container>
       
             <ng-container matColumnDef="numero">
@@ -156,19 +156,19 @@
       <mat-label>Teléfono (P)</mat-label>
       <input matInput placeholder="Principal"  formControlName="telPrincipal" (keypress)="validarNumeros($event)" >
     </mat-form-field><div *ngIf="telPrincipalNoValido" class="error-message">
-      Debe ser mínimo  de 7 caracteres
+      Debe ser 10 caracteres
     </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono (S)</mat-label>
       <input matInput placeholder="Secundario"  formControlName="telSecundario" (keypress)="validarNumeros($event)" >
     </mat-form-field><div *ngIf="telSecundarioNoValido" class="error-message">
-      Debe ser mínimo  de 7 caracteres
+      Debe ser 10 caracteres
     </div></td>
     <td><mat-form-field class="example-full-width">
       <mat-label>Teléfono Celular</mat-label>
       <input matInput placeholder="Celular" formControlName="telCelular" (keypress)="validarNumeros($event)" >
     </mat-form-field><div *ngIf="telCelularNoValido" class="error-message">
-      Debe ser mínimo  de 10 caracteres
+      Debe ser 10 caracteres
     </div></td>
     
   </tr></table>
@@ -282,7 +282,7 @@
     
 <!--API DE PILA PLANILLA-->
 
-      <!--
+      <!-- -->
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -294,14 +294,14 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <table><tr>
-          <td> <mat-form-field class="example-full-width" appearance="outline">
+          <td> <mat-form-field class="example-full-width" appearance="outline" >
             <mat-label>Año</mat-label>
-            <input matInput>
+            <input matInput [(ngModel)]="planillaanio" >
           </mat-form-field>
           </td>
           <td><mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Mes</mat-label>
-            <input matInput>
+            <input matInput [(ngModel)]="planillames">
           </mat-form-field>
         </td>
           <td><button mat-raised-button color="warn" (click)="buscarPlanilla()" >
@@ -311,6 +311,39 @@
         </td>
           
           </tr></table>
+
+<table mat-table [dataSource]="dataSourcePla" class="mat-elevation-z8">
+  <ng-container matColumnDef="tipoPlanilla">
+    <th mat-header-cell *matHeaderCellDef> tipoPlanilla </th>
+    <td mat-cell *matCellDef="let element">{{element.tipoPlanilla}}</td>
+  </ng-container>
+  <ng-container matColumnDef="numeroPlanilla">
+    <th mat-header-cell *matHeaderCellDef> numeroPlanilla </th>
+    <td mat-cell *matCellDef="let element">{{element.numeroPlanilla}}</td>
+  </ng-container>
+  <ng-container matColumnDef="numeroPin">
+    <th mat-header-cell *matHeaderCellDef> numeroPin </th>
+    <td mat-cell *matCellDef="let element">{{element.numeroPin}}</td>
+  </ng-container>
+  <ng-container matColumnDef="valorPago">
+    <th mat-header-cell *matHeaderCellDef> valorPago </th>
+    <td mat-cell *matCellDef="let element">{{element.valorPago}}</td>
+  </ng-container>
+  <ng-container matColumnDef="fechaPago">
+    <th mat-header-cell *matHeaderCellDef> fechaPago </th>
+    <td mat-cell *matCellDef="let element">{{element.fechaPago}}</td>
+  </ng-container>
+  <ng-container matColumnDef="periodoMes">
+    <th mat-header-cell *matHeaderCellDef> periodoMes </th>
+    <td mat-cell *matCellDef="let element">{{element.periodoMes}}</td>
+  </ng-container>
+  <ng-container matColumnDef="periodoAnio">
+    <th mat-header-cell *matHeaderCellDef> periodoAnio </th>
+    <td mat-cell *matCellDef="let element">{{element.periodoAnio}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="planillaColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: planillaColumns;"></tr>
+</table>
 
       </mat-expansion-panel>
     </mat-accordion>
@@ -328,7 +361,7 @@
     <pre>
         {{formContacto.value | json }}
     </pre>
-  -->
+ 
 
 
         

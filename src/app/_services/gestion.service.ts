@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Gestion } from '../_model/gestion';
 import { Parametros } from '../_model/parametros';
+import { CantidadGestionDTO } from '../_dto/CantidadGestionDTO ';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { Parametros } from '../_model/parametros';
 export class GestionService {
 
   private url:string = `${environment.HOST}/gestiones`;
+  private gestionCambio = new Subject<CantidadGestionDTO[]>();
 
   constructor(
     protected http: HttpClient,
@@ -34,4 +36,13 @@ export class GestionService {
       return this.http.post<Gestion>(`${this.url}`, body, headers);
     }
 
+    //////// get, set ///////////////////
+
+    getGestionCambio(){
+      return this.gestionCambio.asObservable();
+    }
+  
+    setGestionCambio(gestion: CantidadGestionDTO[]){
+      return this.gestionCambio.next(gestion);
+    }
 }

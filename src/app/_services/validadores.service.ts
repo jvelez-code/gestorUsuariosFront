@@ -15,8 +15,6 @@ export class ValidadoresService {
 
 
   existeUsuario( control: FormControl ): Promise<any> | Observable <any> {
-
-    console.log(control, 'formulario')
     if( !control.value ) {
       return Promise.resolve(null);
     }
@@ -42,13 +40,10 @@ export class ValidadoresService {
     return(formGroup: FormGroup) =>{
       const pass1Control = formGroup.controls[pass1Name];
       const pass2Control = formGroup.controls[pass2Name];
-      console.log('holamundo1')
       if(pass1Control.value === pass2Control.value){
         pass2Control.setErrors(null);
-        console.log('holamundo2')
       } else {
         pass2Control.setErrors({noEsIgual:true});
-        console.log('holamundo3')
       }
     }
     

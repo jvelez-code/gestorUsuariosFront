@@ -2,23 +2,35 @@
     
     <mat-card-content>
         <div>
-            <form [formGroup]="formClienteMod" #frmClienteMod="ngForm" (ngSubmit)="operar()"> 
+    <form [formGroup]="formClienteMod" #frmClienteMod="ngForm" (ngSubmit)="operar()"> 
+                <div>
     <mat-form-field>
-        <input matInput placeholder="Razón Social" formControlName="rsocial" >
-    </mat-form-field>
+        <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
+    </mat-form-field><div *ngIf="nombreNoValido" class="error-message">
+      Debe ser mínimo  de 4 caracteres
+    </div>
     <mat-form-field>
-        <input matInput placeholder="Correo" formControlName="correo" >
-    </mat-form-field>
+        <input matInput placeholder="Correo"   formControlName="correo">
+    </mat-form-field><div *ngIf="correoNoValido" class="error-message">
+      Formato no Valido
+    </div>
     <mat-form-field>
-        <input matInput placeholder="Celular" formControlName="celular" type="number">
-    </mat-form-field>
+        <input matInput placeholder="Celular" formControlName="telCelular" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telCelularNoValido" class="error-message">
+      Debe ser 10 caracteres
+    </div>
     <mat-form-field>
-        <input matInput placeholder="Teléfono" formControlName="telefono" type="number">
-    </mat-form-field>
+        <input matInput placeholder="Principal"  formControlName="telPrincipal" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telPrincipalNoValido" class="error-message">
+      Debe ser 10 caracteres
+    </div>
+</div>
+<div>
+<button mat-raised-button color="primary" [disabled]="formClienteMod.invalid">Aceptar</button>
+<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>
+</div>
 </form>
 </div>
-<button mat-raised-button color="primary" >Aceptar</button>
-<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>
 </mat-card-content>
 
 </mat-card>

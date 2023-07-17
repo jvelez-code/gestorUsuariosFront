@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Cliente } from 'src/app/_model/cliente';
 import { Contacto } from 'src/app/_model/contactos';
 import { DetalleGestion } from 'src/app/_model/detalleGestion';
@@ -36,6 +36,8 @@ import { MensajeTextoService } from 'src/app/_services/mensaje-texto.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteDialogoComponent } from './cliente-dialogo/cliente-dialogo.component';
 import { PilaenlaceService } from 'src/app/_services/pilaenlace.service';
+import { Planillas } from 'src/app/_model/planillas';
+import { Divipola } from 'src/app/_model/divipola';
 
 @Component({
   selector: 'app-entrantes',
@@ -75,6 +77,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   telCelularC !:String;
   cardCliente : boolean= false ;
 
+ 
   parametros !: Parametros;
   gestion !: Gestion;
   cliente !: Cliente;
@@ -103,6 +106,9 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   hostIp   !: any;
   extension !: any;
   numRealMarcado !: any;
+  idZona !: any;
+  
+  
   
 
   
@@ -123,6 +129,11 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   Type : string = 'MASSIVE';
   FlashSMS : number = 0;
   Devices !: string ;
+  planillames !: string ;
+  planillaanio !: string ;
+  tipoDoc !: any;
+  numDocu !: any;
+
 
 
 
@@ -134,10 +145,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     private TipoDocumentoService : TipoDocumentoService,
     private clienteService : ClienteService,
     private detalleGestionService : DetalleGestionService,
-    private gestionService :GestionService ,
-    private estadoGestionService :EstadoGestionService,
-    private contactoService :ContactoService,
-    private loginService :LoginService,
+    private gestionService : GestionService ,
+    private estadoGestionService : EstadoGestionService,
+    private contactoService : ContactoService,
+    private loginService : LoginService,
     private usuarioService: UsuarioService,
     private askEstadoExtensionService: AskEstadoExtensionService,
     private PilaenlaceService: PilaenlaceService,
@@ -185,19 +196,24 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.numRealMarcado=data.numeroOrigen;
     });  
 
+    
+    this.clienteService.getMensajeCambio().subscribe(data =>{
+      this.snackBar.open(data, "Aviso", { duration: 2000 });
+    })
+    
+
+
   }  
 
   crearFormulario(){
-    this.form = new FormGroup({
-      'id': new FormControl(0),
-      'razonSocial': new FormControl(''),
-
-    });
+   
 
     this.formGuardar = this.fb.group({
     'observacionD': ['', [Validators.required,Validators.minLength(4)]],
     'numeroreal': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]]
     });
+
+    
 
 
       this.formContacto = new FormGroup({
@@ -210,6 +226,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
   
   }
+  
+
 
 
   
@@ -226,17 +244,18 @@ export class EntrantesComponent implements OnInit, OnDestroy{
    const cliente= { idCliente:this.idClienteP }
     this.clienteService.clientePorId( cliente ).subscribe(data =>{  
         this.clienteService.setClienteCambio(data)
-        console.log(data);
         this.dataSourceCli= new MatTableDataSource(data);
-        console.log(data,'2')
+        this.idZona = data[0].divipola?.idZona;
+        this.tipoDoc = data[0].tipoDocumento?.tipoDoc;
+        this.numDocu = data[0].nroDocumento;
 
     });
 
   });
   }
 
+
   abrirDialogo(cliente ?: Cliente){
-    console.log(cliente,'CLIENTE')
     this.dialog.open(ClienteDialogoComponent,{
       width: '350px',
       data: cliente
@@ -296,8 +315,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.formContacto = this.fb.group({
       'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
       'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]],
-      'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'telCelular': [data.telefonoCelular,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
      });
     });
@@ -350,7 +369,9 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     
     let cliente = new Cliente();
     cliente.idCliente = this.idClienteP;
-    
+
+    let divi = new Divipola();
+    divi.idZona = this.idZona;
 
     let estadoGestion = new EstadoGestion();
     estadoGestion.idEstadoGestion= this.idEstadoP;
@@ -378,6 +399,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     cont.telefonoDirecto = this.formContacto.value['telSecundario'];
     cont.telefonoCelular = this.formContacto.value['telCelular'];
     cont.cliente = cliente;
+    cont.usuario = usuario;
+    cont.divipola = divi;
     this.contacto.push(cont);
 
 
@@ -399,6 +422,11 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.clienteService.setMensajecambio('SE REGISTRÓ');
       this.clienteService.setFormCambio(this.cardCliente)
     });
+
+    const askEstadoExtension ={  loginAgente : this.usuario }
+    this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
+      this.gestionService.setGestionCambio(data);
+    });
   
     this.router.navigate(['filtroEntrante']);
   
@@ -411,22 +439,17 @@ export class EntrantesComponent implements OnInit, OnDestroy{
                         FlashSMS: this.FlashSMS, Devices:this.formContacto.value['telCelular']  }
 
     this.mensajeTextoService.gestionHistoricoS(parametros).subscribe(data=>{
-      console.log('Respuesta:', data);
+    this.clienteService.setMensajecambio('ENVIADO SMS');
     }
     )    
   }
 
-  buscarPlanilla(){
-
-  }
 
 
   cancelarGestion(){
     this.clienteService.setFormCambio(this.cardCliente)
     this.clienteService.setMensajecambio('SE CANCELO');
     this.router.navigate(['filtroEntrante']);
-    this.snackBar.open("SE CANCELÓ", "Aviso", { duration: 2000 });
-
       setTimeout(() => {
         this.limpiarControles();
       }, 2000);   
@@ -439,6 +462,29 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     this.idClienteP = null;
     this.idEstadoP = null;
     }
+
+    /*PLANILLAS PILA */
+    planillaColumns: string[] = ['tipoPlanilla','numeroPlanilla','numeroPin','valorPago','fechaPago','periodoMes','periodoAnio'];
+    dataSourcePla !: MatTableDataSource<Planillas>;
+
+  buscarPlanilla(){
+
+    this.PilaenlaceService.buscarPlanilla(this.tipoDoc, this.numDocu, this.planillaanio , this.planillames)
+    .subscribe( (data:any) =>{
+      console.log(data.codigoMensaje);
+     if (data.codigoMensaje==='01'){
+      this.clienteService.setMensajecambio('NO ACTIVAS PARA PAGO');
+
+     } else {
+     const respuestaString = JSON.stringify(data);
+     const respuestaArray: Planillas[] = JSON.parse(respuestaString);
+     this.dataSourcePla= new MatTableDataSource(data.planillas);
+    }
+    });
+    
+
+  }
+
 
     ngOnDestroy() {
       // Desuscripción para evitar fugas de memoria

@@ -11,7 +11,7 @@ export class Cliente {
     razonSocial ?: String;
     direccion ?: String;
     cantidadEmpleados ?: String;
-    fechaHoraSistema ?: String;
+    fechaHoraSistema ?: Date;
     ip ?: String;
     usuario?: Usuario;  
     telefonoCelular ?: String;

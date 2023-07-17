@@ -106,7 +106,6 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
 
     this.clienteService.getFormCambio().subscribe(data =>{
       this.cardCliente=data;
-
     });
 
     this.loginService.getUsuariosCambio().subscribe((data:any) =>{
@@ -114,10 +113,14 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
      });
 
     const askEstadoExtension ={  loginAgente : this.usuarios }
-
     this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
       this.dataSourceCant= new MatTableDataSource(data);
     });
+
+    this.gestionService.getGestionCambio().subscribe(data =>{
+      this.dataSourceCant= new MatTableDataSource(data);
+    });
+
 
     this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
       this.colorExt = data.askEstado?.color;

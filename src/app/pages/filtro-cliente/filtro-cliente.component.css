@@ -129,3 +129,16 @@
   .button-row .mat-mdc-button-base {
     margin: 8px 8px 8px 0;
   }
+
+  /*Dividri pantalla*/
+  .container {
+    display: flex;
+  }
+  
+  .left-column {
+    flex: 1;
+  }
+  
+  .right-column {
+    flex: 1;
+  }

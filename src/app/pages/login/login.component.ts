@@ -84,9 +84,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.mensaje='Contraseña vencida debe actualizarla';
         return;
       }
-
+      
+  
       else if (this.captchaVerified || !this.captchaactivo){
-        
         sessionStorage.clear();
    
         this.loginService.login(this.usuario, this.clave).subscribe(data =>{   
@@ -106,6 +106,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   
         this.usuarioService.buscarAgenteCampana(filtroEntranteDTO).subscribe(data =>{
           this.loginService.agenteDTO=data;
+          console.log(data)
         });
   
         this.menuService.listarPorUsuario(decodedToken.user_name).subscribe(data=>{
@@ -123,12 +124,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   }
 
-  logoutPreviousSession() {
-    // Lógica para cerrar la sesión anterior, si es necesario
-    // Por ejemplo, realizar una solicitud al backend para invalidar la sesión anterior
 
-    console.log('HOLA MUNDO')
-  }
 
 
 

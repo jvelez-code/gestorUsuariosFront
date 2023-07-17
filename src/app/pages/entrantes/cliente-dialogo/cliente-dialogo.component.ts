@@ -21,7 +21,9 @@ export class ClienteDialogoComponent implements OnInit{
     private dialogRef: MatDialogRef<ClienteDialogoComponent>,
     @Inject(MAT_DIALOG_DATA) private data: Cliente,
     private clienteService: ClienteService
-  ) { }
+    ){
+    this.crearFormulario()
+    }
 
   ngOnInit(): void {
       this.cliente = new Cliente();
@@ -39,17 +41,24 @@ export class ClienteDialogoComponent implements OnInit{
       this.cliente.usuario = this.data.usuario;
       this.cliente.ley1581 = this.data.ley1581;
       this.cliente.divipola = this.data.divipola;
-
-
+      
+      this.cargarDataForm();
   }
 
   operar(){
+
+    
     if(this.cliente != null) {
+    
+    this.cliente.razonSocial = this.formClienteMod.value['nombre'];
+    this.cliente.correo = this.formClienteMod.value['correo'];
+    this.cliente.telefonoCelular = this.formClienteMod.value['telCelular'];
+    this.cliente.telefonoFijo = this.formClienteMod.value['telPrincipal'];
+    
       this.clienteService.modificar(this.cliente).pipe(switchMap(() =>{
         const cliente= { idCliente:this.cliente.idCliente || 0 }
         return this.clienteService.clientePorId(cliente);
       })).subscribe(data => {
-        console.log(data,'cliente-dialog')
         this.clienteService.setClienteCambio(data)
       });
     }
@@ -64,26 +73,43 @@ export class ClienteDialogoComponent implements OnInit{
   crearFormulario(){
 
     this.formClienteMod = this.fb.group({
-      'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
+      'nombre': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
       'correo': ['',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-      'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(7),Validators.pattern('^[0-9]+$')]]     
+      'telPrincipal': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telCelular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
   });
   }
 
-  get rsocialNoValido() {
-    return this.formClienteMod.get('rsocial')?.invalid && this.formClienteMod.get('rsocial')?.touched
-  }
-  get telefonoNoValido() {
-    return this.formClienteMod.get('telefono')?.invalid && this.formClienteMod.get('telefono')?.touched
-  }
-  get celularNoValido() {
-    return this.formClienteMod.get('celular')?.invalid && this.formClienteMod.get('celular')?.touched
+  get nombreNoValido() {
+    return this.formClienteMod.get('nombre')?.invalid && this.formClienteMod.get('nombre')?.touched
   }
   get correoNoValido() {
     return this.formClienteMod.get('correo')?.invalid && this.formClienteMod.get('correo')?.touched
   }
+  get telPrincipalNoValido() {
+    return this.formClienteMod.get('telPrincipal')?.invalid && this.formClienteMod.get('telPrincipal')?.touched
+  }
+  get telCelularNoValido() {
+    return this.formClienteMod.get('telCelular')?.invalid && this.formClienteMod.get('telCelular')?.touched
+  }
 
+
+  validarNumeros(event: KeyboardEvent) {
+    const input = event.key;
+    const regex = /[0-9]/;
+    if (!regex.test(input)) {
+      event.preventDefault();
+    }
+  }
+
+  cargarDataForm(){
+    this.formClienteMod.reset({
+      nombre: this.cliente.razonSocial,
+      telPrincipal: this.cliente.telefonoFijo,
+      telCelular: this.cliente.telefonoCelular,
+      correo: this.cliente.correo
+    })
+  }
 
 
 

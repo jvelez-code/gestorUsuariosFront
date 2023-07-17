@@ -56,14 +56,14 @@
                 <input matInput  formControlName="telefono" (keypress)="validarNumeros($event)">
               </mat-form-field>
               <div *ngIf="telefonoNoValido" class="error-message">
-                Debe ser  7 caracteres
+                Debe ser 10 caracteres
               </div></td>
             <td><mat-form-field class="example-full-width">
              <mat-label>Celular</mat-label>
              <input matInput  formControlName="celular" (keypress)="validarNumeros($event)">
             </mat-form-field>
             <div *ngIf="celularNoValido" class="error-message">
-              Debe ser  10 caracteres
+              Debe ser 10 caracteres
             </div></td>
        </tr>
 

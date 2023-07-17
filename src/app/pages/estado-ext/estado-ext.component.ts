@@ -91,7 +91,6 @@ export class ExtadoExtComponent implements OnInit {
             this.askEstadoService.setMensajecambio('SE ACTUALIZÓ')       
   
             }else {
-            //console.log('Debe loguearse en Asterisk');
             this.askEstadoService.setMensajecambio('LOGUEO EN ASTERISK')       
             }
           }); 
