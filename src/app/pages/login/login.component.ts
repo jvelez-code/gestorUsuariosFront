@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   fechaActual : Date = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
   fechaVencimiento !: Date;
   mensajecaptcha!: string;
-  captchaVerified: boolean = true;
+  captchaVerified: boolean = false;
   captchaactivo: boolean = true;
 
 

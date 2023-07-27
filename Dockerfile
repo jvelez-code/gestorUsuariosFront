@@ -1,5 +1,5 @@
 #Primera Etapa
-FROM node:18.12.1 as node
+FROM node:18.17.0 as node
 WORKDIR /app
 
 COPY package.json /app
