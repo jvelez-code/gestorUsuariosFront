@@ -21,6 +21,8 @@ import { RecuperarComponent } from './pages/login/recuperar/recuperar.component'
 import { TokenComponent } from './pages/login/recuperar/token/token.component';
 import { ClienteDialogoComponent } from './pages/entrantes/cliente-dialogo/cliente-dialogo.component';
 import { NgHcaptchaModule } from 'ng-hcaptcha';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CambiarEmpresaComponent } from './pages/cambiar-empresa/cambiar-empresa.component';
 
 
 export function tokenGetter() {
@@ -39,7 +41,8 @@ export function tokenGetter() {
     ClientesComponent,
     RecuperarComponent,
     TokenComponent,
-    ClienteDialogoComponent
+    ClienteDialogoComponent,
+    CambiarEmpresaComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: [environment.HOST.substring(7)],
+        allowedDomains: ["10.1.0.231:9898"],
+        //allowedDomains: [environment.HOST.substring(7)],
         disallowedRoutes: [`http://${environment.HOST.substring(7)}/login/enviarCorreo`],
       },
     }),
@@ -68,7 +72,8 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerErrorsInterceptor,
       multi: true,
-    }
+    },
+    { provide: LocationStrategy , useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

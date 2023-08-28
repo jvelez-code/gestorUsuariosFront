@@ -27,6 +27,7 @@ export class ClientesComponent implements OnInit{
   tipoDocumento$ !: Observable<TipoDocumento[]>;
   divipola$ !: Observable<DivipolaDTO[]>;
   tipoDocumento : string = 'CC';
+  documento !: string;
   divipola : number = 184;
   usuario   !: any;
 
@@ -54,6 +55,8 @@ export class ClientesComponent implements OnInit{
     this.tipoDocumento$=this.tipoDocumentoService.buscar();
     this.divipola$= this.divipolaService.buscar();
 
+    
+
     this.clienteService.getMensajeCambio().subscribe(data =>{
       this.snackBar.open(data, 'AVISO', { duration: 2000 });
     });
@@ -64,13 +67,17 @@ export class ClientesComponent implements OnInit{
 
   crearFormulario(){
 
+    this.clienteService.getDocumentoNuevo().subscribe(data =>{
+      this.documento=data;
+    });
+
     this.formCliente = this.fb.group({
-      'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)], this.validadoresService.existeUsuario],
+      'documento': [this.documento, [Validators.required,Validators.minLength(4),Validators.maxLength(16)], this.validadoresService.existeUsuario],
       'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
       'direccion': ['',[Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
-      'telefono': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-      'correo': ['',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      'correo': ['',[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
       'empleados': ['',[Validators.required,Validators.minLength(1),Validators.maxLength(4),Validators.pattern('^[0-9]+$')]]
 
     });

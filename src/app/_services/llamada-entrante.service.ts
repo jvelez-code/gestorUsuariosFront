@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
+import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,19 @@ export class LlamadaEntranteService {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(askEstadoExtension);
       return this.http.post<boolean>(`${this.url}/buscarAsterisk`,body,{'headers':headers});
-
     }
 
     buscarLlamada(askEstadoExtension :AskEstadoExtension) {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(askEstadoExtension);
       return this.http.post<boolean>(`${this.url}/buscarLlamada`,body,{'headers':headers});
+
+    }
+
+    LlamadaEntrante(filtroEntranteDTO :FiltroEntranteDTO) {
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(filtroEntranteDTO);
+      return this.http.post<boolean>(`${this.url}/llamadaEntrante`,body,{'headers':headers});
 
     }
 }

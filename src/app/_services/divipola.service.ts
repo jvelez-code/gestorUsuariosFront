@@ -4,18 +4,29 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DivipolaDTO } from '../_dto/divipolaDTO ';
+import { Divipola } from '../_model/divipola';
+import { GenericService } from './generic.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class DivipolaService {
+export class DivipolaService extends GenericService<Divipola> {
 
-  private url:string = `${environment.HOST}/divipolas`;
+
+  constructor(http: HttpClient) {
+    super(
+      http,
+      `${environment.HOST}/divipolas`
+    );
+  }
+
+
+  /*private url:string = `${environment.HOST}/divipolas`;
 
   constructor(
     private http: HttpClient,
-    private router: Router) { }
+    private router: Router) { }*/
 
     buscar(){
       const headers = { 'content-type': 'application/json'}

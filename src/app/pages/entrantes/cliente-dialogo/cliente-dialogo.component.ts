@@ -1,9 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
+import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
 import { Cliente } from 'src/app/_model/cliente';
+import { Divipola } from 'src/app/_model/divipola';
 import { ClienteService } from 'src/app/_services/cliente.service';
+import { DivipolaService } from 'src/app/_services/divipola.service';
 
 @Component({
   selector: 'app-cliente-dialogo',
@@ -14,10 +17,14 @@ export class ClienteDialogoComponent implements OnInit{
   
   cliente !: Cliente;
   idCliente !: number;
+  divipola !: number;
+  divi!:Divipola;
+  divipola$ !: Observable<DivipolaDTO[]>;
   formClienteMod !: FormGroup;
 
   constructor(
     private fb : FormBuilder,
+    private divipolaService : DivipolaService,
     private dialogRef: MatDialogRef<ClienteDialogoComponent>,
     @Inject(MAT_DIALOG_DATA) private data: Cliente,
     private clienteService: ClienteService
@@ -26,6 +33,8 @@ export class ClienteDialogoComponent implements OnInit{
     }
 
   ngOnInit(): void {
+      this.divipola$= this.divipolaService.buscar();
+
       this.cliente = new Cliente();
       this.cliente.idCliente = this.data.idCliente;
       this.cliente.tipoDocumento = this.data.tipoDocumento;
@@ -41,42 +50,62 @@ export class ClienteDialogoComponent implements OnInit{
       this.cliente.usuario = this.data.usuario;
       this.cliente.ley1581 = this.data.ley1581;
       this.cliente.divipola = this.data.divipola;
+
+      this.divipola=this.cliente.divipola?.idZona ?? 184;
       
       this.cargarDataForm();
   }
 
   operar(){
 
+    this.divipolaService.listarPorId(this.divipola).subscribe(data =>{
+
+      let divi = new Divipola
+      divi.idZona = data.idZona;
+      divi.indicativo= data.indicativo;
+      divi.codigo=data.codigo;
+      divi.tipoZona=data.tipoZona;
+      divi.tipoEt=data.tipoEt;
+      divi.nombre=data.nombre;
+      divi.idZonapadre=data.idZonapadre;
+      divi.dv=data.dv;
+      divi.zonaEspecial=data.zonaEspecial;
+
     
     if(this.cliente != null) {
     
-    this.cliente.razonSocial = this.formClienteMod.value['nombre'];
-    this.cliente.correo = this.formClienteMod.value['correo'];
-    this.cliente.telefonoCelular = this.formClienteMod.value['telCelular'];
-    this.cliente.telefonoFijo = this.formClienteMod.value['telPrincipal'];
-    
-      this.clienteService.modificar(this.cliente).pipe(switchMap(() =>{
-        const cliente= { idCliente:this.cliente.idCliente || 0 }
-        return this.clienteService.clientePorId(cliente);
-      })).subscribe(data => {
-        this.clienteService.setClienteCambio(data)
-      });
-    }
+      this.cliente.razonSocial = this.formClienteMod.value['nombre'];
+      this.cliente.correo = this.formClienteMod.value['correo'];
+      this.cliente.telefonoCelular = this.formClienteMod.value['telCelular'];
+      this.cliente.telefonoFijo = this.formClienteMod.value['telPrincipal'];
+      this.cliente.divipola=divi
+  
+      
+        this.clienteService.modificar(this.cliente).pipe(switchMap(() =>{
+          const cliente= { idCliente:this.cliente.idCliente || 0 }
+          return this.clienteService.clientePorId(cliente);
+        })).subscribe(data => {
+          this.clienteService.setClienteCambio(data)
+        });
+      }
+  
+
+    })
+
+   
     this.cerrar();
   }
 
 
-  cerrar(){
-    this.dialogRef.close();
-  }
 
   crearFormulario(){
 
     this.formClienteMod = this.fb.group({
       'nombre': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
-      'correo': ['',[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      'telPrincipal': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'correo': ['',[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+      'telPrincipal': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'telCelular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'ciudad': ['',[]],
   });
   }
 
@@ -110,6 +139,11 @@ export class ClienteDialogoComponent implements OnInit{
       correo: this.cliente.correo
     })
   }
+
+  cerrar(){
+    this.dialogRef.close();
+  }
+
 
 
 

@@ -17,6 +17,9 @@ export class ClienteService { //extends GenericService{
   private idClienteCambio = new BehaviorSubject<string> ('000');
   private formCambio = new Subject<boolean>();
   private mensajeCambio = new Subject<string>();
+  private documentoNuevo = new BehaviorSubject<string> ('000');
+  private numeroReal = new BehaviorSubject<string> ('000');
+  private callid = new BehaviorSubject<string> ('000');
 
   private url:string = `${environment.HOST}/clientes`;
 
@@ -98,4 +101,30 @@ export class ClienteService { //extends GenericService{
       return this.mensajeCambio.next(mensaje);
     }
 
+    getDocumentoNuevo(){
+      return this.documentoNuevo.asObservable();
+    }
+  
+    setDocumentoNuevo(documento: string){
+      return this.documentoNuevo.next(documento);
+    }
+
+
+    getnumeroReal(){
+      return this.numeroReal.asObservable();
+    }
+  
+    setnumeroReal(numeroTel: string){
+      return this.numeroReal.next(numeroTel);
+    }
+
+
+    getcallid(){
+      return this.callid.asObservable();
+    }
+  
+    setcallid(idllamada: string){
+      return this.callid.next(idllamada);
+    }
+ 
 }

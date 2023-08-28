@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlContainer, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ControlContainer, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -38,6 +38,7 @@ import { ClienteDialogoComponent } from './cliente-dialogo/cliente-dialogo.compo
 import { PilaenlaceService } from 'src/app/_services/pilaenlace.service';
 import { Planillas } from 'src/app/_model/planillas';
 import { Divipola } from 'src/app/_model/divipola';
+import { ValidadoresService } from 'src/app/_services/validadores.service';
 
 @Component({
   selector: 'app-entrantes',
@@ -67,7 +68,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   gestionPadre !: number;
   gestionHijo !: number;
   panelOpenState = false;
-  tipoGestionP !: number;
+  tipoGestionP : number = 0;
   tipoGestionH !: number;
 
   nombreC !:String;
@@ -75,7 +76,9 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   telPrincipalC !:String;
   telSecundarioC !:String;
   telCelularC !:String;
+  callid !: string;
   cardCliente : boolean= false ;
+  actSutipo : boolean= true ;
 
  
   parametros !: Parametros;
@@ -123,9 +126,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   subTipoGestion$ !: Observable<EstadoGestion[]>;
   gestion$ !: Observable<EstadoGestion[]>;
   agenteCampanas!: any;
+  numeroReal !: string;
 
 
-  MessageText : string = 'Hola soy GESTOR y esto es una prueba su planilla es 11111 y su valor 22222';
+  MessageText : string = 'Asopagos.S.A le confirma: PIN   , VALOR $ , FECHA DE PAGO PERIODO  .';
   Type : string = 'MASSIVE';
   FlashSMS : number = 0;
   Devices !: string ;
@@ -133,12 +137,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   planillaanio !: string ;
   tipoDoc !: any;
   numDocu !: any;
-
-
-
-
-
-
 
 
   constructor( 
@@ -156,7 +154,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     private router: Router,
     private fb : FormBuilder,
     private snackBar: MatSnackBar,
-    private mensajeTextoService: MensajeTextoService ) 
+    private mensajeTextoService: MensajeTextoService,
+    private validadoresService: ValidadoresService ) 
     { 
       this.crearFormulario()
     }
@@ -200,23 +199,31 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     this.clienteService.getMensajeCambio().subscribe(data =>{
       this.snackBar.open(data, "Aviso", { duration: 2000 });
     })
+
+    this.clienteService.getcallid().subscribe(data =>{
+      console.log(data);
+      this.callid=data;
+    });
     
 
 
   }  
 
   crearFormulario(){
-   
+  
+    this.clienteService.getnumeroReal().subscribe(data=>{
+      this.numeroReal=data;
+      console.log(data,1)
+    })
 
     this.formGuardar = this.fb.group({
     'observacionD': ['', [Validators.required,Validators.minLength(4)]],
-    'numeroreal': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]]
+    'numeroreal': [this.numeroReal,[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+    'tipificacioP': ['', [Validators.required, this.validadoresService.validatetipo ]],
+    'tipificacioH': ['', [Validators.required, this.validadoresService.validatetipo ]]
     });
 
-    
-
-
-      this.formContacto = new FormGroup({
+    this.formContacto = new FormGroup({
       'nombre': new FormControl(''),
       'correo': new FormControl(''),
       'telPrincipal': new FormControl(''),
@@ -226,10 +233,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
   
   }
-  
-
-
-
   
 
   clienteSelec(){
@@ -291,9 +294,17 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     this.idEstadoH= this.tipoGestionH;
     const parametros= {  idEstadoPadre:this.tipoGestionP , tipoLlamada:this.tipoLlamada, }
 
+    this.subTipoGestion$=this.estadoGestionService.estadoGestionHijo(parametros);   
 
-    this.subTipoGestion$=this.estadoGestionService.estadoGestionHijo(parametros);
-    
+    this.estadoGestionService.estadoGestionHijo(parametros).subscribe(data=>{
+
+      if(Array.isArray(data) && data.length > 0){
+        this.actSutipo = false
+      }else {
+        this.actSutipo = true;
+      }
+    });
+
     if(this.idEstadoH==0)
     {
       this.idEstadoH=tipoGestionP;
@@ -414,6 +425,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     gestion.usuarioAct = this.usuario;
     gestion.ipAct = this.hostIp
     gestion.flagGestionSucursal = false
+    gestion.callId = this.callid
     
     gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
@@ -444,15 +456,17 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     )    
   }
 
-
+  cancelarGestions(){
+    this.actSutipo = false      
+  }
 
   cancelarGestion(){
-    this.clienteService.setFormCambio(this.cardCliente)
+   this.clienteService.setFormCambio(this.cardCliente)
     this.clienteService.setMensajecambio('SE CANCELO');
     this.router.navigate(['filtroEntrante']);
       setTimeout(() => {
         this.limpiarControles();
-      }, 2000);   
+      }, 2000);
       
   }
 
@@ -471,7 +485,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
     this.PilaenlaceService.buscarPlanilla(this.tipoDoc, this.numDocu, this.planillaanio , this.planillames)
     .subscribe( (data:any) =>{
-      console.log(data.codigoMensaje);
      if (data.codigoMensaje==='01'){
       this.clienteService.setMensajecambio('NO ACTIVAS PARA PAGO');
 

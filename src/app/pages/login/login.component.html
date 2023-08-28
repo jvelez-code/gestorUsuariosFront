@@ -1,158 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina monstro</title>
-    
-</head>
-<body id="bodylogin">
-   <!-- <img id="fondo" src="/assets/fondos/fondo4.jpg" alt="imagenfondo">-->
-
-
-    <div class="empresa">
-
-        <img src="assets/idle/HP.png">
-
-       
-    </div> 
-    <div class="login">
-        <img src="assets/idle/1.png" id="monster">
-        <form class="formulario"  #loginForm="ngForm">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Gestor usuarios</title>
+   </head>
+   <body id="bodylogin">
+      <!-- <img id="fondo" src="/assets/fondos/fondo4.jpg" alt="imagenfondo">-->
+      <div class="empresa">
+         <img src="assets/idle/HP.png" class = "imge">
+      </div>
+      <div class="login">
+         <img src="assets/idle/1.png" id="monster">
+         <form class="formulario"  #loginForm="ngForm">
             <div *ngIf="showError" class="error-message">
-                Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.
-            </div>            
+            </div>
             <label>Usuario</label>
             <!--<input type="email" placeholder="tucorreo@jaimetorres.net" autocomplete="off" id="input-usuario">-->
             <input type="text" placeholder="Usuario Gestor" autocomplete="off" id="email" name="email" [(ngModel)]="usuario" class="email" maxlength="256" required>
             <label>Contraseña</label>
             <!--<input type="password" placeholder="**************" autocomplete="off" id="input-clave">-->
             <input type="password" placeholder="**************" autocomplete="off"  id="password" name="password" [(ngModel)]="clave" class="password" required minlength="8" maxlength="16">
-            
             <ng-hcaptcha (verify)="onVerify($event)"
-              (expired)="onExpired($event)"
-              (error)="onError($event)">
+            (expired)="onExpired($event)"
+            (error)="onError($event)">
             </ng-hcaptcha>
-
             <div style="text-align: center">
-                <div *ngIf="mensajecaptcha" class="mensajecaptcha">{{mensajecaptcha}}</div>
-                <a routerLink="/recuperar">¿Olvidaste tu contraseña?</a>
-              </div>
-            
+               <div *ngIf="mensajecaptcha" class="mensajecaptcha">{{mensajecaptcha}}</div>
+               <a routerLink="/recuperar" id="recuperarclave">¿Olvidaste tu contraseña?</a>
+            </div>
             <div class="inputGroup inputGroup3">
-              <button id="login" type="button" (click)="iniciarSesion()" >Iniciar Sesión
-                <i class="fa fa-sign-in" aria-hidden="true"></i>
-              </button>
-          
+               <button id="login" type="button" (click)="iniciarSesion()" >Iniciar Sesión
+               <i class="fa fa-sign-in" aria-hidden="true"></i>
+               </button>
             </div>
             <!--<h5><a href="/cambiarcotnraseña">Restablecer contraseña</a></h5>-->
-            <mat-card *ngIf="mensaje" class="error-message">{{mensaje}}</mat-card>
-            <mat-card *ngIf="error">{{error}} </mat-card>     
-            </form>
-    </div>
- 
-<footer>
-       
-  <div class="container-footer-all">
-   
-       <div class="container-body">
-
-           <div class="colum1">
-            
-              <img src="https://www.jaimetorres.net/wp-content/uploads/2020/02/LogoJT01.png">
-              
-               <h1>Mas informacion de la compañia</h1>
-
-               <p>Sociedad Anónima fundada en 1980, dedicada a la organización, administración,
-                 custodia y procesamiento de información cíclica y masiva.</p>
-                 <div class="logos-incontect">
-                  <img style=" margin-left: 30px;" src="assets/logos/LogosIcontec.png" width="300" height="131">
-                 </div>
-           </div>
-
-           <div class="colum2">
-
-               <h1>Redes Sociales</h1>
-
-               <div class="row">
-                <a href="https://www.facebook.com/JaimeTorresCia"> 
-                  <img src="assets/logos/facebook.png"></a>
-                  <label>Siguenos en Facebook</label>
+            <div *ngIf="mensaje" class="error-message">{{mensaje}}</div>
+            <mat-card *ngIf="error">{{error}} </mat-card>
+         </form>
+      </div>
+      <footer>
+         <div class="container-footer-all">
+            <div class="container-body">
+               <div class="colum1">
+                  <img src="https://www.jaimetorres.net/wp-content/uploads/2020/02/LogoJT01.png">
+                  <h1>Más información de la compañía</h1>
+                  <p>Sociedad Anónima fundada en 1980, dedicada a la organización, administración,
+                     custodia y procesamiento de información cíclica y masiva.
+                  </p>
+                  <div class="logos-incontect">
+                     <img style=" margin-left: 30px;" src="assets/logos/LogosIcontec.png" width="300" height="131">
+                  </div>
                </div>
-               <div class="row">
-                <a href="https://twitter.com/JaimeTorresCia">
-                   <img src="assets/logos/Twitter.png">
-                  </a>
-                   <label>Siguenos en Twitter</label>
+               <div class="colum2">
+                  <h1>Redes Sociales</h1>
+                  <div class="row">
+                     <a href="https://www.facebook.com/JaimeTorresCia"> 
+                     <img src="assets/logos/facebook.png"></a>
+                     <label>Síguenos en Facebook</label>
+                  </div>
+                  <div class="row">
+                     <a href="https://twitter.com/JaimeTorresCia">
+                     <img src="assets/logos/Twitter.png">
+                     </a>
+                     <label>Síguenos en Twitter</label>
+                  </div>
+                  <div class="row">
+                     <a href="https://www.instagram.com/jaimetorrescia/">
+                     <img src="assets/logos/instagram.png">
+                     </a>
+                     <label>Síguenos en Instagram</label>
+                  </div>
+                  <div class="row">
+                     <a href="https://www.youtube.com/channel/UCmF3NiX2-3epY1XN_Sc4eiA?view_as=subscriber">
+                     <img src="assets/logos/youtube.png">
+                     </a>
+                     <label>Síguenos en You Tube</label>
+                  </div>
                </div>
-               <div class="row">
-                <a href="https://www.instagram.com/jaimetorrescia/">
-                   <img src="assets/logos/instagram.png">
-                  </a>
-                   <label>Siguenos en Instagram</label>
+               <div class="colum3">
+                  <h1>Información Contactos</h1>
+                  <div class="row2">
+                     <img src="assets/logos/ubicacionlogo.png">
+                     <label>Oficina principal
+                     Cra 26 # 61C - 07</label>
+                  </div>
+                  <div class="row2">
+                     <img src="assets/logos/telefonologo.png">
+                     <label>+57 1 487 78 53</label>
+                  </div>
+                  <div class="row2">
+                     <img src="assets/logos/correo.png">
+                     <label>serviciocliente@jaimetorres.net</label>
+                  </div>
                </div>
-               <div class="row">
-                <a href="https://www.youtube.com/channel/UCmF3NiX2-3epY1XN_Sc4eiA?view_as=subscriber">
-                   <img src="assets/logos/youtube.png">
-                  </a>
-                   <label>Siguenos en Youtube</label>
-               </div>
-               
-           </div>
-
-           <div class="colum3">
-
-               <h1>Informacion Contactos</h1>
-
-               <div class="row2">
-                   <img src="assets/logos/ubicacionlogo.png">
-                   <label>Oficina principal
-                    Cra 26 # 61C - 07</label>
-               </div>
-
-               <div class="row2">
-                   <img src="assets/logos/telefonologo.png">
-                   <label>+57 1 487 78 53</label>
-               </div>
-
-               <div class="row2">
-                   <img src="assets/logos/correo.png">
-                    <label>serviciocliente@jaimetorres.net</label>
-
-               </div>
-
-           </div>
-
-       </div>
-   
-   </div>
-   
-   <div class="container-footer">
-          <div class="footer">
+            </div>
+         </div>
+         <div class="container-footer">
+            <div class="footer">
                <div class="copyright">
-                   © 2023 Todos los Derechos Reservados | <a href="https://www.jaimetorres.net/">Jaime Torres C. y Cía. S.A.
+                  © 2023 Todos los Derechos Reservados | <a href="https://www.jaimetorres.net/">Jaime Torres C. y Cía. S.A.
                   </a>
                </div>
-
                <div class="information">
-                   <a href="https://www.jaimetorres.net/compania/">Informacion Compañia</a> | <a href="https://www.jaimetorres.net/politica-de-privacidad/">Privacion y Politica</a> | <a href="">V6.1.0</a>
+                  <a href="https://www.jaimetorres.net/compania/">Información Compañía</a> | <a href="https://www.jaimetorres.net/politica-de-privacidad/">Privación y Política</a> | <a href="">V 6.1.0</a>
                </div>
-           </div>
-
-    </div>
-
-  
-     
-   
-</footer>
-
-
-
-
-  
-
-        
-
-</body>
+            </div>
+         </div>
+      </footer>
+   </body>
 </html>

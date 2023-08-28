@@ -28,14 +28,12 @@ export class PilaenlaceService {
   }
 
   buscarPlanilla(tipo: string, docu: string, anio: string, mes: string):Observable<Planillas[]> {
-
-    console.log(tipo,docu, anio, mes)
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     })
     if (!this.token){
     }
-    return this.http.get<Planillas[]>(`https://prbtsoa.enlace-apb.com/sinapsis-api/services/getPlanillasIndependientes/${tipo}/${docu}/${anio}-${mes}`,{ headers });  
+    return this.http.get<Planillas[]>(`https://prbusr.enlace-apb.com/sinapsis-api/services/getPlanillasIndependientes/${tipo}/${docu}/${anio}-${mes}`,{ headers });  
   }
 
 

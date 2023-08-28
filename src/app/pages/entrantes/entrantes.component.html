@@ -189,7 +189,7 @@
       <td></td>     
       <td><mat-form-field class="example-full-width">
           <mat-label>Tipo Gestion</mat-label>
-          <mat-select   placeholder="SELECCCION" [(value)]="tipoGestionP" (selectionChange)="tipoGestion($event.value)">
+          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionP" (selectionChange)="tipoGestion($event.value)" formControlName="tipificacioP">
             <mat-option *ngFor="let p of (  tipoGestion$ | async )" [value]="p.idEstadoGestion">
               {{p.nombre}}
             </mat-option>
@@ -199,7 +199,8 @@
         
         <td><mat-form-field class="example-full-width" >
           <mat-label>Subtipo Gestion</mat-label>
-          <mat-select placeholder="SELECCCION" (selectionChange)="subtipoGestion($event.value)" >
+          <mat-select placeholder="SELECCCION" (selectionChange)="subtipoGestion($event.value)" formControlName="tipificacioH"
+          [(value)]="tipoGestionH" >
             <mat-option *ngFor="let p of (  subTipoGestion$ | async )" [value]="p.idEstadoGestion">
               {{p.nombre}}
             </mat-option>
@@ -228,12 +229,13 @@
   
         <section class="example-form">
           <div class="example-button-row">
-          <button mat-raised-button color="primary"  [disabled]="formContacto.invalid" [disabled]="formGuardar.invalid" >
+          <button mat-raised-button color="primary"  [disabled]="formContacto.invalid" [disabled]="formGuardar.invalid"  >
           <mat-icon>call</mat-icon>
           <span>GUARDAR</span>
           </button>
         <button mat-raised-button color="accent"  (click)="cancelarGestion()" style="cursor: pointer">
           CANCELAR</button>
+         
           </div>
           </section>
         <mat-divider></mat-divider> 
@@ -351,16 +353,16 @@
   </mat-card-content>
 </mat-card>
 
-   <!-- 
+   <!-- -->
 <hr>
     <pre>
-        estado: {{formContacto.valid}}
+        estado: {{formGuardar.valid}}
         <br>
-        Status: {{formContacto.status}}
+        Status: {{formGuardar.status}}
     </pre>
     <pre>
-        {{formContacto.value | json }}
-    </pre> -->
+        {{formGuardar.value | json }}
+    </pre> 
  
 
 

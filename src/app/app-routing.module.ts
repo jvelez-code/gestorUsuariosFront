@@ -12,6 +12,7 @@ import { TokenComponent } from './pages/login/recuperar/token/token.component';
 import { Not403Component } from './pages/not403/not403.component';
 import { Not404Component } from './pages/not404/not404.component';
 import { GuardService } from './_services/guard.service';
+import { CambiarEmpresaComponent } from './pages/cambiar-empresa/cambiar-empresa.component';
 
 const routes: Routes = [
   { path: 'filtroEntrante', component: FiltroClienteComponent, children:[
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'secretariaVirtual', component: FiltroSecretariaComponent, canActivate: [GuardService] },
   { path: 'estadoExtension', component: ExtadoExtComponent, canActivate: [GuardService] },
   { path: 'clientes', component: ClientesComponent },
+  { path: 'usuarioEmpresa', component: CambiarEmpresaComponent },
   {
     path: 'recuperar', component: RecuperarComponent, children: [
       { path: ':token', component: TokenComponent }

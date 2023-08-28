@@ -1,5 +1,5 @@
  import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
  interface ErrorValidate {
@@ -48,6 +48,16 @@ export class ValidadoresService {
     }
     
 
+  }
+
+
+  validatetipo(control: FormControl): { [s: string]: boolean } | null {
+    if (control.value === null) {
+      return {
+        validateGreaterThanZero: true
+      };
+    }
+    return null;
   }
 
 

@@ -30,6 +30,8 @@ import { Usuarios } from 'src/app/_model/usuarios';
 import { FiltroEntranteDTO } from 'src/app/_dto/filtroEntranteDTO';
 import { UsuarioService } from 'src/app/_services/usuario.service';
 import { CantidadGestionDTO } from 'src/app/_dto/CantidadGestionDTO ';
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
+import { LlamadaEntranteService } from 'src/app/_services/llamada-entrante.service';
 
 
 
@@ -61,8 +63,9 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   idCliente   !: string;
   cardCliente !: boolean;
   cardManual !: boolean;
-  fechafin !: Date 
+  fechafin !: Date;
 
+  valorPredeterminado : any ='0000000'
   nroExt !: any;
   colorExt !: any;
   idExt !: any;
@@ -94,6 +97,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     private contactoService :ContactoService,
     private askEstadoExtensionService: AskEstadoExtensionService,
     private usuarioService : UsuarioService,
+    private llamadaEntranteService : LlamadaEntranteService,
     private router: Router,
     private snackBar: MatSnackBar) { 
 
@@ -126,7 +130,10 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
       this.colorExt = data.askEstado?.color;
       this.idExt = data.askEstado?.idEstado;
       this.nroExt = data.idExtension;
+      this.valorPredeterminado = data.numeroOrigen;
       this.usuarioService.setExtensionCambio(this.nroExt);
+      this.clienteService.setnumeroReal(this.valorPredeterminado);
+     
 
         
 
@@ -154,9 +161,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     this.cardManual=true;
     
 
-    this.formBuscar = new FormGroup({
-       'nroDocumento': new FormControl('')
-    });
+   
 
     this.formAgente   = new FormGroup({
       'agente': new FormControl(''),
@@ -172,6 +177,12 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
       'tipoDoc': new FormControl(''),
       'identificacion': new FormControl('')
    });
+
+   this.formBuscar = new FormGroup({
+    'nroDocumento': new FormControl('')
+ });
+
+   
 
     this.tipoDocumento$=this.tipoDocumentoService.buscar();
 
@@ -204,13 +215,36 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
       });
         if (this.idExt===3){
           const filtroEntranteDTO ={  nroDocumento : this.documentoExt }
-          this.clienteService.asteriskCliente(filtroEntranteDTO).subscribe(data=>{   
-             this.formCliente = new FormGroup({
-            'cliente': new FormControl(data.razonSocial),
-            'tipoDoc': new FormControl(data.tipoDocumento.tipoDoc),
-            'identificacion': new FormControl(data.nroDocumento)
-         });
+          this.clienteService.asteriskCliente(filtroEntranteDTO).subscribe(data=>{ 
+
+            if(data === null){
+              this.llamadaEntranteService.LlamadaEntrante(filtroEntranteDTO).subscribe((data:any) =>{
+                
+                this.clienteService.setcallid(data[0].id_asterisk);
+                this.formCliente = new FormGroup({
+                  'cliente': new FormControl(''),
+                  'tipoDoc': new FormControl(data[0].tipo_doc),
+                  'identificacion': new FormControl(data[0].numero_documento)
+               });
+              });
+
+            }  else{
+              this.formCliente = new FormGroup({
+                'cliente': new FormControl(data.razonSocial),
+                'tipoDoc': new FormControl(data.tipoDocumento.tipoDoc),
+                'identificacion': new FormControl(data.nroDocumento)
+             });
+            }
+            
         });
+        }
+        else if (this.idExt !==3){
+             this.formCliente = new FormGroup({
+            'cliente': new FormControl(''),
+            'tipoDoc': new FormControl(''),
+            'identificacion': new FormControl('')
+         });
+      
         }
       });
 
@@ -241,7 +275,12 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   buscarManual(){
     this.cardCliente=true;
     this.cardManual=false;
+    this.clienteService.setDocumentoNuevo(this.formCliente.value['identificacion'])
+    this.formBuscar = new FormGroup({
+      'nroDocumento': new FormControl(this.formCliente.value['identificacion'])
+   });
 
+   
   }
 
   
@@ -251,12 +290,21 @@ buscarCliente() {
       const filtroEntranteDTO= {tipoDoc:this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento']}    
     
       this.clienteService.filtroCliente(filtroEntranteDTO).subscribe( data =>{
+       
       if(data){  
       this.idCliente =data.idCliente;
       this.clienteService.setIdClienteCambio(this.idCliente);
 
       this.router.navigate(['gestionEntrante']);     
     } else {
+
+      this.clienteService.getDocumentoNuevo().subscribe(data=>{
+        console.log(this.formCliente.value['identificacion'],1);
+  
+        console.log(data,2)
+  
+      });
+  
       this.router.navigate(['clientes']);    
     }
     });
