@@ -27,7 +27,7 @@ import * as moment from 'moment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginService } from 'src/app/_services/login.service';
 import { Usuarios } from 'src/app/_model/usuarios';
-import { FiltroEntranteDTO } from 'src/app/_dto/filtroEntranteDTO';
+import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
 import { UsuarioService } from 'src/app/_services/usuario.service';
 import { CantidadGestionDTO } from 'src/app/_dto/CantidadGestionDTO ';
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
@@ -214,11 +214,11 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
         
       });
         if (this.idExt===3){
-          const filtroEntranteDTO ={  nroDocumento : this.documentoExt }
-          this.clienteService.asteriskCliente(filtroEntranteDTO).subscribe(data=>{ 
+          const parametrosDTO ={  nroDocumento : this.documentoExt }
+          this.clienteService.asteriskCliente(parametrosDTO).subscribe(data=>{ 
 
             if(data === null){
-              this.llamadaEntranteService.LlamadaEntrante(filtroEntranteDTO).subscribe((data:any) =>{
+              this.llamadaEntranteService.LlamadaEntrante(parametrosDTO).subscribe((data:any) =>{
                 
                 this.clienteService.setcallid(data[0].id_asterisk);
                 this.formCliente = new FormGroup({
@@ -257,9 +257,9 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
 
   buscarAuto(){
 
-    const filtroEntranteDTO= {tipoDoc: this.formCliente.value['tipoDoc'], nroDocumento: this.formCliente.value['identificacion'] }    
+    const parametrosDTO= {tipoDoc: this.formCliente.value['tipoDoc'], nroDocumento: this.formCliente.value['identificacion'] }    
     
-      this.clienteService.filtroCliente(filtroEntranteDTO).subscribe( data =>{
+      this.clienteService.filtroCliente(parametrosDTO).subscribe( data =>{
       this.idCliente =data.idCliente;
       this.clienteService.setIdClienteCambio(this.idCliente);
 
@@ -287,9 +287,9 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   
 
 buscarCliente() {
-      const filtroEntranteDTO= {tipoDoc:this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento']}    
+      const parametrosDTO= {tipoDoc:this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento']}    
     
-      this.clienteService.filtroCliente(filtroEntranteDTO).subscribe( data =>{
+      this.clienteService.filtroCliente(parametrosDTO).subscribe( data =>{
        
       if(data){  
       this.idCliente =data.idCliente;

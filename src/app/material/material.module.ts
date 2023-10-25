@@ -17,7 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { CustomDateAdapter } from './custom-adapter';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
@@ -26,6 +26,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [],
@@ -56,7 +58,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatStepperModule,
     MatSlideToggleModule,
     MatGridListModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTabsModule,    
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginatorImpl },

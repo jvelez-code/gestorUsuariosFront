@@ -23,7 +23,7 @@ export class CambiarEmpresaComponent implements  OnInit {
   displayedColumns: string[] = ['usuario','primerNombre','primerApellido','empresa.descripcion',
   'adicional', 'acciones'];
   dataSource !: MatTableDataSource<Usuario>;
-  filtroEntranteDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa  }
+  parametrosDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa  }
 
   constructor(
     
@@ -41,8 +41,8 @@ export class CambiarEmpresaComponent implements  OnInit {
   }
 
   buscarAgente(){
-      this.filtroEntranteDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa }
-      this.usuarioService.buscar(this.filtroEntranteDTO).subscribe(data =>{
+      this.parametrosDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa }
+      this.usuarioService.buscar(this.parametrosDTO).subscribe(data =>{
       this.dataSource = new MatTableDataSource(data);    
       })
 
@@ -52,12 +52,12 @@ export class CambiarEmpresaComponent implements  OnInit {
     }
 
   actualizar(){
-    this.filtroEntranteDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa }
+    this.parametrosDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa }
 
-    console.log(this.filtroEntranteDTO,'hOLA')
+    console.log(this.parametrosDTO,'hOLA')
   
-    this.empresaService.modificarEmp(this.filtroEntranteDTO).subscribe(()=>{
-      this.usuarioService.buscar(this.filtroEntranteDTO).subscribe(data =>{
+    this.empresaService.modificarEmp(this.parametrosDTO).subscribe(()=>{
+      this.usuarioService.buscar(this.parametrosDTO).subscribe(data =>{
         this.dataSource = new MatTableDataSource(data);    
         })      
       this.empresaService.setMensajecambio('SE MODIFICÓ');

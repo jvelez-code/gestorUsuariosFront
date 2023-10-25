@@ -43,7 +43,6 @@ export class AppComponent {
 
   cerrarApp(){
 
-
     if(this.loginService.agenteDTO.idUsuario){
     
     const askEstadoExtension = 

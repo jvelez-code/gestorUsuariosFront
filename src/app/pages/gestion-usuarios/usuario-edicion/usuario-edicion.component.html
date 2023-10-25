@@ -1,0 +1,41 @@
+<mat-card> Ingrese los datos del Usuario</mat-card>
+
+<!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
+<form class="example-container" [formGroup]="form" #frmUsuarios="ngForm" (ngSubmit)="operar()">
+
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="idUsuario" required formControlName="idUsuario">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="example-full-width">            
+        <input matInput placeholder="activo ***" required formControlName="enabled">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="correo ***" required formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="roles ***" required formControlName="roles" >
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="usuario ***" required formControlName="username">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Clave***" formControlName="password">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="frmUsuarios.invalid">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button mat-raised-button color="accent" routerLink='/gestionUsuarios' type="button">
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>
+
+</form>

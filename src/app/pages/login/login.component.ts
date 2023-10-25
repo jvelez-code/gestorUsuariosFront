@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   fechaActual: Date = new Date(moment().format("YYYY-MM-DD HH:mm:ss"));
   fechaVencimiento!: Date;
   mensajecaptcha!: string;
-  captchaVerified: boolean = false;
+  captchaVerified: boolean = true;
   captchaactivo: boolean = true;
 
   constructor(
@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   iniciarSesion() {
     
-    const filtroEntranteDTO = { loginAgente: this.usuario };
+    const parametrosDTO = { loginAgente: this.usuario };
 
-    this.usuarioService.loginValidacion(filtroEntranteDTO).subscribe((data) => {
+    this.usuarioService.loginValidacion(parametrosDTO).subscribe((data) => {
       if (data === null) {
         this.mensaje = "Por favor, contacta al administrador del sistema.";
         return;
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           let decodedToken = helper.decodeToken(data.access_token);
           this.loginService.setUsuariosCambio(decodedToken.user_name);
           const askEstadoExtension = { loginAgente: decodedToken.user_name };
-          const filtroEntranteDTO = { loginAgente: decodedToken.user_name };
+          const parametrosDTO = { loginAgente: decodedToken.user_name };
 
           this.askEstadoExtensionService
             .buscarxAgentes(askEstadoExtension)
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             });
 
           this.usuarioService
-            .buscarAgenteCampana(filtroEntranteDTO)
+            .buscarAgenteCampana(parametrosDTO)
             .subscribe((data) => {
               this.loginService.agenteDTO = data;
               console.log(data);

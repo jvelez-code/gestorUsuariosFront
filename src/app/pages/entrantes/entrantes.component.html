@@ -189,7 +189,8 @@
       <td></td>     
       <td><mat-form-field class="example-full-width">
           <mat-label>Tipo Gestion</mat-label>
-          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionP" (selectionChange)="tipoGestion($event.value)" formControlName="tipificacioP">
+          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionP" 
+          (selectionChange)="tipoGestion($event.value)" formControlName="tipificacioP">
             <mat-option *ngFor="let p of (  tipoGestion$ | async )" [value]="p.idEstadoGestion">
               {{p.nombre}}
             </mat-option>
@@ -199,8 +200,8 @@
         
         <td><mat-form-field class="example-full-width" >
           <mat-label>Subtipo Gestion</mat-label>
-          <mat-select placeholder="SELECCCION" (selectionChange)="subtipoGestion($event.value)" formControlName="tipificacioH"
-          [(value)]="tipoGestionH" >
+          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionH" 
+          (selectionChange)="subtipoGestion($event.value)" formControlName="tipificacioH">
             <mat-option *ngFor="let p of (  subTipoGestion$ | async )" [value]="p.idEstadoGestion">
               {{p.nombre}}
             </mat-option>
@@ -353,7 +354,7 @@
   </mat-card-content>
 </mat-card>
 
-   <!-- -->
+   <!-- 
 <hr>
     <pre>
         estado: {{formGuardar.valid}}
@@ -363,7 +364,7 @@
     <pre>
         {{formGuardar.value | json }}
     </pre> 
- 
+ -->
 
 
         

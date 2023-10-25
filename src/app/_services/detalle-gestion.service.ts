@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
+import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Parametros } from '../_model/parametros';
 import { CantidadGestionDTO } from '../_dto/CantidadGestionDTO ';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
@@ -20,10 +20,10 @@ export class DetalleGestionService {
     private router: Router ) { }
 
 
-    detalleHistoricoS(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
+    detalleHistoricoS(parametrosDTO: ParametrosDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(filtroEntranteDTO);
-      return this.http.post<FiltroEntranteDTO[]>(`${this.url}/buscarCliente`,body,{'headers':headers});
+      const body=JSON.stringify(parametrosDTO);
+      return this.http.post<ParametrosDTO[]>(`${this.url}/buscarCliente`,body,{'headers':headers});
     }
 
     cantidadGestion(askEstadoExtension: AskEstadoExtension){

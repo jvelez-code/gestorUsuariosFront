@@ -7,7 +7,7 @@
     <mat-form-field>
         <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
     </mat-form-field><div *ngIf="nombreNoValido" class="error-message">
-      Debe ser mínimo  de 4 caracteres
+      Debe ser entre 4 y 62 caracteres
     </div>
     <mat-form-field>
         <input matInput placeholder="Correo"   formControlName="correo">
@@ -35,7 +35,7 @@
 </div>
 <div>
 <button mat-raised-button color="primary" [disabled]="formClienteMod.invalid">Aceptar</button>
-<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>
+<!--<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>-->
 </div>
 </form>
 </div>

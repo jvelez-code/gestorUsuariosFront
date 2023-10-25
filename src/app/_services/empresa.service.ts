@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
+import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Empresa } from '../_model/empresa';
 import { GenericService } from './generic.service';
 import { Subject } from 'rxjs';
@@ -23,10 +23,10 @@ export class EmpresaService extends GenericService<Empresa>{
     );
   }
 
-  modificarEmp(filtroEntranteDTO: FiltroEntranteDTO) {
+  modificarEmp(parametrosDTO: ParametrosDTO) {
     const headers = { 'content-type': 'application/json'}  
-    const body=JSON.stringify(filtroEntranteDTO);
-    return this.http.post<FiltroEntranteDTO>(`${this.url}/modificar`,body,{'headers':headers});
+    const body=JSON.stringify(parametrosDTO);
+    return this.http.post<ParametrosDTO>(`${this.url}/modificar`,body,{'headers':headers});
   }
     ////////////////// get, set ////////////////
 

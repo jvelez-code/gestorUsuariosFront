@@ -12,7 +12,13 @@ import { TokenComponent } from './pages/login/recuperar/token/token.component';
 import { Not403Component } from './pages/not403/not403.component';
 import { Not404Component } from './pages/not404/not404.component';
 import { GuardService } from './_services/guard.service';
-import { CambiarEmpresaComponent } from './pages/cambiar-empresa/cambiar-empresa.component';
+import { CambiarEmpresaComponent } from './_services/cambiar-empresa/cambiar-empresa.component';
+import { GestionComercialComponent } from './pages/gestion-comercial/gestion-comercial.component';
+import { SecretariaVirtualComponent } from './pages/secretaria-virtual/secretaria-virtual.component';
+import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
+import { ProductividadComponent } from './pages/productividad/productividad.component';
+import { ExtensionesComponent } from './pages/extensiones/extensiones.component';
+import { UsuarioEdicionComponent } from './pages/gestion-usuarios/usuario-edicion/usuario-edicion.component';
 
 const routes: Routes = [
   { path: 'filtroEntrante', component: FiltroClienteComponent, children:[
@@ -21,10 +27,19 @@ const routes: Routes = [
  },
   { path: 'gestionEntrante', component: EntrantesComponent },
   { path: 'filtroSaliente', component: FiltroSalienteComponent ,canActivate: [GuardService] },
-  { path: 'secretariaVirtual', component: FiltroSecretariaComponent, canActivate: [GuardService] },
+  { path: 'filtrosecretaria', component: FiltroSecretariaComponent, canActivate: [GuardService] },
   { path: 'estadoExtension', component: ExtadoExtComponent, canActivate: [GuardService] },
-  { path: 'clientes', component: ClientesComponent },
-  { path: 'usuarioEmpresa', component: CambiarEmpresaComponent },
+  { path: 'clientes', component: ClientesComponent, canActivate: [GuardService] },
+  { path: 'usuarioEmpresa', component: CambiarEmpresaComponent , canActivate: [GuardService]},
+  { path: 'gestionComercial', component: GestionComercialComponent },
+  { path: 'secretariaVirtual', component: SecretariaVirtualComponent, canActivate: [GuardService] },
+  { path: 'gestionUsuarios', component: GestionUsuariosComponent, children:[
+    { path: 'nuevo', component: UsuarioEdicionComponent },
+    { path: 'edicion/:id', component: UsuarioEdicionComponent },
+    ] 
+  },
+  { path: 'productividad', component: ProductividadComponent, canActivate: [GuardService] },
+  { path: 'extensiones', component: ExtensionesComponent , canActivate: [GuardService]},
   {
     path: 'recuperar', component: RecuperarComponent, children: [
       { path: ':token', component: TokenComponent }

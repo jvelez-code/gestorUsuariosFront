@@ -4,39 +4,47 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
-import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
+import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Usuarios } from '../_model/usuarios';
 import { Usuario } from '../_model/usuario';
+import { GenericService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class UsuarioService extends GenericService<Usuario>{
 
   private extensionCambio = new BehaviorSubject<number> ( 0 )
 
-  private url:string = `${environment.HOST}/usuarios`;
+  //private url:string = `${environment.HOST}/usuarios`;
 
-  constructor(private http: HttpClient,
+  /*constructor(private http: HttpClient,
     private router: Router
-    ) { }
+    ) { }*/
 
-    buscarAgenteCampana(filtroEntranteDTO : FiltroEntranteDTO) {
+    constructor(http: HttpClient) {
+      super(
+        http,
+        `${environment.HOST}/usuarios`
+      );
+    }
+
+    buscarAgenteCampana(parametrosDTO : ParametrosDTO) {
       const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(filtroEntranteDTO);
+      const body=JSON.stringify(parametrosDTO);
       return this.http.post<AgenteDTO>(`${this.url}/buscarExt`,body,{'headers':headers});
 
     }
 
-    loginValidacion(filtroEntranteDTO : FiltroEntranteDTO){
+    loginValidacion(parametrosDTO : ParametrosDTO){
       const headers = { 'content-type': 'application/json'} 
-      const body=JSON.stringify(filtroEntranteDTO);
+      const body=JSON.stringify(parametrosDTO);
       return this.http.post<Usuarios>(`${this.url}/buscarLogin`, body,{'headers':headers});
     }
 
-    buscar(filtroEntranteDTO : FiltroEntranteDTO){
+    buscar(parametrosDTO : ParametrosDTO){
       const headers = { 'content-type': 'application/json'} 
-      const body=JSON.stringify(filtroEntranteDTO);
+      const body=JSON.stringify(parametrosDTO);
       
       return this.http.post<Usuario[]>(`${this.url}/buscar`, body,{'headers':headers});
 

@@ -1,0 +1,357 @@
+<mat-tab-group>
+  <mat-tab label="Consulta de Clientes Comercial">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Gestión Comercial</mat-card-title>
+        <mat-card-subtitle>Fidelización</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <mat-form-field>
+          <mat-label>Ingresa rango de fechas </mat-label>
+          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+
+        </mat-form-field>
+        <br>
+
+        <br>
+
+        <form>
+          <h4>mat-select</h4>
+          <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="food">
+              <!--<mat-option *ngFor="let food of foods" [value]="food.value">
+                            {{food.viewValue}}
+                          </mat-option>-->
+            </mat-select>
+          </mat-form-field>
+          <p> Selected food: {{selectedValue}} </p>
+        </form>
+
+
+        <button mat-raised-button color="primary" (click)="buscar()">Consultar
+          <mat-icon>laptop</mat-icon>
+        </button>
+
+
+      </mat-card-actions>
+    </mat-card>
+
+    <br>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="idDetalleGestionComercial">
+        <th mat-header-cell *matHeaderCellDef> ID Gestión </th>
+        <td mat-cell *matCellDef="let element"> {{element.idDetalleGestionComercial}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="fechaGestion">
+        <th mat-header-cell *matHeaderCellDef> Fecha Gestión </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaGestion}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="fechaGestionCargue">
+        <th mat-header-cell *matHeaderCellDef> Fecha Cargue </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaGestionCargue}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="idAgente">
+        <th mat-header-cell *matHeaderCellDef> Agente </th>
+        <td mat-cell *matCellDef="let element"> {{element.idAgente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipoDocumentoCliente">
+        <th mat-header-cell *matHeaderCellDef> Tipo ID</th>
+        <td mat-cell *matCellDef="let element"> {{element.tipoDocumentoCliente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nroDocumentoCliente">
+        <th mat-header-cell *matHeaderCellDef> NIT </th>
+        <td mat-cell *matCellDef="let element"> {{element.nroDocumentoCliente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="razonSocialCliente">
+        <th mat-header-cell *matHeaderCellDef> Razón Social </th>
+        <td mat-cell *matCellDef="let element"> {{element.razonSocialCliente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreContacto">
+        <th mat-header-cell *matHeaderCellDef> Nombre Contacto </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreContacto}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="numeroContacto">
+        <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+        <td mat-cell *matCellDef="let element"> {{element.numeroContacto}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="celularContacto">
+        <th mat-header-cell *matHeaderCellDef> Célular </th>
+        <td mat-cell *matCellDef="let element"> {{element.celularContacto}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="correoElectronicoContacto">
+        <th mat-header-cell *matHeaderCellDef> Correo electronico </th>
+        <td mat-cell *matCellDef="let element"> {{element.correoElectronicoContacto}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ciudadCliente">
+        <th mat-header-cell *matHeaderCellDef> Ciudad </th>
+        <td mat-cell *matCellDef="let element"> {{element.ciudadCliente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="direccionCliente">
+        <th mat-header-cell *matHeaderCellDef> direccionCliente </th>
+        <td mat-cell *matCellDef="let element"> {{element.direccionCliente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreMotivo">
+        <th mat-header-cell *matHeaderCellDef> Motivo </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreMotivo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="regProyectadosCliente">
+        <th mat-header-cell *matHeaderCellDef> Reg. Proy. </th>
+        <td mat-cell *matCellDef="let element"> {{element.regProyectadosCliente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreEstadoGestion">
+        <th mat-header-cell *matHeaderCellDef> Tipo Gestion </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreEstadoGestion}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="regObtenidosCliente">
+        <th mat-header-cell *matHeaderCellDef> Reg. Obt. </th>
+        <td mat-cell *matCellDef="let element"> {{element.regObtenidosCliente}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="observacionDetGestion">
+        <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+        <td mat-cell *matCellDef="let element"> {{element.observacionDetGestion}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="nroGestionRealizadaDetGestion">
+        <th mat-header-cell *matHeaderCellDef> No. Ges. Realizada </th>
+        <td mat-cell *matCellDef="let element"> {{element.nroGestionRealizadaDetGestion}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="compromisosDetGestion">
+        <th mat-header-cell *matHeaderCellDef> Compromisos </th>
+        <td mat-cell *matCellDef="let element"> {{element.compromisosDetGestion}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ciclodeVida">
+        <th mat-header-cell *matHeaderCellDef> Ciclo de Vida </th>
+        <td mat-cell *matCellDef="let element"> {{element.ciclodeVida}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="activar">
+        <th mat-header-cell *matHeaderCellDef> activar </th>
+        <td mat-cell *matCellDef="let element"> {{element.activar}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+
+    <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+    </mat-paginator>
+
+  </mat-tab>
+  <mat-tab label="Cargue de Archivo">
+    <p>datos2</p>
+    <mat-form-field class="example-full-width">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button (click)="picker.open()">Open</button>
+  </mat-tab>
+
+  <mat-tab label="Ingreso Manual">
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button (click)="picker.open()">Open</button>
+
+    <mat-card class="example-card-cli">
+      <mat-card-header>
+        <mat-card-title>Ingreso Manual</mat-card-title>
+        <mat-card-subtitle>***</mat-card-subtitle>
+      </mat-card-header>
+
+      <form class="example-container" [formGroup]="form" #frmUsuarios="ngForm" (ngSubmit)="guardarGestion()">
+      <table>
+        <tr>
+          <td>Tipo Documento</td>
+          <td><mat-form-field class="example-full-width">
+            <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
+              <mat-option *ngFor="let p of (  tipoDocumento$ | async )" [value]="p.tipoDoc">
+                {{p.tipoDoc}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field></td>
+          <td>Documento</td>
+          <td><mat-form-field class="example-full-width">
+            <input matInput placeholder="Documento ***" formControlName="documento">
+          </mat-form-field></td>
+        </tr>
+
+        <tr>
+        <td>Empresa</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Empresa ***" formControlName="empresa">
+        </mat-form-field></td>
+        <td>Contacto</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Contacto ***" formControlName="contacto">
+        </mat-form-field></td>
+      </tr>
+
+      <tr>
+        <td>Teléfono</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Teléfono ***" formControlName="telefono">
+        </mat-form-field></td>
+        <td>Célular</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Célular ***" formControlName="celular">
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td>Correo</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Correo ***" formControlName="correo">
+        </mat-form-field></td>
+        <td>Dirección</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Dirección ***" formControlName="direccion">
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td>Ciudad</td>
+        <td><mat-form-field class="example-full-width">
+          <mat-select [(value)]="divipola">
+            <mat-option *ngFor="let d of (  divipola$ | async )" [value]="d.idZona">
+              {{d.nombre}}{{d.departamento}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field></td>
+        <td>Mótivo</td>
+        <td><mat-form-field class="example-full-width">
+          <mat-select [(value)]="motivo">
+            <mat-option *ngFor="let d of (  motivo$ | async )" [value]="d.idMotivo">
+              {{d.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td>Registros Proy.</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Registros ***" formControlName="registros">
+        </mat-form-field></td>
+        <td>Tipo Gestión</td>
+        <td><mat-form-field class="example-full-width">
+          <mat-select [(value)]="estadoComercial">
+            <mat-option *ngFor="let d of (  estadoComercial$ | async )" [value]="d.idEstadoGestion">
+              {{d.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td>Fecha Gestión</td>
+        <td>
+          <mat-form-field>
+            <mat-label>Ingresa rango de fechas </mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+  
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+  
+          </mat-form-field>
+        </td>
+        <td>Gestión realizada</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Gestión realizada ***" formControlName="gestionrealizada">
+        </mat-form-field></td>
+      </tr>
+      <tr>        
+        <td>Observación</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Observación ***" formControlName="observacion">
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td>Registros Obtenidos</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Registros Obtenidos ***" formControlName="regobtenidos">
+        </mat-form-field></td>
+        <td>No. Gestión Realizada</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder=" No.Gestión realizada ***" formControlName="gesrealizada">
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td>Compromiso</td>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Compromiso ***" formControlName="compromiso">
+        </mat-form-field></td>
+        <td>Ciclo de Vida</td>
+        <td><mat-form-field class="example-full-width">
+          <mat-select [(value)]="cicloVida">
+            <mat-option *ngFor="let d of (  cicloVida$ | async )" [value]="d.idCiclo">
+              {{d.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field></td>
+      </tr>  
+      
+      </table>
+
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <section>
+          <div class="example-button-row">
+            <button mat-raised-button color="primary">Guardar</button>
+          </div>
+        </section>
+      </mat-card-actions>
+
+      </form>
+    </mat-card>
+
+  </mat-tab>
+</mat-tab-group>

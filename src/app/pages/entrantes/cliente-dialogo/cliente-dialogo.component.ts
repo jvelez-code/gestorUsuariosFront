@@ -101,7 +101,7 @@ export class ClienteDialogoComponent implements OnInit{
   crearFormulario(){
 
     this.formClienteMod = this.fb.group({
-      'nombre': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
+      'nombre': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(64)]],
       'correo': ['',[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
       'telPrincipal': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'telCelular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],

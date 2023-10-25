@@ -30,7 +30,7 @@ export class Gestion {
 let gestion : Gestion
 
 
-/*this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data =>{
+/*this.usuarioService.buscarAgenteCampana(ParametrosDTO).subscribe(data =>{
     this.agenteDtos=data;
 
 

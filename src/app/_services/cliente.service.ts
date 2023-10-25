@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
+import { ParametrosDTO} from '../_dto/ParametrosDTO';
 import { Cliente } from '../_model/cliente';
 import { Parametros } from '../_model/parametros';
 import { GenericService } from './generic.service';
@@ -11,7 +11,7 @@ import { GenericService } from './generic.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService { //extends GenericService{
+export class ClienteService extends GenericService<Cliente> {
 
   private clienteCambio = new Subject<Cliente[]>();
   private idClienteCambio = new BehaviorSubject<string> ('000');
@@ -21,21 +21,28 @@ export class ClienteService { //extends GenericService{
   private numeroReal = new BehaviorSubject<string> ('000');
   private callid = new BehaviorSubject<string> ('000');
 
-  private url:string = `${environment.HOST}/clientes`;
+  //private url:string = `${environment.HOST}/clientes`;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router ) { }
+  // constructor(
+  //   private http: HttpClient,
+  //   private router: Router ) { }
 
-
-
-    modificar(cliente: Cliente) {
-      return this.http.put(this.url, cliente);
+    constructor(protected override http: HttpClient) {
+      super(
+        http,
+        `${environment.HOST}/clientes`
+      )
     }
 
-    listarPorId(id: number) {
-      return this.http.get<Cliente>(`${this.url}/${id}`);
-    }
+
+
+    // modificar(cliente: Cliente) {
+    //   return this.http.put(this.url, cliente);
+    // }
+
+    // listarPorId(id: number) {
+    //   return this.http.get<Cliente>(`${this.url}/${id}`);
+    // }
     
 
     guardarCliente(cliente: Cliente):Observable<any>{
@@ -44,9 +51,9 @@ export class ClienteService { //extends GenericService{
       return this.http.post<Cliente>(`${this.url}`, body, headers);
     }
 
-     filtroCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
+     filtroCliente(parametrosDTO: ParametrosDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(filtroEntranteDTO);
+      const body=JSON.stringify(parametrosDTO);
       return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});
     }
 
@@ -55,10 +62,10 @@ export class ClienteService { //extends GenericService{
       return this.http.post<Cliente[]>(`${this.url}/buscarId`, cliente);
     }
 
-    asteriskCliente(filtroEntranteDTO: FiltroEntranteDTO):Observable<any>{
+    asteriskCliente(parametrosDTO: ParametrosDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
-      const body=JSON.stringify(filtroEntranteDTO);
-      return this.http.post<FiltroEntranteDTO>(`${this.url}/buscarAsterisk`,body,{'headers':headers});
+      const body=JSON.stringify(parametrosDTO);
+      return this.http.post<ParametrosDTO>(`${this.url}/buscarAsterisk`,body,{'headers':headers});
     }
 
 

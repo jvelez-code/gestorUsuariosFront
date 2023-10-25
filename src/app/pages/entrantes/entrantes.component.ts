@@ -68,8 +68,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   gestionPadre !: number;
   gestionHijo !: number;
   panelOpenState = false;
-  tipoGestionP : number = 0;
-  tipoGestionH !: number;
+  tipoGestionP !: number ;
+  tipoGestionH !: any;
 
   nombreC !:String;
   correoC !:String;
@@ -78,7 +78,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   telCelularC !:String;
   callid !: string;
   cardCliente : boolean= false ;
-  actSutipo : boolean= true ;
 
  
   parametros !: Parametros;
@@ -174,9 +173,10 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       this.usuario=data;
      });
 
-     let FiltroEntranteDTO ={ loginAgente: this.usuario }
+     let ParametrosDTO ={ loginAgente: this.usuario }
 
-    this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data =>{
+
+    this.usuarioService.buscarAgenteCampana(ParametrosDTO).subscribe(data =>{
       this.idCampanaE = data.idCampanaE;
       this.idUsuario = data.idUsuario;   
       this.idEmpresa = data.idEmpresa;
@@ -201,7 +201,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     })
 
     this.clienteService.getcallid().subscribe(data =>{
-      console.log(data);
       this.callid=data;
     });
     
@@ -213,7 +212,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   
     this.clienteService.getnumeroReal().subscribe(data=>{
       this.numeroReal=data;
-      console.log(data,1)
     })
 
     this.formGuardar = this.fb.group({
@@ -237,8 +235,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
   clienteSelec(){
 
-    this.tipoGestionP = 0
-    this.tipoGestionH = 0
+    //this.tipoGestionP = 0
+    //this.tipoGestionH = 0
     const parametros= { tipoDoc:this.tipoDocumento, nroDoc:this.nroDocumento, prueba:this.nroDocumento }
     
     this.clienteService.getIdClienteCambio().subscribe(data=>{
@@ -291,6 +289,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
   tipoGestion(tipoGestionP:number){
     this.idEstadoP= tipoGestionP;
+    this.tipoGestionH = null;
     this.idEstadoH= this.tipoGestionH;
     const parametros= {  idEstadoPadre:this.tipoGestionP , tipoLlamada:this.tipoLlamada, }
 
@@ -299,9 +298,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     this.estadoGestionService.estadoGestionHijo(parametros).subscribe(data=>{
 
       if(Array.isArray(data) && data.length > 0){
-        this.actSutipo = false
       }else {
-        this.actSutipo = true;
+        this.tipoGestionH = 0;
       }
     });
 
@@ -456,9 +454,6 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     )    
   }
 
-  cancelarGestions(){
-    this.actSutipo = false      
-  }
 
   cancelarGestion(){
    this.clienteService.setFormCambio(this.cardCliente)

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { FiltroEntranteDTO } from '../_dto/filtroEntranteDTO';
 import { AgenteCampana } from '../_model/agenteCampana';
 
 @Injectable({

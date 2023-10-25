@@ -22,7 +22,13 @@ import { TokenComponent } from './pages/login/recuperar/token/token.component';
 import { ClienteDialogoComponent } from './pages/entrantes/cliente-dialogo/cliente-dialogo.component';
 import { NgHcaptchaModule } from 'ng-hcaptcha';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { CambiarEmpresaComponent } from './pages/cambiar-empresa/cambiar-empresa.component';
+import { CambiarEmpresaComponent } from './_services/cambiar-empresa/cambiar-empresa.component';
+import { GestionComercialComponent } from './pages/gestion-comercial/gestion-comercial.component';
+import { SecretariaVirtualComponent } from './pages/secretaria-virtual/secretaria-virtual.component';
+import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
+import { ProductividadComponent } from './pages/productividad/productividad.component';
+import { ExtensionesComponent } from './pages/extensiones/extensiones.component';
+import { UsuarioEdicionComponent } from './pages/gestion-usuarios/usuario-edicion/usuario-edicion.component';
 
 
 export function tokenGetter() {
@@ -42,7 +48,13 @@ export function tokenGetter() {
     RecuperarComponent,
     TokenComponent,
     ClienteDialogoComponent,
-    CambiarEmpresaComponent
+    CambiarEmpresaComponent,
+    GestionComercialComponent,
+    SecretariaVirtualComponent,
+    GestionUsuariosComponent,
+    ProductividadComponent,
+    ExtensionesComponent,
+    UsuarioEdicionComponent
   ],
   imports: [
     BrowserModule,

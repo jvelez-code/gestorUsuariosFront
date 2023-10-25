@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit{
       let decodedToken = helper.decodeToken(data.access_token);
       this.loginService.setUsuariosCambio(decodedToken.user_name);
 
-      const FiltroEntranteDTO ={  loginAgente : decodedToken.user_name }
-        this.usuarioService.buscarAgenteCampana(FiltroEntranteDTO).subscribe(data=>{
+      const parametrosDTO ={  loginAgente : decodedToken.user_name }
+        this.usuarioService.buscarAgenteCampana(parametrosDTO).subscribe(data=>{
         this.loginService.setagenteCampanaCambio(data);
         this.loginService.AgenteDTO=data;
       });    
