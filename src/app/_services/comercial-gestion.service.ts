@@ -4,11 +4,12 @@ import { GestionComercialDto } from '../_dto/GestionComercialDto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
+import { DetalleGestionComercial } from '../_model/detalleGestionComercial';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ComercialGestionService extends GenericService<GestionComercialDto> {
+export class ComercialGestionService extends GenericService<DetalleGestionComercial> {
 
   
   constructor(protected override  http: HttpClient) {

@@ -22,13 +22,19 @@ import { TokenComponent } from './pages/login/recuperar/token/token.component';
 import { ClienteDialogoComponent } from './pages/entrantes/cliente-dialogo/cliente-dialogo.component';
 import { NgHcaptchaModule } from 'ng-hcaptcha';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { CambiarEmpresaComponent } from './_services/cambiar-empresa/cambiar-empresa.component';
+import { CambiarEmpresaComponent } from './pages/cambiar-empresa/cambiar-empresa.component';
 import { GestionComercialComponent } from './pages/gestion-comercial/gestion-comercial.component';
 import { SecretariaVirtualComponent } from './pages/secretaria-virtual/secretaria-virtual.component';
 import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
 import { ProductividadComponent } from './pages/productividad/productividad.component';
 import { ExtensionesComponent } from './pages/extensiones/extensiones.component';
 import { UsuarioEdicionComponent } from './pages/gestion-usuarios/usuario-edicion/usuario-edicion.component';
+import { RouterModule } from '@angular/router';
+import { FidelizacionComponent } from './pages/fidelizacion/fidelizacion.component';
+import { FidelizacionUsuComponent } from './pages/gestion-comercial/fidelizacion-usu/fidelizacion-usu.component';
+import { CicloVidaComponent } from './pages/gestion-comercial/ciclo-vida/ciclo-vida.component';
+import { Not404Component } from './pages/not404/not404.component';
+import { Not403Component } from './pages/not403/not403.component';
 
 
 export function tokenGetter() {
@@ -54,7 +60,12 @@ export function tokenGetter() {
     GestionUsuariosComponent,
     ProductividadComponent,
     ExtensionesComponent,
-    UsuarioEdicionComponent
+    UsuarioEdicionComponent,
+    FidelizacionComponent,
+    FidelizacionUsuComponent,
+    CicloVidaComponent,
+    Not404Component,
+    Not403Component
   ],
   imports: [
     BrowserModule,
@@ -64,11 +75,12 @@ export function tokenGetter() {
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["10.1.0.231:9898"],
-        //allowedDomains: [environment.HOST.substring(7)],
+        //allowedDomains: ["10.1.0.231:9898"],
+        allowedDomains: [environment.HOST.substring(7)],
         disallowedRoutes: [`http://${environment.HOST.substring(7)}/login/enviarCorreo`],
       },
     }),

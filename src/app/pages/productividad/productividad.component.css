@@ -1,0 +1,24 @@
+   /*CARD*/
+
+   .example-card {
+    max-width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+
+/*Dividri pantalla*/
+.container {
+    display: flex;
+  }
+  
+  .left-column {
+    flex: 1;
+  }
+  
+  .right-column {
+    flex: 1;
+  }

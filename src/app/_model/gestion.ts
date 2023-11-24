@@ -2,6 +2,7 @@ import { Campana } from "./campanas";
 import { Cliente } from "./cliente";
 import { Contacto } from "./contactos";
 import { DetalleGestion } from "./detalleGestion";
+import { DetalleGestionComercial } from "./detalleGestionComercial";
 import { EstadoGestion } from "./estadoGestion";
 import { Usuario } from "./usuario";
 
@@ -14,6 +15,7 @@ export class Gestion {
     estadoGestion ?: EstadoGestion ;
     listaContacto ?: Contacto [];
     listaDetalleGestion ?: DetalleGestion[] ;
+    listaDetalleGestionComercial ?: DetalleGestionComercial[] ;
     agente?: Usuario;
     fechaGestion ?: Date ;
     idArchivoExclusion ?: string ;

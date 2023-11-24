@@ -35,6 +35,12 @@ export class GestionService {
       return this.http.post<Gestion>(`${this.url}`, body, headers);
     }
 
+    guardarGestionComercial(gestion: Gestion) {
+      const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
+      const body=JSON.stringify(gestion);
+      return this.http.post<Gestion>(`${this.url}/comercial`, body, headers);
+    }
+
     //////// get, set ///////////////////
 
     getGestionCambio(){

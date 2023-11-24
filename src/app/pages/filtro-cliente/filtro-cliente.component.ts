@@ -99,10 +99,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
     private usuarioService : UsuarioService,
     private llamadaEntranteService : LlamadaEntranteService,
     private router: Router,
-    private snackBar: MatSnackBar) { 
-
-      
-    }
+    private snackBar: MatSnackBar) {   }
 
 
 
@@ -180,7 +177,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
 
    this.formBuscar = new FormGroup({
     'nroDocumento': new FormControl('')
- });
+    });
 
    
 
@@ -298,12 +295,12 @@ buscarCliente() {
       this.router.navigate(['gestionEntrante']);     
     } else {
 
-      this.clienteService.getDocumentoNuevo().subscribe(data=>{
-        console.log(this.formCliente.value['identificacion'],1);
+      // this.clienteService.getDocumentoNuevo().subscribe(data=>{
+      //   console.log(this.formCliente.value['identificacion'],1);
   
-        console.log(data,2)
+      //   console.log(data,2)
   
-      });
+      // });
   
       this.router.navigate(['clientes']);    
     }

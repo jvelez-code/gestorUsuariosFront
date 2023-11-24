@@ -9,16 +9,21 @@ import { FiltroSecretariaComponent } from './pages/filtro-secretaria/filtro-secr
 import { LoginComponent } from './pages/login/login.component';
 import { RecuperarComponent } from './pages/login/recuperar/recuperar.component';
 import { TokenComponent } from './pages/login/recuperar/token/token.component';
-import { Not403Component } from './pages/not403/not403.component';
-import { Not404Component } from './pages/not404/not404.component';
+//import { Not403Component } from './pages/not403/not403.component';
+//import { Not404Component } from './pages/not404/not404.component';
 import { GuardService } from './_services/guard.service';
-import { CambiarEmpresaComponent } from './_services/cambiar-empresa/cambiar-empresa.component';
+import { CambiarEmpresaComponent } from './pages/cambiar-empresa/cambiar-empresa.component';
 import { GestionComercialComponent } from './pages/gestion-comercial/gestion-comercial.component';
 import { SecretariaVirtualComponent } from './pages/secretaria-virtual/secretaria-virtual.component';
 import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
 import { ProductividadComponent } from './pages/productividad/productividad.component';
 import { ExtensionesComponent } from './pages/extensiones/extensiones.component';
 import { UsuarioEdicionComponent } from './pages/gestion-usuarios/usuario-edicion/usuario-edicion.component';
+import { FidelizacionComponent } from './pages/fidelizacion/fidelizacion.component';
+import { CicloVidaComponent } from './pages/gestion-comercial/ciclo-vida/ciclo-vida.component';
+import { FidelizacionUsuComponent } from './pages/gestion-comercial/fidelizacion-usu/fidelizacion-usu.component';
+import { Not403Component } from './pages/not403/not403.component';
+import { Not404Component } from './pages/not404/not404.component';
 
 const routes: Routes = [
   { path: 'filtroEntrante', component: FiltroClienteComponent, children:[
@@ -32,7 +37,7 @@ const routes: Routes = [
   { path: 'clientes', component: ClientesComponent, canActivate: [GuardService] },
   { path: 'usuarioEmpresa', component: CambiarEmpresaComponent , canActivate: [GuardService]},
   { path: 'gestionComercial', component: GestionComercialComponent },
-  { path: 'secretariaVirtual', component: SecretariaVirtualComponent, canActivate: [GuardService] },
+  { path: 'secretariaVirtual', component: SecretariaVirtualComponent},
   { path: 'gestionUsuarios', component: GestionUsuariosComponent, children:[
     { path: 'nuevo', component: UsuarioEdicionComponent },
     { path: 'edicion/:id', component: UsuarioEdicionComponent },
@@ -40,6 +45,7 @@ const routes: Routes = [
   },
   { path: 'productividad', component: ProductividadComponent, canActivate: [GuardService] },
   { path: 'extensiones', component: ExtensionesComponent , canActivate: [GuardService]},
+  { path: 'fidelizacion', component: FidelizacionComponent },
   {
     path: 'recuperar', component: RecuperarComponent, children: [
       { path: ':token', component: TokenComponent }

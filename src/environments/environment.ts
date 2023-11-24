@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  HOST: 'http://10.1.0.231:9898',
+  HOST: 'http://localhost:9898',
   //HOST: 'http://10.1.0.231:9898/gestorUsuarios',
   //HOST: 'http://gestorcoordinador.jaimetorres.net:9898/gestorUsuarios',
   TOKEN_AUTH_USERNAME: 'mitomediapp',

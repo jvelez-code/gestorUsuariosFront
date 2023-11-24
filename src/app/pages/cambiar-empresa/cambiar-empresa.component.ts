@@ -53,8 +53,6 @@ export class CambiarEmpresaComponent implements  OnInit {
 
   actualizar(){
     this.parametrosDTO  = { loginAgente : this.usuario, idEmpresa : this.selectEmpresa }
-
-    console.log(this.parametrosDTO,'hOLA')
   
     this.empresaService.modificarEmp(this.parametrosDTO).subscribe(()=>{
       this.usuarioService.buscar(this.parametrosDTO).subscribe(data =>{

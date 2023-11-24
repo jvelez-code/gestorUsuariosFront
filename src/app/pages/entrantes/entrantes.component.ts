@@ -300,12 +300,14 @@ export class EntrantesComponent implements OnInit, OnDestroy{
       if(Array.isArray(data) && data.length > 0){
       }else {
         this.tipoGestionH = 0;
+        this.idEstadoH = 0;
+        this.idEstadoH=this.tipoGestionP;
       }
     });
 
     if(this.idEstadoH==0)
     {
-      this.idEstadoH=tipoGestionP;
+      this.idEstadoH=this.tipoGestionP;
     }
   }
 
@@ -387,6 +389,11 @@ export class EntrantesComponent implements OnInit, OnDestroy{
 
     let estadoGestionH = new EstadoGestion();
     estadoGestionH.idEstadoGestion= this.idEstadoH;
+
+    console.log(estadoGestion,'gestion normal-1')
+    console.log(estadoGestionH,'gestion normal-2')
+
+    
     
     
     let det = new DetalleGestion();
@@ -427,6 +434,8 @@ export class EntrantesComponent implements OnInit, OnDestroy{
     
     gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+
+    console.log(gestion,'gestion normal')
   
     this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
