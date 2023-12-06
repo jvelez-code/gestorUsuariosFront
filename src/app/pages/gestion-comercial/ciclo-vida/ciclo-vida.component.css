@@ -1,27 +1,48 @@
-section {
-    display: table;
-    
-  }
+ /*CARD*/
+ .example-card-cli {
+  max-width: 1200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 3rem;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: center;
+}
 
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
+.example-full-width {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}  
 
-  .example-card-cli {
-    max-width: 1200px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 3rem;
-  }
+td {
+  padding-right: 8px;
+}
 
-  .error-message {
-    color: red;
-    font-size: small;
- }
+
+/*BOTTON*/
+
+.button-row {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.error-message {
+  color: red;
+  font-size: small;
+}

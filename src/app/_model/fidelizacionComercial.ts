@@ -17,7 +17,7 @@ export class FidelizacionComercial {
     observacion?: String ;
     migracion?: String ; 
     sucursal ?: String ;
-    fechaGestion?: String ;
+    fechaGestion?: Date ;
 }
 
 let fidelizacionComercial : FidelizacionComercial;

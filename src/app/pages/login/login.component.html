@@ -21,12 +21,12 @@
             <input type="text" placeholder="Usuario Gestor" autocomplete="off" id="email" name="email" [(ngModel)]="usuario" class="email" maxlength="256" required>
             <label>Contraseña</label>
             
+            <!--<input type="password" placeholder="**************" autocomplete="off" id="input-clave">-->
             <input type="password" placeholder="**************" autocomplete="off"  id="password" name="password" [(ngModel)]="clave" class="password" required minlength="8" maxlength="16">
-            <!--<input type="password" placeholder="**************" autocomplete="off" id="input-clave">
             <ng-hcaptcha (verify)="onVerify($event)"
             (expired)="onExpired($event)"
             (error)="onError($event)">
-            </ng-hcaptcha>-->
+            </ng-hcaptcha>
             <div style="text-align: center">
                <div *ngIf="mensajecaptcha" class="mensajecaptcha">{{mensajecaptcha}}</div>
                <a routerLink="/recuperar" id="recuperarclave">¿Olvidaste tu contraseña?</a>

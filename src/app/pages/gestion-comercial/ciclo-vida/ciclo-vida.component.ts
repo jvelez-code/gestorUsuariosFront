@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { GestionComercialDto } from 'src/app/_dto/GestionComercialDto';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
@@ -22,6 +22,7 @@ export class CicloVidaComponent implements OnInit, OnDestroy {
 
   constructor(
     private cicloVidaService : CicloVidaService,
+    private dialogRef: MatDialogRef<CicloVidaComponent>,
     @Inject(MAT_DIALOG_DATA) private data: GestionComercialDto,
   ){}
 
@@ -45,6 +46,12 @@ export class CicloVidaComponent implements OnInit, OnDestroy {
     this.cicloVida.idCiclo = this.idCiclo
     console.log('CICLO',this.cicloVida)
 
+    this.cerrar();
+
+  }
+
+  cerrar(){
+    this.dialogRef.close();
   }
 
   ngOnDestroy(): void {

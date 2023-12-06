@@ -6,25 +6,107 @@
     </div>
     <br>
     </mat-card-header>
-        <form class="example-form" [formGroup]="formFideli" #frmCliente="ngForm"  (ngSubmit)="guardarFidelizacion()">
+        <form class="example-full-width" [formGroup]="formFideli" #frmCliente="ngForm"  (ngSubmit)="guardarFidelizacion()">
             <table class="example-full-width" cellspacing="0">
-                <tr>
-                    <td><mat-form-field class="example-full-width">
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput  formControlName="telefono" >
-                      </mat-form-field>
-                      <div class="error-message">
-                        Debe ser de 7 a 10 caracteres
-                      </div></td>
-                    <td><mat-form-field class="example-full-width">
-                     <mat-label>Celular</mat-label>
-                     <input matInput  formControlName="celular" >
-                    </mat-form-field>
-                    <div  class="error-message">
-                      Debe ser 10 caracteres
-                    </div></td>
-               </tr>
+               <tr>
+                <td><mat-form-field class="example-full-width">
+                    <mat-label>tipoDoc</mat-label>
+                    <input matInput  formControlName="tipoDoc" >
+                  </mat-form-field>
+                  <div class="error-message">
+                    Debe ser de 7 a 10 caracteres
+                  </div></td>
+                <td><mat-form-field class="example-full-width">
+                 <mat-label>documento</mat-label>
+                 <input matInput  formControlName="documento" >
+                </mat-form-field>
+                <div  class="error-message">
+                  Debe ser 10 caracteres
+                </div></td>
+                <td><mat-form-field class="example-full-width">
+                  <mat-label>codCaja</mat-label>
+                  <input matInput  formControlName="codCaja" >
+                 </mat-form-field>
+                 <div  class="error-message">
+                   Debe ser 10 caracteres
+                 </div></td>
+           </tr>
+
+           <tr>
+            <td><mat-form-field class="example-full-width">
+                <mat-label>regNuevos</mat-label>
+                <input matInput  formControlName="regNuevos" >
+              </mat-form-field>
+              <div class="error-message">
+                Debe ser de 7 a 10 caracteres
+              </div></td>
+            <td><mat-form-field class="example-full-width">
+             <mat-label>regRecuperados</mat-label>
+             <input matInput  formControlName="regRecuperados" >
+            </mat-form-field>
+            <div  class="error-message">
+              Debe ser 10 caracteres
+            </div></td>
+            <td><mat-form-field class="example-full-width">
+              <mat-label>numPlanilla</mat-label>
+              <input matInput  formControlName="numPlanilla" >
+             </mat-form-field>
+             <div  class="error-message">
+               Debe ser 10 caracteres
+             </div></td>
+       </tr>
+
+       <tr>
+        <td><mat-form-field class="example-full-width">
+            <mat-label>fechaPago</mat-label>
+            <input matInput  formControlName="fechaPago" >
+          </mat-form-field>
+          <div class="error-message">
+            Debe ser de 7 a 10 caracteres
+          </div></td>
+        <td><mat-form-field class="example-full-width">
+         <mat-label>observacion</mat-label>
+         <input matInput  formControlName="observacion" >
+        </mat-form-field>
+        <div  class="error-message">
+          Debe ser 10 caracteres
+        </div></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>migracion</mat-label>
+          <input matInput  formControlName="migracion" >
+         </mat-form-field>
+         <div  class="error-message">
+           Debe ser 10 caracteres
+         </div></td>
+       </tr>
+
+       <tr>
+        <td><mat-form-field class="example-full-width">
+            <mat-label>sucursal</mat-label>
+            <input matInput  formControlName="sucursal" >
+          </mat-form-field>
+          <div class="error-message">
+            Debe ser de 7 a 10 caracteres
+          </div></td>
+        <td><mat-form-field class="example-full-width">
+         <mat-label>sucursal</mat-label>
+         <input matInput  formControlName="sucursal" >
+        </mat-form-field>
+        <div  class="error-message">
+          Debe ser 10 caracteres
+        </div></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>sucursal</mat-label>
+          <input matInput  formControlName="sucursal" >
+         </mat-form-field>
+         <div  class="error-message">
+           Debe ser 10 caracteres
+         </div></td>
+       </tr>
+
+
             </table>
+            <br>
             <mat-card-actions>
                 <div class="button-row">
                 <button mat-raised-button color="primary" >Guardar</button>

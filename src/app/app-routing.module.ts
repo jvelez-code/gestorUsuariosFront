@@ -43,7 +43,7 @@ const routes: Routes = [
     { path: 'edicion/:id', component: UsuarioEdicionComponent },
     ] 
   },
-  { path: 'productividad', component: ProductividadComponent, canActivate: [GuardService] },
+  { path: 'productividad', component: ProductividadComponent },
   { path: 'extensiones', component: ExtensionesComponent , canActivate: [GuardService]},
   { path: 'fidelizacion', component: FidelizacionComponent },
   {

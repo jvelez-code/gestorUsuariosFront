@@ -5,6 +5,11 @@
     <!-- Contenido del primer campo vertical -->
 
     <mat-card class="example-card">
+      <mat-card-header>
+         <div class="center">
+         <mat-card-title>Efectivas - No Efectivas</mat-card-title></div>
+      </mat-card-header>
+                <br>
       <mat-card-content>
         <table mat-table [dataSource]="dataSourceCant" class="mat-elevation-z8">
 
@@ -34,36 +39,36 @@
     </mat-card>
   </div>
   
-  <div class="right-column">
-    <!-- Contenido del primer campo vertical -->
-
-    <mat-card class="example-card">
-      <mat-card-content>
-        <table mat-table [dataSource]="dataSourceCant" class="mat-elevation-z8">
-
-
-          <!-- Position Column -->
-          <ng-container matColumnDef="usuario">
-            <th mat-header-cell *matHeaderCellDef> USUARIO </th>
-            <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="efectiva">
-            <th mat-header-cell *matHeaderCellDef> EFECTIVA </th>
-            <td mat-cell *matCellDef="let element"> {{element.efectiva}} </td>
-          </ng-container>
-
-          <!-- Weight Column -->
-          <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef> CANTIDAD </th>
-            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="cantidadColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: cantidadColumns;"></tr>
-        </table>
-      </mat-card-content>
+  <div   class="right-column">
+    <mat-card [ngClass]="{'color-rojo':mostrarColor}" class="example-card-tmo">
+      <mat-card-header>
+        <div class="center">
+        <mat-card-title>Tmo Usuarios</mat-card-title></div>
+             </mat-card-header>
+        <br>
+        <mat-card-content>
+          <table >
+            <tr>
+              <td><mat-form-field class="mat-form-field" >
+                <mat-label>Empresa</mat-label>
+                <input matInput  [(ngModel)]="empresa" >
+              </mat-form-field>
+              </td>
+              <td><mat-form-field class="mat-form-field">
+                <mat-label>Promedio</mat-label>
+                <input matInput  [(ngModel)]="promedio" >
+              </mat-form-field>
+              </td>
+              <td><mat-form-field class="mat-form-field">
+                <mat-label>Tmo Usuario</mat-label>
+                <input matInput  [(ngModel)]="tmousuario" disabled="true">
+              </mat-form-field>
+              </td>
+            </tr>
+          </table>
+                      
+        </mat-card-content>
     </mat-card>
+    
   </div>
 </div>

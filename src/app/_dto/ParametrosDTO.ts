@@ -2,7 +2,7 @@ export class ParametrosDTO {
 
     tipoDoc?: string;
 	loginAgente?: string;
-	nroDocumento?: number;
+	nroDocumento?: string;
 	idCliente?: number;
 	idEmpresa?: number;
 	idTipoCampana?: number;
@@ -14,7 +14,7 @@ export class ParametrosDTO {
 	cicloVida?: number;
 	
 	
-	constructor(tipoDoc: string, loginAgente: string, nroDocumento: number, idCliente: number, 
+	constructor(tipoDoc: string, loginAgente: string, nroDocumento: string, idCliente: number, 
 		idEmpresa: number, idTipoCampana: number, idEstadoPadre: number, tipoLlamada: number,
 		fechaInicial: string, fechaFinal: string , idDetalleComer: number , cicloVida: number ) {
             

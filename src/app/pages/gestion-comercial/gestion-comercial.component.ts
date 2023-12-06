@@ -237,7 +237,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   buscarCliente(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
 
-      const parametrosDTO= {tipoDoc: 'CC', nroDocumento: 8080}    
+      const parametrosDTO= {tipoDoc: 'CC', nroDocumento: "8080"}    
   
     this.clienteService.filtroCliente(parametrosDTO).subscribe( data =>{
      
@@ -285,13 +285,13 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
 
     await this.buscarCliente();
 
-    let campana = new Campana
+    let campana = new Campana();
     campana.idCampana = this.idCampanaE
 
-    let ext = new Extension
+    let ext = new Extension();
     ext.extension = this.extension;
 
-    let usuario = new Usuario
+    let usuario = new Usuario();
     usuario.idUsuario = this.idUsuario
     
     let cliente = new Cliente();

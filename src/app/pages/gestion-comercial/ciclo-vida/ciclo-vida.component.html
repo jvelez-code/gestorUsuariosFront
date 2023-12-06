@@ -1,7 +1,9 @@
 <mat-card class="example-card-cli">
     <mat-card-header>
+      <div class="center">
       <mat-card-title>Ciclo de Vida</mat-card-title>
       <mat-card-subtitle>Seguimiento</mat-card-subtitle>
+    </div>
     </mat-card-header>
     <mat-form-field>
        <!-- <mat-label>Ciclo de Vida</mat-label>-->
@@ -11,12 +13,13 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    <mat-card-actions>
+
         <mat-divider></mat-divider>
-        <section>
-          <div class="example-button-row">
-            <button mat-raised-button color="primary" (click)="guardar()">Actualizar</button>
-          </div>
-        </section>
+
+        <mat-card-actions>
+          <div class="button-row">
+          <button mat-raised-button color="primary"(click)="guardar()">Actualizar</button>
+          </div> 
+
     </mat-card-actions>
   </mat-card>

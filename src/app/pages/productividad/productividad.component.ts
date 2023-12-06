@@ -2,7 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { CantidadGestionDTO } from 'src/app/_dto/CantidadGestionDTO ';
+import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
+import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { ContactoService } from 'src/app/_services/contacto.service';
@@ -21,8 +24,16 @@ import { UsuarioService } from 'src/app/_services/usuario.service';
 })
 export class ProductividadComponent implements OnInit, OnDestroy {
 
-  private usuarios !: string;
-
+  usuarios !: string;
+  parametrosDTO !:ParametrosDTO
+  empresa?: string;
+	tmousuario?: string;
+  mostrarColor: boolean = false;
+  promedio?: string;
+  promedioCON: string = "00:07:30";
+  promedioASI: string = "00:10:30";
+  promedioELC: string = "00:12:30";
+  agenteDTO!: AgenteDTO;
 
   constructor( 
     private loginService: LoginService,
@@ -40,14 +51,17 @@ export class ProductividadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.agenteDTO=this.loginService.agenteDTO
+
+    if(this.agenteDTO){
     this.loginService.getUsuariosCambio().subscribe((data:any) =>{
       this.usuarios=data;
      });
 
     const askEstadoExtension ={  loginAgente : this.usuarios }
-    console.log(askEstadoExtension,'cantidad-1')
+    this.parametrosDTO = { loginAgente:this.usuarios ,nroDocumento: this.agenteDTO.nroDocumento}
+
     this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
-      console.log(data,'cantidad')
       this.dataSourceCant= new MatTableDataSource(data);
     });
 
@@ -55,11 +69,49 @@ export class ProductividadComponent implements OnInit, OnDestroy {
       this.dataSourceCant= new MatTableDataSource(data);
     });
 
+    this.llamadaEntranteService.usuarioTmo(this.parametrosDTO).subscribe(data=>{
+        this.tmousuario = data;    
+        let datePromedioC: moment.Moment = moment(this.promedioCON, "HH:mm:ss");
+        let datePromedioE: moment.Moment = moment(this.promedioELC, "HH:mm:ss");
+        let datePromedioA: moment.Moment = moment(this.promedioASI, "HH:mm:ss");          
+        let dateTmo: moment.Moment = moment(this.tmousuario, "HH:mm:ss");        
+        this.empresa = this.agenteDTO.pseudonimo
+
+        if(this.empresa=='CONTACT' && dateTmo>datePromedioC){
+          this.promedio=this.promedioCON;
+          this.mostrarColor= true;
+        }
+        if(this.empresa=='ELECTRONICA' && dateTmo>datePromedioE){
+          this.promedio=this.promedioELC;
+          this.mostrarColor= true;
+        }
+        if(this.empresa=='ASISTIDA' && dateTmo>datePromedioA){
+          this.promedio=this.promedioASI;
+          this.mostrarColor= true;
+        }
+      });
+    }
+
+
   }
+
 
   cantidadColumns: string[] = ['usuario', 'efectiva', 'cantidad'];
   dataSourceCant !: MatTableDataSource<CantidadGestionDTO>; 
 
+  
+
+  operar(){
+
+    this.llamadaEntranteService.usuarioTmo(this.parametrosDTO).subscribe(data=>{
+      console.log('hola munod11',data)
+        this.tmousuario = data;
+      });
+
+    this.loginService.getUsuariosCambio().subscribe((data:any) =>{
+     console.log('hola munod2',data)
+     }); 
+  }
 
   ngOnDestroy(): void {
     
