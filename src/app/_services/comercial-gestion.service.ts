@@ -22,7 +22,16 @@ export class ComercialGestionService extends GenericService<DetalleGestionComerc
   gestionComercial(parametrosDTO: ParametrosDTO) {
     const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
     const body=JSON.stringify(parametrosDTO);
+    console.log(body,'fidelizacion')
     return this.http.post<GestionComercialDto[]>(`${this.url}/gestionComercial`, body, headers);
   }
+
+  comercialUsuario(parametrosDTO: ParametrosDTO) {
+    const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
+    const body=JSON.stringify(parametrosDTO);
+    console.log(body,'comercialUsuario')
+    return this.http.post<GestionComercialDto[]>(`${this.url}/comercialUsuario`, body, headers);
+  }
+
 
 }

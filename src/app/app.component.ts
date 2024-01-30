@@ -11,6 +11,7 @@ import { AskEstadoService } from './_services/ask-estado.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'gestorUsuarioFront';
   
@@ -43,30 +44,36 @@ export class AppComponent {
 
   cerrarApp(){
 
+    console.log('hola login1',this.loginService.agenteDTO.idUsuario)
+
     if(this.loginService.agenteDTO.idUsuario){
     
-    const askEstadoExtension = 
+
+      console.log('hola login2')
+       const askEstadoExtension = 
       { estadoAsk : 1 , idExtension : this.idExt, loginAgente: this.usuarioExt,
       nroDocumento: this.loginService.agenteDTO.nroDocumento }
 
-    this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{      
+       this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{      
       this.enllamada=data;
   
-    if(this.enllamada) {
-      this.askEstadoService.setMensajecambio('EN LLAMADA')
+        if(this.enllamada) {
+         this.askEstadoService.setMensajecambio('EN LLAMADA')
 
+
+       } else {
+
+       console.log('hola login3')
+       this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(()=>{})
+    
+       this.loginService.cerrarSesion();
+    
+              }
+      } )
 
     } else {
-    this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(()=>{})
-    
-    this.loginService.cerrarSesion();
-    
+      console.log('hola login4')
     }
-   })
 
-  }
-  else{
-    this.loginService.cerrarSesion();
-  }
   }
 }

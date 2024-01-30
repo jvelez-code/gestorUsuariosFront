@@ -31,10 +31,11 @@
                <div *ngIf="mensajecaptcha" class="mensajecaptcha">{{mensajecaptcha}}</div>
                <a routerLink="/recuperar" id="recuperarclave">¿Olvidaste tu contraseña?</a>
             </div>
-            <div class="inputGroup inputGroup3">
+            <div class="button-container">
                <button id="login" type="button" (click)="iniciarSesion()" >Iniciar Sesión
                <i class="fa fa-sign-in" aria-hidden="true"></i>
                </button>
+               <mat-spinner class="spinner-overlay" *ngIf="loading"></mat-spinner>
             </div>
             <!--<h5><a href="/cambiarcotnraseña">Restablecer contraseña</a></h5>-->
             <div *ngIf="mensaje" class="error-message">{{mensaje}}</div>
@@ -112,3 +113,4 @@
       </footer>
    </body>
 </html>
+

@@ -27,6 +27,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 @NgModule({
@@ -59,7 +61,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSlideToggleModule,
     MatGridListModule,
     MatProgressBarModule,
-    MatTabsModule,    
+    MatTabsModule, 
+    MatProgressSpinnerModule   
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginatorImpl },

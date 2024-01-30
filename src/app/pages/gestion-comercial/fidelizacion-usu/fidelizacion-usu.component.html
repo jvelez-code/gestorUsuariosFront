@@ -11,14 +11,14 @@
                <tr>
                 <td><mat-form-field class="example-full-width">
                     <mat-label>tipoDoc</mat-label>
-                    <input matInput  formControlName="tipoDoc" >
+                    <input matInput  formControlName="tipoDoc" [readonly]="true">
                   </mat-form-field>
                   <div class="error-message">
                     Debe ser de 7 a 10 caracteres
                   </div></td>
                 <td><mat-form-field class="example-full-width">
                  <mat-label>documento</mat-label>
-                 <input matInput  formControlName="documento" >
+                 <input matInput  formControlName="documento" [readonly]="true">
                 </mat-form-field>
                 <div  class="error-message">
                   Debe ser 10 caracteres

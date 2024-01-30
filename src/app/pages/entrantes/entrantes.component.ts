@@ -45,7 +45,7 @@ import { ValidadoresService } from 'src/app/_services/validadores.service';
   templateUrl: './entrantes.component.html',
   styleUrls: ['./entrantes.component.css']
 })
-export class EntrantesComponent implements OnInit, OnDestroy{
+export class EntrantesComponent implements OnInit, OnDestroy {
 
   clienteColumns = ['razonSocial','tipoDocumento.tipoDoc','nroDocumento','divipola.nombre',
   'divipola.idZonapadre.nombre','correo','telefonoCelular','telefonoFijo','acciones'];
@@ -78,6 +78,7 @@ export class EntrantesComponent implements OnInit, OnDestroy{
   telCelularC !:String;
   callid !: string;
   cardCliente : boolean= false ;
+  filaPar: boolean = true;
 
  
   parametros !: Parametros;

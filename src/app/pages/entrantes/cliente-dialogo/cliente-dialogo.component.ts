@@ -13,7 +13,7 @@ import { DivipolaService } from 'src/app/_services/divipola.service';
   templateUrl: './cliente-dialogo.component.html',
   styleUrls: ['./cliente-dialogo.component.css']
 })
-export class ClienteDialogoComponent implements OnInit{
+export class ClienteDialogoComponent implements OnInit {
   
   cliente !: Cliente;
   idCliente !: number;

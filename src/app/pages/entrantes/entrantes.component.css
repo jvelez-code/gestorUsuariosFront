@@ -121,4 +121,12 @@
 
 
 
+  /* Estilo para filas pares */
+  tr:nth-child(even) {
+    background-color: #b0baf1;
+  }
   
+  /* Estilo para filas impares */
+  tr:nth-child(odd) {
+    background-color: #f7d6d6;
+  }

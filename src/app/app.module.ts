@@ -35,6 +35,7 @@ import { FidelizacionUsuComponent } from './pages/gestion-comercial/fidelizacion
 import { CicloVidaComponent } from './pages/gestion-comercial/ciclo-vida/ciclo-vida.component';
 import { Not404Component } from './pages/not404/not404.component';
 import { Not403Component } from './pages/not403/not403.component';
+import { SalienteComponent } from './pages/saliente/saliente.component';
 
 
 export function tokenGetter() {

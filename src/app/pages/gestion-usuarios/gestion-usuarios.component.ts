@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Usuarios } from 'src/app/_model/usuarios';
 import { UsuariosMigraService } from 'src/app/_services/usuarios-migra.service';
 import { MatSort } from '@angular/material/sort';
+import { duration } from 'moment';
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -14,8 +15,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class GestionUsuariosComponent implements OnInit {
 
-  displayedColumns: string[] = ['idUsuario', 'enabled', 'fechaCambio','email', 'roles', 'username',
-    'failed','acciones', ];
+  displayedColumns: string[] = ['idUsuario', 'enabled', 'fechaCambio','email', 'roles', 'username','failed','acciones', ];
   dataSource!: MatTableDataSource<Usuarios>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -31,13 +31,24 @@ export class GestionUsuariosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.usuariosMigraService.getUsuariosCambio().subscribe(data =>{
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator
+    });
     
     this.usuariosMigraService.listar().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator
     });
-  }
+    
+    this.usuariosMigraService.getMensajeCambio().subscribe(data =>{
+      this.snackBar.open(data, 'AVISO', { duration : 2000 } )
+    });
+
+    }
 
 
 

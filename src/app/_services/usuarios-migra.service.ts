@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 export class UsuariosMigraService extends GenericService<Usuarios> {
 
 
+  //usuariosCambio = new Subject<Usuarios[]>();
   private usuariosCambio = new Subject<Usuarios[]>();
   private mensajeCambio = new Subject<string>();
 

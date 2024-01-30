@@ -60,6 +60,7 @@ export class ProductividadComponent implements OnInit, OnDestroy {
 
     const askEstadoExtension ={  loginAgente : this.usuarios }
     this.parametrosDTO = { loginAgente:this.usuarios ,nroDocumento: this.agenteDTO.nroDocumento}
+    console.log(this.parametrosDTO,'parametros')
 
     this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
       this.dataSourceCant= new MatTableDataSource(data);
@@ -70,25 +71,25 @@ export class ProductividadComponent implements OnInit, OnDestroy {
     });
 
     this.llamadaEntranteService.usuarioTmo(this.parametrosDTO).subscribe(data=>{
-        this.tmousuario = data;    
+        console.log(data,'1')
+      
+        this.tmousuario = data.tmoAgente
         let datePromedioC: moment.Moment = moment(this.promedioCON, "HH:mm:ss");
         let datePromedioE: moment.Moment = moment(this.promedioELC, "HH:mm:ss");
         let datePromedioA: moment.Moment = moment(this.promedioASI, "HH:mm:ss");          
-        let dateTmo: moment.Moment = moment(this.tmousuario, "HH:mm:ss");        
+        let dateTmo: moment.Moment = moment(this.tmousuario, "HH:mm:ss"); 
+        console.log(this.tmousuario,'2')       
         this.empresa = this.agenteDTO.pseudonimo
 
-        if(this.empresa=='CONTACT' && dateTmo>datePromedioC){
-          this.promedio=this.promedioCON;
-          this.mostrarColor= true;
-        }
-        if(this.empresa=='ELECTRONICA' && dateTmo>datePromedioE){
-          this.promedio=this.promedioELC;
-          this.mostrarColor= true;
-        }
-        if(this.empresa=='ASISTIDA' && dateTmo>datePromedioA){
-          this.promedio=this.promedioASI;
-          this.mostrarColor= true;
-        }
+        if(this.empresa=='CONTACT' ){this.promedio=this.promedioCON;}
+        if(this.empresa=='ELECTRONICA' ){this.promedio=this.promedioELC;}
+        if(this.empresa=='ASISTIDA' ){this.promedio=this.promedioASI;}
+
+        if (this.empresa=='CONTACT' && dateTmo>datePromedioC ){ this.mostrarColor= true; }        
+        if(this.empresa=='ELECTRONICA' && dateTmo>datePromedioE){ this.mostrarColor= true; }          
+        if(this.empresa=='ASISTIDA' && dateTmo>datePromedioA){ this.mostrarColor= true; }          
+        else {  console.log('empresa diferente')  }
+
       });
     }
 
@@ -101,17 +102,6 @@ export class ProductividadComponent implements OnInit, OnDestroy {
 
   
 
-  operar(){
-
-    this.llamadaEntranteService.usuarioTmo(this.parametrosDTO).subscribe(data=>{
-      console.log('hola munod11',data)
-        this.tmousuario = data;
-      });
-
-    this.loginService.getUsuariosCambio().subscribe((data:any) =>{
-     console.log('hola munod2',data)
-     }); 
-  }
 
   ngOnDestroy(): void {
     

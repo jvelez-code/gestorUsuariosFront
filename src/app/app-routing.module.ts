@@ -24,6 +24,8 @@ import { CicloVidaComponent } from './pages/gestion-comercial/ciclo-vida/ciclo-v
 import { FidelizacionUsuComponent } from './pages/gestion-comercial/fidelizacion-usu/fidelizacion-usu.component';
 import { Not403Component } from './pages/not403/not403.component';
 import { Not404Component } from './pages/not404/not404.component';
+import { SalienteComponent } from './pages/saliente/saliente.component';
+import { SalientesComponent } from './pages/salientes/salientes.component';
 
 const routes: Routes = [
   { path: 'filtroEntrante', component: FiltroClienteComponent, children:[
@@ -31,9 +33,10 @@ const routes: Routes = [
   ]
  },
   { path: 'gestionEntrante', component: EntrantesComponent },
-  { path: 'filtroSaliente', component: FiltroSalienteComponent ,canActivate: [GuardService] },
+  { path: 'gestionSaliente', component: SalientesComponent },
+  { path: 'filtroSaliente', component: FiltroSalienteComponent },
   { path: 'filtrosecretaria', component: FiltroSecretariaComponent, canActivate: [GuardService] },
-  { path: 'estadoExtension', component: ExtadoExtComponent, canActivate: [GuardService] },
+  { path: 'estadoExtension', component: ExtadoExtComponent },
   { path: 'clientes', component: ClientesComponent, canActivate: [GuardService] },
   { path: 'usuarioEmpresa', component: CambiarEmpresaComponent , canActivate: [GuardService]},
   { path: 'gestionComercial', component: GestionComercialComponent },

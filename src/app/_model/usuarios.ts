@@ -2,16 +2,16 @@ import { Rol } from "./rol";
 
 export class Usuarios {
 
-idUsuario !: number;
-enabled !: boolean;
-fechaCambio !: string;
-password !: string;
-email !: string;
+idUsuario ?: number;
+enabled ?: boolean;
+fechaCambio ?: string;
+password ?: string;
+email ?: string;
 roles !: Rol[]
-username !: string;
-failed !: number;
-fechaActualizacion !: string;
-fechaCreacion !: string;
+username ?: string;
+failed ?: number;
+fechaActualizacion ?: string;
+fechaCreacion ?: string;
 
 
 

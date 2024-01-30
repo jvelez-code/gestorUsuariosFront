@@ -1,32 +1,35 @@
 <router-outlet></router-outlet>
+<form>
 <mat-card>
     <mat-card-header>
+        <div class="center">
       <mat-card-title>Fidelización</mat-card-title>
-      <mat-card-subtitle>Comercial</mat-card-subtitle>
+      <mat-card-subtitle>Comercial</mat-card-subtitle></div>
     </mat-card-header>
+    <table>
+        <tr>
+            <td><mat-form-field>
+                <mat-label>Ingresa rango de fechas </mat-label>
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker1">
+                  <input matStartDate formControlName="start" placeholder="Fecha Inicio">
+                  <input matEndDate formControlName="end" placeholder="Fecha Fin">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker1></mat-date-range-picker>
+            
+                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalida fecha inicio</mat-error>
+                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalida fecha fin</mat-error>
+              </mat-form-field></td>
+      
+            </table>
+ 
 
-    <mat-form-field class="example-full-width">   
-        <mat-label>Ingrese el rango de Fecha</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate placeholder="Inicio">
-          <input matEndDate placeholder="Fin">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>    
-    </mat-form-field>
+  
     
     <mat-card-actions>
         <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
     </mat-card-actions>
   </mat-card>
-  <br>
-<mat-card>
-
-<div class="example-header">
-    <mat-form-field>
-        <input matInput  placeholder="Buscar paciente">
-    </mat-form-field>
-</div>
 
 <mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="idFidelizacion">
@@ -84,4 +87,4 @@
 </mat-table>
 
 <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" [length]="cantidad" (page)="mostrarMas($event)"></mat-paginator>
-</mat-card>
+</form>

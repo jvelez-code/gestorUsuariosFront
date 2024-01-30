@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component ,  Inject ,  OnInit } from '@angular/core';
+import { Form ,  FormBuilder ,  FormGroup ,  Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA ,  MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { GestionComercialDto } from 'src/app/_dto/GestionComercialDto';
 import { Cliente } from 'src/app/_model/cliente';
 import { DetalleGestionComercial } from 'src/app/_model/detalleGestionComercial';
 import { FidelizacionComercial } from 'src/app/_model/fidelizacionComercial';
@@ -13,52 +14,69 @@ import { FidelizacionService } from 'src/app/_services/fidelizacion.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
 
 @Component({
-  selector: 'app-fidelizacion-usu',
-  templateUrl: './fidelizacion-usu.component.html',
+  selector: 'app-fidelizacion-usu' , 
+  templateUrl: './fidelizacion-usu.component.html' , 
   styleUrls: ['./fidelizacion-usu.component.css']
 })
-export class FidelizacionUsuComponent {
+export class FidelizacionUsuComponent implements OnInit {
 
   formFideli !: FormGroup;
+  gestionC !: GestionComercialDto;
 
   constructor(
-    private fidelizacionService : FidelizacionService,
-    private validadoresService : ValidadoresService,
-    private dialogRef: MatDialogRef<FidelizacionUsuComponent>,
-    private fb : FormBuilder,
-    private snackBar: MatSnackBar,
+    private fidelizacionService : FidelizacionService , 
+    private validadoresService : ValidadoresService , 
+    private dialogRef: MatDialogRef<FidelizacionUsuComponent> , 
+    @Inject(MAT_DIALOG_DATA) private data: GestionComercialDto , 
+    private fb : FormBuilder , 
+    private snackBar: MatSnackBar , 
     private router: Router )
     {
       this.crearFormulario();
     }
 
+
+    ngOnInit(): void {
+
+    this.gestionC = new GestionComercialDto();
+    this.gestionC.idDetalleGestionComercial = this.data.idDetalleGestionComercial;
+    this.gestionC.tipoDocumentoCliente = this.data.tipoDocumentoCliente;
+    this.gestionC.nroDocumentoCliente = this.data.nroDocumentoCliente;
+
+    }
+
   crearFormulario(){
 
     this.formFideli = this.fb.group({      
-      'tipoDoc': ['CC',[Validators.required]],
-      'documento': ['8080',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-      'codCaja': ['SIN CCF', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
-      'regNuevos': ['1',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-      'regRecuperados' : ['0', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
-      'fechaPago' : ['2023-12-01', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
-      'numPlanilla': ['8627928921',[Validators.required,Validators.minLength(1),Validators.maxLength(4),Validators.pattern('^[0-9]+$')]],
-      'observacion' : ['INDEPENDIENTE PAGADO', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
-      'migracion' : ['0', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
-      'sucursal' : ['2', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
+      'tipoDoc': [this.data.tipoDocumentoCliente  ,  [Validators.required]] , 
+      'documento': [this.data.nroDocumentoCliente  ,  [Validators.required , Validators.minLength(7) , Validators.maxLength(10) , Validators.pattern('^[0-9]+$')]] , 
+      'codCaja': ['SIN CCF' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'regNuevos': ['1' , [Validators.required , Validators.minLength(10) , Validators.maxLength(10) , Validators.pattern('^[0-9]+$')]] , 
+      'regRecuperados' : ['0' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'fechaPago' : ['2023-12-01' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'numPlanilla': ['8627928921' , [Validators.required , Validators.minLength(1) , Validators.maxLength(4) , Validators.pattern('^[0-9]+$')]] , 
+      'observacion' : ['INDEPENDIENTE PAGADO' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'migracion' : ['0' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'sucursal' : ['2' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
        });
 
   }
 
   guardarFidelizacion(){
 
+
+
+
+
     let detalleGestionComercial = new DetalleGestionComercial();
-    detalleGestionComercial.idDetalleGestionComercial = 210266;
+    detalleGestionComercial.idDetalleGestionComercial = this.data.idDetalleGestionComercial;
 
     let cliente = new Cliente();
-    cliente.idCliente = 1966545;
+    cliente.idCliente = this.data.idCliente;
 
     let usuario = new Usuario();
-    usuario.idUsuario = 457;
+    usuario.idUsuario = this.data.idAgente!;
+    // Aserción no nula (!):
 
     let fide = new FidelizacionComercial();
     fide.idDetalleGestionComercial = detalleGestionComercial;

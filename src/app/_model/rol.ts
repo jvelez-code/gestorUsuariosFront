@@ -1,4 +1,5 @@
-export class Rol{
-    idRol !: number;
-    nombre !: string;
+export class Rol {
+    
+    idRol ?: number;
+    nombre ?: string;
 }

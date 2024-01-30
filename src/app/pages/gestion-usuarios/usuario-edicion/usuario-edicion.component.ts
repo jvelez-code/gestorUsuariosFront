@@ -57,9 +57,13 @@ export class UsuarioEdicionComponent implements OnInit {
           'enabled': new FormControl(data.enabled),
           'fechaCambio': new FormControl(data.fechaCambio),
           'email': new FormControl(data.email),
-          'roles': new FormControl('USER'), 
+          'roles': new FormControl(data.roles[0].idRol), 
+          'rolesNom': new FormControl(data.roles[0].nombre), 
           'username': new FormControl(data.username),
-          'failed': new FormControl(data.failed)
+          'failed': new FormControl(data.failed),
+          'password': new FormControl(data.password),
+          'fechaActu': new FormControl(data.fechaActualizacion),
+          'fechaCrea': new FormControl(data.fechaCreacion),
         });
 
       });
@@ -71,24 +75,21 @@ export class UsuarioEdicionComponent implements OnInit {
 
     if (this.form.invalid) { return; }
 
-    let rol = new Rol();
-    rol.idRol=1
-
-    console.log(rol,'GUARDARXX')
-
     let usuarios = new Usuarios();
     usuarios.idUsuario = this.form.value['idUsuario'];
     usuarios.enabled = this.form.value['enabled'];
     usuarios.fechaCambio = moment(this.fecha).add(3,'month').format('YYYY-MM-DDTHH:mm:ss');
     usuarios.password = this.form.value['password'];
     usuarios.email = this.form.value['email'];
-    usuarios.roles = [rol];
+    usuarios.roles = [
+      {
+        idRol: this.form.value['roles']
+      }
+    ];
     usuarios.username=  this.form.value['username'];
     usuarios.failed = this.form.value['failed'];
-    usuarios.fechaCreacion = this.form.value['fechaCreacion'];
-   
-
-    console.log(usuarios,'GUARDAR')
+    usuarios.fechaCreacion = this.form.value['fechaCrea'];
+    usuarios.fechaActualizacion = this.form.value['fechaActu'];
 
     if (this.edicion) {
       //PRACTICA IDEAL

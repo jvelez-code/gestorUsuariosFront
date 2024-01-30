@@ -183,6 +183,8 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
     end: new FormControl<Date | null>(null),
   });
 
+
+
   displayedColumns: string[] = ['fidelizacion','idDetalleGestionComercial','fechaGestion', 'fechaGestionCargue', 'idAgente', 'tipoDocumentoCliente','nroDocumentoCliente',
   'razonSocialCliente', 'nombreContacto', 'numeroContacto', 'celularContacto','correoElectronicoContacto','ciudadCliente', 'direccionCliente', 'nombreMotivo','regProyectadosCliente',
   'nombreEstadoGestion', 'regObtenidosCliente', 'observacionDetGestion', 'nroGestionRealizadaDetGestion','compromisosDetGestion',
@@ -196,17 +198,25 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   selectedCar !: string;
 
   buscar() {
+    if(this.range.value.start && this.range.value.end) {
 
      this.fechaparametro1 = moment(this.range.value.start).format('YYYY-MM-DD 00:00:01');
      this.fechaparametro2 = moment(this.range.value.end).format('YYYY-MM-DD 23:59:59');
 
-    const parametrosDTO ={ fechaInicial: this.fechaparametro1, fechaFinal: this.fechaparametro2 }
+    const parametrosDTO ={ fechaInicial: this.fechaparametro1, fechaFinal: this.fechaparametro2, idUsuario: this.idUsuario }
     this.comercialGestionService.gestionComercial(parametrosDTO).subscribe(data =>{
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
 
+    this.comercialGestionService.comercialUsuario(parametrosDTO).subscribe(data =>{
+      console.log(data,'usuarios')
+    });
+
+  } else {
+    console.log('Selecciona ambas fechas antes de realizar la búsqueda.');
+  }
 
   }
 
@@ -259,7 +269,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   }
 
 
-  abrirFidelizacion(gestionComercialDto ?: GestionComercialDto){
+  abrirFidelizacion(gestionComercialDto ?: GestionComercialDto ){
     console.log('Hola De', gestionComercialDto)
     this.dialog.open(FidelizacionUsuComponent,{
       width: '700px',
@@ -267,7 +277,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
     });
   }
 
-  abrirCicloVida(gestionComercialDto ?: GestionComercialDto){
+  abrirCicloVida(gestionComercialDto ?: GestionComercialDto, otraVariable: string ='45555'){
     console.log('Hola De', gestionComercialDto)
     this.dialog.open(CicloVidaComponent,{
       width: '350px',

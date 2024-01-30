@@ -18,6 +18,8 @@ import * as moment from "moment";
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit, AfterViewInit {
+
+
   usuario!: string;
   clave!: string;
   mensaje!: string;
@@ -29,6 +31,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   mensajecaptcha!: string;
   captchaVerified: boolean = false;
   captchaactivo: boolean = true;
+
+  loading: boolean = false;
+
 
   constructor(
     private loginService: LoginService,
@@ -58,6 +63,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   iniciarSesion() {
+    sessionStorage.clear();
+    this.loading = true;
     
     const filtroEntranteDTO = { loginAgente: this.usuario };
 
@@ -111,8 +118,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.router.navigate(["estadoExtension"]);
             });
         });
-      }else{
+        this.loading = false;
+      } else {
         this.setMensajeInformativo("Por favor, complete el captcha.");
+        this.loading = false;
       }
     });
   }

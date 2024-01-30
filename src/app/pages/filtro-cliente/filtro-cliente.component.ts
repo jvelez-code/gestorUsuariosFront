@@ -44,19 +44,19 @@ import { LlamadaEntranteService } from 'src/app/_services/llamada-entrante.servi
 
 
 
-export class FiltroClienteComponent implements OnInit, OnDestroy{
+export class FiltroClienteComponent implements OnInit, OnDestroy {
 
   cantidadColumns: string[] = ['usuario', 'efectiva', 'cantidad'];
-  dataSourceCant !: MatTableDataSource<CantidadGestionDTO>; 
+  dataSourceCant !: MatTableDataSource<CantidadGestionDTO>;
 
-  
-  private subscripcion : Subscription = new Subscription();
+
+  private subscripcion: Subscription = new Subscription();
   formAgente!: FormGroup;
   formBuscar!: FormGroup;
   formCliente!: FormGroup;
 
-  
-  tipoDocumento : string = 'CC' ;
+
+  tipoDocumento: string = 'CC';
   nroDocumento  !: string
   idEmpresa !: number;
   idTipoCampana !: number;
@@ -65,102 +65,102 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   cardManual !: boolean;
   fechafin !: Date;
 
-  valorPredeterminado : any ='0000000'
+  valorPredeterminado: any = '0000000'
   nroExt !: any;
   colorExt !: any;
   idExt !: any;
   documentoExt !: any;
 
-  
+
   parametros !: Parametros;
   gestion !: Gestion;
   askEstadoExtension !: AskEstadoExtension;
 
-  detalleGestion: DetalleGestion [] = [];
+  detalleGestion: DetalleGestion[] = [];
 
 
   tipoDocumento$ !: Observable<TipoDocumento[]>;
   private usuarios !: string;
 
 
-  
 
 
 
-  constructor( 
+
+  constructor(
     private loginService: LoginService,
-    private tipoDocumentoService : TipoDocumentoService,
-    private clienteService : ClienteService,
-    private detalleGestionService : DetalleGestionService,
-    private gestionService :GestionService ,
-    private estadoGestionService :EstadoGestionService,
-    private contactoService :ContactoService,
+    private tipoDocumentoService: TipoDocumentoService,
+    private clienteService: ClienteService,
+    private detalleGestionService: DetalleGestionService,
+    private gestionService: GestionService,
+    private estadoGestionService: EstadoGestionService,
+    private contactoService: ContactoService,
     private askEstadoExtensionService: AskEstadoExtensionService,
-    private usuarioService : UsuarioService,
-    private llamadaEntranteService : LlamadaEntranteService,
+    private usuarioService: UsuarioService,
+    private llamadaEntranteService: LlamadaEntranteService,
     private router: Router,
-    private snackBar: MatSnackBar) {   }
+    private snackBar: MatSnackBar) { }
 
 
 
   ngOnInit(): void {
 
-    this.clienteService.getFormCambio().subscribe(data =>{
-      this.cardCliente=data;
+    this.clienteService.getFormCambio().subscribe(data => {
+      this.cardCliente = data;
     });
 
-    this.loginService.getUsuariosCambio().subscribe((data:any) =>{
-      this.usuarios=data;
-     });
-
-    const askEstadoExtension ={  loginAgente : this.usuarios }
-    this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
-      this.dataSourceCant= new MatTableDataSource(data);
+    this.loginService.getUsuariosCambio().subscribe((data: any) => {
+      this.usuarios = data;
     });
 
-    this.gestionService.getGestionCambio().subscribe(data =>{
-      this.dataSourceCant= new MatTableDataSource(data);
+    const askEstadoExtension = { loginAgente: this.usuarios }
+    this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data => {
+      this.dataSourceCant = new MatTableDataSource(data);
+    });
+
+    this.gestionService.getGestionCambio().subscribe(data => {
+      this.dataSourceCant = new MatTableDataSource(data);
     });
 
 
-    this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
+    this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data => {
       this.colorExt = data.askEstado?.color;
       this.idExt = data.askEstado?.idEstado;
       this.nroExt = data.idExtension;
       this.valorPredeterminado = data.numeroOrigen;
       this.usuarioService.setExtensionCambio(this.nroExt);
       this.clienteService.setnumeroReal(this.valorPredeterminado);
-     
 
-        
 
-        this.formAgente   = new FormGroup({
+
+
+      this.formAgente = new FormGroup({
         'agente': new FormControl(data.loginAgente),
         'estado': new FormControl(data.askEstado?.descripcion),
         'numeroReal': new FormControl(data.numeroOrigen),
         'horaInicio': new FormControl(moment(data.fechahoraInicioEstado).format('YYYY-MM-DD HH:mm:ss')),
         'horaActual': new FormControl(moment().format('YYYY-MM-DD HH:mm:ss')),
-  
+
       });
     });
 
 
 
-  
-    
-    
 
 
 
-    
+
+
+
+
     this.buscarAgente();
-    this.cardCliente=false;
-    this.cardManual=true;
-    
+    this.cardCliente = false;
+    this.cardManual = true;
 
-   
 
-    this.formAgente   = new FormGroup({
+
+
+    this.formAgente = new FormGroup({
       'agente': new FormControl(''),
       'estado': new FormControl(''),
       'numeroReal': new FormControl(''),
@@ -173,15 +173,15 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
       'cliente': new FormControl(''),
       'tipoDoc': new FormControl(''),
       'identificacion': new FormControl('')
-   });
-
-   this.formBuscar = new FormGroup({
-    'nroDocumento': new FormControl('')
     });
 
-   
+    this.formBuscar = new FormGroup({
+      'nroDocumento': new FormControl('')
+    });
 
-    this.tipoDocumento$=this.tipoDocumentoService.buscar();
+
+
+    this.tipoDocumento$ = this.tipoDocumentoService.buscar();
 
     this.clienteService.getMensajeCambio().subscribe(data => {
       this.snackBar.open(data, 'AVISO', { duration: 2000 });
@@ -189,125 +189,125 @@ export class FiltroClienteComponent implements OnInit, OnDestroy{
   }
 
   buscarAgente() {
-     this.loginService.getUsuariosCambio().subscribe((data:any) =>{
-     this.usuarios=data;
+    this.loginService.getUsuariosCambio().subscribe((data: any) => {
+      this.usuarios = data;
     });
 
     const actualizar = interval(3000)
-      this.subscripcion= actualizar.subscribe(n=>{
-  
-    const askEstadoExtension ={  loginAgente : this.usuarios }
+    this.subscripcion = actualizar.subscribe(n => {
 
-    this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data =>{
-        this.colorExt=data.askEstado?.color;
-        this.idExt=data.askEstado?.idEstado;
-        this.documentoExt=data.nroDocumento;
-        this.formAgente   = new FormGroup({
-        'agente': new FormControl(data.loginAgente),
-        'estado': new FormControl(data.askEstado?.descripcion),
-        'numeroReal': new FormControl(data.numeroOrigen),
-        'horaInicio': new FormControl(moment(data.fechahoraInicioEstado).format('YYYY-MM-DD HH:mm:ss')),
-        'horaActual': new FormControl(moment().format('YYYY-MM-DD HH:mm:ss')),
-        
-      });
-        if (this.idExt===3){
-          const parametrosDTO ={  nroDocumento : this.documentoExt }
-          this.clienteService.asteriskCliente(parametrosDTO).subscribe(data=>{ 
+      const askEstadoExtension = { loginAgente: this.usuarios }
 
-            if(data === null){
-              this.llamadaEntranteService.LlamadaEntrante(parametrosDTO).subscribe((data:any) =>{
-                
+      this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data => {
+        this.colorExt = data.askEstado?.color;
+        this.idExt = data.askEstado?.idEstado;
+        this.documentoExt = data.nroDocumento;
+        this.formAgente = new FormGroup({
+          'agente': new FormControl(data.loginAgente),
+          'estado': new FormControl(data.askEstado?.descripcion),
+          'numeroReal': new FormControl(data.numeroOrigen),
+          'horaInicio': new FormControl(moment(data.fechahoraInicioEstado).format('YYYY-MM-DD HH:mm:ss')),
+          'horaActual': new FormControl(moment().format('YYYY-MM-DD HH:mm:ss')),
+
+        });
+        if (this.idExt === 3) {
+          const parametrosDTO = { nroDocumento: this.documentoExt }
+          this.clienteService.asteriskCliente(parametrosDTO).subscribe(data => {
+
+            if (data === null) {
+              this.llamadaEntranteService.LlamadaEntrante(parametrosDTO).subscribe((data: any) => {
+
                 this.clienteService.setcallid(data[0].id_asterisk);
                 this.formCliente = new FormGroup({
                   'cliente': new FormControl(''),
                   'tipoDoc': new FormControl(data[0].tipo_doc),
                   'identificacion': new FormControl(data[0].numero_documento)
-               });
+                });
               });
 
-            }  else{
+            } else {
               this.formCliente = new FormGroup({
                 'cliente': new FormControl(data.razonSocial),
                 'tipoDoc': new FormControl(data.tipoDocumento.tipoDoc),
                 'identificacion': new FormControl(data.nroDocumento)
-             });
+              });
             }
-            
-        });
+
+          });
         }
-        else if (this.idExt !==3){
-             this.formCliente = new FormGroup({
+        else if (this.idExt !== 3) {
+          this.formCliente = new FormGroup({
             'cliente': new FormControl(''),
             'tipoDoc': new FormControl(''),
             'identificacion': new FormControl('')
-         });
-      
+          });
+
         }
       });
 
     });
 
-    
-   
+
+
 
   }
 
-  buscarAuto(){
+  buscarAuto() {
 
-    const parametrosDTO= {tipoDoc: this.formCliente.value['tipoDoc'], nroDocumento: this.formCliente.value['identificacion'] }    
-    
-      this.clienteService.filtroCliente(parametrosDTO).subscribe( data =>{
-      this.idCliente =data.idCliente;
+    const parametrosDTO = { tipoDoc: this.formCliente.value['tipoDoc'], nroDocumento: this.formCliente.value['identificacion'] }
+
+    this.clienteService.filtroCliente(parametrosDTO).subscribe(data => {
+      this.idCliente = data.idCliente;
       this.clienteService.setIdClienteCambio(this.idCliente);
 
       this.router.navigate(['gestionEntrante']);
 
-     
+
     });
 
 
   }
 
 
-  buscarManual(){
-    this.cardCliente=true;
-    this.cardManual=false;
+  buscarManual() {
+    this.cardCliente = true;
+    this.cardManual = false;
     this.clienteService.setDocumentoNuevo(this.formCliente.value['identificacion'])
     this.formBuscar = new FormGroup({
       'nroDocumento': new FormControl(this.formCliente.value['identificacion'])
-   });
+    });
 
-   
+
   }
 
-  
-  
 
-buscarCliente() {
-      const parametrosDTO= {tipoDoc:this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento']}    
-    
-      this.clienteService.filtroCliente(parametrosDTO).subscribe( data =>{
-       
-      if(data){  
-      this.idCliente =data.idCliente;
-      this.clienteService.setIdClienteCambio(this.idCliente);
 
-      this.router.navigate(['gestionEntrante']);     
-    } else {
 
-      // this.clienteService.getDocumentoNuevo().subscribe(data=>{
-      //   console.log(this.formCliente.value['identificacion'],1);
-  
-      //   console.log(data,2)
-  
-      // });
-  
-      this.router.navigate(['clientes']);    
-    }
+  buscarCliente() {
+    const parametrosDTO = { tipoDoc: this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento'] }
+
+    this.clienteService.filtroCliente(parametrosDTO).subscribe(data => {
+
+      if (data) {
+        this.idCliente = data.idCliente;
+        this.clienteService.setIdClienteCambio(this.idCliente);
+
+        this.router.navigate(['gestionEntrante']);
+      } else {
+
+        // this.clienteService.getDocumentoNuevo().subscribe(data=>{
+        //   console.log(this.formCliente.value['identificacion'],1);
+
+        //   console.log(data,2)
+
+        // });
+
+        this.router.navigate(['clientes']);
+      }
     });
   }
 
- gestionEntrante(){
+  gestionEntrante() {
     this.router.navigate(['gestionEntrante']);
   }
 
@@ -315,6 +315,6 @@ buscarCliente() {
 
   ngOnDestroy(): void {
     this.subscripcion.unsubscribe();
-   }
+  }
 
 }

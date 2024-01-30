@@ -46,3 +46,8 @@ td {
   color: red;
   font-size: small;
 }
+
+input[readonly] {
+  background-color: #f8f8f8; /* Cambia el color de fondo según tus preferencias */
+  cursor: not-allowed; /* Cambia el cursor al indicador de no permitido */
+}
