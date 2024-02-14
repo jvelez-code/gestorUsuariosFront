@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             .buscarAgenteCampana(filtroEntranteDTO)
             .subscribe((data) => {
               this.loginService.agenteDTO = data;
-              console.log(data);
+              console.log(data,'campaña');
             });
 
           this.menuService

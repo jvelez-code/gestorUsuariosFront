@@ -7,6 +7,7 @@ import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Parametros } from '../_model/parametros';
 import { CantidadGestionDTO } from '../_dto/CantidadGestionDTO ';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
+import { DetalleGestion } from '../_model/detalleGestion';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,20 @@ export class DetalleGestionService {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(askEstadoExtension);
       return this.http.post<CantidadGestionDTO[]>(`${this.url}/catidadGestion`,body,{'headers':headers});
+    }
+
+    salienteDetalle(getalleGestion: DetalleGestion){
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(getalleGestion);
+      return this.http.post<DetalleGestion>(`${this.url}`,body,{'headers':headers});
+    }
+
+    guardarSaliente(detalleGestion: DetalleGestion){
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(detalleGestion);
+      console.log(detalleGestion,'service')
+      return this.http.post<DetalleGestion>(`${this.url}/saliente`,body,{'headers':headers});
+
     }
 
 }

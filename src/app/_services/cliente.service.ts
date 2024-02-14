@@ -20,6 +20,7 @@ export class ClienteService extends GenericService<Cliente> {
   private documentoNuevo = new BehaviorSubject<string> ('000');
   private numeroReal = new BehaviorSubject<string> ('000');
   private callid = new BehaviorSubject<string> ('000');
+  
 
   //private url:string = `${environment.HOST}/clientes`;
 
@@ -54,7 +55,7 @@ export class ClienteService extends GenericService<Cliente> {
      filtroCliente(parametrosDTO: ParametrosDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});
+      return this.http.post<ParametrosDTO>(`${this.url}/buscar`,body,{'headers':headers});
     }
 
     

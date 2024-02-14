@@ -25,7 +25,7 @@ import { FidelizacionUsuComponent } from './pages/gestion-comercial/fidelizacion
 import { Not403Component } from './pages/not403/not403.component';
 import { Not404Component } from './pages/not404/not404.component';
 import { SalienteComponent } from './pages/saliente/saliente.component';
-import { SalientesComponent } from './pages/salientes/salientes.component';
+
 
 const routes: Routes = [
   { path: 'filtroEntrante', component: FiltroClienteComponent, children:[
@@ -33,7 +33,7 @@ const routes: Routes = [
   ]
  },
   { path: 'gestionEntrante', component: EntrantesComponent },
-  { path: 'gestionSaliente', component: SalientesComponent },
+  { path: 'gestionSaliente', component: SalienteComponent },
   { path: 'filtroSaliente', component: FiltroSalienteComponent },
   { path: 'filtrosecretaria', component: FiltroSecretariaComponent, canActivate: [GuardService] },
   { path: 'estadoExtension', component: ExtadoExtComponent },

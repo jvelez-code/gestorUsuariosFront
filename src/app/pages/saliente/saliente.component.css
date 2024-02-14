@@ -1,0 +1,132 @@
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .mat-card-header{
+    text-align: center;
+    background-color: #bbbbd6 ;
+    padding:5px ;
+  }
+  
+
+  .mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+  }
+
+  /*tipificacion*/
+  table {
+    width: 100%;
+  }
+
+
+    Tipifica Gestion
+  .mat-select-content{
+    width: 60%;
+  } 
+
+  
+  .example-full-width {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+
+
+  /*Botones*/
+
+  section {
+    display: table;
+  }
+  
+  .example-label {
+    display: table-cell;
+    font-size: 24px;
+    margin-left: 16px;
+    min-width: 180px;
+  }
+  
+  .example-button-row {
+    display: table-cell;
+    max-width: 600px;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+  
+  th {
+    /* row border */
+    border-bottom: 1px solid #ffa600;
+  }
+  
+  td.mat-cell {
+    /* row padding */
+    padding: 20px 0;
+    border: none;
+  }
+  
+  tr.mat-row {
+    /* row border */
+    border: 1px solid #ffa600;
+  }
+  
+
+   /*CARD*/
+  .example-card-cli {
+    max-width: 1200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .error-message {
+    color: red;
+    font-size: small;
+ }
+
+
+ /* PANEL DE EXPANSIÓN*/
+ .example-action-buttons {
+  padding-bottom: 20px;
+}
+
+
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+
+
+  /* Estilo para filas pares */
+  tr:nth-child(even) {
+    background-color: #b0baf1;
+  }
+  
+  /* Estilo para filas impares */
+  tr:nth-child(odd) {
+    background-color: #f7d6d6;
+  }
