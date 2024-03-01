@@ -70,7 +70,7 @@ export class ClienteService extends GenericService<Cliente> {
     }
 
 
-    //////// get, set ///////////////////
+    //////// GET , SET ///////////////////
 
     getClienteCambio(){
       return this.clienteCambio.asObservable();

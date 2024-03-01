@@ -5,6 +5,7 @@ import { LoginService } from './_services/login.service';
 import { LlamadaEntranteService } from './_services/llamada-entrante.service';
 import { AskEstadoService } from './_services/ask-estado.service';
 import * as moment from 'moment';
+import { ParametrosDTO } from './_dto/ParametrosDTO';
 
 
 @Component({
@@ -21,13 +22,16 @@ export class AppComponent {
   idExt !: number;
   usuarioExt !: string;
   enllamada !: boolean;
-  private fechaActual = moment();
+  fechaActual : Date = new Date();
+  parametrosDTO !: ParametrosDTO;
 
   constructor(
     public loginService: LoginService,
     private askEstadoExtensionService: AskEstadoExtensionService,
     private llamadaEntranteService: LlamadaEntranteService,
-    private askEstadoService: AskEstadoService
+    private askEstadoService: AskEstadoService,
+    
+
   ) {
     this.loginService.getExtensionCambio().subscribe(data => {
       this.idExt = data;
@@ -46,33 +50,50 @@ export class AppComponent {
 
   cerrarApp() {
 
-    if (this.loginService.agenteDTO.idUsuario) {
+ //   if (this.loginService.agenteDTO.idUsuario) {
       const askEstadoExtension =
       {
         estadoAsk: 1, idExtension: this.idExt, loginAgente: this.usuarioExt,
-        nroDocumento: this.loginService.agenteDTO.nroDocumento, tipoDoc: this.fechaActual.format('YYYY-MM-DD 01:01:01')
+        nroDocumento: this.loginService.agenteDTO.nroDocumento, tipoDoc: moment(this.fechaActual).format('YYYY-MM-DD HH:mm:ss')
+      }
+      
+      console.log(askEstadoExtension)
+
+      this.parametrosDTO = { nroDocumento: this.loginService.agenteDTO.nroDocumento  }
+
+
+     this.askEstadoExtensionService.buscarAgente(this.parametrosDTO).subscribe(data => {
+
+      console.log(data , ' pruebas');
+      if(data.askEstado?.idEstado===3){
+        this.askEstadoService.setMensajecambio('EN LLAMADA')
+      }else {
+        this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(() => { })
+
+        this.loginService.cerrarSesion();
+
       }
 
-      this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data => {
-        this.enllamada = data;
+     });
 
-        if (this.enllamada) {
-          this.askEstadoService.setMensajecambio('EN LLAMADA')
+      
+
+      // this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data => {
+      //   this.enllamada = data;
+
+      //   if (this.enllamada) {
+      //     this.askEstadoService.setMensajecambio('EN LLAMADA')
 
 
-        } else {
+      //   } else {
+      //     this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(() => { })
 
-          console.log('hola login3')
-          this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(() => { })
+      //     this.loginService.cerrarSesion();
 
-          this.loginService.cerrarSesion();
+      //   }
+      // })
 
-        }
-      })
-
-    } else {
-      console.log('hola login4')
-    }
+  //  } 
 
   }
 }

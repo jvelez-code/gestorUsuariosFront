@@ -217,7 +217,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
             if (data === null) {
               this.llamadaEntranteService.LlamadaEntrante(parametrosDTO).subscribe((data: any) => {
 
-                this.clienteService.setcallid(data[0].id_asterisk);
+                this.clienteService.setcallid(data[0].idAsterisk);
                 this.formCliente = new FormGroup({
                   'cliente': new FormControl(''),
                   'tipoDoc': new FormControl(data[0].tipo_doc),
@@ -294,14 +294,6 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
 
         this.router.navigate(['gestionEntrante']);
       } else {
-
-        // this.clienteService.getDocumentoNuevo().subscribe(data=>{
-        //   console.log(this.formCliente.value['identificacion'],1);
-
-        //   console.log(data,2)
-
-        // });
-
         this.router.navigate(['clientes']);
       }
     });

@@ -48,7 +48,6 @@ export class LlamadaEntranteService {
     usuarioTmo(parametrosDTO: ParametrosDTO):Observable<any>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      console.log(body,'service')
       return this.http.post<ParametrosDTO>(`${this.url}/tmoUsuario`,body,{'headers':headers});
     }
   }

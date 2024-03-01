@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             .buscarAgenteCampana(filtroEntranteDTO)
             .subscribe((data) => {
               this.loginService.agenteDTO = data;
-              console.log(data,'campaña');
+              
             });
 
           this.menuService
@@ -127,11 +127,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    
+    
     const randomNumber = Math.floor(Math.random() * 13) + 1;
     const bodyElement = document.getElementById("bodylogin");
     const backgroundImage = `url('assets/fondos/fondo${randomNumber}.jpg')`;
-    
+    //const backgroundImage = `url('assets/fondos/fondo12.jpg')`;
     if (bodyElement) {
       bodyElement.style.backgroundImage = backgroundImage;
       bodyElement.style.backgroundRepeat = "no-repeat";
@@ -145,6 +146,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         bodyElement.style.backgroundSize = "contain"; // Otra opción para imágenes más pequeñas
       }
     }
-    
+
+    (window as any).initialize();
+
   }
+
 }
+
+

@@ -37,7 +37,11 @@ import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extensio
 import { CicloVidaComponent } from './ciclo-vida/ciclo-vida.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FidelizacionUsuComponent } from './fidelizacion-usu/fidelizacion-usu.component';
+import { ValidadoresService } from 'src/app/_services/validadores.service';
 
+const today = new Date();
+const month = today.getMonth();
+const year = today.getFullYear();
 
 
 
@@ -48,19 +52,23 @@ import { FidelizacionUsuComponent } from './fidelizacion-usu/fidelizacion-usu.co
 })
 export class GestionComercialComponent implements OnInit, OnDestroy {
 
+  
+
 
   fechaparametro1 !:  string;
   fechaparametro2 !:  string;
-  form!: FormGroup;
-  ParametrosDTO: any;
-  detalleGestion: DetalleGestion [] = [];
+  formManual !: FormGroup;
+  ParametrosDTO : any;
+  detalleGestion : DetalleGestion [] = [];
   contacto : Contacto [] = [];
   detalleGestionComercial : DetalleGestionComercial [] = [];
-  AgenteDTO!: AgenteDTO;
-  minDate!: Date;
-  maxDate!: Date;
-  selectedDate1!: Date;
-  selectedDate2!: Date;
+  AgenteDTO !: AgenteDTO;
+  minDate !: Date;
+  maxDate !: Date;
+  selectedDate1 !: Date;
+  selectedDate2 !: Date;  
+  minFecha: Date = new Date();
+  fechaSeleccionada: Date = new Date();
 
 
   private subscripcion : Subscription = new Subscription();
@@ -71,6 +79,10 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   panelOpenState = false;
   tipoGestionP !: number ;
   tipoGestionH !: any;
+  btoGuardar : boolean = true;
+  btnReport: boolean = true;
+
+  
 
 
 
@@ -107,7 +119,12 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   cicloVida : number = 1;
   estadoComercial$ !: Observable<EstadoGestion[]>;
   estadoComercial : number = 4265;
-  gestionRelizada : string ='0';
+  gestionRelizada : string ='1';
+
+  campaignOne = new FormGroup({
+    start: new FormControl(new Date(year, month,))
+  });
+  
 
 
 
@@ -126,19 +143,18 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
     private dialog : MatDialog,
     private fb : FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar ) 
+    private snackBar: MatSnackBar,
+    private validadoresService: ValidadoresService
+    ) 
     { 
       this.crearFormulario();
-      const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 20, 0, 1);
-    this.maxDate = new Date(currentYear + 1, 11, 31);
     }
 
-    ngOnInit(): void {
 
+
+    ngOnInit(): void {  
       
-
-    this.loginService.getUsuariosCambio().subscribe((data:any) =>{
+      this.loginService.getUsuariosCambio().subscribe((data:any) =>{
       this.usuario=data;
      });
 
@@ -168,12 +184,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
       this.cicloVida$ = this.cicloVidaService.listar();
 
      this.ParametrosDTO ={ idEmpresa: 12 }
-     console.log(this.ParametrosDTO, "hola Mundo4")
      this.estadoComercial$ = this.estadoGestionService.estadoComercial(this.ParametrosDTO)
-      // this.estadoGestionService.estadoComercial(this.ParametrosDTO).subscribe(data =>{
-      //   console.log(data,'hola mundo')
-      // });
-
     }
 
 
@@ -185,7 +196,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
 
 
 
-  displayedColumns: string[] = ['fidelizacion','idDetalleGestionComercial','fechaGestion', 'fechaGestionCargue', 'idAgente', 'tipoDocumentoCliente','nroDocumentoCliente',
+  fidelizacionColumnas: string[] = ['fidelizacion','idDetalleGestionComercial','fechaGestion', 'fechaGestionCargue', 'idAgente', 'tipoDocumentoCliente','nroDocumentoCliente',
   'razonSocialCliente', 'nombreContacto', 'numeroContacto', 'celularContacto','correoElectronicoContacto','ciudadCliente', 'direccionCliente', 'nombreMotivo','regProyectadosCliente',
   'nombreEstadoGestion', 'regObtenidosCliente', 'observacionDetGestion', 'nroGestionRealizadaDetGestion','compromisosDetGestion',
   'ciclodeVida', 'acciones'];
@@ -198,24 +209,36 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   selectedCar !: string;
 
   buscar() {
+
     if(this.range.value.start && this.range.value.end) {
 
      this.fechaparametro1 = moment(this.range.value.start).format('YYYY-MM-DD 00:00:01');
      this.fechaparametro2 = moment(this.range.value.end).format('YYYY-MM-DD 23:59:59');
 
     const parametrosDTO ={ fechaInicial: this.fechaparametro1, fechaFinal: this.fechaparametro2, idUsuario: this.idUsuario }
+    this.btnReport = true;
     this.comercialGestionService.gestionComercial(parametrosDTO).subscribe(data =>{
+      if(data.length > 0 ){
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.btnReport = true;
+      } else { 
+        this.snackBar.open('NO HAY DATOS EN LA FECHA', 'Aviso', {
+        duration: 3000, 
+      });
+      }
+      
     });
 
     this.comercialGestionService.comercialUsuario(parametrosDTO).subscribe(data =>{
-      console.log(data,'usuarios')
+
     });
 
   } else {
-    console.log('Selecciona ambas fechas antes de realizar la búsqueda.');
+    this.snackBar.open('INGRESE FECHAS', 'Aviso', {
+      duration: 3000, 
+    });
   }
 
   }
@@ -224,25 +247,62 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
 
   crearFormulario(){
 
-    this.form = this.fb.group ({
+    this.formManual = this.fb.group ({
 
-      'documento': ['8080', [Validators.required,Validators.minLength(4)]],
-      'empresa': ['ASOPAGOS', [Validators.required,Validators.minLength(4)]],
-      'contacto' : ['DANA', [Validators.required,Validators.minLength(4)]],
-      'telefono': ['6015778899', [Validators.required,Validators.minLength(4)]],
-      'celular': ['3504445566', [Validators.required,Validators.minLength(4)]],
-      'correo': ['pruebas@gmail.com', [Validators.required,Validators.minLength(4)]],
-      'direccion': ['calle 8', [Validators.required,Validators.minLength(4)]],
-      'registros': ['7777', [Validators.required,Validators.minLength(4)]],
-      'gestionrealizada': ['1111', [Validators.required,Validators.minLength(4)]],
+      'documento': ['', [Validators.required,Validators.minLength(4),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'empresa': ['', [Validators.required,Validators.minLength(4)]],
+      'contacto' : ['', [Validators.required,Validators.minLength(4)]],
+      'telefono':['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
+      'correo': ['',[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+      'direccion': ['', [Validators.required,Validators.minLength(4)]],
+      'registros': ['1', [Validators.required,Validators.minLength(1)]],
+      'tipificacioP': ['', [Validators.required, this.validadoresService.validatetipo ]],
+      'fechaGestion': ['', [Validators.required, this.validadoresService.validatetipo ]],
       'observacion': ['Llamar el cliente', [Validators.required,Validators.minLength(4)]],
-      'regobtenidos': ['8888', [Validators.required,Validators.minLength(4)]],
-      'gesrealizada': ['2222', [Validators.required,Validators.minLength(4)]],
-      'compromiso': ['N/A N/A', [Validators.required,Validators.minLength(4)]],
+      'regobtenidos': ['1', [Validators.required,Validators.minLength(1),Validators.pattern('^[0-9]+$')]],
+      'gesrealizada': ['1', [Validators.required,Validators.minLength(1),Validators.pattern('^[0-9]+$')]],
+      'compromiso': ['PAGO', [Validators.required,Validators.minLength(4)]],
 
             });
   }
 
+  get documentoNoValido() {
+    return this.formManual.get('documento')?.invalid && this.formManual.get('documento')?.touched
+  }
+  get empresaNoValido() {
+    return this.formManual.get('empresa')?.invalid && this.formManual.get('empresa')?.touched
+  }
+  get contactoNoValido() {
+    return this.formManual.get('contacto')?.invalid && this.formManual.get('contacto')?.touched
+  }
+  get telefonoNoValido() {
+    return this.formManual.get('telefono')?.invalid && this.formManual.get('telefono')?.touched
+  }
+  get celularNoValido() {
+    return this.formManual.get('celular')?.invalid && this.formManual.get('celular')?.touched
+  }
+  get correoNoValido() {
+    return this.formManual.get('correo')?.invalid && this.formManual.get('correo')?.touched
+  }
+  get direccionNoValido() {
+    return this.formManual.get('direccion')?.invalid && this.formManual.get('direccion')?.touched
+  }
+  get registrosNoValido() {
+    return this.formManual.get('registros')?.invalid && this.formManual.get('registros')?.touched
+  }
+  get observacionNoValido() {
+    return this.formManual.get('observacion')?.invalid && this.formManual.get('observacion')?.touched
+  }
+  get regobtenidosNoValido() {
+    return this.formManual.get('regobtenidos')?.invalid && this.formManual.get('regobtenidos')?.touched
+  }
+  get gesrealizadaNoValido() {
+    return this.formManual.get('gesrealizada')?.invalid && this.formManual.get('gesrealizada')?.touched
+  }
+  get compromisoNoValido() {
+    return this.formManual.get('compromiso')?.invalid && this.formManual.get('compromiso')?.touched
+  }
 
   buscarCliente(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -253,11 +313,8 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
      
     if(data){  
     this.idClienteP =data.idCliente;
-    console.log(this.idClienteP,'CLIENTE')
-
       } 
       else {
-        console.log(this.idClienteP,'CLIENTE2')
     this.router.navigate(['clientes']);    
   }
   });
@@ -270,7 +327,6 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
 
 
   abrirFidelizacion(gestionComercialDto ?: GestionComercialDto ){
-    console.log('Hola De', gestionComercialDto)
     this.dialog.open(FidelizacionUsuComponent,{
       width: '700px',
       data: gestionComercialDto
@@ -278,7 +334,6 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
   }
 
   abrirCicloVida(gestionComercialDto ?: GestionComercialDto, otraVariable: string ='45555'){
-    console.log('Hola De', gestionComercialDto)
     this.dialog.open(CicloVidaComponent,{
       width: '350px',
       data: gestionComercialDto
@@ -291,7 +346,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
 
   async guardarGestion(){  
 
-    try {
+  
 
     await this.buscarCliente();
 
@@ -318,11 +373,14 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
 
     let motivo = new Motivo ();
     motivo.idMotivo = this.motivo;
+
+    let ciclo = new CicloVida();
+    ciclo.idCiclo = this.cicloVida;
     
     
     let det = new DetalleGestion();
-    det.observacion = this.form.value['observacion'];
-    det.numRealMarcado = this.form.value['celular'];
+    det.observacion = this.formManual.value['observacion'];
+    det.numRealMarcado = this.formManual.value['celular'];
     det.usuario = usuario;
     det.estadoGestion = estadoGestionH;
     det.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
@@ -333,20 +391,27 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
     this.detalleGestion.push(det);
 
     let cont = new Contacto();
-    cont.nombre = this.form.value['contacto'];
-    cont.correoElectronico = this.form.value['correo'];
-    cont.numeroContacto = this.form.value['celular'];
-    cont.telefonoDirecto = this.form.value['telefono'];
-    cont.telefonoCelular = this.form.value['celular'];
+    cont.nombre = this.formManual.value['contacto'];
+    cont.correoElectronico = this.formManual.value['correo'];
+    cont.numeroContacto = this.formManual.value['celular'];
+    cont.telefonoDirecto = this.formManual.value['telefono'];
+    cont.telefonoCelular = this.formManual.value['celular'];
     cont.cliente = cliente;
     cont.usuario = usuario;
     cont.divipola = divi;
     this.contacto.push(cont);
 
+    
     let come = new DetalleGestionComercial();
     come.usuario = usuario;
     come.motivo = motivo;
-    come.nroGestionRealizada = this.form.value['gesrealizada'];  
+    come.nroGestionRealizada = this.gestionRelizada;
+    come.regProyectados = this.formManual.value['registros'];
+    come.fechaGestion = this.fechaSeleccionada;
+    come.regObtenidos = this.formManual.value['regobtenidos'];
+    come.compromisos = this.formManual.value['compromiso'];
+    come.nroGestionRealizada = this.formManual.value['gesrealizada'];  
+    come.cicloVida = ciclo;
     this.detalleGestionComercial.push(come);
 
 
@@ -367,21 +432,37 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
     
     gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
-
-    console.log(gestion.listaDetalleGestionComercial,'gestion Comercial-1')
-    console.log(gestion.listaDetalleGestion,'gestion Comercial-2')
+    this.btoGuardar = true;
   
     this.gestionService.guardarGestionComercial(gestion).subscribe( ()=> {
-      this.clienteService.setMensajecambio('SE REGISTRÓ');
+      this.snackBar.open("SE REGISTRO", "Aviso", { duration: 2000 });
+      this.router.navigate(['gestionComercial']);
+
+      setTimeout(() => {
+        this.btoGuardar = false;
+        this.limpiarFormulario();
+      }, 2000);
+      
     });
-  } 
-  catch (error) {
-    
-    console.error('Error en la búsqueda del cliente:', error);
-  }
-  
   
   }
+
+
+
+  limpiarFormulario() {
+    this.detalleGestion = [];
+    this.contacto = [];
+    this.detalleGestionComercial = [];
+    this.idClienteP = null;    
+    this.formManual.get('documento')?.setValue('');
+    this.formManual.get('empresa')?.setValue('');
+    this.formManual.get('contacto')?.setValue('');
+    this.formManual.get('telefono')?.setValue('');
+    this.formManual.get('celular')?.setValue('');
+    this.formManual.get('correo')?.setValue('');
+    this.formManual.get('direccion')?.setValue('');   
+  }
+
 
   ngOnDestroy(): void {
     this.subscripcion.unsubscribe();

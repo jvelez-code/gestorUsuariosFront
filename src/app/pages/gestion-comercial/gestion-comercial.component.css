@@ -40,3 +40,33 @@ section {
 mat-form-field {
   margin-right: 12px;
 }
+
+/*CARD*/
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: center;
+}
+
+.mat-card-header{
+  background-color: #bbbbd6 ;
+  padding:5px ;
+}
+
+ .mat-card{
+  padding:0 ;
+}
+
+.mat-card-content{
+  padding:5px ;
+}
+
+
+
+.error-message {
+  color: red;
+  font-size: small;
+}

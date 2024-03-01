@@ -22,6 +22,7 @@ export class FidelizacionUsuComponent implements OnInit {
 
   formFideli !: FormGroup;
   gestionC !: GestionComercialDto;
+  fechaSeleccionada: Date = new Date();
 
   constructor(
     private fidelizacionService : FidelizacionService , 
@@ -48,25 +49,46 @@ export class FidelizacionUsuComponent implements OnInit {
   crearFormulario(){
 
     this.formFideli = this.fb.group({      
-      'tipoDoc': [this.data.tipoDocumentoCliente  ,  [Validators.required]] , 
-      'documento': [this.data.nroDocumentoCliente  ,  [Validators.required , Validators.minLength(7) , Validators.maxLength(10) , Validators.pattern('^[0-9]+$')]] , 
-      'codCaja': ['SIN CCF' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
-      'regNuevos': ['1' , [Validators.required , Validators.minLength(10) , Validators.maxLength(10) , Validators.pattern('^[0-9]+$')]] , 
-      'regRecuperados' : ['0' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
-      'fechaPago' : ['2023-12-01' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
-      'numPlanilla': ['8627928921' , [Validators.required , Validators.minLength(1) , Validators.maxLength(4) , Validators.pattern('^[0-9]+$')]] , 
-      'observacion' : ['INDEPENDIENTE PAGADO' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
-      'migracion' : ['0' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
-      'sucursal' : ['2' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'tipoDoc': [this.data.tipoDocumentoCliente ] , 
+      'documento': [this.data.nroDocumentoCliente  ] , 
+      'codCaja': ['SIN CCF' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(8)]] , 
+      'regNuevos': ['1' , [Validators.required , Validators.minLength(1) , Validators.maxLength(4) , Validators.pattern('^[0-9]+$')]] , 
+      'regRecuperados' : ['0' ,  [Validators.required , Validators.minLength(1) , Validators.maxLength(4)]] , 
+      'fechaPago' : ['' ,[Validators.required, this.validadoresService.validatetipo ]] , 
+      'numPlanilla': ['86' , [Validators.required , Validators.minLength(6) , Validators.maxLength(16) , Validators.pattern('^[0-9]+$')]] , 
+      'observacion' : ['PAGADA' ,  [Validators.required , Validators.minLength(3) , Validators.maxLength(64)]] , 
+      'migracion' : ['0' ,  [Validators.required , Validators.minLength(1) , Validators.maxLength(4), Validators.pattern('^[0-9]+$')]] , 
+      'sucursal' : ['0' ,  [Validators.required , Validators.minLength(1) , Validators.maxLength(4), Validators.pattern('^[0-9]+$')]] , 
        });
 
   }
 
+  get codCajaNoValido() {
+    return this.formFideli.get('codCaja')?.invalid && this.formFideli.get('codCaja')?.touched
+  }
+  get regNuevosNoValido() {
+    return this.formFideli.get('regNuevos')?.invalid && this.formFideli.get('regNuevos')?.touched
+  }
+  get regRecuperadosNoValido() {
+    return this.formFideli.get('regRecuperados')?.invalid && this.formFideli.get('regRecuperados')?.touched
+  }
+  get fechaPagoNoValido() {
+    return this.formFideli.get('fechaPago')?.invalid && this.formFideli.get('fechaPago')?.touched
+  }
+  get numPlanillaNoValido() {
+    return this.formFideli.get('numPlanilla')?.invalid && this.formFideli.get('numPlanilla')?.touched
+  }
+  get observacionNoValido() {
+    return this.formFideli.get('observacion')?.invalid && this.formFideli.get('observacion')?.touched
+  }
+  get migracionNoValido() {
+    return this.formFideli.get('migracion')?.invalid && this.formFideli.get('migracion')?.touched
+  }
+  get sucursalNoValido() {
+    return this.formFideli.get('sucursal')?.invalid && this.formFideli.get('sucursal')?.touched
+  }
+
   guardarFidelizacion(){
-
-
-
-
 
     let detalleGestionComercial = new DetalleGestionComercial();
     detalleGestionComercial.idDetalleGestionComercial = this.data.idDetalleGestionComercial;
@@ -85,17 +107,16 @@ export class FidelizacionUsuComponent implements OnInit {
     fide.codCaja = this.formFideli.value['codCaja'];
     fide.registrosNuevos = this.formFideli.value['regNuevos'];
     fide.registrosRecuperados = this.formFideli.value['regRecuperados'];
-    fide.fechaPago = this.formFideli.value['fechaPago'];
+    fide.fechaPago = moment(this.fechaSeleccionada).format('YYYY-MM-DD');
     fide.numeroPlanilla = this.formFideli.value['numPlanilla'];
     fide.observacion = this.formFideli.value['observacion'];
     fide.migracion = this.formFideli.value['migracion'];
     fide.sucursal = this.formFideli.value['sucursal'];
     fide.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
-    this.fidelizacionService.registrar(fide).subscribe(()=>
-    
-    console.log('hola fidelizacion')
-    
-    );
+
+    this.fidelizacionService.registrar(fide).subscribe(()=>{
+      this.snackBar.open("SE REGISTRO", "Aviso", { duration: 2000 });
+    });
     
     this.cerrar();
   }

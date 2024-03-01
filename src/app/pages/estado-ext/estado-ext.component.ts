@@ -44,9 +44,7 @@ export class ExtadoExtComponent implements OnInit {
 
 
   ngOnInit(): void {
-   /* this.askEstadoService.buscar().subscribe(data=>{
-      console.log(data);
-    });*/
+    
     this.askEstados$=this.askEstadoService.buscar();
 
     this.loginService.getExtensionCambio().subscribe(data =>{
@@ -74,10 +72,11 @@ export class ExtadoExtComponent implements OnInit {
       loginAgente: this.usuarioExt, 
       nroDocumento: this.loginService.agenteASK.nroDocumento, tipoDoc:this.fechaActual.format('YYYY-MM-DD 01:01:01') }
       
-    this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{
-    this.enllamada=data;
+    // this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{
+    // this.enllamada=data;
   
-    if(this.enllamada) {
+    // if(this.enllamada) {
+      if(this.estadoExt===3) {
 
       this.askEstadoService.setMensajecambio('EN LLAMADA')         
     }
@@ -86,6 +85,7 @@ export class ExtadoExtComponent implements OnInit {
           if(this.estadoExt===2){
 
           this.llamadaEntranteService.buscarLogin(askEstadoExtension).subscribe(data =>{
+            console.log(data,'entrante')
 
             this.enAsterisk=data;
 
@@ -119,8 +119,8 @@ export class ExtadoExtComponent implements OnInit {
     
        }
 
-  })
-  }
+  // })
+   }
 
 
   

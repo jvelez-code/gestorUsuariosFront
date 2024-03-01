@@ -85,8 +85,6 @@ export class PilaenlaceService {
       });
 
     const body=JSON.stringify(datos);
-    console.log(datos);
-    console.log(this.tokenPla,'tokenssss');
     return this.http.post<Planillas[]>('https://prbusr.enlace-apb.com/sinapsis-api/services/generarPlanillasOtros',body,{'headers':headers});
   }
 

@@ -5,6 +5,7 @@ export class ParametrosDTO {
 	idUsuario?: number;
 	nroDocumento?: string;
 	idCliente?: number;
+	empresa?: string;
 	idEmpresa?: number;
 	idTipoCampana?: number;
 	idEstadoPadre?: number;
@@ -17,7 +18,7 @@ export class ParametrosDTO {
 	
 	
 	constructor(tipoDoc: string, loginAgente: string, idUsuario:number, nroDocumento: string, idCliente: number, 
-		idEmpresa: number, idTipoCampana: number, idEstadoPadre: number, tipoLlamada: number,
+		empresa: string, idEmpresa: number, idTipoCampana: number, idEstadoPadre: number, tipoLlamada: number,
 		fechaInicial: string, fechaFinal: string , idDetalleComer: number , cicloVida: number ,idGestion: number ) {
             
 		this.tipoDoc = tipoDoc;
@@ -25,6 +26,7 @@ export class ParametrosDTO {
 		this.idUsuario = idUsuario;
 		this.nroDocumento = nroDocumento;
 		this.idCliente = idCliente;
+		this.empresa = empresa;
 		this.idEmpresa = idEmpresa;
 		this.idTipoCampana = idTipoCampana;
 		this.idEstadoPadre = idEstadoPadre;

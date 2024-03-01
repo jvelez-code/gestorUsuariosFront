@@ -15,6 +15,8 @@ import { duration } from 'moment';
 })
 export class GestionUsuariosComponent implements OnInit {
 
+  
+
   displayedColumns: string[] = ['idUsuario', 'enabled', 'fechaCambio','email', 'roles', 'username','failed','acciones', ];
   dataSource!: MatTableDataSource<Usuarios>;
   @ViewChild(MatSort) sort!: MatSort;

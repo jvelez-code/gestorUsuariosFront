@@ -8,7 +8,7 @@ import { LoginService } from 'src/app/_services/login.service';
 import { MenuService } from 'src/app/_services/menu.service';
 import { UsuarioService } from 'src/app/_services/usuario.service';
 import { environment } from 'src/environments/environment';
-import '../../../assets/login-animation.js';
+import '../../../assets/login-animation_.js';
 
 @Component({
   selector: 'app-login',

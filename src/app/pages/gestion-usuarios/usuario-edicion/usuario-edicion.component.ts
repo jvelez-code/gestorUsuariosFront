@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as moment from 'moment';
 import { switchMap } from 'rxjs';
@@ -14,19 +14,35 @@ import { UsuariosMigraService } from 'src/app/_services/usuarios-migra.service';
 })
 export class UsuarioEdicionComponent implements OnInit {
 
-  form!: FormGroup;
+  formUsuarios!: FormGroup;
   id!: number;
   edicion!: boolean;
   fecha: Date = new Date();
+  activo :Boolean = true;
+  fechaSeleccionada: Date = new Date();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private usuariosMigraService: UsuariosMigraService
-  ) { }
+    private usuariosMigraService: UsuariosMigraService,
+    private fb : FormBuilder,
+  ) { 
+    this.crearFormulario();
+  }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
+    this.route.params.subscribe((data:Params)=>{
+      this.id =data['id'];
+      this.edicion = data['id'] != null;
+      this.initForm();
+    });
+  }
+
+  get f() { return this.formUsuarios.controls; }
+
+
+  crearFormulario(){
+    this.formUsuarios = this.fb.group({
       'idUsuario': new FormControl(0),
       'enabled': new FormControl(''),
       'fechaCambio': new FormControl(''),
@@ -35,61 +51,69 @@ export class UsuarioEdicionComponent implements OnInit {
       'roles': new FormControl(''),
       'username': new FormControl(''),
       'failed': new FormControl(''),
+      'fechaActu': new FormControl(''),
       'fechaCreacion': new FormControl('')
-    });
-
-    this.route.params.subscribe((data:Params)=>{
-      this.id =data['id'];
-      this.edicion = data['id'] != null;
-      this.initForm();
-    });
+    })
   }
 
-  get f() { return this.form.controls; }
+
 
   private initForm() {
     if (this.edicion) {
 
       this.usuariosMigraService.listarPorId(this.id).subscribe(data => {
-        
-        this.form = new FormGroup({
+
+        this.formUsuarios = this.fb.group({
           'idUsuario': new FormControl(data.idUsuario),
           'enabled': new FormControl(data.enabled),
           'fechaCambio': new FormControl(data.fechaCambio),
           'email': new FormControl(data.email),
           'roles': new FormControl(data.roles[0].idRol), 
-          'rolesNom': new FormControl(data.roles[0].nombre), 
           'username': new FormControl(data.username),
           'failed': new FormControl(data.failed),
           'password': new FormControl(data.password),
           'fechaActu': new FormControl(data.fechaActualizacion),
-          'fechaCrea': new FormControl(data.fechaCreacion),
-        });
-
+          'fechaCreacion': new FormControl(data.fechaCreacion),
+        })
       });
+    } else { 
+      let fechaCambio = moment(this.fechaSeleccionada);
+      fechaCambio.add(3,'months');
+
+      this.formUsuarios = this.fb.group({
+        'idUsuario': new FormControl(0),
+        'enabled': new FormControl(this.activo),
+        'fechaCambio': new FormControl(moment(fechaCambio).format('YYYY-MM-DD HH:mm:ss')),
+        'password': new FormControl('$2a$10$ju20i95JTDkRa7Sua63JWOChSBc0MNFtG/6Sps2ahFFqN.HCCUMW.'),
+        'email': new FormControl('@jaimetorres.net'),
+        'roles': new FormControl(''),
+        'username': new FormControl(''),
+        'failed': new FormControl('0'),
+        'fechaActu': new FormControl(moment(this.fechaSeleccionada).format('YYYY-MM-DD HH:mm:ss')),
+        'fechaCreacion': new FormControl(moment(this.fechaSeleccionada).format('YYYY-MM-DD HH:mm:ss'))
+      })
     }
   }
 
 
   operar() {
 
-    if (this.form.invalid) { return; }
-
+    if (this.formUsuarios.invalid) { return; }
+    
     let usuarios = new Usuarios();
-    usuarios.idUsuario = this.form.value['idUsuario'];
-    usuarios.enabled = this.form.value['enabled'];
-    usuarios.fechaCambio = moment(this.fecha).add(3,'month').format('YYYY-MM-DDTHH:mm:ss');
-    usuarios.password = this.form.value['password'];
-    usuarios.email = this.form.value['email'];
+    usuarios.enabled = this.formUsuarios.value['enabled'];
+    usuarios.fechaCambio =  this.formUsuarios.value['fechaCambio'];
+    usuarios.password = this.formUsuarios.value['password'];
+    usuarios.email = this.formUsuarios.value['email'];
     usuarios.roles = [
       {
-        idRol: this.form.value['roles']
+        idRol: this.formUsuarios.value['roles']
       }
     ];
-    usuarios.username=  this.form.value['username'];
-    usuarios.failed = this.form.value['failed'];
-    usuarios.fechaCreacion = this.form.value['fechaCrea'];
-    usuarios.fechaActualizacion = this.form.value['fechaActu'];
+    usuarios.username=  this.formUsuarios.value['username'];
+    usuarios.failed = this.formUsuarios.value['failed'];    
+    usuarios.fechaActualizacion = this.formUsuarios.value['fechaActu'];
+    usuarios.fechaCreacion = this.formUsuarios.value['fechaCreacion'];
 
     if (this.edicion) {
       //PRACTICA IDEAL
@@ -100,11 +124,8 @@ export class UsuarioEdicionComponent implements OnInit {
         this.usuariosMigraService.setMensajecambio('SE MODIFICÓ');
       });
     } else {
-       //PRACTICA COMUN
-       usuarios.password = '$2a$10$ju20i95JTDkRa7Sua63JWOChSBc0MNFtG/6Sps2ahFFqN.HCCUMW.';
-       usuarios.failed = 0 ;
-       this.usuariosMigraService.registrar(usuarios).subscribe(() => {
-        this.usuariosMigraService.listar().subscribe(data => {
+          this.usuariosMigraService.registrar(usuarios).subscribe(() => {
+          this.usuariosMigraService.listar().subscribe(data => {
           this.usuariosMigraService.setUsuariosCambio(data);
           this.usuariosMigraService.setMensajecambio('SE REGISTRÓ');
         });

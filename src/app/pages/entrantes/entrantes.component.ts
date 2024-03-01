@@ -433,7 +433,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
   
     this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
-      console.log(gestion)
       this.clienteService.setMensajecambio('SE REGISTRÓ');
       this.clienteService.setFormCambio(this.cardCliente)
     });
@@ -462,8 +461,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   pruebasGenerar(){
     this.PilaenlaceService.filtroClienteXXX().subscribe(data =>{
      
-     console.log(data, 'pruebassss')
-
     });
     
   }

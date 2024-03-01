@@ -429,9 +429,9 @@ export class SalienteComponent implements OnInit, OnDestroy {
     det.usuarioAct = this.usuario;
     det.extension = ext;
     
-    this.detalleGestionService.salienteDetalle(det).subscribe(()=>{
+    // this.detalleGestionService.salienteDetalle(det).subscribe(()=>{
 
-    });
+    // });
 
 
 
@@ -454,11 +454,10 @@ export class SalienteComponent implements OnInit, OnDestroy {
       
 
     })
-
-    console.log(det.gestion, 'detalle gestion')
+    
     this.detalleGestionService.guardarSaliente(det).subscribe( data =>{
-      console.log(data, '111')
-      this.snackBar.open("SE REGISTRO", "Aviso", { duration: 2000 });
+
+    this.snackBar.open("SE REGISTRO", "Aviso", { duration: 2000 });
 
       setTimeout(() => {
       this.limpiarControles();

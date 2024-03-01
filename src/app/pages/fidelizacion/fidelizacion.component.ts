@@ -75,17 +75,12 @@ export class FidelizacionComponent   implements OnInit {
     this.fidelizacionService.eliminar(idFidelizacion).pipe(switchMap(() =>{
       return this.fidelizacionService.buscar(this.parametrosDTO)
     })).subscribe(data =>{
-      console.log(data,'2')
+      
       this.fidelizacionService.setFidelizacionCambio(data);
       this.fidelizacionService.setMensajecambio('SE ELIMINÓ')
       
 
     })
-    // this.fidelizacionService.eliminar(idFidelizacion).subscribe(data =>{
-    //   console.log('Hola Mundo')
-
-    // });
-
   }
 
 

@@ -28,14 +28,12 @@ export class ContactoService {
      salienteContacto(id: number , contacto: Contacto) {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(contacto);
-      console.log(id, contacto,'asdasdas')
       return this.http.patch<Contacto>(`${this.url}/${id}`,body,{'headers':headers});
     }
 
     contactoId(parametrosDTO: ParametrosDTO) {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      console.log(parametrosDTO,'contacto')
       return this.http.post<Contacto>(`${this.url}/buscarId`,body,{'headers':headers});
     }
 

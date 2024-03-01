@@ -25,6 +25,7 @@ import { FidelizacionUsuComponent } from './pages/gestion-comercial/fidelizacion
 import { Not403Component } from './pages/not403/not403.component';
 import { Not404Component } from './pages/not404/not404.component';
 import { SalienteComponent } from './pages/saliente/saliente.component';
+import { MonitoreoComponent } from './pages/monitoreo/monitoreo.component';
 
 
 const routes: Routes = [
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'productividad', component: ProductividadComponent },
   { path: 'extensiones', component: ExtensionesComponent , canActivate: [GuardService]},
   { path: 'fidelizacion', component: FidelizacionComponent },
+  { path: 'monitoreo', component: MonitoreoComponent },
   {
     path: 'recuperar', component: RecuperarComponent, children: [
       { path: ':token', component: TokenComponent }
