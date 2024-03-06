@@ -35,7 +35,6 @@ export class CambiarEmpresaComponent implements  OnInit {
   ngOnInit(): void {
 
   this.empresaService.getMensajeCambio().subscribe(data =>{
-    console.log('Hola Mundo');
   })
     
   }

@@ -59,8 +59,8 @@ export class ProductividadComponent implements OnInit, OnDestroy {
      });
 
     const askEstadoExtension ={  loginAgente : this.usuarios }
-    this.parametrosDTO = { loginAgente:this.usuarios ,nroDocumento: this.agenteDTO.nroDocumento}
-    console.log(this.parametrosDTO,'parametros')
+    this.parametrosDTO = { loginAgente:this.usuarios ,nroDocumento: this.agenteDTO.nroDocumento  }
+    
 
     this.detalleGestionService.cantidadGestion(askEstadoExtension).subscribe(data =>{
       this.dataSourceCant= new MatTableDataSource(data);
@@ -71,14 +71,11 @@ export class ProductividadComponent implements OnInit, OnDestroy {
     });
 
     this.llamadaEntranteService.usuarioTmo(this.parametrosDTO).subscribe(data=>{
-        console.log(data,'1')
-      
         this.tmousuario = data.tmoAgente
         let datePromedioC: moment.Moment = moment(this.promedioCON, "HH:mm:ss");
         let datePromedioE: moment.Moment = moment(this.promedioELC, "HH:mm:ss");
         let datePromedioA: moment.Moment = moment(this.promedioASI, "HH:mm:ss");          
         let dateTmo: moment.Moment = moment(this.tmousuario, "HH:mm:ss"); 
-        console.log(this.tmousuario,'2')       
         this.empresa = this.agenteDTO.pseudonimo
 
         if(this.empresa=='CONTACT' ){this.promedio=this.promedioCON;}

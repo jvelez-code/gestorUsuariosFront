@@ -1,10 +1,12 @@
 import { EstadoGestion } from "./estadoGestion";
 import { Extension } from "./extension";
+import { Gestion } from "./gestion";
 import { Usuario } from "./usuario";
 
 export class DetalleGestion {
 
     idDetalleGestion ?: number;
+    gestion ?: Gestion;
     observacion?: String;
     ip?: String;
     usuarioAct?: String;

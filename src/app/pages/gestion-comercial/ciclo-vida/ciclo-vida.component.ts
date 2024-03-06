@@ -1,5 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription, switchMap } from 'rxjs';
 import { GestionComercialDto } from 'src/app/_dto/GestionComercialDto';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
@@ -24,10 +25,11 @@ export class CicloVidaComponent implements OnInit, OnDestroy {
 
   constructor(
     private cicloVidaService : CicloVidaService,
+    private snackBar: MatSnackBar ,
     private dialogRef: MatDialogRef<CicloVidaComponent>,
     @Inject(MAT_DIALOG_DATA) private data: GestionComercialDto,
   ){
-    console.log(data)
+    
   }
 
   ngOnInit(): void {
@@ -40,24 +42,12 @@ export class CicloVidaComponent implements OnInit, OnDestroy {
     this.parametrosDTO ={ idDetalleComer: this.data.idDetalleGestionComercial, cicloVida: this.idCiclo }
 
     this.cicloVidaService.modificarCiclo(this.parametrosDTO).subscribe(data =>{
+      this.snackBar.open("SE REGISTRO", "Aviso", { duration: 2000 });
 
     })
 
-
-    // this.fidelizacionService.eliminar(idFidelizacion).pipe(switchMap(() =>{
-    //   return this.fidelizacionService.buscar(this.parametrosDTO)
-    // })).subscribe(data =>{
-    //   console.log(data,'2')
-    //   this.fidelizacionService.setFidelizacionCambio(data);
-    //   this.fidelizacionService.setMensajecambio('SE ELIMINÓ')
-
-
-    console.log('PRUBASCV', this.data.idDetalleGestionComercial)
-
     this.cicloVida = new CicloVida
     this.cicloVida.idCiclo = this.idCiclo
-    console.log('CICLO',this.cicloVida)
-
     this.cerrar();
 
   }

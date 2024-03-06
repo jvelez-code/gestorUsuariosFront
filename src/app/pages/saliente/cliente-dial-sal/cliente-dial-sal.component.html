@@ -1,0 +1,45 @@
+<mat-card class="example-card-cli">
+    
+    <mat-card-content>
+        <div>
+    <form [formGroup]="formClienteMod" #frmClienteMod="ngForm" (ngSubmit)="operar()"> 
+                <div>
+    <mat-form-field>
+        <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
+    </mat-form-field><div *ngIf="nombreNoValido" class="error-message">
+      Debe ser entre 4 y 62 caracteres
+    </div>
+    <mat-form-field>
+        <input matInput placeholder="Correo"   formControlName="correo">
+    </mat-form-field><div *ngIf="correoNoValido" class="error-message">
+      Formato no Valido
+    </div>
+    <mat-form-field>
+        <input matInput placeholder="Celular" formControlName="telCelular" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telCelularNoValido" class="error-message">
+      Debe  10 caracteres
+    </div>
+    <mat-form-field>
+        <input matInput placeholder="Principal"  formControlName="telPrincipal" (keypress)="validarNumeros($event)" >
+    </mat-form-field><div *ngIf="telPrincipalNoValido" class="error-message">
+      Debe ser 7 a 10 caracteres
+    </div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Ciudades</mat-label>
+      <mat-select placeholder="Ciudades" [(value)]="divipola">
+        <mat-option *ngFor="let d of (  divipola$ | async )" [value]="d.idZona">
+          {{d.nombre}}{{d.departamento}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+<div>
+<button mat-raised-button color="primary" [disabled]="formClienteMod.invalid">Aceptar</button>
+<!--<button mat-raised-button color="accent" (click)="cerrar()">Cancelar</button>-->
+</div>
+</form>
+</div>
+</mat-card-content>
+
+</mat-card>
+

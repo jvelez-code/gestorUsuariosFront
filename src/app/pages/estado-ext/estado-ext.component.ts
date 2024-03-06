@@ -2,6 +2,7 @@ import { ContentObserver } from '@angular/cdk/observers';
 import { Component, INJECTOR, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { EMPTY, Observable } from 'rxjs';
 import { AskEstado } from 'src/app/_model/askEstado';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
@@ -24,6 +25,7 @@ export class ExtadoExtComponent implements OnInit {
   enAsterisk!: boolean;
   enllamada!: boolean;
   documentoExt !:any;
+  private fechaActual = moment();
   
   askEstados$ !: Observable<AskEstado[]>;
 
@@ -42,9 +44,7 @@ export class ExtadoExtComponent implements OnInit {
 
 
   ngOnInit(): void {
-   /* this.askEstadoService.buscar().subscribe(data=>{
-      console.log(data);
-    });*/
+    
     this.askEstados$=this.askEstadoService.buscar();
 
     this.loginService.getExtensionCambio().subscribe(data =>{
@@ -67,14 +67,16 @@ export class ExtadoExtComponent implements OnInit {
 
   
   cambioExt(){
+
     const askEstadoExtension ={ estadoAsk : this.estadoExt, idExtension : this.idExt, 
       loginAgente: this.usuarioExt, 
-      nroDocumento: this.loginService.agenteASK.nroDocumento }
+      nroDocumento: this.loginService.agenteASK.nroDocumento, tipoDoc:this.fechaActual.format('YYYY-MM-DD 01:01:01') }
       
-    this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{
-    this.enllamada=data;
+    // this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{
+    // this.enllamada=data;
   
-    if(this.enllamada) {
+    // if(this.enllamada) {
+      if(this.estadoExt===3) {
 
       this.askEstadoService.setMensajecambio('EN LLAMADA')         
     }
@@ -83,6 +85,7 @@ export class ExtadoExtComponent implements OnInit {
           if(this.estadoExt===2){
 
           this.llamadaEntranteService.buscarLogin(askEstadoExtension).subscribe(data =>{
+            console.log(data,'entrante')
 
             this.enAsterisk=data;
 
@@ -116,8 +119,8 @@ export class ExtadoExtComponent implements OnInit {
     
        }
 
-  })
-  }
+  // })
+   }
 
 
   

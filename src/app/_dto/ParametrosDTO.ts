@@ -5,6 +5,7 @@ export class ParametrosDTO {
 	idUsuario?: number;
 	nroDocumento?: string;
 	idCliente?: number;
+	empresa?: string;
 	idEmpresa?: number;
 	idTipoCampana?: number;
 	idEstadoPadre?: number;
@@ -13,17 +14,19 @@ export class ParametrosDTO {
 	fechaFinal?: string;
 	idDetalleComer?: number;
 	cicloVida?: number;
+	idGestion?: number;
 	
 	
 	constructor(tipoDoc: string, loginAgente: string, idUsuario:number, nroDocumento: string, idCliente: number, 
-		idEmpresa: number, idTipoCampana: number, idEstadoPadre: number, tipoLlamada: number,
-		fechaInicial: string, fechaFinal: string , idDetalleComer: number , cicloVida: number ) {
+		empresa: string, idEmpresa: number, idTipoCampana: number, idEstadoPadre: number, tipoLlamada: number,
+		fechaInicial: string, fechaFinal: string , idDetalleComer: number , cicloVida: number ,idGestion: number ) {
             
 		this.tipoDoc = tipoDoc;
 		this.loginAgente = loginAgente;
 		this.idUsuario = idUsuario;
 		this.nroDocumento = nroDocumento;
 		this.idCliente = idCliente;
+		this.empresa = empresa;
 		this.idEmpresa = idEmpresa;
 		this.idTipoCampana = idTipoCampana;
 		this.idEstadoPadre = idEstadoPadre;
@@ -32,6 +35,7 @@ export class ParametrosDTO {
 		this.fechaFinal = fechaFinal;
 		this.idDetalleComer = idDetalleComer;
 		this.cicloVida = cicloVida;
+		this.idGestion = idGestion;
 	}
 }
 

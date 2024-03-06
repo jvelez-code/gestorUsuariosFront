@@ -119,7 +119,7 @@ export class ClientesComponent implements OnInit{
   guardarCliente(){
   if ( this.formCliente.invalid ) {
 
-    console.log('El formulario es inválido. No se puede guardar.');
+
   } else {
 
    

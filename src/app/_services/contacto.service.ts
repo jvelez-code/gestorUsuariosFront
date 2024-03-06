@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Parametros } from '../_model/parametros';
 import { Contacto } from '../_model/contactos';
+import { ParametrosDTO } from '../_dto/ParametrosDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +24,17 @@ export class ContactoService {
        const body=JSON.stringify(parametros);
        return this.http.post<Contacto>(`${this.url}/buscar`,body,{'headers':headers});
      }
+
+     salienteContacto(id: number , contacto: Contacto) {
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(contacto);
+      return this.http.patch<Contacto>(`${this.url}/${id}`,body,{'headers':headers});
+    }
+
+    contactoId(parametrosDTO: ParametrosDTO) {
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(parametrosDTO);
+      return this.http.post<Contacto>(`${this.url}/buscarId`,body,{'headers':headers});
+    }
+
 }

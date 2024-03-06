@@ -4,6 +4,8 @@ import { AskEstadoExtensionService } from './_services/ask-estado-extension.serv
 import { LoginService } from './_services/login.service';
 import { LlamadaEntranteService } from './_services/llamada-entrante.service';
 import { AskEstadoService } from './_services/ask-estado.service';
+import * as moment from 'moment';
+import { ParametrosDTO } from './_dto/ParametrosDTO';
 
 
 @Component({
@@ -14,66 +16,84 @@ import { AskEstadoService } from './_services/ask-estado.service';
 
 export class AppComponent {
   title = 'gestorUsuarioFront';
-  
+
   menus!: Menu[];
-  estadoExt !:number;
-  idExt !:number;
-  usuarioExt !:string;
+  estadoExt !: number;
+  idExt !: number;
+  usuarioExt !: string;
   enllamada !: boolean;
+  fechaActual : Date = new Date();
+  parametrosDTO !: ParametrosDTO;
 
   constructor(
     public loginService: LoginService,
-    private askEstadoExtensionService : AskEstadoExtensionService,
-    private llamadaEntranteService : LlamadaEntranteService,
-    private askEstadoService : AskEstadoService
-  ) { 
-    this.loginService.getExtensionCambio().subscribe(data =>{
-      this.idExt=data;
+    private askEstadoExtensionService: AskEstadoExtensionService,
+    private llamadaEntranteService: LlamadaEntranteService,
+    private askEstadoService: AskEstadoService,
+    
+
+  ) {
+    this.loginService.getExtensionCambio().subscribe(data => {
+      this.idExt = data;
     });
 
-    this.loginService.getUsuariosCambio().subscribe(data =>{
-      this.usuarioExt=data;
+    this.loginService.getUsuariosCambio().subscribe(data => {
+      this.usuarioExt = data;
     });
   }
 
   ngOnInit() {
-    this.loginService.getMenuCambio().subscribe(data=>{
-       this.menus= data;
+    this.loginService.getMenuCambio().subscribe(data => {
+      this.menus = data;
     });
   }
 
-  cerrarApp(){
+  cerrarApp() {
 
-    console.log('hola login1',this.loginService.agenteDTO.idUsuario)
+ //   if (this.loginService.agenteDTO.idUsuario) {
+      const askEstadoExtension =
+      {
+        estadoAsk: 1, idExtension: this.idExt, loginAgente: this.usuarioExt,
+        nroDocumento: this.loginService.agenteDTO.nroDocumento, tipoDoc: moment(this.fechaActual).format('YYYY-MM-DD HH:mm:ss')
+      }
+      
+      console.log(askEstadoExtension)
 
-    if(this.loginService.agenteDTO.idUsuario){
-    
-
-      console.log('hola login2')
-       const askEstadoExtension = 
-      { estadoAsk : 1 , idExtension : this.idExt, loginAgente: this.usuarioExt,
-      nroDocumento: this.loginService.agenteDTO.nroDocumento }
-
-       this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{      
-      this.enllamada=data;
-  
-        if(this.enllamada) {
-         this.askEstadoService.setMensajecambio('EN LLAMADA')
+      this.parametrosDTO = { nroDocumento: this.loginService.agenteDTO.nroDocumento  }
 
 
-       } else {
+     this.askEstadoExtensionService.buscarAgente(this.parametrosDTO).subscribe(data => {
 
-       console.log('hola login3')
-       this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(()=>{})
-    
-       this.loginService.cerrarSesion();
-    
-              }
-      } )
+      console.log(data , ' pruebas');
+      if(data.askEstado?.idEstado===3){
+        this.askEstadoService.setMensajecambio('EN LLAMADA')
+      }else {
+        this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(() => { })
 
-    } else {
-      console.log('hola login4')
-    }
+        this.loginService.cerrarSesion();
+
+      }
+
+     });
+
+      
+
+      // this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data => {
+      //   this.enllamada = data;
+
+      //   if (this.enllamada) {
+      //     this.askEstadoService.setMensajecambio('EN LLAMADA')
+
+
+      //   } else {
+      //     this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(() => { })
+
+      //     this.loginService.cerrarSesion();
+
+      //   }
+      // })
+
+  //  } 
 
   }
 }

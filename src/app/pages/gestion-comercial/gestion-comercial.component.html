@@ -24,7 +24,7 @@
           <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalida fecha fin</mat-error>
 
         </mat-form-field>
-       <button mat-raised-button color="primary" (click)="buscar()">Consultar
+       <button mat-raised-button color="primary"  (click)="buscar()">Consultar 
           <mat-icon>laptop</mat-icon>
         </button>
         </form>
@@ -169,8 +169,8 @@
         </td>
     </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="fidelizacionColumnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: fidelizacionColumnas"></tr>
 
 
     </table>
@@ -180,7 +180,7 @@
     
       
     </mat-tab>
-  <mat-tab label="Cargue de Archivo">
+  <!--<mat-tab label="Cargue de Archivo">
     <p>datos2</p>
 
     <mat-form-field class="example-full-width">
@@ -192,19 +192,19 @@
     <button mat-raised-button (click)="picker2.open()">Open</button>
 
 
-  </mat-tab>
+  </mat-tab>-->
 
   <mat-tab label="Ingreso Manual">
 
     
 
     <mat-card class="example-card-cli">
-      <mat-card-header>
+      <mat-card-header class="center">
         <mat-card-title>Ingreso Manual</mat-card-title>
         <mat-card-subtitle>***</mat-card-subtitle>
       </mat-card-header>
 
-      <form class="example-container" [formGroup]="form" #frmUsuarios="ngForm" (ngSubmit)="guardarGestion()">
+      <form class="example-container" [formGroup]="formManual" #frmUsuarios="ngForm" (ngSubmit)="guardarGestion()">
       <table>
         <tr>
           <td>Tipo Documento</td>
@@ -217,40 +217,54 @@
           </mat-form-field></td>
           <td>Documento</td>
           <td><mat-form-field class="example-full-width">
-            <input matInput placeholder="Documento ***" formControlName="documento">
-          </mat-form-field></td>
+            <input matInput placeholder="Documento ***" formControlName="documento" type="number">
+          </mat-form-field><div *ngIf="documentoNoValido" class="error-message">
+            Debe ser mínimo  de 4 caracteres
+          </div></td>
         </tr>
 
         <tr>
         <td>Empresa</td>
         <td><mat-form-field class="example-full-width">
           <input matInput placeholder="Empresa ***" formControlName="empresa">
-        </mat-form-field></td>
+        </mat-form-field><div *ngIf="empresaNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
         <td>Contacto</td>
         <td><mat-form-field class="example-full-width">
           <input matInput placeholder="Contacto ***" formControlName="contacto">
-        </mat-form-field></td>
+        </mat-form-field><div *ngIf="contactoNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
       </tr>
 
       <tr>
         <td>Teléfono</td>
         <td><mat-form-field class="example-full-width">
-          <input matInput placeholder="Teléfono ***" formControlName="telefono">
-        </mat-form-field></td>
+          <input matInput placeholder="Teléfono ***" formControlName="telefono" type="number">
+        </mat-form-field><div *ngIf="telefonoNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
         <td>Célular</td>
         <td><mat-form-field class="example-full-width">
-          <input matInput placeholder="Célular ***" formControlName="celular">
-        </mat-form-field></td>
+          <input matInput placeholder="Célular ***" formControlName="celular" type="number">
+        </mat-form-field><div *ngIf="celularNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
       </tr>
       <tr>
         <td>Correo</td>
         <td><mat-form-field class="example-full-width">
           <input matInput placeholder="Correo ***" formControlName="correo">
-        </mat-form-field></td>
+        </mat-form-field><div *ngIf="correoNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
         <td>Dirección</td>
         <td><mat-form-field class="example-full-width">
           <input matInput placeholder="Dirección ***" formControlName="direccion">
-        </mat-form-field></td>
+        </mat-form-field><div *ngIf="direccionNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
       </tr>
       <tr>
         <td>Ciudad</td>
@@ -273,11 +287,13 @@
       <tr>
         <td>Registros Proy.</td>
         <td><mat-form-field class="example-full-width">
-          <input matInput placeholder="Registros ***" formControlName="registros">
-        </mat-form-field></td>
+          <input matInput placeholder="Registros ***" formControlName="registros" type="number">
+        </mat-form-field><div *ngIf="registrosNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
         <td>Tipo Gestión</td>
         <td><mat-form-field class="example-full-width">
-          <mat-select [(value)]="estadoComercial">
+          <mat-select [(value)]="estadoComercial" formControlName="tipificacioP">
             <mat-option *ngFor="let d of (  estadoComercial$ | async )" [value]="d.idEstadoGestion">
               {{d.nombre}}
             </mat-option>
@@ -286,13 +302,13 @@
       </tr>
       <tr>
         <td>Fecha Gestión</td>
-        <td>
-          <mat-form-field>
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker3">
-            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-          </mat-form-field>
+        <td> <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Escoge una fecha" [min]="minFecha"
+              [(ngModel)]="fechaSeleccionada" formControlName="fechaGestion">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>      
+                 
         </td>
         <td>Gestión realizada</td>
         <td><mat-form-field class="example-full-width">
@@ -306,23 +322,31 @@
         <td>Observación</td>
         <td><mat-form-field class="example-full-width">
           <input matInput placeholder="Observación ***" formControlName="observacion">
-        </mat-form-field></td>
+        </mat-form-field><div *ngIf="observacionNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
       </tr>
       <tr>
         <td>Registros Obtenidos</td>
         <td><mat-form-field class="example-full-width">
-          <input matInput placeholder="Registros Obtenidos ***" formControlName="regobtenidos">
-        </mat-form-field></td>
+          <input matInput placeholder="Registros Obtenidos ***" formControlName="regobtenidos" type="number">
+        </mat-form-field><div *ngIf="regobtenidosNoValido" class="error-message">
+          Debe ser mínimo  de 1 caracteres
+        </div></td>
         <td>No. Gestión Realizada</td>
         <td><mat-form-field class="example-full-width">
-          <input matInput placeholder=" No.Gestión realizada ***" formControlName="gesrealizada">
-        </mat-form-field></td>
+          <input matInput placeholder=" No.Gestión realizada ***" formControlName="gesrealizada" type="number">
+        </mat-form-field><div *ngIf="gesrealizadaNoValido" class="error-message">
+          Debe ser mínimo  de 1 caracteres
+        </div></td>
       </tr>
       <tr>
         <td>Compromiso</td>
         <td><mat-form-field class="example-full-width">
           <input matInput placeholder="Compromiso ***" formControlName="compromiso">
-        </mat-form-field></td>
+        </mat-form-field><div *ngIf="compromisoNoValido" class="error-message">
+          Debe ser mínimo  de 4 caracteres
+        </div></td>
         <td>Ciclo de Vida</td>
         <td><mat-form-field class="example-full-width">
           <mat-select [(value)]="cicloVida">
@@ -339,7 +363,10 @@
       <mat-card-actions>
         <section>
           <div class="example-button-row">
-            <button mat-raised-button color="primary">Guardar</button>
+            <button mat-raised-button color="primary" [disabled]="formManual.invalid" [disabled]="btoGuardar">
+              <mat-icon>call</mat-icon>
+              <span>GUARDAR</span>
+            </button>
           </div>
         </section>
       </mat-card-actions>
@@ -351,37 +378,15 @@
   </mat-tab>
   </mat-tab-group>
 
-   <!--  -->
+   <!--  
    <hr>
    <pre>
-       estado: {{form.valid}}
+       estado: {{formManual.valid}}
        <br>
-       Status: {{form.status}}
+       Status: {{formManual.status}}
    </pre>
    <pre>
-       {{form.value | json }}
-   </pre> 
-
-
-   <mat-card>
-    <mat-card-header>
-      <mat-card-title>Actions Buttons</mat-card-title>
-      <mat-card-subtitle>Start</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
-  <br>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Actions Buttons</mat-card-title>
-      <mat-card-subtitle>End</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions align="end">
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
+       {{formManual.value | json }}
+   </pre>
+   -->
   

@@ -5,17 +5,17 @@ import { Usuario } from "./usuario";
 
 export class Contacto {
 
-    idContacto !: number ;
+    idContacto ?: number ;
     cliente ?: Cliente ; 
-    gestion !: Gestion ;
+    gestion ?: Gestion ;
     usuario?: Usuario;
     divipola ?: Divipola;
-    nombre !: String ;
-    correoElectronico !: String ;
-    numeroContacto !: String ;
-    telefonoDirecto !: String ;
-    telefonoCelular !: String ;
-    nroEmpleado !: number;
+    nombre ?: String ;
+    correoElectronico ?: String ;
+    numeroContacto ?: String ;
+    telefonoDirecto ?: String ;
+    telefonoCelular ?: String ;
+    nroEmpleado ?: number;
 
 }
 

@@ -1,7 +1,7 @@
 <mat-card> Ingrese los datos del Usuario</mat-card>
 
 <!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
-<form class="example-container" [formGroup]="form" #frmUsuarios="ngForm" (ngSubmit)="operar()">
+<form class="example-container" [formGroup]="formUsuarios" #frmUsuarios="ngForm" (ngSubmit)="operar()">
 
     <div [hidden]="true">
         <mat-form-field class="example-full-width">
@@ -10,7 +10,11 @@
     </div>
 
     <mat-form-field class="example-full-width">            
-        <input matInput placeholder="activo ***" required formControlName="enabled">
+        <input matInput placeholder="activo ***" required>
+        <mat-select [(value)]="activo" >
+            <mat-option value="true">TRUE</mat-option>
+            <mat-option value="false">FALSE</mat-option>
+          </mat-select>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
@@ -35,3 +39,17 @@
     </button>
 
 </form>
+
+
+ <!--  -->
+   <hr>
+   <pre>
+       estado: {{frmUsuarios.valid}}
+       <br>
+       Status: {{frmUsuarios.status}}
+   </pre>
+   <pre>
+       {{frmUsuarios.value | json }}
+   </pre>
+   
+  

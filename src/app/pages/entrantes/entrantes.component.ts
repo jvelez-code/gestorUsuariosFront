@@ -389,12 +389,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     estadoGestion.idEstadoGestion= this.idEstadoP;
 
     let estadoGestionH = new EstadoGestion();
-    estadoGestionH.idEstadoGestion= this.idEstadoH;
-
-    console.log(estadoGestion,'gestion normal-1')
-    console.log(estadoGestionH,'gestion normal-2')
-
-    
+    estadoGestionH.idEstadoGestion= this.idEstadoH;    
     
     
     let det = new DetalleGestion();
@@ -436,7 +431,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
 
-    console.log(gestion,'gestion normal')
   
     this.gestionService.guardarGestionS(gestion).subscribe( ()=> {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
@@ -462,6 +456,13 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     this.clienteService.setMensajecambio('ENVIADO SMS');
     }
     )    
+  }
+
+  pruebasGenerar(){
+    this.PilaenlaceService.filtroClienteXXX().subscribe(data =>{
+     
+    });
+    
   }
 
 

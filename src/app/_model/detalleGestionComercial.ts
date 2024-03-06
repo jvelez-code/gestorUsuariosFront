@@ -8,7 +8,7 @@ export class DetalleGestionComercial {
     idDetalleGestionComercial?: number;
     gestion?: Gestion;
     detalleGestion?: String;
-    fechaGestion?: String; //2020-09-05T11:30:05 ISODate || moment.js
+    fechaGestion?: Date; //2020-09-05T11:30:05 ISODate || moment.js
     motivo?: Motivo;
     gestionRealizada?: String;
     nroGestionRealizada?: String;

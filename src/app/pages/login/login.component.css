@@ -187,6 +187,7 @@ body{
   left: 60%;
   position: absolute;
   z-index: 9999;
+  color: #050505;
 }
 
 /* Hacer que el contenido esté centrado en pantallas pequeñas */
@@ -235,15 +236,16 @@ body{
   .imge {
     display: none;
   }
-  #monster{
-    display: none;
-  }
+  
   footer {
-    margin-top: 180vh;
+    margin-top: 200vh;
+    
   }
   .login {
-    top: 20%;
+    /*top: 10%;*/
   }
+
+  
 }
 
 
@@ -260,15 +262,19 @@ body{
 .formulario{
     width: 400px; /*ancho del contenedor formulario*/
     position: absolute; /* permite posicionar elementos de manera absoluta, esto es de manera definida por valores de los atributos top, left, bottom y right, que indican la distancia con respecto a un punto.*/
-    background-color: #efeeee;/*color de fondo del formulario*/
-    /*border: 4px solid #8f4790; Borde del formualrio y color */
+    /*background-color: rgba(218, 206, 217, 0.75); /*color de fondo del formulario con transparencia (RGBA)*/
+    border: 2px solid #ffffff; /*Borde del formulario con color blanco*/
     border-radius: 10px; /*darle curvadura al borde*/
     padding: 30px 60px; /*del contenido de la caja a los bordes*/
-    top: 260px; /*subir el formulario*/
-    left: 50%; /*lo mueve a la dechar npi*/
-    transform: translate(-50%); /*lo vuelve a dehjar donde estaba en el centro*/
+    top: 100px; /*subir el formulario*/
+    left: 10vh; /*lo mueve a la dechar npi*/
+    /*transform: translate(-50%); /*lo vuelve a dehjar donde estaba en el centro*/
     text-align: center; /*alinear al centro*/
+    
 }
+
+
+
 
 .formulario input,label,button{
     display: block; /*que que todos se pongan en bloque a lo ancho*/
@@ -531,20 +537,29 @@ to {
 }
 }
 
-.button-container {
+form .svgContainer {
   position: relative;
-  display: inline-block;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1em;
+  border-radius: 50%;
+  background: none;
+  border: solid 2.5px #3A5E77;
+  overflow: hidden;
+  pointer-events: none;
 }
-
-.spinner-overlay {
+form .svgContainer div {
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 100%;
+}
+form .svgContainer .mySVG {
   position: absolute;
-  top: 0;
   left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1; /* Asegura que el spinner esté sobre el botón */
+  pointer-events: none;
 }
