@@ -6,17 +6,17 @@ export class Cliente {
 
     idCliente ?: number;
     tipoDocumento ?: TipoDocumento;
-    nroDocumento ?: String;
-    correo ?: String;
-    razonSocial ?: String;
-    direccion ?: String;
-    cantidadEmpleados ?: String;
+    nroDocumento ?: string;
+    correo ?: string;
+    razonSocial ?: string;
+    direccion ?: string;
+    cantidadEmpleados ?: string;
     fechaHoraSistema ?: Date;
-    ip ?: String;
+    ip ?: string;
     usuario?: Usuario;  
-    telefonoCelular ?: String;
-    telefonoFijo ?: String;    
-    ley1581  ?: Boolean;
+    telefonoCelular ?: string;
+    telefonoFijo ?: string;    
+    ley1581  ?: boolean;
     divipola ?: Divipola;
     
 

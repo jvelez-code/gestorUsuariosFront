@@ -1,0 +1,15 @@
+.password-toggle-icon {
+  top: 30%;
+  transform: translateY(-50%);
+  right: 10px; /* Ajusta la posición según sea necesario */
+  cursor: pointer;
+  z-index: 1;
+}
+
+#videoContainer {
+  overflow: hidden;
+}
+
+#videoBG {
+  object-fit: cover;
+}

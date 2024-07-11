@@ -1,0 +1,63 @@
+<mat-toolbar>Registro de Casos</mat-toolbar>
+<mat-toolbar>{{tipoDocumento}} {{nroDocumento}}</mat-toolbar>
+<div class="example-container">
+  <mat-form-field>
+    <mat-select placeholder="Selecciona Departamento" [(value)]="idDepartSeleccion">
+        @for (p of (  crmDepartamento$ | async ); track p) {
+          <mat-option [value]="p.idDepartamento">
+            {{p.nombreDepartamento}}
+          </mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-select placeholder="Selecciona Categoria" [(value)]="idCategoriaSeleccion" (selectionChange)="subCategoria($event.value)">
+      @for (p of (  crmCategoria$ | async ); track p) {
+        <mat-option [value]="p.idCategoria">
+          {{p.nombreCategoria}}
+        </mat-option>
+      }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-select placeholder="Selecciona SubCategoria" [(value)]="idSubCategoriaSeleccion" (selectionChange)="tipologia($event.value)">
+      @for (p of (  CrmSubCategoria$ | async ); track p) {
+        <mat-option [value]="p.idSubcategoria">
+          {{p.nombreSubCategoria}}
+        </mat-option>
+      }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-select placeholder="Selecciona TIpología" [(value)]="idTipologiaSeleccion">
+      @for (p of (  CrmTipologia$ | async ); track p) {
+        <mat-option [value]="p.idTipologia">
+          {{p.nombreTipologia}}
+        </mat-option>
+      }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-select placeholder="Selecciona Estado" [(value)]="idEstadoSeleccion">
+      @for (p of (  crmEstado$ | async ); track p) {
+        <mat-option [value]="p.idEstado">
+          {{p.nombreEstado}}
+        </mat-option>
+      }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput placeholder="Nro Teléfono" [(ngModel)]="nroTelefono">
+</mat-form-field>
+
+<mat-form-field>
+  <textarea matInput placeholder="Observación" [(ngModel)]="observacion"></textarea>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="aceptar()" [disabled]="estadoBotonRegistrar()">Registrar</button>
+</div>

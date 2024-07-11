@@ -4,10 +4,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
-import { AgenteCampana } from '../_model/agenteCampana';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { Menu } from '../_model/menu';
-import { Usuarios } from '../_model/usuarios';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +16,8 @@ export class LoginService {
   private menuCambio = new Subject<Menu[]>();
   private usuarioCambio = new BehaviorSubject<string> ('DEFAULT');
   private extensionCambio = new BehaviorSubject<number> ( 0 )
+  private ultimoCambio = new Subject<Date>();
+
 
   agenteDTO!: AgenteDTO;
   agenteASK!: AskEstadoExtension;
@@ -31,7 +31,7 @@ export class LoginService {
   ) { }
 
     cerrarLogin(usuario: string){
-    const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
+    //const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
     const body=JSON.stringify(usuario);
     return this.http.post<any>(`${this.url}`, body);
   }
@@ -117,6 +117,21 @@ export class LoginService {
       headers: new HttpHeaders().set('Content-Type', 'text/plain')
     });
   }
+
+
+  ///////GET, SET //////
+
+  getUltimoCambio() {
+    return this.ultimoCambio.asObservable();
+  }
+
+  setUltimoCambio(hora: Date) {
+    this.ultimoCambio.next(hora);
+  }
+
+
+
+
 
 
   /*

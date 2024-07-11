@@ -9,7 +9,7 @@
     </mat-card-header>
     <mat-card-actions>
       <div class="example-button-row center">
-        <button mat-raised-button color="primary" (click)="buscarCliente()">BUSCAR</button>
+        <button mat-raised-button color="primary" (click)="buscarCliente()" [disabled]="habilitaG" >BUSCAR</button>
       </div>    
       </mat-card-actions>
   </mat-card>

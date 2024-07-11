@@ -1,5 +1,5 @@
 import { Component ,  Inject ,  OnInit } from '@angular/core';
-import { Form ,  FormBuilder ,  FormGroup ,  Validators } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA ,  MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -12,11 +12,18 @@ import { Usuario } from 'src/app/_model/usuario';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { FidelizacionService } from 'src/app/_services/fidelizacion.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
+import { MatButton } from '@angular/material/button';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions } from '@angular/material/card';
 
 @Component({
-  selector: 'app-fidelizacion-usu' , 
-  templateUrl: './fidelizacion-usu.component.html' , 
-  styleUrls: ['./fidelizacion-usu.component.css']
+    selector: 'app-fidelizacion-usu',
+    templateUrl: './fidelizacion-usu.component.html',
+    styleUrls: ['./fidelizacion-usu.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, MatButton]
 })
 export class FidelizacionUsuComponent implements OnInit {
 

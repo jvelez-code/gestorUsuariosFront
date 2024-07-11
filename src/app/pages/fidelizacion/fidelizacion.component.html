@@ -1,90 +1,94 @@
 <router-outlet></router-outlet>
 <form>
-<mat-card>
+  <mat-card>
     <mat-card-header>
-        <div class="center">
-      <mat-card-title>Fidelización</mat-card-title>
-      <mat-card-subtitle>Comercial</mat-card-subtitle></div>
-    </mat-card-header>
-    <table>
+      <div class="center">
+        <mat-card-title>Fidelización</mat-card-title>
+        <mat-card-subtitle>Comercial</mat-card-subtitle></div>
+      </mat-card-header>
+      <table>
         <tr>
-            <td><mat-form-field>
-                <mat-label>Ingresa rango de fechas </mat-label>
-                <mat-date-range-input [formGroup]="range" [rangePicker]="picker1">
-                  <input matStartDate formControlName="start" placeholder="Fecha Inicio">
-                  <input matEndDate formControlName="end" placeholder="Fecha Fin">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker1></mat-date-range-picker>
-            
-                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalida fecha inicio</mat-error>
-                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalida fecha fin</mat-error>
-              </mat-form-field></td>
-      
-            </table>
- 
+          <td><mat-form-field>
+            <mat-label>Ingresa rango de fechas </mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker1">
+              <input matStartDate formControlName="start" placeholder="Fecha Inicio">
+              <input matEndDate formControlName="end" placeholder="Fecha Fin">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker1></mat-date-range-picker>
 
-  
-    
-    <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
-    </mat-card-actions>
-  </mat-card>
+            @if (range.controls.start.hasError('matStartDateInvalid')) {
+              <mat-error>Invalida fecha inicio</mat-error>
+            }
+            @if (range.controls.end.hasError('matEndDateInvalid')) {
+              <mat-error>Invalida fecha fin</mat-error>
+            }
+          </mat-form-field></td>
 
-<mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="idFidelizacion">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> FIDELIZACIÓN </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.idFidelizacion}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="numeroPlanilla">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> PLANILLA </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.numeroPlanilla}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="idCliente.razonSocial">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> RAZON S. </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.idCliente.razonSocial}}</mat-cell>
-    </ng-container>
+        </table>
 
 
-    <ng-container matColumnDef="idUsuario.usuario">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.idUsuario.usuario}}</mat-cell>
-    </ng-container>
 
-    <ng-container matColumnDef="sucursal">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> SUCURSAL </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.sucursal}}</mat-cell>
-    </ng-container>
 
-    <ng-container matColumnDef="codCaja">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> CAJA COM. </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.codCaja}}</mat-cell>
-    </ng-container>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+        </mat-card-actions>
+      </mat-card>
 
-    <ng-container matColumnDef="observacion">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> OBSERVACIÓN </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.observacion}}</mat-cell>
-    </ng-container>
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="idFidelizacion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> FIDELIZACIÓN </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.idFidelizacion}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="fechaGestion">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> GESTIÓN </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.fechaGestion}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="numeroPlanilla">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> PLANILLA </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.numeroPlanilla}}</mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-        <mat-cell *matCellDef="let row">
+        <ng-container matColumnDef="idCliente.razonSocial">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> RAZON S. </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.idCliente.razonSocial}}</mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="idUsuario.usuario">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.idUsuario.usuario}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="sucursal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> SUCURSAL </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.sucursal}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="codCaja">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> CAJA COM. </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.codCaja}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="observacion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> OBSERVACIÓN </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.observacion}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaGestion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> GESTIÓN </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.fechaGestion}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let row">
             <button mat-button color="accent" (click)="eliminar(row.idFidelizacion)">
-                <mat-icon>delete</mat-icon>
+              <mat-icon>delete</mat-icon>
             </button>
-        </mat-cell>
-    </ng-container>
+          </mat-cell>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
 
-<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" [length]="cantidad" (page)="mostrarMas($event)"></mat-paginator>
-</form>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" [length]="cantidad" (page)="mostrarMas($event)"></mat-paginator>
+    </form>

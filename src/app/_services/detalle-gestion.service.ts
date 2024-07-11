@@ -9,6 +9,7 @@ import { CantidadGestionDTO } from '../_dto/CantidadGestionDTO ';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { DetalleGestion } from '../_model/detalleGestion';
 import { GenericService } from './generic.service';
+import { FiltroDetalleGestionDTO } from '../_dto/filtroDetalleGestionDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +28,10 @@ export class DetalleGestionService extends GenericService<DetalleGestion> {
 
 
 
-    detalleHistoricoS(parametrosDTO: ParametrosDTO):Observable<any>{
+    detalleHistorico(parametrosDTO: ParametrosDTO):Observable<FiltroDetalleGestionDTO[]>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      return this.http.post<ParametrosDTO[]>(`${this.url}/buscarCliente`,body,{'headers':headers});
+      return this.http.post<FiltroDetalleGestionDTO[]>(`${this.url}/detalleHistorico`,body,{'headers':headers});
     }
 
     cantidadGestion(askEstadoExtension: AskEstadoExtension){
@@ -45,10 +46,11 @@ export class DetalleGestionService extends GenericService<DetalleGestion> {
       return this.http.post<DetalleGestion>(`${this.url}`,body,{'headers':headers});
     }
 
-    guardarSaliente(detalleGestion: DetalleGestion){
+    guardarSaliente(id :number, detalleGestion: DetalleGestion){
       const headers = { 'content-type': 'application/json'}  
+      
       const body=JSON.stringify(detalleGestion);
-      return this.http.post<DetalleGestion>(`${this.url}/gestionSaliente`,body,{'headers':headers});
+      return this.http.post<DetalleGestion>(`${this.url}/gestionSaliente/${id}`,body,{'headers':headers});
 
     }
 

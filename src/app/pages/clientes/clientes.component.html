@@ -1,99 +1,117 @@
 <mat-card class="example-card-cli">
-    <mat-card-header>
-        <div class="center">
-        <mat-card-title>CLIENTES</mat-card-title></div>
-      </mat-card-header>
+  <mat-card-header>
+    <div class="center">
+      <mat-card-title>CLIENTES</mat-card-title></div>
+    </mat-card-header>
     <mat-card-content>Nuevos</mat-card-content>
     <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm"  (ngSubmit)="guardarCliente()">
-        <table class="example-full-width" cellspacing="0">
-         <tr>
+      <table class="example-full-width" cellspacing="0">
+        <tr>
           <td>
-          <mat-form-field class="example-full-width">
-            <mat-label>Tipo Documento</mat-label>
-            <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
-              <mat-option *ngFor="let p of (  tipoDocumento$ | async )" [value]="p.tipoDoc">
-                {{p.tipoDoc}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field></td>
-        <td><mat-form-field class="example-full-width">
-            <mat-label>Documento</mat-label>
-            <input matInput type="text"  placeholder="Ingrese documento" formControlName="documento" [class.is-invalid]="documentoNoValido">
-            </mat-form-field>
-            <div *ngIf="documentoNoValido" class="error-message">
-              Debe ser entre 4 y 16 caracteres
-            </div>
-          </td>
-        </tr>
-         <tr>
-            <td><mat-form-field class="example-full-width">
-              <mat-label>Ciudades</mat-label>
-              <mat-select placeholder="Ciudades" [(value)]="divipola">
-                <mat-option *ngFor="let d of (  divipola$ | async )" [value]="d.idZona">
-                  {{d.nombre}}{{d.departamento}}
-                </mat-option>
+            <mat-form-field class="example-full-width">
+              <mat-label>Tipo Documento</mat-label>
+              <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
+                @for (p of (  tipoDocumento$ | async ); track p) {
+                  <mat-option [value]="p.tipoDoc">
+                    {{p.tipoDoc}}
+                  </mat-option>
+                }
               </mat-select>
             </mat-form-field></td>
             <td><mat-form-field class="example-full-width">
-             <mat-label>Razón Social</mat-label>
-             <input matInput type="text" formControlName="rsocial" [class.is-invalid]="rsocialNoValido">
+              <mat-label>Documento</mat-label>
+              <input matInput type="text"  placeholder="Ingrese documento" formControlName="documento" [class.is-invalid]="documentoNoValido">
             </mat-form-field>
-            <div *ngIf="rsocialNoValido" class="error-message">
+            @if (documentoNoValido) {
+              <div class="error-message">
+                Debe ser entre 4 y 16 caracteres
+              </div>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Ciudades</mat-label>
+            <mat-select placeholder="Ciudades" [(value)]="divipola">
+              @for (d of (  divipola$ | async ); track d) {
+                <mat-option [value]="d.idZona">
+                  {{d.nombre}}{{d.departamento}}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field></td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Razón Social</mat-label>
+            <input matInput type="text" formControlName="rsocial" [class.is-invalid]="rsocialNoValido">
+          </mat-form-field>
+          @if (rsocialNoValido) {
+            <div class="error-message">
               Debe ser entre 3 y 64 caracteres
-            </div></td>
+            </div>
+          }</td>
           <td><mat-form-field class="example-full-width">
             <mat-label>Dirección</mat-label>
             <input matInput type="text" formControlName="direccion" [class.is-invalid]="direccionNoValido">
           </mat-form-field>
-          <div *ngIf="direccionNoValido" class="error-message">
-            Debe ser entre 3 y 32 caracteres
-          </div></td>
-            </tr>
+          @if (direccionNoValido) {
+            <div class="error-message">
+              Debe ser entre 3 y 32 caracteres
+            </div>
+          }</td>
+        </tr>
 
         <tr>
-            <td><mat-form-field class="example-full-width">
-                <mat-label>Teléfono</mat-label>
-                <input matInput  formControlName="telefono" (keypress)="validarNumeros($event)">
-              </mat-form-field>
-              <div *ngIf="telefonoNoValido" class="error-message">
-                Debe ser de 7 a 10 caracteres
-              </div></td>
-            <td><mat-form-field class="example-full-width">
-             <mat-label>Celular</mat-label>
-             <input matInput  formControlName="celular" (keypress)="validarNumeros($event)">
-            </mat-form-field>
-            <div *ngIf="celularNoValido" class="error-message">
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Teléfono</mat-label>
+            <input matInput  formControlName="telefono" (keypress)="validarNumeros($event)">
+          </mat-form-field>
+          @if (telefonoNoValido) {
+            <div class="error-message">
+              Debe ser de 7 a 10 caracteres
+            </div>
+          }</td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Celular</mat-label>
+            <input matInput  formControlName="celular" (keypress)="validarNumeros($event)">
+          </mat-form-field>
+          @if (celularNoValido) {
+            <div class="error-message">
               Debe ser 10 caracteres
-            </div></td>
-       </tr>
+            </div>
+          }</td>
+        </tr>
 
 
-       <tr>
-        <td><mat-form-field class="example-full-width">
-         <mat-label>Correo</mat-label>
-         <input matInput type="text" formControlName="correo">
-        </mat-form-field>
-        <div *ngIf="correoNoValido" class="error-message">
-          Formato no valido
-        </div></td>
-      <td><mat-form-field class="example-full-width">
-        <mat-label> # Empleados</mat-label>
-        <input matInput  formControlName="empleados" (keypress)="validarNumeros($event)">
-      </mat-form-field>
-      <div *ngIf="empleadosNoValido" class="error-message">
-      Debe ser mínimo de 4 caracteres
-      </div></td>
-   </tr>
+        <tr>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Correo</mat-label>
+            <input matInput type="text" formControlName="correo">
+          </mat-form-field>
+          @if (correoNoValido) {
+            <div class="error-message">
+              Formato no valido
+            </div>
+          }</td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label> # Empleados</mat-label>
+            <input matInput  formControlName="empleados" (keypress)="validarNumeros($event)">
+          </mat-form-field>
+          @if (empleadosNoValido) {
+            <div class="error-message">
+              Debe ser mínimo de 4 caracteres
+            </div>
+          }</td>
+        </tr>
 
-        </table>    
-        <mat-card-actions>
-          <div class="button-row">
-          <button mat-raised-button color="primary" [disabled]="formCliente.invalid">Guardar</button>
-          <button mat-raised-button color="accent"  (click)="cancelarCliente()">Cancelar</button></div>
-      </mat-card-actions>    
-    </form>
-</mat-card>
+      </table>
+      <mat-card-actions>
+        <div class="button-row">
+          <button mat-raised-button color="primary" [disabled]="formCliente.invalid" type="submit">Guardar</button>
+            <button mat-raised-button color="accent"  (click)="cancelarCliente()" type="button">Cancelar</button></div>
+        </mat-card-actions>
+      </form>
+    </mat-card>
 
 
 
-  
+

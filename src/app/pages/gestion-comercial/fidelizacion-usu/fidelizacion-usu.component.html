@@ -1,111 +1,125 @@
 <mat-card class="example-card-cli">
-    <mat-card-header>
-        <div class="center">
+  <mat-card-header>
+    <div class="center">
       <mat-card-title>Fidelización</mat-card-title>
       <mat-card-subtitle>Comercial</mat-card-subtitle>
     </div>
     <br>
     </mat-card-header>
-        <form class="example-full-width" [formGroup]="formFideli" #frmFideli="ngForm"  (ngSubmit)="guardarFidelizacion()">
-            <table class="example-full-width" cellspacing="0">
-               <tr>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>tipoDoc</mat-label>
-                    <input matInput  formControlName="tipoDoc" [readonly]="true">
-                  </mat-form-field></td>
-                <td><mat-form-field class="example-full-width">
-                 <mat-label>documento</mat-label>
-                 <input matInput  formControlName="documento" [readonly]="true">
-                </mat-form-field></td>
-                <td><mat-form-field class="example-full-width">
-                  <mat-label>codCaja</mat-label>
-                  <input matInput  formControlName="codCaja" >
-                 </mat-form-field>
-                 <div *ngIf="codCajaNoValido" class="error-message">
-                  Debe ser entre 3 y 8 caracteres
-                </div></td>
-           </tr>
+    <form class="example-full-width" [formGroup]="formFideli" #frmFideli="ngForm"  (ngSubmit)="guardarFidelizacion()">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>tipoDoc</mat-label>
+            <input matInput  formControlName="tipoDoc" [readonly]="true">
+          </mat-form-field></td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>documento</mat-label>
+            <input matInput  formControlName="documento" [readonly]="true">
+          </mat-form-field></td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>codCaja</mat-label>
+            <input matInput  formControlName="codCaja" >
+          </mat-form-field>
+          @if (codCajaNoValido) {
+            <div class="error-message">
+              Debe ser entre 3 y 8 caracteres
+            </div>
+          }</td>
+        </tr>
 
-           <tr>
-            <td><mat-form-field class="example-full-width">
-                <mat-label>regNuevos</mat-label>
-                <input matInput  formControlName="regNuevos" >
-              </mat-form-field>
-              <div *ngIf="regNuevosNoValido" class="error-message">
-                Debe ser entre 1 y 4 caracteres
-              </div></td>
-            <td><mat-form-field class="example-full-width">
-             <mat-label>regRecuperados</mat-label>
-             <input matInput  formControlName="regRecuperados" >
-            </mat-form-field>
-            <div  *ngIf="regRecuperadosNoValido" class="error-message">
-                Debe ser entre 1 y 4 caracteres
-            </div></td>
-            <td><mat-form-field class="example-full-width">
-              <mat-label>numPlanilla</mat-label>
-              <input matInput  formControlName="numPlanilla" >
-             </mat-form-field>
-             <div *ngIf="numPlanillaNoValido"  class="error-message">
+        <tr>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>regNuevos</mat-label>
+            <input matInput  formControlName="regNuevos" >
+          </mat-form-field>
+          @if (regNuevosNoValido) {
+            <div class="error-message">
+              Debe ser entre 1 y 4 caracteres
+            </div>
+          }</td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>regRecuperados</mat-label>
+            <input matInput  formControlName="regRecuperados" >
+          </mat-form-field>
+          @if (regRecuperadosNoValido) {
+            <div  class="error-message">
+              Debe ser entre 1 y 4 caracteres
+            </div>
+          }</td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>numPlanilla</mat-label>
+            <input matInput  formControlName="numPlanilla" >
+          </mat-form-field>
+          @if (numPlanillaNoValido) {
+            <div  class="error-message">
               Debe ser entre 6 y 16 caracteres
-             </div></td>
-       </tr>
+            </div>
+          }</td>
+        </tr>
 
-       <tr>
-        <td><mat-form-field class="example-full-width">
+        <tr>
+          <td><mat-form-field class="example-full-width">
             <mat-label>fechaPago</mat-label>
             <input matInput [matDatepicker]="picker" placeholder="Escoge una fecha"
               [(ngModel)]="fechaSeleccionada" formControlName="fechaPago">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </td>
         <td><mat-form-field class="example-full-width">
-         <mat-label>observacion</mat-label>
-         <input matInput  formControlName="observacion" >
+          <mat-label>observacion</mat-label>
+          <input matInput  formControlName="observacion" >
         </mat-form-field>
-        <div *ngIf="observacionNoValido"  class="error-message">
-          Debe ser de 3 a 64 caracteres
-        </div></td>
-        
-       </tr>
+        @if (observacionNoValido) {
+          <div  class="error-message">
+            Debe ser de 3 a 64 caracteres
+          </div>
+        }</td>
 
-       <tr>
+      </tr>
+
+      <tr>
         <td><mat-form-field class="example-full-width">
           <mat-label>migracion</mat-label>
           <input matInput  formControlName="migracion" >
-         </mat-form-field>
-         <div  *ngIf="migracionNoValido" class="error-message">
-          Debe ser de 1 a 4 caracteres
-         </div></td>
-        <td><mat-form-field class="example-full-width">
-            <mat-label>sucursal</mat-label>
-            <input matInput  formControlName="sucursal" >
-          </mat-form-field>
-          <div *ngIf="sucursalNoValido" class="error-message">
+        </mat-form-field>
+        @if (migracionNoValido) {
+          <div  class="error-message">
             Debe ser de 1 a 4 caracteres
-          </div></td>
-         </tr>
+          </div>
+        }</td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>sucursal</mat-label>
+          <input matInput  formControlName="sucursal" >
+        </mat-form-field>
+        @if (sucursalNoValido) {
+          <div class="error-message">
+            Debe ser de 1 a 4 caracteres
+          </div>
+        }</td>
+      </tr>
 
 
-            </table>
-            <br>
-            <mat-card-actions>
-                <div class="button-row">
-                <button mat-raised-button color="primary" [disabled]="formFideli.invalid" >Guardar</button>
-                </div>
-            </mat-card-actions>  
-        </form>    
+    </table>
+    <br>
+      <mat-card-actions>
+        <div class="button-row">
+          <button mat-raised-button color="primary" [disabled]="formFideli.invalid" >Guardar</button>
+        </div>
+      </mat-card-actions>
+    </form>
   </mat-card>
   <!--
-   <hr>
-   <pre>
-       estado: {{formFideli.valid}}
-       <br>
-       Status: {{formFideli.status}}
-   </pre>
-   <pre>
-       {{formFideli.value | json }}
-   </pre>
-   -->  
-   
-   
+  <hr>
+    <pre>
+      estado: {{formFideli.valid}}
+      <br>
+        Status: {{formFideli.status}}
+      </pre>
+      <pre>
+        {{formFideli.value | json }}
+      </pre>
+      -->
+
+

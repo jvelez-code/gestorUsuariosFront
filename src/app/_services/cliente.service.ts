@@ -14,7 +14,7 @@ import { GenericService } from './generic.service';
 export class ClienteService extends GenericService<Cliente> {
 
   private clienteCambio = new Subject<Cliente[]>();
-  private idClienteCambio = new BehaviorSubject<string> ('000');
+  private idClienteCambio = new BehaviorSubject<number> (0);
   private formCambio = new Subject<boolean>();
   private mensajeCambio = new Subject<string>();
   private documentoNuevo = new BehaviorSubject<string> ('000');
@@ -22,13 +22,7 @@ export class ClienteService extends GenericService<Cliente> {
   private callid = new BehaviorSubject<string> ('000');
   
 
-  //private url:string = `${environment.HOST}/clientes`;
-
-  // constructor(
-  //   private http: HttpClient,
-  //   private router: Router ) { }
-
-    constructor(protected override http: HttpClient) {
+  constructor(protected override http: HttpClient) {
       super(
         http,
         `${environment.HOST}/clientes`
@@ -52,14 +46,14 @@ export class ClienteService extends GenericService<Cliente> {
       return this.http.post<Cliente>(`${this.url}`, body, headers);
     }
 
-     filtroCliente(parametrosDTO: ParametrosDTO):Observable<any>{
+     filtroCliente(parametrosDTO: ParametrosDTO):Observable<Cliente[]>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      return this.http.post<ParametrosDTO>(`${this.url}/buscar`,body,{'headers':headers});
+      return this.http.post<Cliente[]>(`${this.url}/buscar`,body,{'headers':headers});
     }
 
     
-    clientePorId(cliente: Cliente){
+    clientePorId(cliente: Cliente):Observable<Cliente[]> {
       return this.http.post<Cliente[]>(`${this.url}/buscarId`, cliente);
     }
 
@@ -85,7 +79,7 @@ export class ClienteService extends GenericService<Cliente> {
       return this.idClienteCambio.asObservable();
     }
 
-    setIdClienteCambio(idCliente: string ){
+    setIdClienteCambio(idCliente: number ){
       
       return this.idClienteCambio.next(idCliente );
     }

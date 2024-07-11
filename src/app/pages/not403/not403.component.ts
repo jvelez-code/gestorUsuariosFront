@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-not403',
-  templateUrl: './not403.component.html',
-  styleUrls: ['./not403.component.css']
+    selector: 'app-not403',
+    templateUrl: './not403.component.html',
+    styleUrls: ['./not403.component.scss'],
+    standalone: true,
+    imports: [RouterLink]
 })
 export class Not403Component {
 

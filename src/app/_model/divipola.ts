@@ -2,13 +2,13 @@ export class Divipola {
     
     idZona ?: number;
     indicativo ?: number;
-    codigo ?: String;
-    tipoZona ?: String;
-    tipoEt ?: String;
-    nombre ?: String;
-    idZonapadre ?: String;
-    dv ?: String;
-    zonaEspecial ?: String;
+    codigo ?: string;
+    tipoZona ?: string;
+    tipoEt ?: string;
+    nombre ?: string;
+    idZonapadre ?: string;
+    dv ?: string;
+    zonaEspecial ?: string;
 }
 
 let divipola : Divipola

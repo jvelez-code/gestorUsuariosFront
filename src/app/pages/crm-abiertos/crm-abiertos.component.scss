@@ -1,0 +1,48 @@
+.example-card-cli {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 3rem;
+  text-align: center;
+  }
+
+  
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+
+  /* Estilo para celdas de datos pares dentro de #tabla1 a partir de la segunda fila */
+.colorTabla tr:nth-child(even) td {
+    background-color: #ffffff;
+  }
+  
+  /* Estilo para celdas de datos impares dentro de #tabla1 a partir de la segunda fila */
+  .colorTabla tr:nth-child(odd) td {
+    background-color: #bed0f7;
+  }
+
+
+.table-container {
+  overflow: auto;
+  flex: 1 1 auto;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-header-cell, .mat-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-paginator {
+  flex-shrink: 0;
+}

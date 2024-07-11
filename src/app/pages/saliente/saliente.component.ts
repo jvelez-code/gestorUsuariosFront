@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, ControlContainer, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ControlContainer, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
 import { Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Cliente } from 'src/app/_model/cliente';
 import { Contacto } from 'src/app/_model/contactos';
@@ -38,12 +38,24 @@ import { Planillas } from 'src/app/_model/planillas';
 import { Divipola } from 'src/app/_model/divipola';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
 import { ClienteDialSalComponent } from './cliente-dial-sal/cliente-dial-sal.component';
+import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
+import { MatDivider } from '@angular/material/divider';
+import { MatOption } from '@angular/material/core';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent } from '@angular/material/card';
 
 
 @Component({
-  selector: 'app-saliente',
-  templateUrl: './saliente.component.html',
-  styleUrl: './saliente.component.css'
+    selector: 'app-saliente',
+    templateUrl: './saliente.component.html',
+    styleUrl: './saliente.component.scss',
+    standalone: true,
+    imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatDivider, AsyncPipe]
 })
 export class SalienteComponent implements OnInit, OnDestroy {
 
@@ -62,6 +74,7 @@ export class SalienteComponent implements OnInit, OnDestroy {
 
 
   private subscripcion : Subscription = new Subscription();
+  parametrosDTO!: ParametrosDTO;
   tipoDocumento !: string;
   tipoLlamada !: number;
   idContactoP   !: number;
@@ -71,11 +84,11 @@ export class SalienteComponent implements OnInit, OnDestroy {
   tipoGestionP !: number ;
   tipoGestionH !: any;
 
-  nombreC !:String;
-  correoC !:String;
-  telPrincipalC !:String;
-  telSecundarioC !:String;
-  telCelularC !:String;
+  nombreC !:string;
+  correoC !:string;
+  telPrincipalC !:string;
+  telSecundarioC !:string;
+  telCelularC !:string;
   callid !: string;
   cardCliente : boolean= false ;
   filaPar: boolean = true;
@@ -281,13 +294,17 @@ export class SalienteComponent implements OnInit, OnDestroy {
   gestionHistorico(){
 
     
-    this.tipoLlamada= 0;
+    this.tipoLlamada= 1;
     const parametros= { nroDoc:this.nroDocumento, idEmpresa:this.idEmpresa, 
       tipoLlamada:this.tipoLlamada, idEstadoPadre:this.tipoGestionP,
       idCliente:this.idClienteP }
 
+      this.parametrosDTO= { nroDocumento: this.nroDocumento, idEmpresa:this.idEmpresa, 
+        tipoLlamada:this.tipoLlamada, idEstadoPadre:this.tipoGestionP,
+        idCliente:this.idClienteP }
+
     //HISTORICO
-    this.detalleGestionService.detalleHistoricoS(parametros).subscribe(data =>{
+    this.detalleGestionService.detalleHistorico(this.parametrosDTO).subscribe(data =>{
       this.dataSourceHisto= new MatTableDataSource(data);
       this.dataSourceHisto.sort = this.sort;
       this.dataSourceHisto.paginator = this.paginator;
@@ -297,6 +314,7 @@ export class SalienteComponent implements OnInit, OnDestroy {
 
 
   }
+
 
   tipoGestion(tipoGestionP:number){
     this.idEstadoP= tipoGestionP;
@@ -336,7 +354,7 @@ export class SalienteComponent implements OnInit, OnDestroy {
     this.contactoService.filtroContacto(parametros).subscribe(data =>{
       this.formContacto = this.fb.group({
       'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
-      'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
       'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'telCelular': [data.telefonoCelular,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
@@ -455,7 +473,7 @@ export class SalienteComponent implements OnInit, OnDestroy {
 
     })
     
-    this.detalleGestionService.guardarSaliente(det).subscribe( data =>{
+    this.detalleGestionService.guardarSaliente( this.idGestion, det).subscribe( data =>{
 
     this.snackBar.open("SE REGISTRO", "Aviso", { duration: 2000 });
 

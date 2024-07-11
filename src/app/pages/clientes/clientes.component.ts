@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -14,11 +14,20 @@ import { DivipolaService } from 'src/app/_services/divipola.service';
 import { LoginService } from 'src/app/_services/login.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
+import { AsyncPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 
 @Component({
-  selector: 'app-clientes',
-  templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+    selector: 'app-clientes',
+    templateUrl: './clientes.component.html',
+    styleUrls: ['./clientes.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatInput, MatCardActions, MatButton, AsyncPipe]
 })
 export class ClientesComponent implements OnInit{
 
@@ -152,7 +161,6 @@ export class ClientesComponent implements OnInit{
   }
 
   cancelarCliente(){
-
     this.formCliente.reset({
       'documento':'',
       'rsocial': '',
@@ -160,10 +168,7 @@ export class ClientesComponent implements OnInit{
       'telefono': '',
       'celular': '',
       'empleados': ''
-
-    });
-
-      
+    });      
   }
  
 }

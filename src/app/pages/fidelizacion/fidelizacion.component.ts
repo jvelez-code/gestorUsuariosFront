@@ -1,20 +1,28 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import * as moment from 'moment';
 import { switchMap } from 'rxjs';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
 import { FidelizacionComercial } from 'src/app/_model/fidelizacionComercial';
 import { FidelizacionService } from 'src/app/_services/fidelizacion.service';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatDateRangePicker } from '@angular/material/datepicker';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions } from '@angular/material/card';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
-  selector: 'app-fidelizacion',
-  templateUrl: './fidelizacion.component.html',
-  styleUrls: ['./fidelizacion.component.css']
+    selector: 'app-fidelizacion',
+    templateUrl: './fidelizacion.component.html',
+    styleUrls: ['./fidelizacion.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet, ReactiveFormsModule, FormsModule, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatError, MatCardActions, MatButton, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class FidelizacionComponent   implements OnInit {
 

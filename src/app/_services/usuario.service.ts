@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
@@ -14,7 +14,8 @@ import { GenericService } from './generic.service';
 })
 export class UsuarioService extends GenericService<Usuario>{
 
-  private extensionCambio = new BehaviorSubject<number> ( 0 )
+  private extensionCambio = new BehaviorSubject<number> ( 0 );
+  private usuariosCambio = new Subject<Usuarios>();
 
   //private url:string = `${environment.HOST}/usuarios`;
 
@@ -50,8 +51,15 @@ export class UsuarioService extends GenericService<Usuario>{
 
     }
 
+    intentosFallidos(parametrosDTO : ParametrosDTO){
+      const headers = { 'content-type': 'application/json'} 
+      const body=JSON.stringify(parametrosDTO);      
+      return this.http.post<Usuario>(`${this.url}/intento`, body,{'headers':headers});
+
+    }
 
 
+   ////// GET AND SET
 
     getExtensionCambio() {
       return this.extensionCambio.asObservable();
@@ -61,4 +69,11 @@ export class UsuarioService extends GenericService<Usuario>{
       this.extensionCambio.next(extension);
     }
 
+    getUsuariosCambio(){
+      return this.usuariosCambio.asObservable();
+    }
+  
+    setUsuariosCambio(Usuarios: Usuarios){
+      this.usuariosCambio.next(Usuarios);
+    }
 }

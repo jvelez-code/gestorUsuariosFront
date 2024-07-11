@@ -9,18 +9,26 @@ import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extensio
 import { AskEstadoService } from 'src/app/_services/ask-estado.service';
 import { LlamadaEntranteService } from 'src/app/_services/llamada-entrante.service';
 import { LoginService } from 'src/app/_services/login.service';
+import { AsyncPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions } from '@angular/material/card';
 
 
 
 @Component({
-  selector: 'app-extado-ext',
-  templateUrl: './estado-ext.component.html',
-  styleUrls: ['./estado-ext.component.css']
+    selector: 'app-extado-ext',
+    templateUrl: './estado-ext.component.html',
+    styleUrls: ['./estado-ext.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatFormField, MatLabel, MatSelect, MatOption, MatCardActions, MatButton, AsyncPipe]
 })
 export class ExtadoExtComponent implements OnInit {
 
   estadoExt !:number;
-  idExt !:number;
+  idExt !:number | undefined;
   usuarioExt !:string;
   enAsterisk!: boolean;
   enllamada!: boolean;
@@ -34,7 +42,6 @@ export class ExtadoExtComponent implements OnInit {
     private askEstadoExtensionService: AskEstadoExtensionService,
     private loginService: LoginService,
     private llamadaEntranteService: LlamadaEntranteService,
-    private router: Router,
     private snackBar: MatSnackBar
   )
   {
@@ -76,7 +83,12 @@ export class ExtadoExtComponent implements OnInit {
     // this.enllamada=data;
   
     // if(this.enllamada) {
-      if(this.estadoExt===3) {
+
+    this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data => {
+      this.idExt = data.askEstado?.idEstado;
+      
+    
+      if(this.idExt===3) {
 
       this.askEstadoService.setMensajecambio('EN LLAMADA')         
     }
@@ -85,8 +97,6 @@ export class ExtadoExtComponent implements OnInit {
           if(this.estadoExt===2){
 
           this.llamadaEntranteService.buscarLogin(askEstadoExtension).subscribe(data =>{
-            console.log(data,'entrante')
-
             this.enAsterisk=data;
 
           if(this.enAsterisk){
@@ -118,7 +128,7 @@ export class ExtadoExtComponent implements OnInit {
     
     
        }
-
+      })
   // })
    }
 

@@ -4,15 +4,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, withDisabledInitialNavigation } from '@angular/router';
+import { Router, withDisabledInitialNavigation, RouterOutlet } from '@angular/router';
 import { interval, Observable, Subscription } from 'rxjs';
 import { AskEstadoExtension } from 'src/app/_model/askEstadoExtension';
-import { ControlContainer, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-
-import { Cliente } from 'src/app/_model/cliente';
-import { Contacto } from 'src/app/_model/contactos';
+import { ControlContainer, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DetalleGestion } from 'src/app/_model/detalleGestion';
-import { EstadoGestion } from 'src/app/_model/estadoGestion';
 import { Gestion } from 'src/app/_model/gestion';
 import { Parametros } from 'src/app/_model/parametros';
 import { TipoDocumento } from 'src/app/_model/tipoDocumento';
@@ -24,22 +20,28 @@ import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import * as moment from 'moment';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginService } from 'src/app/_services/login.service';
-import { Usuarios } from 'src/app/_model/usuarios';
-import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
 import { UsuarioService } from 'src/app/_services/usuario.service';
 import { CantidadGestionDTO } from 'src/app/_dto/CantidadGestionDTO ';
-import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { LlamadaEntranteService } from 'src/app/_services/llamada-entrante.service';
+import { AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 
 
 
 
 @Component({
-  selector: 'app-filtro-cliente',
-  templateUrl: './filtro-cliente.component.html',
-  styleUrls: ['./filtro-cliente.component.css']
+    selector: 'app-filtro-cliente',
+    templateUrl: './filtro-cliente.component.html',
+    styleUrls: ['./filtro-cliente.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatCardActions, MatButton, MatSelect, MatOption, MatIcon, AsyncPipe]
 })
 
 
@@ -60,7 +62,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
   nroDocumento  !: string
   idEmpresa !: number;
   idTipoCampana !: number;
-  idCliente   !: string;
+  idCliente   !: any;
   cardCliente !: boolean;
   cardManual !: boolean;
   fechafin !: Date;
@@ -257,7 +259,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
     const parametrosDTO = { tipoDoc: this.formCliente.value['tipoDoc'], nroDocumento: this.formCliente.value['identificacion'] }
 
     this.clienteService.filtroCliente(parametrosDTO).subscribe(data => {
-      this.idCliente = data.idCliente;
+      this.idCliente = data[0].idCliente;
       this.clienteService.setIdClienteCambio(this.idCliente);
 
       this.router.navigate(['gestionEntrante']);
@@ -287,9 +289,9 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
     const parametrosDTO = { tipoDoc: this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento'] }
 
     this.clienteService.filtroCliente(parametrosDTO).subscribe(data => {
-
-      if (data) {
-        this.idCliente = data.idCliente;
+      //VALIDA SI EL ARREGLO ESTA VACIO
+      if (Array.isArray(data) && data.length > 0) {
+        this.idCliente = data[0].idCliente;
         this.clienteService.setIdClienteCambio(this.idCliente);
 
         this.router.navigate(['gestionEntrante']);

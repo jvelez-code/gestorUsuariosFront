@@ -6,7 +6,7 @@ export class EstadoGestion {
     
     
     idEstadoGestion ?: number;
-    nombre ?: String;
+    nombre ?: string;
     idEstadoGestionPadre ?: number;
     aplicaDG ?: boolean;
     estadoFinal ?: boolean;

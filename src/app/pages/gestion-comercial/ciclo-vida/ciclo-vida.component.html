@@ -1,25 +1,27 @@
 <mat-card class="example-card-cli">
-    <mat-card-header>
-      <div class="center">
+  <mat-card-header>
+    <div class="center">
       <mat-card-title>Ciclo de Vida</mat-card-title>
       <mat-card-subtitle>Seguimiento</mat-card-subtitle>
     </div>
-    </mat-card-header>
-    <mat-form-field>
-       <!-- <mat-label>Ciclo de Vida</mat-label>-->
-        <mat-select placeholder="SELECCCION" [(value)]="idCiclo">
-          <mat-option *ngFor="let p of ( cicloVida$  | async )" [value]="p.idCiclo">
-            {{p.nombre}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  </mat-card-header>
+  <mat-form-field>
+    <!-- <mat-label>Ciclo de Vida</mat-label>-->
+    <mat-select placeholder="SELECCCION" [(value)]="idCiclo">
+      @for (p of ( cicloVida$  | async ); track p) {
+        <mat-option [value]="p.idCiclo">
+          {{p.nombre}}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-        <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-        <mat-card-actions>
-          <div class="button-row">
-          <button mat-raised-button color="primary"(click)="guardar()">Actualizar</button>
-          </div> 
-          
-    </mat-card-actions>
-  </mat-card>
+  <mat-card-actions>
+    <div class="button-row">
+      <button mat-raised-button color="primary"(click)="guardar()">Actualizar</button>
+    </div>
+
+  </mat-card-actions>
+</mat-card>

@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LoginService } from 'src/app/_services/login.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent } from '@angular/material/card';
+import { MatToolbar } from '@angular/material/toolbar';
 
 
 @Component({
-  selector: 'app-token',
-  templateUrl: './token.component.html',
-  styleUrls: ['./token.component.css']
+    selector: 'app-token',
+    templateUrl: './token.component.html',
+    styleUrls: ['./token.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, ReactiveFormsModule, MatFormField, MatInput, MatButton]
 })
 export class TokenComponent implements OnInit {
 

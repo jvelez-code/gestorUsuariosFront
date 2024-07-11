@@ -1,21 +1,23 @@
 <mat-card class="example-card">
-    <mat-card-header>
-      <div class="center">
+  <mat-card-header>
+    <div class="center">
       <mat-card-title>ESTADO EXTENSIÓN</mat-card-title>
       <mat-card-subtitle>Estados</mat-card-subtitle></div>
     </mat-card-header>
     <mat-form-field appearance="fill">
       <mat-label>Seleccione</mat-label>
       <mat-select placeholder="SELECCCION" [(value)]="estadoExt">
-        <mat-option *ngFor="let p of ( askEstados$  | async )" [value]="p.idEstado">
-          {{p.descripcion}}
-        </mat-option>
+        @for (p of ( askEstados$  | async ); track p) {
+          <mat-option [value]="p.idEstado">
+            {{p.descripcion}}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
     <mat-card-actions>
-        <div class="button-row">
-            <button mat-raised-button color="primary"(click)="cambioExt()">Cambiar</button>
-        </div>
+      <div class="button-row">
+        <button mat-raised-button color="primary"(click)="cambioExt()">Cambiar</button>
+      </div>
     </mat-card-actions>
   </mat-card>

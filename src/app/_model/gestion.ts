@@ -22,7 +22,7 @@ export class Gestion {
     usuarioAct ?: number
     ipAct ?: string ;
     fechaHoraSis ?: Date ;    
-    flagGestionSucursal ?: Boolean ;
+    flagGestionSucursal ?: boolean ;
     valorCotizacion ?: number ;
     fechaAgenda ?: Date ;    
     idGestionPadre ?: number ;

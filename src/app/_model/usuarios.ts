@@ -12,6 +12,7 @@ username ?: string;
 failed ?: number;
 fechaActualizacion ?: string;
 fechaCreacion ?: string;
+ultimoLog ?: string;
 
 
 

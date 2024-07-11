@@ -1,4 +1,7 @@
+import { Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
+
+@Injectable()
 
 //https://stackoverflow.com/questions/58132292/angular-material-datepicker-input-format
 export class CustomDateAdapter extends NativeDateAdapter {

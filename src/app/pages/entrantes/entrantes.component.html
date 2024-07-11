@@ -5,91 +5,91 @@
 <mat-card class="example-card-cli">
   <mat-card-header>
     <div class="center">
-    <mat-card-title>CLIENTE</mat-card-title>
-    <mat-card-subtitle>detalles</mat-card-subtitle></div>
-  </mat-card-header>
+      <mat-card-title>CLIENTE</mat-card-title>
+      <mat-card-subtitle>detalles</mat-card-subtitle></div>
+    </mat-card-header>
     <mat-card-content>
-          <table mat-table [dataSource]="dataSourceCli" class="mat-elevation-z8">
-      
-            <ng-container matColumnDef="razonSocial">
-              <th mat-header-cell *matHeaderCellDef> RAZÓN SOCIAL </th>
-              <td mat-cell *matCellDef="let element"> {{element.razonSocial}} </td>
-            </ng-container>
+      <table mat-table [dataSource]="dataSourceCli" class="colorTabla">
+
+        <ng-container matColumnDef="razonSocial">
+          <th mat-header-cell *matHeaderCellDef> RAZÓN SOCIAL </th>
+          <td mat-cell *matCellDef="let element"> {{element.razonSocial}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="tipoDocumento.tipoDoc">
+          <th mat-header-cell *matHeaderCellDef> TIPO </th>
+          <td mat-cell *matCellDef="let element"> {{element.tipoDocumento.tipoDoc}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nroDocumento">
+          <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
+          <td mat-cell *matCellDef="let element"> {{element.nroDocumento}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="divipola.nombre">
+          <th mat-header-cell *matHeaderCellDef> MUNICIPIO </th>
+          <td mat-cell *matCellDef="let element"> {{element.divipola.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="divipola.idZonapadre.nombre">
+          <th mat-header-cell *matHeaderCellDef> DEPARTAMENTO </th>
+          <td mat-cell *matCellDef="let element"> {{element.divipola.idZonapadre.nombre}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="correo">
+          <th mat-header-cell *matHeaderCellDef> CORREO </th>
+          <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="telefonoCelular">
+          <th mat-header-cell *matHeaderCellDef> CELULAR </th>
+          <td mat-cell *matCellDef="let element"> {{element.telefonoCelular}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefonoFijo">
+          <th mat-header-cell *matHeaderCellDef> FIJO </th>
+          <td mat-cell *matCellDef="let element"> {{element.telefonoFijo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef  > MODIFICAR </th>
+          <td mat-cell *matCellDef="let element" >
+            <button mat-button color="primary" (click)="abrirDialogo(element)" >
+              <mat-icon>ballot</mat-icon>
+            </button>
           
-            <!-- Name Column -->
-            <ng-container matColumnDef="tipoDocumento.tipoDoc">
-              <th mat-header-cell *matHeaderCellDef> TIPO </th>
-              <td mat-cell *matCellDef="let element"> {{element.tipoDocumento.tipoDoc}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="nroDocumento">
-              <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
-              <td mat-cell *matCellDef="let element"> {{element.nroDocumento}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="divipola.nombre">
-              <th mat-header-cell *matHeaderCellDef> MUNICIPIO </th>
-              <td mat-cell *matCellDef="let element"> {{element.divipola.nombre}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="divipola.idZonapadre.nombre">
-              <th mat-header-cell *matHeaderCellDef> DEPARTAMENTO </th>
-              <td mat-cell *matCellDef="let element"> {{element.divipola.idZonapadre.nombre}} </td>
-            </ng-container>
-            <!-- Weight Column -->
-            <ng-container matColumnDef="correo">
-              <th mat-header-cell *matHeaderCellDef> CORREO </th>
-              <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
-            </ng-container>
-          
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="telefonoCelular">
-              <th mat-header-cell *matHeaderCellDef> CELULAR </th>
-              <td mat-cell *matCellDef="let element"> {{element.telefonoCelular}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="telefonoFijo">
-              <th mat-header-cell *matHeaderCellDef> FIJO </th>
-              <td mat-cell *matCellDef="let element"> {{element.telefonoFijo}} </td>
-            </ng-container>
-            <ng-container matColumnDef="acciones">
-              <th mat-header-cell *matHeaderCellDef  > MODIFICAR </th>
-              <td mat-cell *matCellDef="let element" > 
-                <button mat-button color="primary" (click)="abrirDialogo(element)" >
-                  <mat-icon>ballot</mat-icon>
-                </button>  
-              </td>
-          </ng-container>
-      
-            <tr mat-header-row *matHeaderRowDef="clienteColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: clienteColumns;"></tr>
-          </table>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="clienteColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: clienteColumns;"></tr>
+      </table>
     </mat-card-content>
-</mat-card>
-<br>
+  </mat-card>
+  <br>
 
 
-<!--Formulario de Historico De Gestiones-->
+    <!--Formulario de Historico De Gestiones-->
+    <mat-card class="example-card-cli">
+      <mat-card-header>
+        <div class="center">
+          <mat-card-title>HISTÓRICO</mat-card-title>
+          <mat-card-subtitle>gestiones</mat-card-subtitle></div>
+        </mat-card-header>
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSourceHisto" class="colorHist">
 
-<mat-card class="example-card-cli">
-  <mat-card-header>
-    <div class="center">
-    <mat-card-title>HISTÓRICO</mat-card-title>
-    <mat-card-subtitle>gestiones</mat-card-subtitle></div>
-  </mat-card-header>
-    <mat-card-content>
-       <table mat-table [dataSource]="dataSourceHisto">
-      
             <ng-container matColumnDef="fecha">
               <th mat-header-cell *matHeaderCellDef> FECHA </th>
               <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fecha}} </td>
             </ng-container>
-          
-             <ng-container matColumnDef="usuario">
+
+            <ng-container matColumnDef="usuario">
               <th mat-header-cell *matHeaderCellDef> USUARIO </th>
               <td mat-cell *matCellDef="let element" class="mat-row"> {{element.usuario}} </td>
             </ng-container>
-      
+
             <ng-container matColumnDef="campana">
               <th mat-header-cell *matHeaderCellDef> CAMPAÑA </th>
               <td mat-cell *matCellDef="let element"> {{element.campana}} </td>
@@ -99,20 +99,20 @@
               <th mat-header-cell *matHeaderCellDef> TIPO </th>
               <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
             </ng-container>
-          
+
             <!-- Symbol Column -->
             <ng-container matColumnDef="subtipo">
               <th mat-header-cell *matHeaderCellDef> SUBTIPO </th>
               <td mat-cell *matCellDef="let element"> {{element.subtipo}} </td>
             </ng-container>
-          
+
             <ng-container matColumnDef="observacion">
               <th mat-header-cell *matHeaderCellDef > OBSERVACIÓN </th>
-              <td mat-cell *matCellDef="let element" > {{element.observacion}} </td>
+              <td mat-cell *matCellDef="let element" class="mat-cell-observacion"> {{element.observacion}} </td>
             </ng-container>
-      
+
             <ng-container matColumnDef="numero">
-              <th mat-header-cell *matHeaderCellDef> NUMERO REAL </th>
+              <th mat-header-cell *matHeaderCellDef> NÚMERO REAL </th>
               <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
             </ng-container>
 
@@ -121,128 +121,310 @@
           </table>
 
           <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" [length]="cantidad"></mat-paginator>
-        
-      
 
-    </mat-card-content>
+
+
+        </mat-card-content>
+      </mat-card>
+      <br>
+
+
+        <!--Formulario de Contacto-->
+        <mat-card class="example-card-cli">
+          <mat-card-header>
+            <div class="center">
+              <mat-card-title>CONTACTO</mat-card-title></div>
+            </mat-card-header>
+            <mat-card-content>
+              <form [formGroup]="formContacto" #frmContacto="ngForm" >
+                <table class="example-full-width">
+                  <th></th>
+                  <tr>
+                  <td><mat-form-field class="example-full-width">
+                    <mat-label>Nombre del Contacto</mat-label>
+                    <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
+                  </mat-form-field>@if (nombreNoValido) {
+                  <div class="error-message">
+                    Debe ser mín de 4 max 32 caracteres
+                  </div>
+                }</td>
+                <td><mat-form-field class="example-full-width">
+                  <mat-label>Correo del Contacto</mat-label>
+                  <input matInput placeholder="Correo"   formControlName="correo">
+                </mat-form-field>@if (correoNoValido) {
+                <div class="error-message">
+                  Formato no Valido
+                </div>
+              }</td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Teléfono (P)</mat-label>
+                <input matInput placeholder="Principal"  formControlName="telPrincipal" (keypress)="validarNumeros($event)" >
+              </mat-form-field>@if (telPrincipalNoValido) {
+              <div class="error-message">
+                Debe ser 10 caracteres
+              </div>
+            }</td>
+            <td><mat-form-field class="example-full-width">
+              <mat-label>Teléfono (S)</mat-label>
+              <input matInput placeholder="Secundario"  formControlName="telSecundario" (keypress)="validarNumeros($event)" >
+            </mat-form-field>@if (telSecundarioNoValido) {
+            <div class="error-message">
+              Debe ser 10 caracteres
+            </div>
+          }</td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Teléfono Celular</mat-label>
+            <input matInput placeholder="Celular" formControlName="telCelular" (keypress)="validarNumeros($event)" [class.is-invalid]="telCelularNoValido">
+          </mat-form-field>@if (telCelularNoValido) {
+          <div class="error-message">
+            Debe ser 10 caracteres
+          </div>
+        }</td>
+
+      </tr></table>
+    </form>
+  </mat-card-content>
 </mat-card>
-<br>
 
 
-<!--Formulario de tipificacion-->
-  
-<mat-card class="example-card-cli">
+ <!--Formulario de Guardar Gestiòn-->
+ <mat-card class="example-card-cli">
   <mat-card-header>
     <div class="center">
-    <mat-card-title>CONTACTO</mat-card-title></div>
+      <mat-card-title>TIPIFICACIÓN</mat-card-title>
+    </div>
   </mat-card-header>
   <mat-card-content>
-  <form [formGroup]="formContacto" #frmContacto="ngForm" > 
-  <table class="example-full-width" cellspacing="0" ><tr>
+    <form [formGroup]="formGuardar" #frmGuardar="ngForm" (ngSubmit)="guardarGestion()">
+
+      <table>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <mat-label>Tipo Gestión</mat-label>
+              <mat-select placeholder="SELECCIÓN" [(value)]="tipoGestionP"
+                (selectionChange)="tipoGestion($event.value)" formControlName="tipificacioP">
+                <mat-option *ngFor="let p of tipoGestion$ | async" [value]="p.idEstadoGestion">
+                  {{ p.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+
+          <td>
+            <mat-form-field class="example-full-width">
+              <mat-label>Subtipo Gestión</mat-label>
+              <mat-select placeholder="SELECCIÓN" [(value)]="tipoGestionH"
+                (selectionChange)="subtipoGestion($event.value)" formControlName="tipificacioH">
+                <mat-option *ngFor="let p of subTipoGestion$ | async" [value]="p.idEstadoGestion">
+                  {{ p.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+
+
+      <div>OBSERVACIÓN</div>
+      <div>
+        <mat-form-field   class="example-full"  appearance="outline">
+          <mat-label>Observaciones</mat-label>
+          <textarea matInput placeholder="Observación" formControlName="observacionD"
+            [class.is-invalid]="observacionDNoValido"></textarea>
+        </mat-form-field>@if (observacionDNoValido) {
+        <div class="error-message">
+          Debe ser mínimo de 4 caracteres
+        </div>
+        }
+      </div>
+
+      <mat-form-field  appearance="outline">
+        <mat-label>Número Real Marcado</mat-label>
+        <input matInput placeholder="Número Real" formControlName="numeroreal" (keypress)="validarNumeros($event)">
+      </mat-form-field>@if (numerorealNoValido) {
+      <div class="error-message">
+        Debe ser mínimo de 7 caracteres
+      </div>
+      }    
+        
+      <div class="example-button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]=" formContacto.invalid || formGuardar.invalid ">
+            <mat-icon>call</mat-icon>
+            <span>GUARDAR</span>
+          </button>
+          <button mat-raised-button color="accent" (click)="cancelarGestion()" style="cursor: pointer" type="button">
+            <mat-icon>delete_forever</mat-icon>
+            <span>CANCELAR</span>
+          </button>
+        </div>
+
+      <mat-divider></mat-divider>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+<!--API DE PILA ASTERISK-->
+
+<mat-card class="example-card-cli">
+  <mat-card-content>
+      <div class="example-button-row">
+      <button  mat-raised-button color="primary" mat-button (click)="accordion.openAll()">API PLANILLA</button>
+      <button  mat-raised-button color="accent" mat-button (click)="accordion.closeAll()">CONTRAER</button>
+      <mat-divider></mat-divider>
+    </div>
+
+    <mat-accordion class="example-headers-align" multi>
+
+
+      
+  <!--API DE PILA PLANILLA-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Generar Planillas
+      </mat-panel-title>
+      <mat-panel-description>
+        Información por periodos
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
     
-    <td><mat-form-field class="example-full-width">
-      <mat-label>Nombre del Contacto</mat-label>
-      <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
-    </mat-form-field><div *ngIf="nombreNoValido" class="error-message">
-      Debe ser mínimo  de 4 caracteres
-    </div></td>
-    <td><mat-form-field class="example-full-width">
-      <mat-label>Correo del Contacto</mat-label>
-      <input matInput placeholder="Correo"   formControlName="correo">
-    </mat-form-field><div *ngIf="correoNoValido" class="error-message">
-      Formato no Valido
-    </div></td>
-    <td><mat-form-field class="example-full-width">
-      <mat-label>Teléfono (P)</mat-label>
-      <input matInput placeholder="Principal"  formControlName="telPrincipal" (keypress)="validarNumeros($event)" >
-    </mat-form-field><div *ngIf="telPrincipalNoValido" class="error-message">
-      Debe ser 10 caracteres
-    </div></td>
-    <td><mat-form-field class="example-full-width">
-      <mat-label>Teléfono (S)</mat-label>
-      <input matInput placeholder="Secundario"  formControlName="telSecundario" (keypress)="validarNumeros($event)" >
-    </mat-form-field><div *ngIf="telSecundarioNoValido" class="error-message">
-      Debe ser 10 caracteres
-    </div></td>
-    <td><mat-form-field class="example-full-width">
-      <mat-label>Teléfono Celular</mat-label>
-      <input matInput placeholder="Celular" formControlName="telCelular" (keypress)="validarNumeros($event)" >
-    </mat-form-field><div *ngIf="telCelularNoValido" class="error-message">
-      Debe ser 10 caracteres
-    </div></td>
-    
-  </tr></table>
-</form>
+    <table>
+      <th></th><tr>
+      <td> <mat-form-field class="example-full-width" appearance="outline" >
+        <mat-label>Año</mat-label>
+         <mat-select [(ngModel)]="planillaanio">
+    <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+  </mat-select>
+      </mat-form-field>
+    </td>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Mes</mat-label>
+      <select matNativeControl required [(ngModel)]="planillames">
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+    </mat-form-field>
+  </td>
+  <td><mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Modalidad</mat-label>
+    <select matNativeControl required [(ngModel)]="modalidad">
+      <option value="1">ELECTRONICA</option>
+      <option value="2">ASISTIDA</option>
+    </select>
+  </mat-form-field>
+</td>
+  <td><button mat-raised-button color="warn" (click)="generarPlanilla()" >
+    <mat-icon>call</mat-icon>
+    <span>ENVIAR</span>
+  </button>
+</td>
+
+</tr></table>
+
+
+<table mat-table [dataSource]="dataSourceGen" class="colorApi">
+
+  <ng-container matColumnDef="value">
+    <th mat-header-cell *matHeaderCellDef> INFORME GENERAL </th>
+    <td mat-cell *matCellDef="let row"> {{ row.value }} </td>
+  </ng-container>
+  <ng-container matColumnDef="tipoPlanilla">
+    <th mat-header-cell *matHeaderCellDef> Tipo Planilla </th>
+    <td mat-cell *matCellDef="let row"> {{ row.object.tipoPlanilla }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numeroPin">
+    <th mat-header-cell *matHeaderCellDef> PIN</th>
+    <td mat-cell *matCellDef="let row" [ngStyle]="{'background-color': 'yellow'}"> {{ row.object.numeroPin }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numeroPlanilla">
+    <th mat-header-cell *matHeaderCellDef> Nro Planilla </th>
+    <td mat-cell *matCellDef="let row"> {{ row.object.numeroPlanilla }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="valorPago">
+    <th mat-header-cell *matHeaderCellDef> Valor Pago </th>
+    <td mat-cell *matCellDef="let row"> {{ row.object.valorPago  }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="generarColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: generarColumns;"></tr>
+</table>
+</mat-expansion-panel>
+
+
+
+<!--SOPORTE PLANILLA-->
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Soporte Planillas
+    </mat-panel-title>
+    <mat-panel-description>
+      Información por periodos
+      <mat-icon>date_range</mat-icon>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <table><th></th><tr>
+    <td> <mat-form-field class="example-full-width" appearance="outline" >
+      <mat-label>Nro Planilla</mat-label>
+      <input matInput [(ngModel)]="planilla" >
+    </mat-form-field>
+  </td>
+  <td><mat-form-field class="example-full-width" appearance="outline">
+    <select matNativeControl required [(ngModel)]="reporte">
+      <option value="1">RESUMEN</option>
+      <option value="2">SIN-IBC</option>
+      <option value="3">CON-IBC</option>
+    </select>
+  </mat-form-field>
+</td>
+
+<td><button mat-raised-button color="warn" (click)="generarSoporte()" [disabled]="!planilla">
+  <mat-icon>call</mat-icon>
+  <span>ENVIAR</span>
+</button>
+</td>
+
+</tr></table>
+
+
+<table mat-table [dataSource]="dataSourceSop" class="colorApi">
+
+<ng-container matColumnDef="message">
+  <th mat-header-cell *matHeaderCellDef> MENSAJE </th>
+  <td mat-cell *matCellDef="let row"> {{ row.message }} </td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="soporteColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: soporteColumns;"></tr>
+</table>
+</mat-expansion-panel>
+
+
+
+
+
+
+
+</mat-accordion>
 </mat-card-content>
 </mat-card>
 
-<!--Formulario de Guardar Gestiòn-->
-
-<mat-card class="example-card-cli">
-  <mat-card-header>
-    <div class="center">
-    <mat-card-title>TIPIFICACIÓN</mat-card-title></div>
-    </mat-card-header>
-    <mat-card-content>
-    <form [formGroup]="formGuardar" #frmGuardar="ngForm" (ngSubmit)="guardarGestion()">
-     <table ><tr> 
-      <td></td>     
-      <td><mat-form-field class="example-full-width">
-          <mat-label>Tipo Gestion</mat-label>
-          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionP" 
-          (selectionChange)="tipoGestion($event.value)" formControlName="tipificacioP">
-            <mat-option *ngFor="let p of (  tipoGestion$ | async )" [value]="p.idEstadoGestion">
-              {{p.nombre}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field></td>  
-        <td></td>
-        
-        <td><mat-form-field class="example-full-width" >
-          <mat-label>Subtipo Gestion</mat-label>
-          <mat-select placeholder="SELECCCION" [(value)]="tipoGestionH" 
-          (selectionChange)="subtipoGestion($event.value)" formControlName="tipificacioH">
-            <mat-option *ngFor="let p of (  subTipoGestion$ | async )" [value]="p.idEstadoGestion">
-              {{p.nombre}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field></td> 
-        <td></td>
-        </tr></table>
-        
-        <div >OBSERVACIÓN</div>
-        <div>
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Observaciones</mat-label>
-            <textarea matInput placeholder="Observación" formControlName="observacionD" [class.is-invalid]="observacionDNoValido"></textarea>
-          </mat-form-field><div *ngIf="observacionDNoValido" class="error-message">
-          Debe ser mínimo  de 4 caracteres
-        </div>
-        </div>
-
-        <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Numero Real Marcado</mat-label>
-        <input matInput placeholder="Número Real" formControlName="numeroreal" (keypress)="validarNumeros($event)" >
-      </mat-form-field><div *ngIf="numerorealNoValido" class="error-message">
-        Debe ser mínimo  de 7 caracteres
-      </div>
-
-  
-        <section class="example-form">
-          <div class="example-button-row">
-          <button mat-raised-button color="primary"  [disabled]="formContacto.invalid" [disabled]="formGuardar.invalid"  >
-          <mat-icon>call</mat-icon>
-          <span>GUARDAR</span>
-          </button>
-        <button mat-raised-button color="accent"  (click)="cancelarGestion()" style="cursor: pointer">
-          CANCELAR</button>
-         
-          </div>
-          </section>
-        <mat-divider></mat-divider> 
-    </form>
-  </mat-card-content>
-</mat-card>  
 
 <!--API DE PILA MENSAJES-->
 <mat-card class="example-card-cli">
@@ -250,9 +432,9 @@
     <div class="example-button-row">
       <button  mat-raised-button color="primary" mat-button (click)="accordion.openAll()">SMS TEXTO</button>
       <button  mat-raised-button color="accent" mat-button (click)="accordion.closeAll()">CONTRAER</button>
-      <mat-divider></mat-divider> 
+      <mat-divider></mat-divider>
     </div>
-    
+
     <mat-accordion class="example-headers-align" multi>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -264,59 +446,61 @@
             <mat-icon>account_circle</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
-    
-        <table><tr>
-        <td> <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Mensaje</mat-label>
-          <textarea matInput placeholder="Observación" [(ngModel)]="MessageText" maxlength="160"></textarea>
-        </mat-form-field>
+
+        <table><th></th><tr>
+          <td> <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Mensaje</mat-label>
+            <textarea matInput placeholder="Observación" [(ngModel)]="MessageText" maxlength="160"></textarea>
+          </mat-form-field>
         </td>
-        
+
         <td><button mat-raised-button color="warn" (click)="mensajeTexto()" [disabled]="MessageText === ''">
-            <mat-icon>call</mat-icon>
-            <span>ENVIAR</span>
-            </button>
-        </td>
-        </tr></table>
-       
-        
-    
-      </mat-expansion-panel>
-    
-<!--API DE PILA PLANILLA-->
+          <mat-icon>call</mat-icon>
+          <span>ENVIAR</span>
+        </button>
+      </td>
+    </tr></table>
 
-      <!-- -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Planillas
-          </mat-panel-title>
-          <mat-panel-description>
-            Información por periodos
-            <mat-icon>date_range</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <table><tr>
-          <td> <mat-form-field class="example-full-width" appearance="outline" >
-            <mat-label>Año</mat-label>
-            <input matInput [(ngModel)]="planillaanio" >
-          </mat-form-field>
-          </td>
-          <td><mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Mes</mat-label>
-            <input matInput [(ngModel)]="planillames">
-          </mat-form-field>
-        </td>
-          <td><button mat-raised-button color="warn" (click)="buscarPlanilla()" >
-            <mat-icon>call</mat-icon>
-            <span>ENVIAR</span>
-            </button>
-            <!--<button mat-raised-button color="primary" (click)="pruebasGenerar()">Primary</button>-->
-        </td>
-          
-          </tr></table>
 
-<table mat-table [dataSource]="dataSourcePla" class="mat-elevation-z8">
+
+  </mat-expansion-panel>
+
+  
+
+  <!--API DE PILA PLANILLA-->
+
+  <!-- -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Planillas
+      </mat-panel-title>
+      <mat-panel-description>
+        Información por periodos
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <table><tr>
+      <td> <mat-form-field class="example-full-width" appearance="outline" >
+        <mat-label>Año</mat-label>
+        <input matInput [(ngModel)]="planillaanio" >
+      </mat-form-field>
+    </td>
+    <td><mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Mes</mat-label>
+      <input matInput [(ngModel)]="planillames">
+    </mat-form-field>
+  </td>
+  <td><button mat-raised-button color="warn" (click)="buscarPlanilla()" >
+    <mat-icon>call</mat-icon>
+    <span>ENVIAR</span>
+  </button>
+  <!--<button mat-raised-button color="primary" (click)="pruebasGenerar()">Primary</button>-->
+</td>
+
+</tr></table>
+
+<table mat-table [dataSource]="dataSourcePla" class="colorApi" >
   <ng-container matColumnDef="tipoPlanilla">
     <th mat-header-cell *matHeaderCellDef> tipoPlanilla </th>
     <td mat-cell *matCellDef="let element">{{element.tipoPlanilla}}</td>
@@ -349,30 +533,32 @@
   <tr mat-row *matRowDef="let row; columns: planillaColumns;"></tr>
 </table>
 
-      </mat-expansion-panel>
-    </mat-accordion>
+</mat-expansion-panel>
+</mat-accordion>
 
 
-    
-  </mat-card-content>
+
+</mat-card-content>
 </mat-card>
 
-   <!--  
+
+
+<!--
 <hr>
-    <pre>
-        estado: {{formGuardar.valid}}
-        <br>
-        Status: {{formGuardar.status}}
+  <pre>
+    estado: {{formGuardar.valid}}
+    <br>
+      Status: {{formGuardar.status}}
     </pre>
     <pre>
-        {{formGuardar.value | json }}
-    </pre> 
+      {{formGuardar.value | json }}
+    </pre>
 
     -->
 
 
 
-        
-      
 
-  
+
+
+

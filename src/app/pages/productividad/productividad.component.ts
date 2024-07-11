@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { Router, RouterOutlet } from '@angular/router';
 import * as moment from 'moment';
 import { CantidadGestionDTO } from 'src/app/_dto/CantidadGestionDTO ';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
@@ -16,11 +16,18 @@ import { LlamadaEntranteService } from 'src/app/_services/llamada-entrante.servi
 import { LoginService } from 'src/app/_services/login.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import { UsuarioService } from 'src/app/_services/usuario.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { NgClass } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-productividad',
-  templateUrl: './productividad.component.html',
-  styleUrls: ['./productividad.component.css']
+    selector: 'app-productividad',
+    templateUrl: './productividad.component.html',
+    styleUrls: ['./productividad.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, NgClass, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule]
 })
 export class ProductividadComponent implements OnInit, OnDestroy {
 

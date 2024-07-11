@@ -18,10 +18,10 @@ export class EstadoGestionService {
     private http: HttpClient,
     private router: Router) { }
 
-    estadoGestionPadre(parametros: Parametros):Observable<any>{
+    estadoGestionPadre(parametros: Parametros) {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametros);
-      return this.http.post<Parametros>(`${this.url}/buscar`,body,{'headers':headers});
+      return this.http.post<EstadoGestion[]>(`${this.url}/buscar`,body,{'headers':headers});
     }
 
     estadoGestionHijo(parametros: Parametros):Observable<any>{
@@ -30,9 +30,14 @@ export class EstadoGestionService {
       return this.http.post<Parametros>(`${this.url}/buscarEstado`,body,{'headers':headers});
     }
 
-    estadoComercial(parametros: ParametrosDTO){
+    estadoComercial(parametros: ParametrosDTO):Observable<EstadoGestion[]>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametros);
       return this.http.post<EstadoGestion[]>(`${this.url}/gestionComercial`,body,{'headers':headers});
+    }
+
+    estadoSecretaria(parametros: ParametrosDTO):Observable<EstadoGestion[]>{
+      const headers = { 'content-type': 'application/json'} 
+      return this.http.post<EstadoGestion[]>(`${this.url}/estadoSecretaria`,parametros,{'headers':headers});
     }
 }

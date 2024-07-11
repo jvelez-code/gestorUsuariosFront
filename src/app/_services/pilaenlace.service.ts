@@ -1,94 +1,148 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Planillas } from '../_model/planillas';
 import { Observable } from 'rxjs';
-import { Parametros } from '../_model/parametros';
+import { ApiPilaDto } from '../_dto/apiPilaDTO';
+import { RespuestaPila } from '../_dto/RespuestaPila';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PilaenlaceService {
 
-  private token !: String;
-  private tokenPla !: String;
+
+  private url: string = `https://servicios-pila.enlace-apb.com`;
+  private urlPrueba: string = `https://prbusr.enlace-apb.com`;
+  private token !: string;
+  private tokenPila !: string;
 
   constructor(
     protected http: HttpClient,
-    //@Inject(String) protected urlGenerarPlanilla: string
-    ) { 
+    //@Inject(string) protected urlGenerarPlanilla: string
+  ) {
     this.buscarToken();
+    this.buscarTokenPila();
     this.tokenPlanillas();
   }
 
-  buscarToken(){
-    const header = { 'content-type': 'application/json'}  
+  buscarToken() {
+    const header = { 'content-type': 'application/json' }
 
-    const parametros = { 
-    'usuario': 'VFB6d2dGdjgyZVE0dlZ4eHVxY2hidz09',
-    'clave': 'Y1hyRnZXaTBzV2dtOHBmaFpMNnhPUT09',
-    'token': '',
-    'error': 0 }
+    const parametros = {
+      'usuario': 'VFB6d2dGdjgyZVE0dlZ4eHVxY2hidz09',
+      'clave': 'Y1hyRnZXaTBzV2dtOHBmaFpMNnhPUT09',
+      'token': '',
+      'error': 0
+    }
 
-    const body=JSON.stringify(parametros);
+    const body = JSON.stringify(parametros);
 
-    this.http.post('https://prbtsoa.enlace-apb.com/sinapsis-api/services/authorize',body,{'headers':header}).subscribe( (data:any) =>{
-         
-    this.token=data.token;      
+    this.http.post('https://prbtsoa.enlace-apb.com/sinapsis-api/services/authorize', body, { 'headers': header }).subscribe((data: any) => {
+
+      this.token = data.token;
     });
   }
 
-  buscarPlanilla(tipo: string, docu: string, anio: string, mes: string):Observable<Planillas[]> {
+
+
+
+
+  tokenPlanillas() {
+    const header = { 'content-type': 'application/json' }
+
+    const parametros = {
+      'usuario': 'VFB6d2dGdjgyZVE0dlZ4eHVxY2hidz09',
+      'clave': 'Y1hyRnZXaTBzV2dtOHBmaFpMNnhPUT09',
+      'token': '',
+      'error': 0
+    }
+
+    const body = JSON.stringify(parametros);
+
+    this.http.post(`${this.url}/sinapsis-api/services/authorize/`, body, { 'headers': header }).subscribe((data: any) => {
+
+    });
+  }
+
+
+  //APIS PARA GENERAR PLANILLA
+
+  buscarTokenPila() {
+    const header = { 'content-type': 'application/json' }
+    const parametros = {
+      'usuario': 'TllTaTNGdEtFbERTWWpzUmFIZklnZz09',
+      'clave': 'Y1hyRnZXaTBzV2dtOHBmaFpMNnhPUT09'
+    }
+
+    const body = JSON.stringify(parametros);
+
+    this.http.post(`${this.url}/sinapsis-api/services/authorize`, body, { 'headers': header }).subscribe((data: any) => {
+
+      this.tokenPila = data.token;
+    });
+  }
+
+  generarPlanillaS(apiPilaDto: ApiPilaDto): Observable<any> {
+    //6
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.tokenPila,
+      'Content-Type': 'application/json'
+    })
+    if (!this.tokenPila) {
+      console.log('No hay token generarPlanilla()')
+    }
+    const body = JSON.stringify(apiPilaDto);
+    return this.http.post<RespuestaPila[]>(`${this.url}/sinapsis-api/services/generarPlanillasOtros`, body, { 'headers': headers });
+
+  }
+
+
+  envioSoporte(apiPilaDto: ApiPilaDto) {
+    //5
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.tokenPila,
+      'Content-Type': 'application/json'
+    })
+    if (!this.tokenPila) {
+      console.log('No hay token envioSoporteS()')
+    }
+    return this.http.get<RespuestaPila>(`${this.url}/sinapsis-api/services/generarReportePlanilla/${apiPilaDto.planilla}/${apiPilaDto.reporte}`, { 'headers': headers });
+
+  }
+
+
+  validarPlanillaS(apiPilaDto: ApiPilaDto) {
+    //4
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.tokenPila,
+      'Content-Type': 'application/json'
+    })
+    if (!this.tokenPila) {
+      console.log('No hay token envioSoporteS()')
+    }
+    const body = JSON.stringify(apiPilaDto);
+    return this.http.get<RespuestaPila>(`${this.url}/sinapsis-api/services/consultarPlanillas/Pagas/CC/1070985185/2024-01`, { 'headers': headers });
+
+  }
+
+  buscarPlanilla(tipo: string, docu: string, anio: string, mes: string): Observable<Planillas[]> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     })
-    if (!this.token){
+    if (!this.token) {
     }
-    return this.http.get<Planillas[]>(`https://prbusr.enlace-apb.com/sinapsis-api/services/getPlanillasIndependientes/${tipo}/${docu}/${anio}-${mes}`,{ headers });  
+    return this.http.get<Planillas[]>(`${this.url}/sinapsis-api/services/getPlanillasIndependientes/${tipo}/${docu}/${anio}-${mes}`, { headers });
   }
 
 
-
-  tokenPlanillas(){
-    const header = { 'content-type': 'application/json'}  
-
-    const parametros = { 
-    'usuario': 'VFB6d2dGdjgyZVE0dlZ4eHVxY2hidz09',
-    'clave': 'Y1hyRnZXaTBzV2dtOHBmaFpMNnhPUT09',
-    'token': '',
-    'error': 0 }
-
-    const body=JSON.stringify(parametros);
-
-    this.http.post('https://prbusr.enlace-apb.com/sinapsis-api/services/authorize/',body,{'headers':header}).subscribe( (data:any) =>{
-         
-    this.tokenPla=data.token;      
-    
-    });
+  buscarPlanillas(): Observable<RespuestaPila> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    })
+ 
+    return this.http.get<RespuestaPila>(`${this.urlPrueba}/sinapsis-api/services/consultarPlanillas/Activas/CC/1070985185/2023-12`, { headers });
   }
-   
-
-
-  filtroClienteXXX() {
-
-    let datos = {
-      "tipoIde":"CC",
-      "numeroIde":"1070985185",
-      "sucursal":"0",
-      "periodoGeneracion":"2023-12",
-      "modalidad":1,
-      "usuario":"CVIRACACHA_TCH"
-      }
-   
-      const headers = new HttpHeaders({
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1ZjU1YTgzZi04NmRjLTQ4MTUtOGM2Ni0zNWYxZmE1NDY3NTMiLCJzdWIiOiJNaWdyYWNpb24xOSIsImlhdCI6MTcwNzc2NzIzMCwiZXhwIjoxNzA3Nzc0NDMwfQ.d0IPuQgPSZb34pUS-Ds0YbXeGgcLzI1UyBa9lnriBbR8IB3-ztTKEu8MBXRB2FZSS2n3skzZrSLuk_VXqGphuQ',
-        'Content-Type': 'application/json'
-      });
-
-    const body=JSON.stringify(datos);
-    return this.http.post<Planillas[]>('https://prbusr.enlace-apb.com/sinapsis-api/services/generarPlanillasOtros',body,{'headers':headers});
-  }
-
-
-
 
 }

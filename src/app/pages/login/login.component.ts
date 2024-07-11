@@ -1,23 +1,32 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, AfterViewInit, ElementRef, OnInit } from "@angular/core";
+import { Router, RouterLink } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { AskEstadoExtension } from "src/app/_model/askEstadoExtension";
-import { AgenteCampanaService } from "src/app/_services/agente-campana.service";
 import { AskEstadoExtensionService } from "src/app/_services/ask-estado-extension.service";
 import { LoginService } from "src/app/_services/login.service";
 import { MenuService } from "src/app/_services/menu.service";
 import { UsuarioService } from "src/app/_services/usuario.service";
 import { environment } from "src/environments/environment";
-import "../../../assets/login-animation.js";
-import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 import * as moment from "moment";
+import { MatCard } from "@angular/material/card";
+import { NgHcaptchaModule } from "ng-hcaptcha";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+    selector: "app-login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        NgHcaptchaModule,
+        RouterLink,
+        MatCard,
+        CommonModule
+    ],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit  {
 
 
   usuario!: string;
@@ -31,8 +40,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   mensajecaptcha!: string;
   captchaVerified: boolean = false;
   captchaactivo: boolean = true;
+  vercontrasena: boolean = false;
 
-  loading: boolean = false;
 
 
   constructor(
@@ -40,10 +49,24 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private menuService: MenuService,
     private askEstadoExtensionService: AskEstadoExtensionService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef 
   ) {}
 
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    sessionStorage.clear();
+  }
+
+  contrasenaVisible(): void {
+    this.vercontrasena = !this.vercontrasena;
+    const passwordField = this.elementRef.nativeElement.querySelector('#password') as HTMLInputElement;
+    if (passwordField) {
+      passwordField.type = this.vercontrasena ? 'text' : 'password';
+    }
+  }
+
+ 
 
   onVerify(token: string) {
     console.log("El captcha es valido");
@@ -64,11 +87,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   iniciarSesion() {
     sessionStorage.clear();
-    this.loading = true;
+
+
+    this.loginService.setUsuariosCambio(this.usuario);
     
     const filtroEntranteDTO = { loginAgente: this.usuario };
 
     this.usuarioService.loginValidacion(filtroEntranteDTO).subscribe((data) => {
+      
       if (data === null) {
         this.mensaje = "Por favor, contacta al administrador del sistema.";
         return;
@@ -77,19 +103,39 @@ export class LoginComponent implements OnInit, AfterViewInit {
         moment(data.fechaCambio).format("YYYY-MM-DD HH:mm:ss")
       );
 
+      // INTENTOS FALLIDOS
+      if (data.failed && data.failed > 2 ) {
+        this.mensaje = "Intentos Fallidos, Contactar al adminisrador";
+        return;        
+      } 
+      // USUARIO ACTIVO
       if (data.enabled === false) {
-        this.mensaje = "Por favor, contacta al administrador del sistema.";
+        this.mensaje = " Usuario Inactivo, Contactar al adminisrador";
         return;
-      } else if (this.fechaVencimiento < this.fechaActual) {
-        this.mensaje =
-          "Contraseña expirada. Por favor, actualízala para continuar.";
-        return;
-      } else if (this.captchaVerified || !this.captchaactivo) {
-        sessionStorage.clear();
         
-        this.loginService.login(this.usuario, this.clave).subscribe((data) => {
-          sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
+      }  // USUARIO FECHA VENCIMIENTO
+      if (this.fechaVencimiento < this.fechaActual) {
+        this.mensaje ="Contraseña expirada. Por favor, actualízala para continuar.";
+        return;
+      }
+      if (this.captchaVerified && this.captchaactivo) {
+        this.usuarioService.setUsuariosCambio(data);
+        this.iniciarSesionUsuario();       
+        
+      } else {
+        this.setMensajeInformativo("Por favor, complete el captcha.");
+      }
+    });
+  }
 
+
+    // Función para iniciar sesión del usuario
+    iniciarSesionUsuario() {
+      sessionStorage.clear();
+  
+      this.loginService.login(this.usuario, this.clave).subscribe({
+        next: (data) => {
+          sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
           const helper = new JwtHelperService();
 
           let decodedToken = helper.decodeToken(data.access_token);
@@ -105,8 +151,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             });
 
           this.usuarioService
-            .buscarAgenteCampana(filtroEntranteDTO)
-            .subscribe((data) => {
+            .buscarAgenteCampana(filtroEntranteDTO).subscribe((data) => {
               this.loginService.agenteDTO = data;
               
             });
@@ -117,40 +162,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.loginService.setMenuCambio(data);
               this.router.navigate(["estadoExtension"]);
             });
-        });
-        this.loading = false;
-      } else {
-        this.setMensajeInformativo("Por favor, complete el captcha.");
-        this.loading = false;
-      }
-    });
-  }
 
-  ngAfterViewInit() {
-    
-    
-    const randomNumber = Math.floor(Math.random() * 13) + 1;
-    const bodyElement = document.getElementById("bodylogin");
-    const backgroundImage = `url('assets/fondos/fondo${randomNumber}.jpg')`;
-    //const backgroundImage = `url('assets/fondos/fondo12.jpg')`;
-    if (bodyElement) {
-      bodyElement.style.backgroundImage = backgroundImage;
-      bodyElement.style.backgroundRepeat = "no-repeat";
-      bodyElement.style.backgroundSize = "cover";
-     
-    }
-    
-    // Usar una media query para ajustar la imagen en pantallas pequeñas
-    if (window.matchMedia("(max-width: 768px)").matches) {
-      if (bodyElement) {
-        bodyElement.style.backgroundSize = "contain"; // Otra opción para imágenes más pequeñas
-      }
+         this.loginService.setUltimoCambio(this.fechaActual);
+        },
+        error: (error) => {
+          // Manejar el error aquí
+          console.error("Error al iniciar sesión:", error);
+          if (error.status === 400 && error.error.error === "invalid_grant") {
+            this.mensaje = "Credenciales inválidas. Por favor, verifica tu nombre de usuario y contraseña.";
+          } else {
+            this.mensaje = "Error al iniciar sesión. Por favor, intenta nuevamente más tarde.";
+          }
+        }
+      });
     }
 
-    (window as any).initialize();
-
-  }
-
+  
 }
 
 

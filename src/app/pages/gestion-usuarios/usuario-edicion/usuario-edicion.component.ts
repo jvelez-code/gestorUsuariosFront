@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import * as moment from 'moment';
 import { switchMap } from 'rxjs';
 import { Rol } from 'src/app/_model/rol';
 import { Usuarios } from 'src/app/_model/usuarios';
 import { UsuariosMigraService } from 'src/app/_services/usuarios-migra.service';
+import { JsonPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
+import { MatCard } from '@angular/material/card';
 
 @Component({
-  selector: 'app-usuario-edicion',
-  templateUrl: './usuario-edicion.component.html',
-  styleUrls: ['./usuario-edicion.component.css']
+    selector: 'app-usuario-edicion',
+    templateUrl: './usuario-edicion.component.html',
+    styleUrls: ['./usuario-edicion.component.scss'],
+    standalone: true,
+    imports: [MatCard, ReactiveFormsModule, MatFormField, MatInput, MatSelect, MatOption, MatButton, MatIcon, RouterLink, JsonPipe]
 })
 export class UsuarioEdicionComponent implements OnInit {
 
@@ -18,7 +28,7 @@ export class UsuarioEdicionComponent implements OnInit {
   id!: number;
   edicion!: boolean;
   fecha: Date = new Date();
-  activo :Boolean = true;
+  activo :boolean = true;
   fechaSeleccionada: Date = new Date();
 
   constructor(

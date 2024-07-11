@@ -1,79 +1,79 @@
 <router-outlet></router-outlet>
 <!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
 <div [hidden]="cardCliente">
-    <!-- Contenido del segundo campo vertical -->
-    <div class="center">
+  <!-- Contenido del segundo campo vertical -->
+  <div class="center">
 
-      <mat-card class="example-card" [style.background-color]="colorExt">
-        <mat-card-header>
-          <div class="center">
-            <mat-card-title>CLIENTE</mat-card-title>
-          </div>
-        </mat-card-header>
-        <mat-card-content>
-          <form class="example-form" [formGroup]="formAgente" #frmAgente="ngForm">
-            <mat-form-field class="example-full-width">
-              <mat-label>Agente</mat-label>
-              <input matInput formControlName="agente" readonly>
-            </mat-form-field>
+    <mat-card class="example-card" [style.background-color]="colorExt">
+      <mat-card-header>
+        <div class="center">
+          <mat-card-title>CLIENTE PILA</mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="example-form" [formGroup]="formAgente" #frmAgente="ngForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>Agente</mat-label>
+            <input matInput formControlName="agente" readonly>
+          </mat-form-field>
 
-            <table class="example-full-width" cellspacing="0">
-              <tr>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Estado</mat-label>
-                    <input matInput formControlName="estado" readonly>
-                  </mat-form-field></td>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Número</mat-label>
-                    <input matInput formControlName="numeroReal" readonly>
-                  </mat-form-field></td>
-              </tr>
-            </table>
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Estado</mat-label>
+                <input matInput formControlName="estado" readonly>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="numeroReal" readonly>
+              </mat-form-field></td>
+            </tr>
+          </table>
 
-            <table class="example-full-width" cellspacing="0">
-              <tr>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Hora Inicio Estado</mat-label>
-                    <input matInput formControlName="horaInicio" readonly>
-                  </mat-form-field></td>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Hora Actual</mat-label>
-                    <input matInput formControlName="horaActual" readonly>
-                  </mat-form-field></td>
-              </tr>
-            </table>
-          </form>
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Hora Inicio Estado</mat-label>
+                <input matInput formControlName="horaInicio" readonly>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Hora Actual</mat-label>
+                <input matInput formControlName="horaActual" readonly>
+              </mat-form-field></td>
+            </tr>
+          </table>
+        </form>
 
-          <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm">
-            <mat-form-field class="example-full-width">
-              <mat-label>Cliente</mat-label>
-              <input matInput formControlName="cliente" readonly>
-            </mat-form-field>
+        <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>Cliente</mat-label>
+            <input matInput formControlName="cliente" readonly>
+          </mat-form-field>
 
-            <table class="example-full-width" cellspacing="0">
-              <tr>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Tipo</mat-label>
-                    <input matInput formControlName="tipoDoc" readonly>
-                  </mat-form-field></td>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Identificación</mat-label>
-                    <input matInput formControlName="identificacion" readonly>
-                  </mat-form-field></td>
-              </tr>
-            </table>
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Tipo</mat-label>
+                <input matInput formControlName="tipoDoc" readonly>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Identificación</mat-label>
+                <input matInput formControlName="identificacion" readonly>
+              </mat-form-field></td>
+            </tr>
+          </table>
 
-          </form>
+        </form>
 
-        </mat-card-content>
-        <mat-card-actions>
-          <div class="button-row">
-            <button mat-raised-button color="primary" (click)="buscarAuto()">Consultar</button>
-            <button mat-raised-button color="accent" (click)="buscarManual()">Manual</button>
-          </div>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="button-row">
+          <button mat-raised-button color="primary" (click)="buscarAuto()">Consultar</button>
+          <button mat-raised-button color="accent" (click)="buscarManual()">Manual</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 
 
 
@@ -92,9 +92,11 @@
         <mat-form-field appearance="fill">
           <mat-label>Tipo Documento</mat-label>
           <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
-            <mat-option *ngFor="let p of (  tipoDocumento$ | async )" [value]="p.tipoDoc">
-              {{p.tipoDoc}}
-            </mat-option>
+            @for (p of (  tipoDocumento$ | async ); track p) {
+              <mat-option [value]="p.tipoDoc">
+                {{p.tipoDoc}}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
 
@@ -109,7 +111,7 @@
         </button>
       </form>
     </mat-card-content>
-     </mat-card>
+  </mat-card>
   <mat-card>
- </mat-card>
+  </mat-card>
 </div>

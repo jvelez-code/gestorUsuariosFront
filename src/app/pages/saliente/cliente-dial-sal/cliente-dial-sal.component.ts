@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, switchMap } from 'rxjs';
 import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
@@ -7,11 +7,20 @@ import { Cliente } from 'src/app/_model/cliente';
 import { Divipola } from 'src/app/_model/divipola';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { DivipolaService } from 'src/app/_services/divipola.service';
+import { AsyncPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-cliente-dial-sal',
-  templateUrl: './cliente-dial-sal.component.html',
-  styleUrl: './cliente-dial-sal.component.css'
+    selector: 'app-cliente-dial-sal',
+    templateUrl: './cliente-dial-sal.component.html',
+    styleUrl: './cliente-dial-sal.component.scss',
+    standalone: true,
+    imports: [MatCard, MatCardContent, ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatSelect, MatOption, MatButton, AsyncPipe]
 })
 export class ClienteDialSalComponent implements OnInit {
   

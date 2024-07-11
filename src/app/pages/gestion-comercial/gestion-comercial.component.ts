@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { Router, RouterOutlet } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { GestionComercialDto } from 'src/app/_dto/GestionComercialDto';
 import { ComercialGestionService } from 'src/app/_services/comercial-gestion.service';
@@ -38,6 +38,17 @@ import { CicloVidaComponent } from './ciclo-vida/ciclo-vida.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FidelizacionUsuComponent } from './fidelizacion-usu/fidelizacion-usu.component';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
+import { AsyncPipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatInput } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatDateRangePicker, MatDatepickerInput, MatDatepicker } from '@angular/material/datepicker';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions } from '@angular/material/card';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 const today = new Date();
 const month = today.getMonth();
@@ -46,9 +57,11 @@ const year = today.getFullYear();
 
 
 @Component({
-  selector: 'app-gestion-comercial',
-  templateUrl: './gestion-comercial.component.html',
-  styleUrls: ['./gestion-comercial.component.css']
+    selector: 'app-gestion-comercial',
+    templateUrl: './gestion-comercial.component.html',
+    styleUrls: ['./gestion-comercial.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet, MatTabGroup, MatTab, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatError, MatButton, MatIcon, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatSelect, MatOption, MatInput, MatDatepickerInput, MatDatepicker, MatDivider, AsyncPipe]
 })
 export class GestionComercialComponent implements OnInit, OnDestroy {
 
@@ -312,7 +325,7 @@ export class GestionComercialComponent implements OnInit, OnDestroy {
     this.clienteService.filtroCliente(parametrosDTO).subscribe( data =>{
      
     if(data){  
-    this.idClienteP =data.idCliente;
+    this.idClienteP =data[0].idCliente;
       } 
       else {
     this.router.navigate(['clientes']);    
