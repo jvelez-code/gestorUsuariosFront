@@ -1,14 +1,14 @@
 export class Extension {
 
-    extension!: String;
-    duracionultimoestado!: String;
-    fechaestado!: String;
-    fechaultimoestado!: String;
-    extensionconectado!: String;
-    espera!: String;
-    monitoreo!: String;
-    disponible!: String;
-    detalleHorarioList !: String;
+    extension!: string;
+    duracionultimoestado!: string;
+    fechaestado!: string;
+    fechaultimoestado!: string;
+    extensionconectado!: string;
+    espera!: string;
+    monitoreo!: string;
+    disponible!: string;
+    detalleHorarioList !: string;
     
 
 }

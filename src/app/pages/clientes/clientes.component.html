@@ -106,8 +106,14 @@
       </table>
       <mat-card-actions>
         <div class="button-row">
-          <button mat-raised-button color="primary" [disabled]="formCliente.invalid" type="submit">Guardar</button>
-            <button mat-raised-button color="accent"  (click)="cancelarCliente()" type="button">Cancelar</button></div>
+          <button mat-raised-button color="primary" [disabled]="formCliente.invalid" type="submit">
+            <mat-icon>send</mat-icon>
+            <span>Guardar</span>
+          </button>
+            <button mat-raised-button color="accent"  (click)="cancelarCliente()" type="button">
+              <mat-icon>cancel</mat-icon>
+            <span>Cancelar</span>
+            </button></div>
         </mat-card-actions>
       </form>
     </mat-card>

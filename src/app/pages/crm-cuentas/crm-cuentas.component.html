@@ -92,14 +92,19 @@
                 <td mat-cell *matCellDef="let element" class="mat-row"> {{element.nroRealmarcado}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="fechaGestion">
-                <th mat-header-cell *matHeaderCellDef> fecha Gestion </th>
-                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fechaGestion | date: 'YYYY-MM-dd HH:mm'}} </td>
+              <ng-container matColumnDef="fechaCaso">
+                <th mat-header-cell *matHeaderCellDef> fecha Caso </th>
+                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fechaCaso | date: 'YYYY-MM-dd HH:mm'}} </td>
               </ng-container>
   
               <ng-container matColumnDef="fechaVencimiento">
                 <th mat-header-cell *matHeaderCellDef> Vencimiento </th>
-                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fechaVencimiento | date: 'YYYY-MM-dd HH:mm'}} </td>
+                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fechaVencimiento }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fechaCierre">
+                <th mat-header-cell *matHeaderCellDef> Fecha Cierre </th>
+                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fechaCierre | date: 'YYYY-MM-dd HH:mm'}} </td>
               </ng-container>
 
               <ng-container matColumnDef="nombreCategoria">
@@ -114,7 +119,7 @@
               </ng-container>  
   
               <ng-container matColumnDef="nombreTipologia">
-                <th mat-header-cell *matHeaderCellDef> Tipologia </th>
+                <th mat-header-cell *matHeaderCellDef> Tipología </th>
                 <td mat-cell *matCellDef="let element" class="mat-row"> {{element.nombreTipologia}} </td>
               </ng-container>
 
@@ -136,8 +141,8 @@
               </ng-container>
               
               <ng-container matColumnDef="acciones">
-                <th mat-header-cell *matHeaderCellDef class="header-cell" > Ver caso </th>
-                <td mat-cell *matCellDef="let element" class="cell" (click)="verDetalleCasos(element.idCaso, element.nombreEstado)">
+                <th mat-header-cell *matHeaderCellDef  >VER CASO</th>
+                <td mat-cell *matCellDef="let element" (click)="verDetalleCasos(element.idCaso, element.nombreEstado)">
                 <mat-icon>android</mat-icon></td>
               </ng-container>
               
@@ -152,18 +157,6 @@
           </mat-card-content>         
         </mat-card>
 
-
-
-
-
-
-
-
-
-
-
-
-
          <!-- vista detalle del caso -->
 
 
@@ -173,11 +166,11 @@
         <mat-card-header>
             <div class="center">
               <mat-card-title>DETALLE DEL CASO {{idCaso}}</mat-card-title>
-              <mat-card-subtitle>Historico de gestiones {{nombreEstado}}</mat-card-subtitle>
+              <mat-card-subtitle>Historico Observaciones</mat-card-subtitle>
             </div>
           </mat-card-header>
           <mat-card-content>
-            <table mat-table [dataSource]="dataSourceDeta" class="tabla2">
+            <table mat-table [dataSource]="dataSourceDeta" class="colorTablaDe">
    
               <ng-container matColumnDef="idDetalle">
                 <th mat-header-cell *matHeaderCellDef> Nro Detalle </th>
@@ -185,7 +178,7 @@
               </ng-container>
   
               <ng-container matColumnDef="fechaDetalle">
-                <th mat-header-cell *matHeaderCellDef> Fecha Detalle</th>
+                <th mat-header-cell *matHeaderCellDef> Fecha Observación</th>
                 <td mat-cell *matCellDef="let element"> {{element.fechaDetalle | date: 'YYYY-MM-dd HH:mm'}} </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="detalleCasosColumns"></tr>
@@ -196,9 +189,9 @@
                 <td mat-cell *matCellDef="let element" class="mat-row"> {{element.observacion}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="usuario.usuario">
+              <ng-container matColumnDef="usuario">
                 <th mat-header-cell *matHeaderCellDef> Agente </th>
-                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.usuario.usuario}} </td>
+                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.usuario}} </td>
               </ng-container>
               
             </table>
@@ -206,44 +199,62 @@
   
           </mat-card-content>  
 
-          <div class="example-card-obs">
+          <div class="example-card-obs" [hidden]="activoEstado">
           <mat-card >
-         
-          <form [formGroup]="formObs" (ngSubmit)="guardaObs()">   
-            <mat-form-field appearance="outline">
-              <mat-label>Estado del Caso</mat-label>
-              <mat-select [(value)]="idEstado" formControlName="estadoCaso">
-                <mat-option value="1">ABIERTO</mat-option>
-                <mat-option value="2">CERRADO</mat-option>
-                <mat-option value="3">ANÁLISIS</mat-option>
-              </mat-select>
-            </mat-form-field>
-          <mat-divider></mat-divider>
+            <form [formGroup]="formGuardar" (ngSubmit)="aceptar()">
+            <mat-form-field appearance="fill">
+                  <mat-label>Estado del Caso</mat-label>
+                  <mat-select formControlName="idEstado" >
+                    <mat-option value="1">ABIERTO</mat-option>
+                    <mat-option value="2">CERRADO</mat-option>
+                    <mat-option value="3">ANÁLISIS</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              <mat-divider></mat-divider>
 
-            <mat-form-field appearance="outline" class="wide-textarea">
-                <textarea matInput   type="text"     placeholder="Observación" [(ngModel)]="observacionCaso" formControlName="observacionCaso"
-                [class.is-invalid]="observacionNoValido">
-                <small @*ngIf="observacionNoValido">Ingrese mas de 4 letras</small>
-              </textarea></mat-form-field>@if (observacionNoValido) {
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Observacion</mat-label>
+                <textarea formControlName="observacion" matInput placeholder="Observación" 
+                [class.is-invalid]="observacionNoValido"></textarea>
+              </mat-form-field>
+              @if (observacionNoValido) {
                 <div class="error-message">
-                  Debe ser mínimo  de 4 caracteres
+                  Debe ser mínimo de 4 caracteres
                 </div>
-              }
+                }
 
             <section >
               <div class="example-button-row" >
-                <button mat-raised-button color="primary" [disabled]="formObs.invalid || activoEstado" ><mat-icon>call</mat-icon>
+                <button mat-raised-button color="primary" type="submit" [disabled]="formGuardar.invalid">
+                  <mat-icon>call</mat-icon>
                   <span>OBSERVACIÓN</span></button>
-                <button mat-raised-button color="accent" (click)="cancelarDet()">	<mat-icon>delete_forever</mat-icon>
-                  <span>CANCELAR</span></button>
               </div>
             </section>
-            <mat-divider></mat-divider>
-          </form>
+            <mat-divider></mat-divider>  
+          </form>  
           </mat-card>
         </div>
+          
+          <button mat-raised-button color="accent" (click)="cancelarDet()">
+            <mat-icon>delete_forever</mat-icon>
+            <span>CANCELAR</span></button>
+        
         </mat-card>
  </mat-card>
+
+ <!--     
+ 
+<hr>
+<pre>
+  estado: {{formGuardar.valid}}
+  <br>
+    Status: {{formGuardar.status}}
+  </pre>
+  <pre>
+    {{formGuardar.value | json }}
+  </pre>
+
+  -->
 
 
 

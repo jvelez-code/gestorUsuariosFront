@@ -1,63 +1,174 @@
-<mat-toolbar>Registro de Casos</mat-toolbar>
-<mat-toolbar>{{tipoDocumento}} {{nroDocumento}}</mat-toolbar>
-<div class="example-container">
-  <mat-form-field>
-    <mat-select placeholder="Selecciona Departamento" [(value)]="idDepartSeleccion">
-        @for (p of (  crmDepartamento$ | async ); track p) {
+<mat-toolbar>CASO NUEVO {{tipoDocumento}}-{{nroDocumento}} </mat-toolbar>
+<mat-card class="example-card-cli">
+ <div class="mat-card-content">
+  <form [formGroup]="formCasos" (ngSubmit)="guardar()" class="form-field-full">
+    <div class="form-grid">
+
+      <mat-form-field>
+        <mat-label>Departamento</mat-label>
+        <mat-select placeholder="Selecciona Departamento" [(value)]="idDepartSeleccion">
+          @for (p of ( crmDepartamento$ | async ); track p) {
           <mat-option [value]="p.idDepartamento">
             {{p.nombreDepartamento}}
           </mat-option>
-        }
-    </mat-select>
-</mat-form-field>
+          }
+        </mat-select>
+      </mat-form-field>
 
-<mat-form-field>
-  <mat-select placeholder="Selecciona Categoria" [(value)]="idCategoriaSeleccion" (selectionChange)="subCategoria($event.value)">
-      @for (p of (  crmCategoria$ | async ); track p) {
-        <mat-option [value]="p.idCategoria">
-          {{p.nombreCategoria}}
-        </mat-option>
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select placeholder="Selecciona Categoria" [(value)]="idCategoriaSeleccion"
+          (selectionChange)="subCategoria($event.value)">
+          @for (p of ( crmCategoria$ | async ); track p) {
+          <mat-option [value]="p.idCategoria">
+            {{p.nombreCategoria}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>SubCategoria</mat-label>
+        <mat-select placeholder="Selecciona SubCategoria" [(value)]="idSubCategoriaSeleccion"
+          (selectionChange)="tipologia($event.value)">
+          @for (p of ( CrmSubCategoria$ | async ); track p) {
+          <mat-option [value]="p.idSubcategoria">
+            {{p.nombreSubCategoria}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Tipologia</mat-label>
+        <mat-select placeholder="Selecciona Tipología" [(value)]="idTipologiaSeleccion">
+          @for (p of ( CrmTipologia$ | async ); track p) {
+          <mat-option [value]="p.idTipologia">
+            {{p.nombreTipologia}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <mat-select placeholder="Selecciona Estado" formControlName="idEstado" >
+          <mat-option value="1">ABIERTO</mat-option>
+          <mat-option value="2">CERRADO</mat-option>
+          <mat-option value="3">ANÁLISIS</mat-option>
+          <!-- @for (p of (  crmEstado$ | async ); track p) {
+     <mat-option [value]="p.idEstado">
+       {{p.nombreEstado}}
+     </mat-option>
+        } -->
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Fuente</mat-label>
+        <mat-select placeholder="Selecciona Fuente" [(value)]="idFuenteSeleccion">
+          @for (p of ( crmFuente$ | async ); track p) {
+          <mat-option [value]="p.idFuente">
+            {{p.nombreFuente}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Origen</mat-label>
+        <mat-select placeholder="Selecciona Origen" [(value)]="idOrigenSeleccion">
+          @for (p of ( crmOrigen$ | async ); track p) {
+          <mat-option [value]="p.idOrigen">
+            {{p.nombreOrigen}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Procesos</mat-label>
+        <mat-select placeholder="Selecciona Proceso" [(value)]="idProcesoSeleccion">
+          @for (p of ( crmProceso$ | async ); track p) {
+          <mat-option [value]="p.idProceso">
+            {{p.nombreProceso}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+
+    
+
+
+
+    </div>
+
+
+    <mat-form-field>
+      <mat-label>Numero Telefono</mat-label>
+      <input matInput placeholder="Nro Teléfono" formControlName="nroTelefono"
+      [class.is-invalid]="telefonoNoValido">
+    </mat-form-field>
+    @if (telefonoNoValido) {
+      <div class="error-message">
+        Debe ser mín 7 y max 10
+      </div>
       }
-  </mat-select>
-</mat-form-field>
 
-<mat-form-field>
-  <mat-select placeholder="Selecciona SubCategoria" [(value)]="idSubCategoriaSeleccion" (selectionChange)="tipologia($event.value)">
-      @for (p of (  CrmSubCategoria$ | async ); track p) {
-        <mat-option [value]="p.idSubcategoria">
-          {{p.nombreSubCategoria}}
-        </mat-option>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Observacion</mat-label>
+      <textarea formControlName="observacion"  matInput placeholder="Observación" 
+      [class.is-invalid]="observacionNoValido"></textarea>
+    </mat-form-field>
+    @if (observacionNoValido) {
+      <div class="error-message">
+        Debe ser mínimo de 4 caracteres
+      </div>
       }
-  </mat-select>
-</mat-form-field>
 
-<mat-form-field>
-  <mat-select placeholder="Selecciona TIpología" [(value)]="idTipologiaSeleccion">
-      @for (p of (  CrmTipologia$ | async ); track p) {
-        <mat-option [value]="p.idTipologia">
-          {{p.nombreTipologia}}
-        </mat-option>
-      }
-  </mat-select>
-</mat-form-field>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="formCasos.invalid || estadoBotonRegistrar()">
+        <mat-icon>call</mat-icon>
+        <span>GUARDAR</span>
+      </button>
+      <button mat-raised-button color="accent" (click)="cerrar()" type="button">
+        <mat-icon>delete_forever</mat-icon>
+        <span>CANCELAR</span>
+      </button>
+    </div>
 
-<mat-form-field>
-  <mat-select placeholder="Selecciona Estado" [(value)]="idEstadoSeleccion">
-      @for (p of (  crmEstado$ | async ); track p) {
-        <mat-option [value]="p.idEstado">
-          {{p.nombreEstado}}
-        </mat-option>
-      }
-  </mat-select>
-</mat-form-field>
-
-<mat-form-field>
-  <input matInput placeholder="Nro Teléfono" [(ngModel)]="nroTelefono">
-</mat-form-field>
-
-<mat-form-field>
-  <textarea matInput placeholder="Observación" [(ngModel)]="observacion"></textarea>
-</mat-form-field>
-
-<button mat-raised-button color="primary" (click)="aceptar()" [disabled]="estadoBotonRegistrar()">Registrar</button>
+  </form>
 </div>
+
+
+
+</mat-card>
+
+
+
+
+<!-- Aquí iteras sobre this.data usando *ngFor -->
+
+
+<!--     
+ 
+<hr>
+<pre>
+  estado: {{formCasos.valid}}
+  <br>
+    Status: {{formCasos.status}}
+  </pre>
+  <pre>
+    {{formCasos.value | json }}
+  </pre>
+
+  -->
+
+
+  
+
+

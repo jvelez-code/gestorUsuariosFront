@@ -14,8 +14,6 @@ import { MatDividerModule } from '@angular/material/divider';
 
 
 import { ClienteService } from 'src/app/_services/cliente.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CrmCasosService } from 'src/app/_services/crm-casos.service';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
@@ -33,6 +31,7 @@ import { switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CasoClienteComponent } from './caso-cliente/caso-cliente.component';
 import { CasoNuevoComponent } from './caso-nuevo/caso-nuevo.component';
+import { FiltroCrmDetallesDTO } from 'src/app/_dto/FiltroCrmDetallesDTO';
 
 
 
@@ -60,16 +59,15 @@ import { CasoNuevoComponent } from './caso-nuevo/caso-nuevo.component';
 export class CrmCuentasComponent implements OnInit {
 
   clienteColumns = ['razonSocial', 'tipoDocumento.tipoDoc', 'nroDocumento', 'divipola.nombre',
-    'divipola.idZonapadre.nombre', 'correo', 'telefonoCelular', 'telefonoFijo', 'acciones'];
+                    'divipola.idZonapadre.nombre', 'correo', 'telefonoCelular', 'telefonoFijo', 'acciones'];
   dataSourceCli !: MatTableDataSource<Cliente>;
 
-  crmCasosColumns: string[] = ['idCaso','nroRealmarcado','fechaGestion', 
-                               'fechaVencimiento', 'nombreCategoria','nombreSubcategoria','nombreTipologia', 
+  crmCasosColumns: string[] = ['idCaso','nroRealmarcado','fechaCaso', 'fechaVencimiento', 'fechaCierre', 'nombreCategoria','nombreSubcategoria','nombreTipologia', 
                                'nombreEstado','nombreNivel','nombreDepartamento','acciones'];
   dataSourceCasos!: MatTableDataSource<CrmCasos>;
 
 
-  detalleCasosColumns: string[] = ['idDetalle', 'fechaDetalle', 'observacion', 'usuario.usuario'];
+  detalleCasosColumns: string[] = ['idDetalle', 'fechaDetalle', 'observacion', 'usuario'];
   dataSourceDeta!: MatTableDataSource<CrmDetalle>;
 
 
@@ -77,25 +75,21 @@ export class CrmCuentasComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatPaginator) paginatorDet!: MatPaginator;
 
-  formBuscar!: FormGroup;
-
+  formGuardar !: FormGroup;
   idCliente   !: number;
   fechaSumada !: string;
   fechafinal !: string;
   parametrosDTO !: ParametrosDTO;
+  filtroCrmDetallesDTO !: FiltroCrmDetallesDTO
   usuario: Usuario[] = [];
   crmEstado!: CrmEstado[];
   crmCasos: CrmCasos[] = [];
-
-  idClienteP   !: any;
   vistadetallescasos: boolean = false;
   idCaso !: number;
-  idEstado: number = 2;
   nombreEstado!: string;
   activoEstado!: boolean;
-  observacionCaso !: string;
+  observacion !: string;
   idUsuario: any;
-  formObs !: FormGroup;
 
 
   constructor(
@@ -104,18 +98,20 @@ export class CrmCuentasComponent implements OnInit {
     private crmDetallesService: CrmDetallesService,
     private loginService: LoginService,
     private crmEstadosService: CrmEstadosService,
-    private fb: FormBuilder,
     private dialog: MatDialog,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private fb: FormBuilder
   ) {
-    this.formObservacion();
-  }
+    this.crearFormulario();
 
+  }
 
 
   ngOnInit(): void {
 
+    this.crmCasosService.getCrmCasosCambio().subscribe(data =>{
+      this.dataSourceCasos = new MatTableDataSource(data);
+      this.dataSourceCasos.paginator = this.paginator;
+    });
 
     this.idUsuario = this.loginService.agenteDTO.idUsuario;
 
@@ -128,69 +124,42 @@ export class CrmCuentasComponent implements OnInit {
 
   }
 
+  crearFormulario(){
+
+    this.formGuardar = this.fb.group({
+      idEstado: ['2',[Validators.required]],
+      observacion:['',[Validators.required, Validators.minLength(4)]],
+    });
+  }
+
+  get observacionNoValido() {
+    return this.formGuardar.get('observacion')?.invalid && this.formGuardar.get('observacion')?.touched
+  }
+
 
   clienteSelec() {
 
     this.clienteService.getIdClienteCambio().subscribe(data => {
-      this.idClienteP = data
+      this.idCliente = data
 
-      const cliente = { idCliente: this.idClienteP }
+      const cliente = { idCliente: this.idCliente }
       this.clienteService.clientePorId(cliente).subscribe(data => {
-        this.clienteService.setClienteCambio(data)
         this.dataSourceCli = new MatTableDataSource(data);
 
       });
 
-    });
+    }); 
   }
+
+ 
 
 
   listarCasos() {
-
-
-    this.parametrosDTO = { idCliente: this.idClienteP }
-
-
-    this.crmCasosService.casosCliente(this.parametrosDTO).subscribe(data => {
-      data.forEach(caso => {
-        let fechaGestionS = moment(caso.fechaGestion).format('YYYY-MM-DD')
-        //    //correo
-        //  let diferenciaEnDias = fechaActual.diff(fechaGestionS, 'days');
-        //  console.log(diferenciaEnDias,'diff');
-        //  if (diferenciaEnDias >= -2 && diferenciaEnDias <= 2) {
-        //    console.log(`La fecha de gestión (${fechaGestionS}) está dentro de un rango de 2 días antes o después de la fecha actual (${fechaFormato})`);
-        //  } else {
-        //    console.log(`La fecha de gestión (${fechaGestionS}) no está dentro del rango de 2 días antes o después de la fecha actual (${fechaFormato})`);
-        //  }
-      },
-      );
+      this.parametrosDTO = { idCliente: this.idCliente }
+      this.crmCasosService.casosCliente(this.parametrosDTO).subscribe(data => {
       this.dataSourceCasos = new MatTableDataSource(data);
       this.dataSourceCasos.paginator = this.paginator;
-
     });
-
-
-
-    function sumarDiasExcluyendoFestivos(fechaActual: Date, diasASumar: number, festivos: string[]): string {
-      let diasSumados = 0;
-
-      while (diasSumados < diasASumar) {
-        fechaActual.setDate(fechaActual.getDate() + 1);
-        let fechaStr = fechaActual.toISOString().split('T')[0];
-        if (!festivos.includes(fechaStr)) {
-          diasSumados++;
-        }
-      }
-
-      return fechaActual.toISOString().split('T')[0];
-    }
-
-    let fechaActual = new Date();
-    let diasASumar = 2;
-    let festivos: string[] = ['2024-06-18', '2024-06-20', '2024-07-20', '2024-07-21'];
-
-    let nuevaFecha = sumarDiasExcluyendoFestivos(fechaActual, diasASumar, festivos);
-    console.log(nuevaFecha);
   }
 
 
@@ -200,7 +169,6 @@ export class CrmCuentasComponent implements OnInit {
 
     this.idCaso = idCaso;
     this.nombreEstado = estadoCasos;
-
     if (this.nombreEstado == 'CERRADO') {
       this.activoEstado = true;
     }
@@ -209,6 +177,7 @@ export class CrmCuentasComponent implements OnInit {
     this.crmDetallesService.detalleCasos(this.idCaso).subscribe(data => {
       this.dataSourceDeta = new MatTableDataSource(data);
       this.dataSourceDeta.paginator = this.paginatorDet;
+      this.crmDetallesService.setCrmDetalleCambio(data);
     });
 
 
@@ -216,65 +185,44 @@ export class CrmCuentasComponent implements OnInit {
 
 
 
-  get observacionNoValido() {
-    return this.formObs.get('observacionCaso')?.invalid && this.formObs.get('observacionCaso')?.touched
-  }
-
-  formObservacion() {
-
-    this.formObs = this.fb.group({
-      'observacionCaso': ['', [Validators.required, Validators.minLength(4)]],
-      'estadoCaso': [this.idEstado, [Validators.required]]
-    });
-  }
 
 
 
-  guardaObs() {
+
+  aceptar() {
 
     this.parametrosDTO = {
       idCrmCaso: this.idCaso,
-      idCrmEstado: this.idEstado,
-      idCliente: this.idClienteP
+      idCrmEstado: this.formGuardar.value['idEstado'],
+      idCliente: this.idCliente
     }
-    console.log(this.parametrosDTO, 'parametro')
+
+    this.filtroCrmDetallesDTO = { 
+      fechaDetalle: moment(new Date).format('YYYY-MM-DD HH:mm:ss'),
+      idCrmCaso: this.idCaso, 
+      idUsuario: this.idUsuario, 
+      observacion: this.formGuardar.value['observacion'],
+      idCrmEstado: this.formGuardar.value['idEstado'],
+      idCliente: this.idCliente
+    }
 
 
-    let estado = new CrmEstado();
-    estado.idEstado = this.idEstado;
-    this.crmEstado.push(estado);
-
-    let casos = new CrmCasos();
-    casos.idCaso = this.idCaso;
-    casos.crmEstado = estado;
-    this.crmCasos.push(casos);
-
-
-    let usu = new Usuario();
-    usu.idUsuario = this.idUsuario;
-    this.usuario.push(usu);
-
-
-    let detalle = new CrmDetalle();
-    detalle.crmCasos = casos;
-    detalle.fechaDetalle = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
-    detalle.observacion = this.observacionCaso;
-    detalle.usuario = usu;
-
-
-
-    this.crmDetallesService.registrar(detalle).pipe(switchMap(() => {
+    this.crmDetallesService.registrarDetalle(this.filtroCrmDetallesDTO).pipe(switchMap(() => {
       return this.crmDetallesService.detalleCasos(this.idCaso);
     })).subscribe(data => {
       this.dataSourceDeta = new MatTableDataSource(data);
       this.dataSourceDeta.paginator = this.paginatorDet;
-
     })
 
-    this.crmCasosService.actualizaCaso(this.parametrosDTO).subscribe(() => {
-    })
+    this.crmCasosService.actualizaCaso(this.filtroCrmDetallesDTO).pipe(switchMap(()=>{
+      return this.crmCasosService.casosCliente(this.parametrosDTO)
+    })).subscribe(data=>{
+      this.crmCasosService.setCrmCasosCambio(data);
+      this.dataSourceCasos = new MatTableDataSource(data);
+      this.dataSourceCasos.paginator = this.paginator;
+    });
 
-
+    this.activoEstado = true;
 
     setTimeout(() => {
       this.limpiarControles();
@@ -285,22 +233,17 @@ export class CrmCuentasComponent implements OnInit {
     this.crmEstado = [];
     this.crmCasos = [];
     this.usuario = [];
-    this.formObs.reset();
+    this.observacion = '';
+    this.formGuardar.reset();
   }
 
 
   cancelarDet() {
 
-    this.crmCasosService.casosCliente(this.parametrosDTO).subscribe(data => {
-      this.dataSourceCasos = new MatTableDataSource(data);
-      this.dataSourceCasos.paginator = this.paginator;
-
       this.activoEstado = false;
-
-      this.vistadetallescasos = !this.vistadetallescasos;      
+      this.vistadetallescasos = !this.vistadetallescasos;              
       this.limpiarControles();
-      
-    })   
+      this.listarCasos();
   }
 
   abrirCliente(cliente?: Cliente) {
@@ -312,7 +255,7 @@ export class CrmCuentasComponent implements OnInit {
 
   abrirCasoNuevo(cliente?: Cliente) {
     this.dialog.open(CasoNuevoComponent, {
-      width: '900px',
+      width: '1350px',
       data: cliente
     });
   }

@@ -1,6 +1,5 @@
 import { Divipola } from "./divipola";
 import { TipoDocumento } from "./tipoDocumento";
-import { Usuario } from "./usuario";
 
 export class Cliente {
 
@@ -13,7 +12,7 @@ export class Cliente {
     cantidadEmpleados ?: string;
     fechaHoraSistema ?: Date;
     ip ?: string;
-    usuario?: Usuario;  
+    usuario?: string;  
     telefonoCelular ?: string;
     telefonoFijo ?: string;    
     ley1581  ?: boolean;

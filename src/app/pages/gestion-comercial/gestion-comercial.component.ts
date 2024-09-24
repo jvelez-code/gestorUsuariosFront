@@ -19,7 +19,7 @@ import { EstadoGestion } from 'src/app/_model/estadoGestion';
 import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { LoginService } from 'src/app/_services/login.service';
 import { UsuarioService } from 'src/app/_services/usuario.service';
-import { Campana } from 'src/app/_model/campanas';
+import { Campana } from 'src/app/_model/campana';
 import { Extension } from 'src/app/_model/extension';
 import { Usuario } from 'src/app/_model/usuario';
 import { Cliente } from 'src/app/_model/cliente';

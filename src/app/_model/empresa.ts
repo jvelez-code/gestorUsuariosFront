@@ -1,8 +1,8 @@
 export class Empresa {
 
     idEmpresa!: number;
-    descripcion!: String;
-    pseudonimo!: String; 
+    descripcion!: string;
+    pseudonimo!: string; 
 
 }
 

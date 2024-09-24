@@ -9,4 +9,7 @@ export interface Planillas {
     periodoAnio ?: string;
       
   }
+
+  
+let planillas : Planillas;
   //? cuando llame la interface se opcional

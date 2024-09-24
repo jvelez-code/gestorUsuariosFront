@@ -145,7 +145,7 @@
                     <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
                   </mat-form-field>@if (nombreNoValido) {
                   <div class="error-message">
-                    Debe ser mínimo  de 4 caracteres
+                    Debe ser mín de 4 max 128 caracteres
                   </div>
                 }</td>
                 <td><mat-form-field class="example-full-width">
@@ -249,7 +249,7 @@
       }    
         
       <div class="example-button-row">
-          <button mat-raised-button color="primary" type="submit" [disabled]=" formContacto.invalid || formGuardar.invalid ">
+          <button mat-raised-button color="primary" type="submit" [disabled]="formGuardar.invalid ">
             <mat-icon>call</mat-icon>
             <span>GUARDAR</span>
           </button>

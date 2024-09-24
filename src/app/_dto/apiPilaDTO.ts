@@ -3,8 +3,8 @@ export class ApiPilaDto {
 
     tipoIdentificacionAportante?: string
     nroIdentificacionAportante?: string
-    tipoIde?: String | undefined
-    numeroIde?: String | undefined
+    tipoIde?: string | undefined
+    numeroIde?: string | undefined
     anoGeneracion?: string
     mesGeneracion?: string
     modalidad?: number

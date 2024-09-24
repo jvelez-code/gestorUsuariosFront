@@ -1,11 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ParametrosDTO} from '../_dto/ParametrosDTO';
 import { Cliente } from '../_model/cliente';
-import { Parametros } from '../_model/parametros';
 import { GenericService } from './generic.service';
 
 @Injectable({
@@ -29,18 +27,7 @@ export class ClienteService extends GenericService<Cliente> {
       )
     }
 
-
-
-    // modificar(cliente: Cliente) {
-    //   return this.http.put(this.url, cliente);
-    // }
-
-    // listarPorId(id: number) {
-    //   return this.http.get<Cliente>(`${this.url}/${id}`);
-    // }
-    
-
-    guardarCliente(cliente: Cliente):Observable<any>{
+    guardarCliente(cliente: Cliente):Observable<Cliente>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(cliente);
       return this.http.post<Cliente>(`${this.url}`, body, headers);

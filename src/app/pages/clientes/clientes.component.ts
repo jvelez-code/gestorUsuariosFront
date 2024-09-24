@@ -8,26 +8,30 @@ import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
 import { Cliente } from 'src/app/_model/cliente';
 import { Divipola } from 'src/app/_model/divipola';
 import { TipoDocumento } from 'src/app/_model/tipoDocumento';
-import { Usuario } from 'src/app/_model/usuario';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { DivipolaService } from 'src/app/_services/divipola.service';
 import { LoginService } from 'src/app/_services/login.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
 import { AsyncPipe } from '@angular/common';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-clientes',
     templateUrl: './clientes.component.html',
     styleUrls: ['./clientes.component.scss'],
     standalone: true,
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatInput, MatCardActions, MatButton, AsyncPipe]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent,
+       ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption,
+       MatInput, MatCardActions, MatButton, AsyncPipe,
+       MatButtonModule,
+       MatIconModule]
 })
 export class ClientesComponent implements OnInit{
 
@@ -126,12 +130,7 @@ export class ClientesComponent implements OnInit{
   }
 
   guardarCliente(){
-  if ( this.formCliente.invalid ) {
-
-
-  } else {
-
-   
+  if ( this.formCliente.invalid ){   
     let tipo = new TipoDocumento
     tipo.tipoDoc = this.tipoDocumento;
 

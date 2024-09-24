@@ -1,12 +1,40 @@
-.example-container {
-  display: flex;
-  flex-direction: column;
+.example-card-cli {
+  max-width: 1300px;
+  background-color: #e4eaf377;
+  margin: 2rem ;
+  //background-color: rgba(7, 22, 110, 0.055);
+ 
+
+  .mat-card-content {
+    padding: 16px;
+
+    .form-field-full {
+      .form-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Distribuir dinámicamente en dos columnas */
+      }
+
+      mat-form-field {
+        width: 100%;
+        margin-bottom: 16px;
+      }
+    }
+
+    .form-actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        margin-left: 8px;
+      }
+    }
+  }
 }
 
-.example-container>* {
-  width: 100%;
-}
 
-.example-spacer {
-  flex: 1 1 auto;
+.error-message {
+  color: red;
+  font-size: small;
 }

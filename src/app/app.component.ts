@@ -10,13 +10,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsuarioService } from './_services/usuario.service';
 import { UsuariosMigraService } from './_services/usuarios-migra.service';
 import { switchMap } from 'rxjs';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
 import { MatDivider } from '@angular/material/divider';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatMenuTrigger, MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
 
 
@@ -26,11 +26,14 @@ import { MatToolbar } from '@angular/material/toolbar';
     styleUrls: ['./app.component.scss'],
     standalone: true,
     imports: [MatToolbar, MatIconButton, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatSidenavContainer, MatSidenav, MatDivider, MatSidenavContent, 
-              RouterOutlet,
-              NgxUiLoaderModule]
+              RouterOutlet,NgxUiLoaderRouterModule,
+              NgxUiLoaderModule,
+              MatMenuModule,
+              MatButtonModule]
 })
 
 export class AppComponent {
+
   title = 'gestorUsuarioFront';
 
   menus!: Menu[];
@@ -42,6 +45,9 @@ export class AppComponent {
   enllamada !: boolean;
   fechaActual : Date = new Date();
   parametrosDTO !: ParametrosDTO;
+
+  menuGroups: { group: string, items: any[] }[] = [];
+  specificGroup: { group: string, items: any[] } = { group: 'Grupo Especial', items: [] };
 
   constructor(
     public  loginService: LoginService,
@@ -98,8 +104,7 @@ export class AppComponent {
       const askEstadoExtension =
       {
         estadoAsk: 1, idExtension: this.idExt, loginAgente: this.usuarioExt,
-        nroDocumento: this.loginService.agenteDTO.nroDocumento, 
-        //tipoDoc: moment(this.fechaActual).format('YYYY-MM-DD HH:mm:ss')
+        nroDocumento: this.loginService.agenteDTO.nroDocumento
       }
       
       this.parametrosDTO = { nroDocumento: this.loginService.agenteDTO.nroDocumento , 
@@ -109,6 +114,9 @@ export class AppComponent {
 
 
      this.askEstadoExtensionService.buscarAgente(this.parametrosDTO).subscribe(data => {
+
+      if(data){
+
 
       if(data.askEstado?.idEstado===3){
         this.askEstadoService.setMensajecambio('EN LLAMADA')
@@ -127,27 +135,12 @@ export class AppComponent {
         });
 
       }
+         } else {
+          this.loginService.cerrarSesion();
+
+         }
 
      });
-
-      
-
-      // this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data => {
-      //   this.enllamada = data;
-
-      //   if (this.enllamada) {
-      //     this.askEstadoService.setMensajecambio('EN LLAMADA')
-
-
-      //   } else {
-      //     this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(() => { })
-
-      //     this.loginService.cerrarSesion();
-
-      //   }
-      // })
-
-  //  } 
 
   }
 }

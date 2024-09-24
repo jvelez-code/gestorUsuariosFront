@@ -46,3 +46,49 @@
 .mat-paginator {
   flex-shrink: 0;
 }
+
+.mat-cell {
+  /* Asegura que el texto dentro de las celdas no se desborde y se recorte con puntos suspensivos */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
+/********************
+
+/* Asegúrate de que la tabla tenga una posición relativa */
+.mat-table {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Estilo para las celdas fijas */
+.fixed-column {
+  position: sticky;
+  background: white; /* Ajusta el color de fondo según tu diseño */
+  z-index: 1; /* Asegúrate de que la columna fija esté por encima de las demás */
+}
+
+/* Posiciona la columna fija a la derecha o izquierda según lo necesites */
+.fixed-column.mat-header-cell {
+  left: 0;
+  /* Puedes ajustar el valor si necesitas más espaciado */
+}
+
+.fixed-column.mat-cell {
+  left: 0;
+  /* Ajusta el valor si es necesario para un espaciado correcto */
+}
+
+/* Ajuste adicional para la tabla */
+.mat-header-cell {
+  background: #f5f5f5; /* Color de fondo para el encabezado */
+  border-bottom: 1px solid #ddd; /* Borde inferior */
+}
+
+.mat-cell {
+  border-bottom: 1px solid #ddd; /* Borde inferior */
+}

@@ -1,0 +1,45 @@
+<router-outlet></router-outlet>
+
+<div [hidden]="route.children.length !== 0">
+  <mat-toolbar>
+    <mat-toolbar-row>
+        <span class="span">Graficos</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <mat-card class="example-card-cli">
+    <div class="mosaico-container">
+      
+      <mat-card class="targetgrafico">
+        <mat-card-content matRipple >
+              <mat-card-title-group>
+                <mat-card-title>LLamadas por Hora</mat-card-title>   
+                <img mat-card-lg-image src="assets/reporte.png" >
+              </mat-card-title-group>
+              <mat-card-content>
+                {{longText}} 
+                <br><br>
+              </mat-card-content>
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <button mat-raised-button color="primary"  [routerLink]="'/llamadaOnline'">
+                  Consultar
+                  <mat-icon>trending_up</mat-icon>
+                  </button>
+                </mat-card-actions>
+        </mat-card-content>
+      </mat-card>      
+
+    <!--INSERTE AQUI LOS OTROS GRFICOS-->
+    
+  </div>
+  </mat-card>
+
+</div>
+
+
+<div>
+  
+</div>
+  
+

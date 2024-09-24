@@ -1,4 +1,4 @@
-import { Campana } from "./campanas";
+import { Campana } from "./campana";
 import { Usuario } from "./usuario";
 import { Empresa } from "./empresa";
 

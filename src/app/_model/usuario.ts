@@ -3,16 +3,16 @@ import { Empresa } from "./empresa";
 export class Usuario {
 
     idUsuario!: number;
-    usuario !: String;
-    tipoDocumento !: String;
-    nroDocumento !: String;
-    primerNombre !: String;
-    segundoNombre !: String;
-    primerApellido !: String;
-    segundoApellido !: String;
-    perfil !: String;
+    usuario !: string;
+    tipoDocumento !: string;
+    nroDocumento !: string;
+    primerNombre !: string;
+    segundoNombre !: string;
+    primerApellido !: string;
+    segundoApellido !: string;
+    perfil !: string;
     empresa !: Empresa;
-    estado !: String;
+    estado !: string;
 
 }
 

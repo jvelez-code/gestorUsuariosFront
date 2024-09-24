@@ -1,0 +1,35 @@
+<!--  INGRESO MANUAL-->
+<router-outlet></router-outlet>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div class="center">
+          <mat-card-title>CLIENTE</mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo Documento</mat-label>
+            <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
+              @for (p of (  tipoDocumento$ | async ); track p) {
+                <mat-option [value]="p.tipoDoc">
+                  {{p.tipoDoc}}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Nro Documento</mat-label>
+            <input matInput placeholder="DOCUMENTO" type="number" required formControlName="nroDocumento">
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" type="submit" [disabled]="formBuscar.invalid">
+            <mat-icon>call</mat-icon>
+            <span>Consultar</span>
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+    </mat-card>

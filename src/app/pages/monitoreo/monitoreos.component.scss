@@ -1,161 +1,160 @@
+@charset "UTF-8";
 table {
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    text-align: center;
-  }
-    .span {
-      margin: auto;
-      font-size: 16px;
-    }
-    
-    .make-gold {
-      background-color: gold
-    }
-    
-    .Desconectado {
-      background-color:#B0B0B0
-    }
-    
-    .Disponible_Entrante {
-      background-color:#9ED5A0;
-    }
-    
-    .En_Llamada {
-      background-color:#F7F8A1
-    }
-    
-    .Salida_Baño {
-      background-color:#00FFFF
-    }
-    
-    .Salida_Almuerzo {
-      background-color:#95839E
-    }
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align: center;
+}
+
+.span {
+  margin: auto;
+  font-size: 16px;
+}
+
+.make-gold {
+  background-color: gold;
+}
+
+.Desconectado {
+  background-color: #B0B0B0;
+}
+
+.Disponible_Entrante {
+  background-color: #9ED5A0;
+}
+
+.En_Llamada {
+  background-color: #F7F8A1;
+}
+
+.Salida_Baño {
+  background-color: #00FFFF;
+}
+
+.Salida_Almuerzo {
+  background-color: #95839E;
+}
+
+.Pausas_Activas {
+  background-color: #FCBB00;
+}
+
+.Break_AM {
+  background-color: #95839E;
+}
+
+.Break_PM {
+  background-color: #95839E;
+}
+
+.Soporte {
+  background-color: #C85353;
+}
+
+.Capacitacion {
+  background-color: #CCEEFF;
+}
+
+.Disponible_Saliente {
+  background-color: #a3c1ff;
+}
+
+.Desconectado_Cierre_Asterisk {
+  background-color: #8080ff;
+}
+
+.Pruebas {
+  background-color: #ffb233;
+}
+
+.Coaching {
+  background-color: #006699;
+}
+
+.Correo {
+  background-color: #FF99FF;
+}
+
+.Chat {
+  background-color: #CCCC00;
+}
+
+.Backoffice {
+  background-color: #FFCCFF;
+}
+
+.Saliente_En_llamada {
+  background-color: #FF8000;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.mosaico-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+.mosaico-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  width: calc(12% - 1px); /* Tres columnas, ajusta según el diseño deseado */
+  background-color: #f9f9f9;
+}
+
+.item-header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.item-content {
+  padding: 10px;
+  overflow: hidden;
+}
+
+.item-content div {
+  margin-bottom: 5px;
+}
+
+.example-card-cli {
+  max-width: 1600px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+}
+
+
+
+.centre {
+  text-align: center;
+  margin: auto;
+  vertical-align: middle;
+  align-items: center;
   
-    .Pausas_Activas {
-      background-color:#FCBB00
-    }
-    
-    .Break_AM {
-      background-color:#95839E
-    }
-  
-    .Break_PM {
-      background-color:#95839E
-    }
-    
-    .Soporte {
-      background-color:#C85353
-    }
-  
-    .Capacitacion {
-      background-color:#CCEEFF
-    }
-  
-  
-    .Disponible_Saliente {
-      background-color:#a3c1ff
-    }
-    
-    .Desconectado_Cierre_Asterisk {
-      background-color:#8080ff
-    }
-  
-    .Pruebas {
-      background-color:#ffb233
-    }
-    
-    .Coaching {
-      background-color:#006699
-    }
-  
-    .Correo {
-      background-color:#FF99FF
-    }
-  
-    .Chat {
-      background-color:#CCCC00
-    }
-  
-    .Backoffice {
-      background-color:#FFCCFF
-    }
-  
-    .Saliente_En_llamada {
-      background-color:#FF8000
-    }
-  
-    strong{
-      font-weight: bold;
-    }
-  
-  
-  
-    .mosaico-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      
-    }
-    
-    .mosaico-item {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow: hidden;
-      width: calc(12.4% - 10px); /* Tres columnas, ajusta según el diseño deseado */
-      background-color: #f9f9f9;
-     
-    }
-    
-    .item-header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-    
-    .item-content {
-      padding: 10px;
-    }
-    
-    .item-content div {
-      margin-bottom: 5px;
-    }
-    
-  
-    .example-card-cli {
-      max-width: 1800px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 3rem;
-    }
-  
-    .center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
-      text-align: center;
-    }
-  
-    .custom-slide-toggle.mat-slide-toggle.mat-primary .mat-slide-toggle-bar {
-      background-color: #00ff00; /* Color verde en formato hexadecimal */
-    }
-    
-    .custom-slide-toggle.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
-      background-color: #00ff00; /* Color verde en formato hexadecimal */
-    }
-  
-  
-    .content-container {
-      display: flex;
-      justify-content: space-between;
-    }
-    
-    .toggle-container {
-      display: flex;
-      gap: 10px; /* Espacio entre los toggles */
-    }
-    
+}
+
+.custom-slide-toggle.mat-slide-toggle.mat-primary .mat-slide-toggle-bar {
+  background-color: #00ff00; /* Color verde en formato hexadecimal */
+}
+
+.custom-slide-toggle.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
+  background-color: #00ff00; /* Color verde en formato hexadecimal */
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.toggle-container {
+  display: flex;
+  gap: 10px; /* Espacio entre los toggles */
+}

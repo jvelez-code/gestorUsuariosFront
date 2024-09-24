@@ -21,4 +21,6 @@ export interface Parametros {
       Devices?: string;
       
   }
+
+  let parametros : Parametros;
   //? cuando llame la interface se opcional

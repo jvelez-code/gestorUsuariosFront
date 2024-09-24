@@ -154,7 +154,7 @@ th, td {
 
    /*CARD*/
   .example-card-cli {
-    max-width: 1200px;
+    max-width: 1500px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -170,52 +170,22 @@ th, td {
  }
 
 
- /* PANEL DE EXPANSIÓN*/
- .example-action-buttons {
-  padding-bottom: 20px;
-}
-
-
-
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
-}
-
-.example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
-  margin-left: 8px;
-}
-
-
-
-/* Estilo para celdas de datos pares dentro de #tabla1 a partir de la segunda fila */
+   /* Estilo para celdas de datos pares dentro de #tabla1 a partir de la segunda fila */
 .colorTabla tr:nth-child(even) td {
   background-color: #ffffff;
 }
 
 /* Estilo para celdas de datos impares dentro de #tabla1 a partir de la segunda fila */
 .colorTabla tr:nth-child(odd) td {
-  background-color: #d4eed8;
+  background-color: #bed0f7;
 }
 
-/* Estilo para celdas de datos pares dentro de #tabla2 */
-.tabla2 tr:nth-child(even) td {
+
+.colorTablaDe tr:nth-child(even) td {
   background-color: #ffffff;
 }
 
-/* Estilo para celdas de datos impares dentro de #tabla2 */
-.tabla2 tr:nth-child(odd) td {
-  background-color: #e6e6123a;
+/* Estilo para celdas de datos impares dentro de #tabla1 a partir de la segunda fila */
+.colorTablaDe tr:nth-child(odd) td {
+  background-color: #d6f742;
 }
-
-
-
-  .header-cell {
-    cursor: pointer; /* Cambia el cursor a pointer */
-  }
-  
-  /* Estilos para la celda del cuerpo */
-  .cell {
-    cursor: pointer; /* Cambia el cursor a pointer */
-  }
-

@@ -28,7 +28,7 @@ import { UsuarioService } from 'src/app/_services/usuario.service';
 import * as moment from 'moment';
 import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 import { Usuario } from 'src/app/_model/usuario';
-import { Campana } from 'src/app/_model/campanas';
+import { Campana } from 'src/app/_model/campana';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { Extension } from 'src/app/_model/extension';
 import { MatAccordion } from '@angular/material/expansion';
@@ -353,7 +353,7 @@ export class SalienteComponent implements OnInit, OnDestroy {
 
     this.contactoService.filtroContacto(parametros).subscribe(data =>{
       this.formContacto = this.fb.group({
-      'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
+      'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(128)]],
       'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
       'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
@@ -396,6 +396,13 @@ export class SalienteComponent implements OnInit, OnDestroy {
 
 
   guardarGestion(){  
+
+    if (this.formContacto.invalid) {
+      return Object.values(this.formContacto.controls).forEach(control => {
+        control.markAllAsTouched();
+      });
+    }
+
     let campana = new Campana
     campana.idCampana = this.idCampanaE
 
@@ -430,7 +437,7 @@ export class SalienteComponent implements OnInit, OnDestroy {
     gestion.usuarioAct = this.usuario;
     gestion.ipAct = this.hostIp
     gestion.flagGestionSucursal = false
-    gestion.callId = this.callid    
+    gestion.callid = this.callid    
     //gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
 

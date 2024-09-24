@@ -32,7 +32,8 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
             '/askEstadoExtensiones/buscaraAgente',
             '/reporContact/monitoreo',
             '/askEstadoExtensiones/buscaraAgente',
-            '/clientes/buscarAsterisk'
+            '/clientes/buscarAsterisk',
+            '/LlamadasEntrantes/llamadaEntrante'
           ];
 
         const isExcluded = excludedUrls.some(url => request.url.includes(url));

@@ -32,7 +32,7 @@ export class AskEstadoExtensionService {
 
     }
 
-    actualizarEstadoExt(askEstadoExtension :AskEstadoExtension) {
+    actualizarEstadoExt(askEstadoExtension :AskEstadoExtension) {     
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(askEstadoExtension);
       return this.http.post<AskEstadoExtension>(`${this.url}/actualizarEstado`,body,{'headers':headers});

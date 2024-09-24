@@ -9,14 +9,14 @@ export class FidelizacionComercial {
     idDetalleGestionComercial?: DetalleGestionComercial;
     idCliente?: Cliente ;
     idUsuario?: Usuario ;
-    codCaja?: String ;
+    codCaja?: string ;
     registrosNuevos ?: number ;
     registrosRecuperados ?: number 
-    fechaPago?: String ;
-    numeroPlanilla?: String ;
-    observacion?: String ;
-    migracion?: String ; 
-    sucursal ?: String ;
+    fechaPago?: string ;
+    numeroPlanilla?: string ;
+    observacion?: string ;
+    migracion?: string ; 
+    sucursal ?: string ;
     fechaGestion?: Date ;
 }
 

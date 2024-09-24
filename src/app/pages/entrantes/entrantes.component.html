@@ -145,7 +145,7 @@
                     <input matInput placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido" >
                   </mat-form-field>@if (nombreNoValido) {
                   <div class="error-message">
-                    Debe ser mín de 4 max 32 caracteres
+                    Debe ser mín de 4 max 128 caracteres
                   </div>
                 }</td>
                 <td><mat-form-field class="example-full-width">
@@ -231,8 +231,8 @@
         <mat-form-field   class="example-full"  appearance="outline">
           <mat-label>Observaciones</mat-label>
           <textarea matInput placeholder="Observación" formControlName="observacionD"
-            [class.is-invalid]="observacionDNoValido"></textarea>
-        </mat-form-field>@if (observacionDNoValido) {
+            [class.is-invalid]="observacionNoValido"></textarea>
+        </mat-form-field>@if (observacionNoValido) {
         <div class="error-message">
           Debe ser mínimo de 4 caracteres
         </div>
@@ -249,7 +249,7 @@
       }    
         
       <div class="example-button-row">
-          <button mat-raised-button color="primary" type="submit" [disabled]=" formContacto.invalid || formGuardar.invalid ">
+          <button mat-raised-button color="primary" type="submit" [disabled]="formGuardar.invalid ">
             <mat-icon>call</mat-icon>
             <span>GUARDAR</span>
           </button>
@@ -265,7 +265,9 @@
 </mat-card>
 
 
-<!--API DE PILA ASTERISK-->
+
+
+<!--API DE PILA ASTERISK
 
 <mat-card class="example-card-cli">
   <mat-card-content>
@@ -277,9 +279,13 @@
 
     <mat-accordion class="example-headers-align" multi>
 
+      
+    -->
+     
+
 
       
-  <!--API DE PILA PLANILLA-->
+  <!--API DE PILA PLANILLA
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -366,9 +372,9 @@
 </table>
 </mat-expansion-panel>
 
+-->
 
-
-<!--SOPORTE PLANILLA-->
+<!--SOPORTE PLANILLA
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -403,6 +409,7 @@
 </tr></table>
 
 
+
 <table mat-table [dataSource]="dataSourceSop" class="colorApi">
 
 <ng-container matColumnDef="message">
@@ -410,23 +417,26 @@
   <td mat-cell *matCellDef="let row"> {{ row.message }} </td>
 </ng-container>
 
+
+
 <tr mat-header-row *matHeaderRowDef="soporteColumns"></tr>
 <tr mat-row *matRowDef="let row; columns: soporteColumns;"></tr>
 </table>
 </mat-expansion-panel>
+-->
 
 
-
-
-
-
-
+<!--
 </mat-accordion>
 </mat-card-content>
 </mat-card>
 
+-->
 
-<!--API DE PILA MENSAJES-->
+
+
+
+<!--API DE PILA MENSAJES
 <mat-card class="example-card-cli">
   <mat-card-content>
     <div class="example-button-row">
@@ -464,12 +474,11 @@
 
 
   </mat-expansion-panel>
-
+-->
   
 
-  <!--API DE PILA PLANILLA-->
+  <!--API DE PILA PLANILLA
 
-  <!-- -->
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -495,7 +504,6 @@
     <mat-icon>call</mat-icon>
     <span>ENVIAR</span>
   </button>
-  <!--<button mat-raised-button color="primary" (click)="pruebasGenerar()">Primary</button>-->
 </td>
 
 </tr></table>
@@ -540,10 +548,12 @@
 
 </mat-card-content>
 </mat-card>
+-->
 
 
 
-<!--
+
+<!---->
 <hr>
   <pre>
     estado: {{formGuardar.valid}}
@@ -554,7 +564,7 @@
       {{formGuardar.value | json }}
     </pre>
 
-    -->
+ 
 
 
 

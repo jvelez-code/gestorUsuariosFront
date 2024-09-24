@@ -10,6 +10,10 @@ import { CrmEstado } from '../_model/crmEstado';
 import { CrmSubCategoria } from '../_model/crmSubCategoria';
 import { CrmTipologia } from '../_model/crmTipologia';
 import { CrmDepartamento } from '../_model/crmDepartamento';
+import { CrmFuente } from '../_model/crmFuente';
+import { CrmOrigen } from '../_model/crmOrigen';
+import { CrmProceso } from '../_model/crmProceso';
+import { FiltroCrmDetallesDTO } from '../_dto/FiltroCrmDetallesDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +34,11 @@ export class CrmCasosService extends GenericService<CrmCasos> {
     private urltipologia = `${environment.HOST}/crmTipologia`
     private urlEstados = `${environment.HOST}/crmEstados`
     private urlDepartamentos = `${environment.HOST}/crmDepartamentos`
+    private urlFuentes = `${environment.HOST}/crmFuentes`
+    private urlOrigenes = `${environment.HOST}/crmOrigenes`
+    private urlProcesos = `${environment.HOST}/crmProcesos`
 
-    public listarCategorias() :Observable<CrmCategoria[]> {
-      return this.http.get<CrmCategoria[]>(this.urlcategoria, {});
-    }
-  
+    
     public listarEstados() :Observable<CrmEstado[]> {
       return this.http.get<CrmEstado[]>(this.urlEstados, {});
     }
@@ -49,6 +53,19 @@ export class CrmCasosService extends GenericService<CrmCasos> {
   
     public listarTipologias(id :number) :Observable<CrmTipologia[]> {
       return this.http.get<CrmTipologia[]>(`${this.urltipologia}/listarPorSub/${id}`, {});
+    }
+
+
+    public listarFuentes() :Observable<CrmFuente[]> {
+      return this.http.get<CrmFuente[]>(`${this.urlFuentes}`, {});
+    }
+
+    public listarOrigenes() :Observable<CrmOrigen[]> {
+      return this.http.get<CrmOrigen[]>(`${this.urlOrigenes}`, {});
+    }
+
+    public listarProcesos() :Observable<CrmProceso[]> {
+      return this.http.get<CrmProceso[]>(`${this.urlProcesos}`, {});
     }
   
     crearCasoNuevo(crmCasos: CrmCasos):Observable<CrmCasos> {
@@ -69,9 +86,9 @@ export class CrmCasosService extends GenericService<CrmCasos> {
       return this.http.get<CrmCasos[]>(`${this.url}/casosEstado`, {});
     }
 
-    actualizaCaso(parametrosDTO: ParametrosDTO): Observable<void> {
+    actualizaCaso(filtro: FiltroCrmDetallesDTO): Observable<void> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.post<void>(`${this.url}/actualizaCaso`,parametrosDTO, { headers });
+      return this.http.post<void>(`${this.url}/actualizaCaso`,filtro, { headers });
     }
 
     

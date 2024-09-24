@@ -25,7 +25,7 @@ export class TokenComponent implements OnInit {
   error!: string;
   rpta!: number;
   tokenValido!: boolean;
-  validacionPass1 = `- Debe tener de 8 a 15 caracteres.`                                      
+  validacionPass1 = `- Debe tener de 10 a 15 caracteres.`                                      
   validacionPass2 = `- Debe tener una mayuscula.`
   validacionPass3 = `- Debe tener un número.`
   validacionPass4 = `- Debe tener un caracter especial (!@#$%^&*).`;
@@ -42,7 +42,7 @@ export class TokenComponent implements OnInit {
 
   ngOnInit() {
 
-    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,15}$/;
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{10,15}$/;
     const passwordPattern = Validators.pattern(regex);
     this.formRecuperar = this.fb.group({
       password: ['', [Validators.required,passwordPattern]],

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Observable, Subject } from 'rxjs';
+import { FiltroCrmDetallesDTO } from '../_dto/FiltroCrmDetallesDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class CrmDetallesService extends GenericService <CrmDetalle> {
 
     public detalleCasos(id: number) :Observable<CrmDetalle[]> {
       return this.http.get<CrmDetalle[]>(`${this.url}/detalleCasos/${id}`, {});
+    }
+
+    registrarDetalle(filtroCrmDetallesDTO: FiltroCrmDetallesDTO):Observable<FiltroCrmDetallesDTO[]>{
+      const headers = { 'content-type': 'application/json'}
+      return this.http.post<FiltroCrmDetallesDTO[]>(`${this.url}/registrarDetalle`,filtroCrmDetallesDTO,{'headers':headers});
     }
 
     ////////////////// get, set ////////////////

@@ -11,6 +11,8 @@ import { MatCard } from "@angular/material/card";
 import { NgHcaptchaModule } from "ng-hcaptcha";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import { FestivosService } from "src/app/_services/festivos.service";
+import { EmpresaService } from "src/app/_services/empresa.service";
 
 @Component({
     selector: "app-login",
@@ -41,13 +43,16 @@ export class LoginComponent implements OnInit  {
   captchaVerified: boolean = false;
   captchaactivo: boolean = true;
   vercontrasena: boolean = false;
+  gestorUrl: string =  `${environment.CORREO}/#/recuperar`
 
 
 
   constructor(
     private loginService: LoginService,
     private menuService: MenuService,
+    private festivosService: FestivosService,
     private askEstadoExtensionService: AskEstadoExtensionService,
+    private empresaService: EmpresaService,
     private usuarioService: UsuarioService,
     private router: Router,
     private elementRef: ElementRef 
@@ -132,6 +137,7 @@ export class LoginComponent implements OnInit  {
     // Función para iniciar sesión del usuario
     iniciarSesionUsuario() {
       sessionStorage.clear();
+      
   
       this.loginService.login(this.usuario, this.clave).subscribe({
         next: (data) => {
@@ -152,7 +158,12 @@ export class LoginComponent implements OnInit  {
 
           this.usuarioService
             .buscarAgenteCampana(filtroEntranteDTO).subscribe((data) => {
+              console.log(data,'login dto')
               this.loginService.agenteDTO = data;
+              if(data.pseudonimo){
+                this.empresaService.setEmpresaCambio(data.pseudonimo);
+              }
+              
               
             });
 
@@ -160,10 +171,17 @@ export class LoginComponent implements OnInit  {
             .listarPorUsuario(decodedToken.user_name)
             .subscribe((data) => {
               this.loginService.setMenuCambio(data);
-              this.router.navigate(["estadoExtension"]);
+              this.router.navigate(["intro"]);
             });
 
+        this.festivosService.listar().subscribe(data => {
+          this.festivosService.festivos = data;
+        });
+
          this.loginService.setUltimoCambio(this.fechaActual);
+         this.loginService.actualizarIntento(filtroEntranteDTO).subscribe(()=>{
+          
+         });
         },
         error: (error) => {
           // Manejar el error aquí

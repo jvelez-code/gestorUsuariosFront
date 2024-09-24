@@ -68,8 +68,8 @@ export class CrmAbiertosComponent implements OnInit{
 
   }
 
-  crmCasosColumns: string[] = ['idCaso','tipoDocumento','nroDocumento','nroRealmarcado','fechaGestion', 
-                                'fechaVencimiento', 'nombreCategoria','nombreSubcategoria','nombreTipologia', 
+  crmCasosColumns: string[] = ['idCaso','tipoDocumento','nroDocumento','nroRealmarcado','fechaCaso', 'fechaVencimiento', 
+                                'fechaCierre', 'nombreCategoria','nombreSubcategoria','nombreTipologia', 
                                 'nombreEstado','nombreNivel','nombreDepartamento','acciones'];
   dataSourceCasos!: MatTableDataSource<CrmCasos>; 
 

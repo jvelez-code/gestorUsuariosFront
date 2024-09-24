@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, withDisabledInitialNavigation, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { interval, Observable, Subscription } from 'rxjs';
 import { AskEstadoExtension } from 'src/app/_model/askEstadoExtension';
-import { ControlContainer, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DetalleGestion } from 'src/app/_model/detalleGestion';
 import { Gestion } from 'src/app/_model/gestion';
 import { Parametros } from 'src/app/_model/parametros';
@@ -32,6 +31,7 @@ import { MatButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 
 
 
@@ -41,7 +41,21 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } 
     templateUrl: './filtro-cliente.component.html',
     styleUrls: ['./filtro-cliente.component.scss'],
     standalone: true,
-    imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatCardActions, MatButton, MatSelect, MatOption, MatIcon, AsyncPipe]
+    imports: [RouterOutlet,
+              MatCard, 
+              MatCardHeader, 
+              MatCardTitle, 
+              MatCardContent, 
+              ReactiveFormsModule, 
+              MatFormField, 
+              MatLabel, 
+              MatInput, 
+              MatCardActions, 
+              MatButton, 
+              MatSelect, 
+              MatOption, 
+              MatIcon, 
+              AsyncPipe]
 })
 
 
@@ -67,11 +81,12 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
   cardManual !: boolean;
   fechafin !: Date;
 
-  valorPredeterminado: any = '0000000'
+  valorPredeterminado !: string 
   nroExt !: any;
   colorExt !: any;
   idExt !: any;
   documentoExt !: any;
+  agenteDTO!: AgenteDTO;
 
 
   parametros !: Parametros;
@@ -100,6 +115,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
     private askEstadoExtensionService: AskEstadoExtensionService,
     private usuarioService: UsuarioService,
     private llamadaEntranteService: LlamadaEntranteService,
+    private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar) { }
 
@@ -129,7 +145,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
       this.colorExt = data.askEstado?.color;
       this.idExt = data.askEstado?.idEstado;
       this.nroExt = data.idExtension;
-      this.valorPredeterminado = data.numeroOrigen;
+      this.valorPredeterminado = data.numeroOrigen ?? '';
       this.usuarioService.setExtensionCambio(this.nroExt);
       this.clienteService.setnumeroReal(this.valorPredeterminado);
 
@@ -146,20 +162,9 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
       });
     });
 
-
-
-
-
-
-
-
-
-
     this.buscarAgente();
     this.cardCliente = false;
     this.cardManual = true;
-
-
 
 
     this.formAgente = new FormGroup({
@@ -191,6 +196,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
   }
 
   buscarAgente() {
+    
     this.loginService.getUsuariosCambio().subscribe((data: any) => {
       this.usuarios = data;
     });
@@ -201,9 +207,13 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
       const askEstadoExtension = { loginAgente: this.usuarios }
 
       this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data => {
+        //busca el agente en ask_estado_extension
         this.colorExt = data.askEstado?.color;
         this.idExt = data.askEstado?.idEstado;
         this.documentoExt = data.nroDocumento;
+        this.valorPredeterminado = data.numeroOrigen ?? '';
+        this.clienteService.setnumeroReal(this.valorPredeterminado);
+
         this.formAgente = new FormGroup({
           'agente': new FormControl(data.loginAgente),
           'estado': new FormControl(data.askEstado?.descripcion),
@@ -216,16 +226,18 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
           const parametrosDTO = { nroDocumento: this.documentoExt }
           this.clienteService.asteriskCliente(parametrosDTO).subscribe(data => {
 
-            if (data === null) {
-              this.llamadaEntranteService.LlamadaEntrante(parametrosDTO).subscribe((data: any) => {
+            if (data === null) 
+           {
+                this.llamadaEntranteService.LlamadaEntrante(parametrosDTO).subscribe((data: any) => {
 
-                this.clienteService.setcallid(data[0].idAsterisk);
-                this.formCliente = new FormGroup({
-                  'cliente': new FormControl(''),
-                  'tipoDoc': new FormControl(data[0].tipo_doc),
-                  'identificacion': new FormControl(data[0].numero_documento)
+                  this.clienteService.setcallid(data.idAsterisk);
+
+                  this.formCliente = new FormGroup({
+                    'cliente': new FormControl(''),
+                    'tipoDoc': new FormControl(data.tipoDoc),
+                    'identificacion': new FormControl(data.numeroDocumento)
+                  });
                 });
-              });
 
             } else {
               this.formCliente = new FormGroup({

@@ -33,4 +33,10 @@ export class DivipolaService extends GenericService<Divipola> {
       return this.http.get<DivipolaDTO[]>(`${this.url}/buscar`);
     }
 
+    buscarCargue(divipolaDto: DivipolaDTO):Observable<Divipola[]> {
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(divipolaDto);
+      return this.http.post<Divipola[]>(`${this.url}/buscarCargue`,body,{'headers':headers});
+    }
+
 }

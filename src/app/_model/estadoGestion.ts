@@ -2,8 +2,7 @@ import { Empresa } from "./empresa";
 
 
 export class EstadoGestion {
-    
-    
+      
     
     idEstadoGestion ?: number;
     nombre ?: string;

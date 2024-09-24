@@ -8,7 +8,7 @@ import { Observable, switchMap } from 'rxjs';
 import { LlamadaEntranteDTO } from 'src/app/_dto/LlamadaEntranteDTO';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
 import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
-import { Campana } from 'src/app/_model/campanas';
+import { Campana } from 'src/app/_model/campana';
 import { Cliente } from 'src/app/_model/cliente';
 import { Contacto } from 'src/app/_model/contactos';
 import { DetalleGestion } from 'src/app/_model/detalleGestion';
@@ -30,7 +30,7 @@ import { ValidadoresService } from 'src/app/_services/validadores.service';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import { MatOption } from '@angular/material/core';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { NgFor, AsyncPipe, CommonModule } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -49,7 +49,7 @@ import { DivipolaService } from 'src/app/_services/divipola.service';
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatButton, MatCardContent, 
       MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, 
       MatRowDef, MatRow, MatPaginator, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, 
-      MatIcon, MatDivider, AsyncPipe, MatSnackBarModule]
+      MatIcon, MatDivider, AsyncPipe, MatSnackBarModule, CommonModule]
 })
 export class SecretariaVirtualComponent implements OnInit {
 
@@ -62,6 +62,7 @@ export class SecretariaVirtualComponent implements OnInit {
   formContacto!: FormGroup;
   formGuardar!: FormGroup;
 
+  idLlamadaEntrante !: number;
   nroDocumento!: string ;
   idCliente !: number | undefined ; 
   numeroReal !: string;
@@ -82,6 +83,7 @@ export class SecretariaVirtualComponent implements OnInit {
   tipoGestionP !: number;
   tipoGestionH !: any;
   idEmpresa   !: any;
+  empresa   !: any;
   idEstadoP   !: any;
   idEstadoH   !: any;
   idUsuario   !: any;
@@ -141,6 +143,7 @@ export class SecretariaVirtualComponent implements OnInit {
       this.idUsuario = data.idUsuario;
       this.idEmpresa = data.idEmpresa;
       this.hostIp = data.hostIp;
+      this.empresa = data.pseudonimo;
      
     });
 
@@ -177,18 +180,23 @@ export class SecretariaVirtualComponent implements OnInit {
 
   buscarSecreVirt() {
 
-    this.llamadaEntranteDTO = { empresa: 'CONTACT', idAgente: this.idUsuario}
+    this.llamadaEntranteDTO = { empresa: this.empresa, idAgente: this.idUsuario}
     this.secretariaVirtualService.llamadaSecretaria(this.llamadaEntranteDTO).subscribe(data => {
 
       if(!data){
         this.secretariaVirtualService.setMensajecambio('NO HAY DEVOLUCIONES');
         return;
       }
-      console.log('hola mundo')
+
+      if(data.opcionEntrante==555){
+        this.secretariaVirtualService.setMensajecambio('YA TIENE GESTION EN EL DIA');
+        return;
+      }
       this.fechaHora =  moment(data.fechaHora).format('YYYY-MM-DD HH:mm:ss');
       this.numeroDevolucion = data.numeroDevolucion;
       this.tipoDocumento = data.tipoDocumento.tipoDoc || '';
       this.nroDocumento = data.numeroDocumento || '';
+      this.idLlamadaEntrante = data.idLlamadaEntrante;
 
 
       this.parametrosDTO = { tipoDoc: this.tipoDocumento, nroDocumento: this.nroDocumento };
@@ -202,7 +210,7 @@ export class SecretariaVirtualComponent implements OnInit {
           this.gestionHistorico();
                  
         } else  {
-          this.cardCliente=!this.cardCliente;
+         this.cardCliente=!this.cardCliente;
         }
       
       })
@@ -238,19 +246,19 @@ export class SecretariaVirtualComponent implements OnInit {
 
 
   crearFormulario(){
+
+    this.clienteService.getnumeroReal().subscribe(data=>{
+      this.numeroReal=data;
+    })
     this.formCliente = this.fb.group({
-      'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(64)]],
+      'rsocial': ['', [Validators.required,Validators.minLength(3),Validators.maxLength(128)]],
       'direccion': ['',[Validators.required,Validators.minLength(3),Validators.maxLength(32)]],
       'telefono': ['',[Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'celular': ['',[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
       'correo': ['',[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
       'empleados': ['',[Validators.required,Validators.minLength(1),Validators.maxLength(4),Validators.pattern('^[0-9]+$')]]
 
-    });
-  
-    this.clienteService.getnumeroReal().subscribe(data=>{
-      this.numeroReal=data;
-    })
+    }); 
 
 
     this.formContacto = new FormGroup({
@@ -331,7 +339,8 @@ export class SecretariaVirtualComponent implements OnInit {
   this.clienteService.guardarCliente(cli).pipe(
     switchMap(() => {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
-      this.cardCliente = true;
+      this.cardCliente=!this.cardCliente;
+      this.cardVisible=!this.cardVisible; 
       this.parametrosDTO = { tipoDoc: this.tipoDocumento, nroDocumento: this.nroDocumento };
       return this.clienteService.filtroCliente(this.parametrosDTO);
     })
@@ -341,24 +350,43 @@ export class SecretariaVirtualComponent implements OnInit {
     this.idZona = data[0].divipola?.idZona;
     this.gestionHistorico();
   });
-    }
 
+  this.limpiarCLiente();
 
-
-//CONTACTO
-contactoUltimo(){
-  const parametros= { idCliente: this.idCliente }
-
-  this.contactoService.filtroContacto(parametros).subscribe(data =>{
-    this.formContacto = this.fb.group({
-    'nombre': [data.nombre, [Validators.required,Validators.minLength(4),Validators.maxLength(16)]],
-    'correo': [data.correoElectronico,[ Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
-    'telPrincipal': [data.numeroContacto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-    'telSecundario': [data.telefonoDirecto,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-    'telCelular': [data.telefonoCelular,[Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]+$')]],
-   });
-  });
+    
 }
+
+
+ //LISTA DE CONTACTO
+
+ contactoUltimo() {
+
+  const parametros = { idCliente: this.idCliente }
+  this.contactoService.filtroContacto(parametros).subscribe(data => {
+    if (data == null){
+      this.formContacto = this.fb.group({
+        'nombre': ['', [Validators.required, Validators.minLength(4), Validators.maxLength(128)]],
+        'correo': ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+        'telPrincipal': ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+        'telSecundario': ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+        'telCelular': ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+      });
+    } else {
+      this.formContacto = this.fb.group({
+        'nombre': [data.nombre, [Validators.required, Validators.minLength(4), Validators.maxLength(128)]],
+        'correo': [data.correoElectronico, [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+        'telPrincipal': [data.numeroContacto, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+        'telSecundario': [data.telefonoDirecto, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+        'telCelular': [data.telefonoCelular, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+      });
+
+    }
+    
+  });
+
+}
+
+
 
 
 get nombreNoValido() {
@@ -382,7 +410,6 @@ get observacionDNoValido() {
 get numerorealNoValido() {
   return this.formGuardar.get('numeroreal')?.invalid && this.formGuardar.get('numeroreal')?.touched
 }
-
 
 
 
@@ -417,6 +444,13 @@ subtipoGestion(tipoGestionH: number) {
 }
 
 guardarGestion() {
+
+  if (this.formContacto.invalid) {
+    return Object.values(this.formContacto.controls).forEach(control => {
+      control.markAllAsTouched();
+    });
+  }
+
 
   let campana = new Campana
   campana.idCampana = this.idCampanaE
@@ -476,7 +510,7 @@ guardarGestion() {
   gestion.usuarioAct = this.usuario;
   gestion.ipAct = this.hostIp
   gestion.flagGestionSucursal = false
-  gestion.callId = this.callid
+  gestion.callid = this.callid
 
   gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
   gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
@@ -497,6 +531,10 @@ guardarGestion() {
 
 
 cancelarGestion() {
+  this.llamadaEntranteDTO = { idLlamadaEntrante: this.idLlamadaEntrante}
+  this.secretariaVirtualService.devolSecretaria(this.llamadaEntranteDTO).subscribe(data =>{
+
+  })
   this.secretariaVirtualService.setMensajecambio('SE CANCELO');
 
   setTimeout(() => {
@@ -516,20 +554,28 @@ limpiarControles() {
   this.nroDocumento = '';
   this.fechaHora = '';
   this.numeroDevolucion = '';
+  this.formGuardar.reset();
+  this.limpiarCLiente();
+
 
 }
 
-cancelarCliente() {
 
+limpiarCLiente(){
   this.formCliente.reset({
     'rsocial': '',
     'direccion': '',
     'telefono': '',
     'celular': '',
     'empleados': ''
-  });   
+  });
+}
 
-  
+cancelarCliente() {  
+  this.llamadaEntranteDTO = { idLlamadaEntrante: this.idLlamadaEntrante}
+  this.secretariaVirtualService.devolSecretaria(this.llamadaEntranteDTO).subscribe(data =>{
+
+  })
   this.secretariaVirtualService.setMensajecambio('SE CANCELO');
 
   setTimeout(() => {

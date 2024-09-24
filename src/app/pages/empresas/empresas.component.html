@@ -1,0 +1,41 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span class="span">Búsqueda de Empresas</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <mat-card class="example-card-cli">
+    <mat-card-content >
+      <div class="animated fadeIn m-5 mosaico-container" >
+        
+  
+          <div class="item-header">
+            <mat-card-subtitle>Empresa</mat-card-subtitle>
+  <br>
+            <mat-select placeholder="Selección" [(value)]="pseudonimo">
+              <mat-option *ngFor="let p of ( empresas$ | async )" [value]="p.pseudonimo">
+                {{p.pseudonimo}}
+              </mat-option>
+            </mat-select>
+  
+          </div>
+          
+          <mat-divider></mat-divider>
+          
+          <br>
+          <div class="center">
+            <button mat-raised-button color="primary" (click)="aceptar()" [routerLink]="['/reporte']" >
+              Aceptar</button >
+          </div>
+          
+          
+  
+  
+        </div>
+      
+    </mat-card-content>
+  </mat-card>
+  
+  
+  
+  

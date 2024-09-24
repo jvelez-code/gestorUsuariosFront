@@ -3,13 +3,13 @@ import { AskEstado } from "./askEstado";
 export class AskEstadoExtension {
 
     idExtension ?: number;
-    loginAgente ?: String;
+    loginAgente ?: string;
     askEstado ?: AskEstado;
-    numeroOrigen ?: String;
-    fechahoraUltimaLlamada ?: String;
+    numeroOrigen ?: string;
+    fechahoraUltimaLlamada ?: string;
     fechahoraInicioEstado ?: Date;
-    nroDocumento ?: String;
-    empresaAsk ?: String;
+    nroDocumento ?: string;
+    empresaAsk ?: string;
     activoAsk  ?: boolean;
     id_extension?: number ;
     login_agente?: string ;

@@ -1,0 +1,99 @@
+
+
+.center {
+    display: inline-block;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    width: 40%;
+    text-align: justify;
+  
+  }
+  
+  .centre {
+    text-align: center;
+    margin: auto;
+    vertical-align: middle;
+    align-items: center;
+    
+  }
+  
+  
+  .example-card-cli {
+    max-width: 1500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    padding: 20px;
+    overflow: hidden;
+    
+  }
+  
+  .button-container {
+    display: inline-flex;
+    justify-content: space-between; /* Espacia los botones de manera uniforme */
+    gap: 10px; /* Espacio entre los botones (opcional si usas justify-content: space-between) */
+  }
+  
+  .span {
+    margin: auto;
+  }
+  
+  table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    text-align: center;
+  }
+  
+  tr:hover {
+    background-color: coral;
+  }
+  
+  section {
+    display: table;
+  }
+  
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
+  
+  
+  .example-card-cli {
+    max-width: 1500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+  }
+  
+  .example-card-cli2 {
+    margin-top: 1rem;
+  }
+  
+  .formulario {
+    display: grid;
+    padding: 20px;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+  }
+  
+  .mat-mdc-table {
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+  }
+  
+  .mat-column-name {
+    height: 100px;
+  }
+  
+  mat-cell, mat-header-cell, mat-footer-cell {
+    flex: 1;
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+  }

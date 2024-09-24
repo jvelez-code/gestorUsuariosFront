@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Observable } from 'rxjs';
+import { LlamadaEntranteDTO } from '../_dto/LlamadaEntranteDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +32,10 @@ export class LlamadaEntranteService {
 
     }
 
-    LlamadaEntrante(parametrosDTO :ParametrosDTO) {
+    LlamadaEntrante(parametrosDTO :ParametrosDTO):Observable<LlamadaEntranteDTO> {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      return this.http.post<boolean>(`${this.url}/llamadaEntrante`,body,{'headers':headers});
+      return this.http.post<LlamadaEntranteDTO>(`${this.url}/llamadaEntrante`,body,{'headers':headers});
 
     }
 

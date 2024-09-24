@@ -5,7 +5,7 @@ import { Usuario } from "./usuario";
 export class CrmDetalle {
 
     idDetalle ?: number;
-    fechaDetalle ?: Date;
+    fechaDetalle ?: string;
     observacion ?: string;
     crmCasos ?: CrmCasos;
     usuario ?: Usuario;

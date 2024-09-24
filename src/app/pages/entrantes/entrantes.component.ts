@@ -24,7 +24,7 @@ import { UsuarioService } from 'src/app/_services/usuario.service';
 import * as moment from 'moment';
 import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 import { Usuario } from 'src/app/_model/usuario';
-import { Campana } from 'src/app/_model/campanas';
+import { Campana } from 'src/app/_model/campana';
 import { AskEstadoExtensionService } from 'src/app/_services/ask-estado-extension.service';
 import { Extension } from 'src/app/_model/extension';
 import { MatAccordion } from '@angular/material/expansion';
@@ -52,7 +52,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';import { RespuestaPila } from 'src/app/_dto/RespuestaPila';
+import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO'; import { RespuestaPila } from 'src/app/_dto/RespuestaPila';
 import { Planilla } from 'src/app/_dto/Planilla';
 ;
 
@@ -84,7 +84,7 @@ import { Planilla } from 'src/app/_dto/Planilla';
 export class EntrantesComponent implements OnInit, OnDestroy {
 
   clienteColumns = ['razonSocial', 'tipoDocumento.tipoDoc', 'nroDocumento', 'divipola.nombre',
-                    'divipola.idZonapadre.nombre', 'correo', 'telefonoCelular', 'telefonoFijo', 'acciones'];
+    'divipola.idZonapadre.nombre', 'correo', 'telefonoCelular', 'telefonoFijo', 'acciones'];
   dataSourceCli !: MatTableDataSource<Cliente>;
 
   detalleGestionColumns: string[] = ['fecha', 'usuario', 'campana', 'tipo', 'subtipo', 'observacion', 'numero'];
@@ -126,7 +126,8 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   gestionHijo !: number;
   panelOpenState = false;
   tipoGestionP !: number;
-  tipoGestionH !: any;
+  tipoGestionH ?: number | null;
+  idEstadoH   ?: number | null;
 
   nombreC !: string;
   correoC !: string;
@@ -145,29 +146,28 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
   detalleGestion: DetalleGestion[] = [];
   contacto: Contacto[] = [];
-  agenteDtos !: AgenteDTO;
-  AgenteDTO!: AgenteDTO;
+  agenteDTO!: AgenteDTO;
 
 
 
-  idCliente   !: any;
-  idEstadoP   !: any;
-  idEstadoH   !: any;
-  idUsuario   !: any;
-  usuario   !: any;
-  nroDocumento   !: any;
-  primerNombre   !: any;
-  primerApellido   !: any;
-  idEmpresa   !: any;
-  pseudonimo   !: any;
-  descripcion   !: any;
-  idCampanaE   !: any;
-  nombreCamE   !: any;
-  tipoLlamadaCamE   !: any;
-  hostIp   !: any;
-  extension !: any;
-  numRealMarcado !: any;
-  idZona !: any;
+  idCliente?: number;
+  idEstadoP?: number;
+
+  idUsuario   !: number;
+  usuario?: string;
+  nroDocumento?: string;
+  primerNombre?: string;
+  primerApellido?: string;
+  idEmpresa?: number;
+  pseudonimo?: string;
+  descripcion?: string;
+  idCampanaE?: number;
+  nombreCamE?: string;
+  tipoLlamadaCamE?: string;
+  hostIp?: string;;
+  extension: any;
+  numRealMarcado?: string;
+  idZona?: number;
 
 
 
@@ -189,7 +189,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   //generarPlanilla$ !: Observable<RespuestaPila[]>
 
 
-  MessageText: string = 'Asopagos.S.A le confirma: PIN   , VALOR $ , FECHA DE PAGO PERIODO  .';
+  MessageText: string = 'le confirma: PIN   , VALOR $ , FECHA DE PAGO PERIODO  .';
   Type: string = 'MASSIVE';
   FlashSMS: number = 0;
   Devices !: string;
@@ -219,8 +219,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private mensajeTextoService: MensajeTextoService,
-    private validadoresService: ValidadoresService) 
-    {
+    private validadoresService: ValidadoresService) {
     this.crearFormulario()
   }
 
@@ -230,7 +229,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    
+
 
     this.dataSource.paginator = this.paginatorpla;
     this.dataSource.sort = this.sortpla;
@@ -239,16 +238,30 @@ export class EntrantesComponent implements OnInit, OnDestroy {
       this.usuario = data;
     });
 
-    this.parametrosDTO = { loginAgente: this.usuario }
-    this.usuarioService.buscarAgenteCampana(this.parametrosDTO).subscribe(data => {
-      this.idCampanaE = data.idCampanaE;
-      this.idUsuario = data.idUsuario;
-      this.idEmpresa = data.idEmpresa;
-      this.hostIp = data.hostIp;
-      this.clienteSelec();
-      this.gestionHistorico();
-      this.contactoUltimo();
-    });
+
+    this.agenteDTO = this.loginService.agenteDTO;
+
+    this.idCampanaE = this.agenteDTO.idCampanaE;
+    this.idUsuario = this.agenteDTO.idUsuario ?? 0;
+    this.idEmpresa = this.agenteDTO.idEmpresa;
+    this.hostIp = this.agenteDTO.hostIp;
+
+    // this.parametrosDTO = { loginAgente: this.usuario }
+    // this.usuarioService.buscarAgenteCampana(this.parametrosDTO).subscribe(data => {
+    //   console.log(data,'buscarAgenteCampana')
+    //   this.idCampanaE = data.idCampanaE;
+    //   this.idUsuario = data.idUsuario;
+    //   this.idEmpresa = data.idEmpresa;
+    //   this.hostIp = data.hostIp;
+
+    // });
+
+    this.clienteSelec();
+    this.gestionHistorico();
+    this.contactoUltimo();
+
+
+
 
 
 
@@ -278,6 +291,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   crearFormulario() {
 
     this.clienteService.getnumeroReal().subscribe(data => {
+      console.log(data,'numeroreal')
       this.numeroReal = data;
     })
 
@@ -332,7 +346,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
   gestionHistorico() {
 
-
     this.tipoLlamada = 0;
     const parametros = {
       nroDoc: this.nroDocumento, idEmpresa: this.idEmpresa,
@@ -373,14 +386,9 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
     this.estadoGestionService.estadoGestionHijo(parametros).subscribe(data => {
 
-      if (Array.isArray(data) && data.length > 0) {
-        console.log(data);
-      } 
-      else {
-        this.tipoGestionH = 0;
-        this.idEstadoH = 0;
-        this.idEstadoH = this.tipoGestionP;
-      }
+      this.tipoGestionH = (Array.isArray(data) && data.length > 0) ? this.tipoGestionH : this.tipoGestionP;
+      this.idEstadoH = (Array.isArray(data) && data.length > 0) ? this.idEstadoH : this.tipoGestionP;
+
     });
 
     if (this.idEstadoH == 0) {
@@ -397,17 +405,36 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   //LISTA DE CONTACTO
 
   contactoUltimo() {
-    this.formContacto.markAllAsTouched();
+    // console.log(this.formContacto.status,'hola')
+
+    // if(this.formContacto.valid){
+    //   console.log('munbdo')
+    //   return Object.values(this.formContacto.controls).forEach( control =>{
+    //     control.markAllAsTouched();
+    //   });
+    // }
+
     const parametros = { idCliente: this.idCliente }
 
     this.contactoService.filtroContacto(parametros).subscribe(data => {
-      this.formContacto = this.fb.group({
-        'nombre': [data.nombre, [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
-        'correo': [data.correoElectronico, [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
-        'telPrincipal': [data.numeroContacto, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
-        'telSecundario': [data.telefonoDirecto, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
-        'telCelular': [data.telefonoCelular, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
-      });
+      if (data == null) {
+        this.formContacto = this.fb.group({
+          'nombre': ['', [Validators.required, Validators.minLength(4), Validators.maxLength(64)]],
+          'correo': ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+          'telPrincipal': ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+          'telSecundario': ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+          'telCelular': ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+        });
+      } else {
+        this.formContacto = this.fb.group({
+          'nombre': [data.nombre, [Validators.required, Validators.minLength(4), Validators.maxLength(128)]],
+          'correo': [data.correoElectronico, [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+          'telPrincipal': [data.numeroContacto, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+          'telSecundario': [data.telefonoDirecto, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+          'telCelular': [data.telefonoCelular, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')]],
+        });
+
+      }
     });
   }
 
@@ -429,7 +456,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   get telCelularNoValido() {
     return this.formContacto.get('telCelular')?.invalid && this.formContacto.get('telCelular')?.touched
   }
-  get observacionDNoValido() {
+  get observacionNoValido() {
     return this.formGuardar.get('observacionD')?.invalid && this.formGuardar.get('observacionD')?.touched
   }
   get numerorealNoValido() {
@@ -449,16 +476,21 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
 
   guardarGestion() {
-    
-    let campana = new Campana
+    if (this.formContacto.invalid) {
+      return Object.values(this.formContacto.controls).forEach(control => {
+        control.markAllAsTouched();
+      });
+    }
+
+    let campana = new Campana();
     campana.idCampana = this.idCampanaE
 
-    let ext = new Extension
+    let ext = new Extension();
     ext.extension = this.extension;
 
 
-    let usuario = new Usuario
-    usuario.idUsuario = this.idUsuario
+    let usuario = new Usuario();
+    usuario.idUsuario = this.idUsuario;
 
 
     let cliente = new Cliente();
@@ -471,7 +503,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     estadoGestion.idEstadoGestion = this.idEstadoP;
 
     let estadoGestionH = new EstadoGestion();
-    estadoGestionH.idEstadoGestion = this.idEstadoH;
+    estadoGestionH.idEstadoGestion = this.tipoGestionH ?? 0;
 
 
     let det = new DetalleGestion();
@@ -508,10 +540,9 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     gestion.usuarioAct = this.usuario;
     gestion.ipAct = this.hostIp
     gestion.flagGestionSucursal = false
-    gestion.callId = this.callid
+    gestion.callid = this.callid
     gestion.fechaHoraSis = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     gestion.fechaGestion = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
-
 
     this.gestionService.guardarGestionS(gestion).subscribe(() => {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
@@ -555,8 +586,8 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   limpiarControles() {
     this.detalleGestion = [];
     this.contacto = [];
-    this.idCliente = null;
-    this.idEstadoP = null;
+    this.idCliente = 0;
+    this.idEstadoP = 0;
   }
 
 
@@ -569,17 +600,17 @@ export class EntrantesComponent implements OnInit, OnDestroy {
 
     const planillas: Element[] = [];
 
-    this.pilaenlaceService.buscarPlanillas().subscribe(data =>{
+    this.pilaenlaceService.buscarPlanillas().subscribe(data => {
       console.log(data, '3');
 
       const planillas: Element[] = [];
 
       data.object.ASISTIDAS.forEach((item: Planilla) => {
-        planillas.push({ numeroPlanilla: item.numeroPlanilla, entidadRecaudo: 'Asistida', tipoPlanilla:item.tipoPlanilla, numeroPin: item.numeroPin });
+        planillas.push({ numeroPlanilla: item.numeroPlanilla, entidadRecaudo: 'Asistida', tipoPlanilla: item.tipoPlanilla, numeroPin: item.numeroPin });
       });
 
       data.object.ELECTRONICAS.forEach((item: Planilla) => {
-        planillas.push({ numeroPlanilla: item.numeroPlanilla, entidadRecaudo: 'Electrónica', tipoPlanilla:item.tipoPlanilla, numeroPin: item.numeroPin });
+        planillas.push({ numeroPlanilla: item.numeroPlanilla, entidadRecaudo: 'Electrónica', tipoPlanilla: item.tipoPlanilla, numeroPin: item.numeroPin });
       });
 
       console.log(planillas, 'final');
@@ -590,9 +621,9 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     });
 
 
-    
 
-    
+
+
 
     // this.pilaenlaceService.buscarPlanilla(this.tipoDoc, this.numDocu, this.planillaanio , this.planillames)
     // .subscribe( (data:any) =>{
@@ -609,7 +640,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   }
 
 
-  
+
 
   //6//
   generarPlanilla() {

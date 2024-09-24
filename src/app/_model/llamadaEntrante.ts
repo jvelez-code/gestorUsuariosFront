@@ -12,13 +12,13 @@ export class LlamadaEntrante {
     tipoCliente!: string;
     claseCliente !: string;
     numeroOrigen!: number;
-    deseaDevolucion!: number;
+    deseaDevolucion!: boolean;
     numeroDevolucion!: string;
-    idDetalleGestion!: string;
-    numeroIntentosFallidos!: string;
-    idAgente!: string;
+    idDetalleGestion!: number;
+    numeroIntentosFallidos!: number;
+    idAgente!: number;
     fechaDevolucion!: string;
-    opcionEntrante!: string;
+    opcionEntrante!: number;
     empresa !: string;
     intento1 !: string;
     intento2 !: string;

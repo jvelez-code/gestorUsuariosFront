@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { Menu } from '../_model/menu';
+import { ParametrosDTO } from '../_dto/ParametrosDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class LoginService {
 
 
   private url: string = `${environment.HOST}/oauth/token`
+  private apiUrl = `${environment.HOST}/login/actualizarIntento`
 
   constructor(
     private http: HttpClient,
@@ -45,6 +47,12 @@ export class LoginService {
     });
   }
 
+  actualizarIntento(parametrosDTO: ParametrosDTO): Observable<void> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  
+    return this.http.post<void>(this.apiUrl, parametrosDTO, { headers });
+  }
+
+  //GETTER Y SETTER
 
 
   getMenuCambio() {

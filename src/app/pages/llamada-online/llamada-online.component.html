@@ -1,0 +1,120 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+      <span class="span">LLAMADAS POR HORA {{empresaparametro}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="example-card-cli">
+
+ <div class="chart-container"  class="center" style="width: 50%; float:left; " >
+  <div class="mat-elevation-z8">
+    <form class="formulario" method="POST">
+
+        <mat-form-field class="example-form-field">
+          <mat-label>Seleccione las fechas</mat-label>
+          <mat-date-range-input class="span"
+            [formGroup]="campaignOne"
+            [rangePicker]="campaignOnePicker"
+            [comparisonStart]="campaignTwo.value.start"
+            [comparisonEnd]="campaignTwo.value.end">
+            <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="fechaInicio">
+            <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="fechaFin">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+          <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+        </mat-form-field>
+        
+      <section class="button-container">
+        <button mat-raised-button color="primary" [disabled]=cargando (click)="llamadasporHora()">
+          <mat-icon>save</mat-icon>
+          <i [ngClass]="{'save':cargando, 'refresh':!cargando}"></i> Aceptar
+        </button>
+        <button mat-raised-button color="accent"  [disabled]=cargando  (click)="cambiar()" >Graficas
+          <mat-icon>satellite</mat-icon></button>
+        <button mat-raised-button color="warn" (click)="descargar()">Descarga
+          <mat-icon>laptop</mat-icon>
+        </button>  
+      </section>
+    </form>
+    <canvas id="canvas" style="padding: 10px;">{{chart}}</canvas>
+   
+  </div>
+
+</div> 
+  
+
+
+
+
+
+<div style="width:45%;  float:right; "> 
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="hora_llamada">
+      <mat-header-cell *matHeaderCellDef class="centre"> HORA </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="centre"> {{element.hora_llamada}} </mat-cell>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="answered">
+      <mat-header-cell *matHeaderCellDef class="centre"> CONTESTADAS </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="centre"> {{element.answered}} </mat-cell>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="no_answer">
+      <mat-header-cell *matHeaderCellDef class="centre"> SIN CONTESTAR </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="centre"> {{element.no_answer}} </mat-cell>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="totales">
+      <mat-header-cell *matHeaderCellDef class="centre"> TOTAL </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="centre"> {{element.totales}} </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns" class="centre"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="centre"></mat-row>
+    
+  </mat-table>
+
+
+    <mat-table [dataSource]="dataSources" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef class="centre" > HORA </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="centre"> {{element.total}} </mat-cell>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="contestadas">
+        <mat-header-cell mat-header-cell *matHeaderCellDef class="centre"> CONTESTADAS </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="centre"> {{element.contestadas}} </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="nocontestadas">
+        <mat-header-cell mat-header-cell *matHeaderCellDef class="centre" > SIN CONTESTAR </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element" class="centre"> {{element.nocontestadas}} </mat-cell>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="totalG">
+        <mat-header-cell mat-header-cell *matHeaderCellDef class="centre" > TOTAL </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element" class="centre"> {{element.totalG}} </mat-cell>
+      </ng-container>
+      
+      <mat-header-row *matHeaderRowDef="displayedColumnss"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnss;"></mat-row>
+    </mat-table>
+  </div>
+
+</mat-card>
+<br>
+
+
+

@@ -1,13 +1,6 @@
 export class Motivo {
 
     idMotivo ?: number;
-	nombre ?: string;	
-	
-	// constructor( idMotivo: number, nombre: string ) {
-            
-	// 	this.idMotivo = idMotivo;
-	// 	this.nombre = nombre;
-    // }
-}
+	nombre ?: string;	}
 
 let motivo : Motivo;

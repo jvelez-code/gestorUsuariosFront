@@ -1,4 +1,4 @@
-import { Campana } from "./campanas";
+import { Campana } from "./campana";
 import { Cliente } from "./cliente";
 import { Contacto } from "./contactos";
 import { DetalleGestion } from "./detalleGestion";
@@ -19,14 +19,14 @@ export class Gestion {
     agente?: Usuario;
     fechaGestion ?: Date ;
     idArchivoExclusion ?: string ;
-    usuarioAct ?: number
+    usuarioAct ?: string
     ipAct ?: string ;
     fechaHoraSis ?: Date ;    
     flagGestionSucursal ?: boolean ;
     valorCotizacion ?: number ;
     fechaAgenda ?: Date ;    
     idGestionPadre ?: number ;
-    callId ?: string ;
+    callid ?: string ;
 }
 
 let gestion : Gestion

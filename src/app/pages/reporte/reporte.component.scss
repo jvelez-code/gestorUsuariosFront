@@ -1,0 +1,191 @@
+@charset "UTF-8";
+.center {
+  text-align: center;
+  margin: auto;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.centre {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.example-card-cli {
+  max-width: 1500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 250px;
+}
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  width: 490px;
+}
+
+.example-button-row .mat-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  text-align: center;
+}
+
+table tr:hover {
+  background-color: coral;
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.mosaico-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.mosaico-item {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  width: calc(25% - 30px); /* Tres columnas, ajusta según el diseño deseado */
+  background-color: #f9f9f9;
+  display: inline-block;
+  transition: background-color 0.5s;
+  &:hover {
+    background-color: #c7c7c7; // Color de fondo al pasar el cursor
+  }
+}
+
+
+
+.item-header {
+  padding: 10px;
+}
+
+.item-content {
+  padding: 10px;
+}
+
+.mat-card-actions {
+  justify-content: center;
+}
+
+.boton {
+  border-radius: 20px; /* Puedes ajustar el radio según tu preferencia */
+  background-color: #3f51b5;
+  position: relative;
+  color: white;
+}
+
+.mat-divider {
+  display: block;
+  margin: 0;
+  border-top-style: solid;
+  border-top-color: var(--mat-divider-color);
+  border-top-width: var(--mat-divider-width);
+  justify-content: center;
+}
+
+/*
+
+  .mosaico-item {
+
+      border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: calc(20% - 10px);  Tres columnas, ajusta según el diseño deseado
+    background-color: #f9f9f9;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+*/
+
+
+.example-ripple-container {
+  cursor: pointer;
+  text-align: center;
+
+  width: 3000px;
+  height: 300px;
+  line-height: 300px;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/** Styles to make the demo look better. */
+.example-ripple-checkbox {
+  margin: 6px 12px 6px 0;
+}
+
+.example-ripple-form-field {
+  margin: 0 12px 0 0;
+}

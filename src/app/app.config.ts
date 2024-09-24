@@ -16,6 +16,10 @@ import { ServerErrorsInterceptor } from './shared/server-errors.interceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { MatPaginatorImpl } from './material/mat-paginator';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { CustomDateAdapter } from './material/custom-adapter';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 export function tokenGetter() {
   return sessionStorage.getItem(environment.TOKEN_NAME);
@@ -39,6 +43,41 @@ export const appConfig: ApplicationConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorsInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: BnNgIdleService },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorImpl },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    importProvidersFrom(
+      NgxUiLoaderModule.forRoot({
+          "bgsColor": "red",
+          "bgsOpacity": 0.5,
+          "bgsPosition": "bottom-right",
+          "bgsSize": 60,
+          "bgsType": "ball-spin-clockwise",
+          "blur": 6,
+          "delay": 0,
+          "fastFadeOut": true,
+          "fgsColor": "#3f51b5",
+          "fgsPosition": "center-center",
+          "fgsSize": 70,
+          "fgsType": "ball-spin-clockwise",
+          "gap": 24,
+          "logoPosition": "center-center",
+          "logoSize": 120,
+          "logoUrl": "",
+          "masterLoaderId": "master",
+          "overlayBorderRadius": "0",
+          "overlayColor": "rgba(40,40,40,0.21)",
+          "pbColor": "#ffffff",
+          "pbDirection": "ltr",
+          "pbThickness": 5,
+          "hasProgressBar": true,
+          "text": "",
+          "textColor": "#FFFFFF",
+          "textPosition": "center-center",
+          "maxTime": -1,
+          "minTime": 300
+      })
+    ),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi())
 ]

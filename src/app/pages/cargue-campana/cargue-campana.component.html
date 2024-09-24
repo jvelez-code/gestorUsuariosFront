@@ -1,0 +1,30 @@
+<mat-card class="example-card-car" appearance="outlined">
+  
+    <mat-card-header>
+      <div class="center">
+      <mat-card-title>CARGUE ARCHIVOS</mat-card-title>
+      <mat-card-subtitle>Campañas</mat-card-subtitle>
+    </div>
+    </mat-card-header>
+    <mat-card-actions>
+      <div>
+      <input 
+      type="file" 
+      (change)="onFileSelected($event)"
+      accept=".csv">
+      <button mat-raised-button color="primary" (click)="cargueArchivo()">
+        <mat-icon>send</mat-icon>
+            <span>Cargar</span>
+      </button>      
+    </div>
+    
+    </mat-card-actions>
+  
+  </mat-card>
+  <mat-card class="example-card-dat">
+    <p class="large-text">Nombre del archivo: {{ fileName }}</p>
+      <p class="large-text">Campaña: {{ idCampana }}</p>
+      <p class="large-text">Registros: {{ cantRegistros }}</p>
+      <p class="large-text">Clientes Nuevos: {{ cantClientes }}</p>
+  </mat-card>
+
