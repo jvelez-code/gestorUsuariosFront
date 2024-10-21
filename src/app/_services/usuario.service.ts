@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AgenteDTO } from '../_dto/agenteDTO';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
@@ -30,11 +30,23 @@ export class UsuarioService extends GenericService<Usuario>{
       );
     }
 
+
+    listarCalidad() :Observable<Usuario[]> {
+      return this.http.get<Usuario[]>(`${this.url}/listarCalidad`);
+
+    }
+
+    buscarAsignaciones(parametrosDTO : ParametrosDTO) :Observable<Usuario[]>{
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(parametrosDTO);
+      return this.http.post<Usuario[]>(`${this.url}/buscarAsignaciones`,body,{'headers':headers});
+    }
+
+
     buscarAgenteCampana(parametrosDTO : ParametrosDTO) {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
       return this.http.post<AgenteDTO>(`${this.url}/buscarExt`,body,{'headers':headers});
-
     }
 
     loginValidacion(parametrosDTO : ParametrosDTO){

@@ -27,16 +27,22 @@ export class ClienteService extends GenericService<Cliente> {
       )
     }
 
-    guardarCliente(cliente: Cliente):Observable<Cliente>{
+    guardarCliente(cliente: Cliente): Observable<Cliente>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  
       const body=JSON.stringify(cliente);
       return this.http.post<Cliente>(`${this.url}`, body, headers);
     }
 
+    //Se deja en array para usarlo en la tabla la cual solo recibe array
      filtroCliente(parametrosDTO: ParametrosDTO):Observable<Cliente[]>{
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
       return this.http.post<Cliente[]>(`${this.url}/buscar`,body,{'headers':headers});
+    }
+
+    buscarCliente(parametrosDTO: ParametrosDTO): Observable <Cliente> {
+      const headers = { 'content-type': 'application/json'} 
+      return this.http.post<Cliente>(`${this.url}/buscarCliente`, parametrosDTO, {'headers':headers});
     }
 
     

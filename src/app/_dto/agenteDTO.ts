@@ -45,6 +45,7 @@ export class AgenteDTO {
 		this.tipoLlamadaCamS = tipoLlamadaCamS;
 		this.hostIp = hostIp;
 	}
+
 }
 
 let agenteDTO : AgenteDTO;

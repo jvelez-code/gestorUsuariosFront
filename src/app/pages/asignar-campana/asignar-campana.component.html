@@ -1,0 +1,81 @@
+<form [formGroup]="formAsignar" (ngSubmit)="guardar()">
+<mat-card class="example-card-cli">
+  <mat-card-header>
+    <div class="center">
+      <mat-card-title>Asignar Campaña</mat-card-title>
+      <mat-card-subtitle>Agentes</mat-card-subtitle>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Tipo Camapaña</mat-label>
+      <mat-select placeholder="SELECCIÓN" [(value)]="tipoCampana" (selectionChange)="campanasTipo($event.value)"
+        formControlName="tipoCampana">
+        <mat-option value="3">ENTRADA DE LLAMADA</mat-option>
+        <mat-option value="4">ESPECIAL APORTANTE</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Canal de Comunicación</mat-label>
+      <mat-select placeholder="SELECCIÓN" [(value)]="idCampana" formControlName="idCampana">
+        @for (p of ( campanas$ | async ); track p) {
+        <mat-option [value]="p.idCampana"> {{p.idCampana}}{{"--"}}{{p.nombre}} </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+     <button appearance="fill" class="full-width" mat-raised-button color="primary" type="submit" [disabled]="formAsignar.invalid">
+      <mat-icon>lock_open</mat-icon>
+            <span>GUARDAR</span>
+      </button>
+
+
+  </mat-card-content>
+</mat-card>
+
+<br>
+<mat-card class="card-asignacion">
+
+
+  <mat-selection-list #usua multiple>
+    <p>
+      <button appearance="fill" class="full-width" mat-raised-button color="accent" (click)="selectAll(usua)">
+        <mat-icon>assignment_returned</mat-icon>
+        <span>ASIGNA TODOS</span>
+  </button>
+    </p>
+    <mat-divider></mat-divider>
+    <p>
+      Selecccionados: {{usua.selectedOptions.selected.length}}
+    </p>
+    <button appearance="fill" class="full-width" mat-raised-button color="accent" 
+        (click)="guardarSelec(usua.selectedOptions.selected)">
+      <mat-icon>assignment_return</mat-icon>
+        <span>ASIGNA</span>
+  </button>
+  <mat-divider></mat-divider>
+
+
+
+    @for (p of ( usuarios$ | async ); track p) {
+    <mat-list-option [value]="p.idUsuario">{{p.usuario}}</mat-list-option>
+    }
+  </mat-selection-list>
+
+
+</mat-card>
+
+</form>
+
+<!---->
+<hr>
+<pre>
+  estado: {{formAsignar.valid}}
+  <br>
+    Status: {{formAsignar.status}}
+  </pre>
+<pre>
+    {{formAsignar.value | json }}
+  </pre>

@@ -13,6 +13,7 @@ import { ReportesGeneral } from '../_model/reportesgeneral';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Empresa } from '../_model/empresa';
 import { Gestion } from '../_model/gestion';
+import { AskLogEstado } from '../_model/askLogEstado';
 const EXCEL_TYPE =
 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
 const EXCEL_EXT = '.xlsx';
@@ -154,8 +155,13 @@ export class ReporteService {
     reporSeguimiento(parametrosDTO: ParametrosDTO):Observable<ReportesGeneral[]>{      
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametrosDTO);
-      console.log(body);
       return this.http.post<ReportesGeneral[]>(`${this.urlGes}/seguimiento`,body,{'headers':headers});
+     }
+
+     detalleEstadosEmb(parametrosDTO: ParametrosDTO):Observable<AskLogEstado[]>{      
+      const headers = { 'content-type': 'application/json'}  
+      const body=JSON.stringify(parametrosDTO);
+      return this.http.post<AskLogEstado[]>(`${this.urlCon}/detalleEstadosEmb`,body,{'headers':headers});
      }
 
     reporEmpresa(parametros: Parametros):Observable<any>{      
@@ -221,7 +227,7 @@ export class ReporteService {
       
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametros);
-      return this.http.post<DetalleGestion[]>(`${this.urlGes}/ConsolidadodeCicloVida`,body,{'headers':headers});
+      return this.http.post<AskLogEstado[]>(`${this.urlGes}/ConsolidadodeCicloVida`,body,{'headers':headers});
      }
 
      reporReporteAgenda(parametros: Parametros) {  

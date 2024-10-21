@@ -1,0 +1,29 @@
+.example-card-cli {
+    max-width: 1200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .card-asignacion {
+    max-width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 3rem;
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .full-width {
+    width: 55%; /* Asegura que el campo ocupe el ancho completo */
+    margin-bottom: 16px; /* Espaciado entre los campos */
+  }

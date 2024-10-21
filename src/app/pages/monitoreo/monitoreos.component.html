@@ -43,7 +43,7 @@
               </ng-container>
               
           </div>
-          <div class="item-content" [ngClass]="element.descripcion">
+          <div class="item-content" [style.background-color]="element.color">
             <div><strong>Ext:</strong> {{element.id_extension}}</div>
             <div><strong>Estado:</strong> {{element.descripcion}}</div>
             <div><strong>Número:</strong> {{element.numero_origen}}</div>
@@ -64,12 +64,7 @@
   <mat-card class="example-card-cli">
     <div class="animated fadeIn m-5">
       <table mat-table [dataSource]="dataSource"  matSort  class="mat-elevation-z8">
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-      
-    
-          <ng-container matColumnDef="serial" >
-                
+          <ng-container matColumnDef="serial" >                
                 <th mat-header-cell *matHeaderCellDef class= "centre">N°</th>
                 <td mat-cell *matCellDef="let i = index"  scope="row" class= "centre">{{i+1}}</td>
           </ng-container>
@@ -77,33 +72,33 @@
         <!-- Position Column -->
         <ng-container matColumnDef="extension" class="cabecera">
           <th mat-header-cell *matHeaderCellDef class= "centre"> EXTENSION </th>
-          <td mat-cell *matCellDef="let element"  [ngClass]="element.descripcion" class= "centre"> {{element.id_extension }} </td>
+          <td mat-cell *matCellDef="let element"  [style.background-color]="element.color" class= "centre"> {{element.id_extension }} </td>
         </ng-container>
     
       
         <ng-container matColumnDef="login">
           <th mat-header-cell *matHeaderCellDef class= "centre" > USUARIO </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="element.descripcion" class= "centre"> {{element.login_agente }} </td>
+          <td mat-cell *matCellDef="let element" [style.background-color]="element.color" class= "centre"> {{element.login_agente }} </td>
         </ng-container>
     
         <ng-container matColumnDef="fecha">
           <th mat-header-cell *matHeaderCellDef class= "centre" > FECHA </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="element.descripcion" class= "centre"> {{element.fechahora_inicio_estado |  date:'yyyy-MM-dd HH:mm:ss'  }} </td>
+          <td mat-cell *matCellDef="let element" [style.background-color]="element.color" class= "centre"> {{element.fechahora_inicio_estado |  date:'yyyy-MM-dd HH:mm:ss'  }} </td>
         </ng-container>
     
         <ng-container matColumnDef="descripcion">
           <th mat-header-cell *matHeaderCellDef class= "centre" > ESTADO </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="element.descripcion" class= "centre"> {{element.descripcion  }} </td>
+          <td mat-cell *matCellDef="let element" [style.background-color]="element.color" class= "centre"> {{element.descripcion  }} </td>
         </ng-container>
     
         <ng-container matColumnDef="numero_origen">
           <th mat-header-cell *matHeaderCellDef class= "centre" > NÚMERO </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="element.descripcion" class= "centre"> {{element.numero_origen  }} </td>
+          <td mat-cell *matCellDef="let element" [style.background-color]="element.color" class= "centre"> {{element.numero_origen  }} </td>
         </ng-container>
     
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef class= "centre" > TOTAL </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="element.descripcion" class= "centre"> {{element.total }}</td>
+          <td mat-cell *matCellDef="let element" [style.background-color]="element.color" class= "centre"> {{element.total }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cerrar">

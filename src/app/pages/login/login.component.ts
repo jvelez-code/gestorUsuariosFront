@@ -156,13 +156,11 @@ export class LoginComponent implements OnInit  {
               this.loginService.agenteASK = data;
             });
 
-          this.usuarioService
-            .buscarAgenteCampana(filtroEntranteDTO).subscribe((data) => {
+          this.usuarioService.buscarAgenteCampana(filtroEntranteDTO).subscribe((data) => {
               console.log(data,'login dto')
-              this.loginService.agenteDTO = data;
-              if(data.pseudonimo){
-                this.empresaService.setEmpresaCambio(data.pseudonimo);
-              }
+              this.loginService.agenteDTO = data;              
+              this.empresaService.setEmpresaCambio(data.pseudonimo ?? '' );
+            
               
               
             });

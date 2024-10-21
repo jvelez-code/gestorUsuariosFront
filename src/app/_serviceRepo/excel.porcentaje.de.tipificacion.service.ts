@@ -26,8 +26,6 @@ export class ExcelPorcentajeDeTipificacionService {
     this._worbook = new Workbook();
     this._worbook.creator = "JaimeTorres";
 
-    console.log(dataExcel, 'holaporras')
-
     await this.crearPorcentanjeDeTipificacion(dataExcel, parametros);
 
     this._worbook.xlsx.writeBuffer().then((data) => {

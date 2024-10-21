@@ -80,7 +80,7 @@ export class MonitoreosComponent implements OnInit, OnDestroy {
 
 
   private subscripcion : Subscription = new Subscription();
-  displayedColumns = ['serial','extension', 'login', 'fecha','descripcion', 'numero_origen','total', 'cerrar'];
+  displayedColumns = ['serial','extension', 'login', 'fecha','descripcion','numero_origen','total', 'cerrar'];
   dataSource !: MatTableDataSource<AskEstadoExtension>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -26,10 +26,9 @@ listarMonitoreo(){
 }
 
 
-monitoreoEmpresa( parametrosDTO: ParametrosDTO ):Observable<any>{
-    
+monitoreoEmpresa( parametrosDTO: ParametrosDTO ):Observable<AskEstadoExtension[]>{
   const headers = { 'content-type': 'application/json'}  
   const body=JSON.stringify(parametrosDTO);
-  return this.http.post<AskEstadoExtension>(`${this.url}/reporContact/monitoreo`,body,{'headers':headers});
+  return this.http.post<AskEstadoExtension[]>(`${this.url}/reporContact/monitoreo`,body,{'headers':headers});
  }
 }

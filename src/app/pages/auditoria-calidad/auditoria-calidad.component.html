@@ -1,0 +1,267 @@
+<!--  INGRESO MANUAL-->
+
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div class="center">
+          <mat-card-title>CLIENTE</mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()">
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo Documento</mat-label>
+            <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
+              @for (p of (  tipoDocumento$ | async ); track p) {
+                <mat-option [value]="p.tipoDoc">
+                  {{p.tipoDoc}}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Nro Documento</mat-label>
+            <input matInput placeholder="DOCUMENTO" type="number" required formControlName="nroDocumento">
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" type="submit" [disabled]="formBuscar.invalid">
+            <mat-icon>call</mat-icon>
+            <span>Consultar</span>
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+    </mat-card>
+
+    <mat-card class="example-card-cli">
+        <mat-card-header>
+          <div class="center">
+            <mat-card-title>CLIENTE</mat-card-title>
+            <mat-card-subtitle>detalles</mat-card-subtitle></div>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="dataSourceCli" class="colorTabla">
+      
+              <ng-container matColumnDef="razonSocial">
+                <th mat-header-cell *matHeaderCellDef> RAZÓN SOCIAL </th>
+                <td mat-cell *matCellDef="let element"> {{element.razonSocial}} </td>
+              </ng-container>
+      
+              <!-- Name Column -->
+              <ng-container matColumnDef="tipoDocumento.tipoDoc">
+                <th mat-header-cell *matHeaderCellDef> TIPO </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipoDocumento.tipoDoc}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="nroDocumento">
+                <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
+                <td mat-cell *matCellDef="let element"> {{element.nroDocumento}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="divipola.nombre">
+                <th mat-header-cell *matHeaderCellDef> MUNICIPIO </th>
+                <td mat-cell *matCellDef="let element"> {{element.divipola.nombre}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="divipola.idZonapadre.nombre">
+                <th mat-header-cell *matHeaderCellDef> DEPARTAMENTO </th>
+                <td mat-cell *matCellDef="let element"> {{element.divipola.idZonapadre.nombre}} </td>
+              </ng-container>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="correo">
+                <th mat-header-cell *matHeaderCellDef> CORREO </th>
+                <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+              </ng-container>
+      
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="telefonoCelular">
+                <th mat-header-cell *matHeaderCellDef> CELULAR </th>
+                <td mat-cell *matCellDef="let element"> {{element.telefonoCelular}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="telefonoFijo">
+                <th mat-header-cell *matHeaderCellDef> FIJO </th>
+                <td mat-cell *matCellDef="let element"> {{element.telefonoFijo}} </td>
+              </ng-container>         
+                    
+              <tr mat-header-row *matHeaderRowDef="clienteColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: clienteColumns;"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+        <br>
+
+    <!--Formulario de Historico De Gestiones-->
+    <mat-card class="example-card-cli">
+        <mat-card-header>
+          <div class="center">
+            <mat-card-title>HISTÓRICO</mat-card-title>
+            <mat-card-subtitle>gestiones</mat-card-subtitle></div>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="dataSourceHisto" class="colorHist">
+  
+              <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef> FECHA </th>
+                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.fecha}} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="usuario">
+                <th mat-header-cell *matHeaderCellDef> USUARIO </th>
+                <td mat-cell *matCellDef="let element" class="mat-row"> {{element.usuario}} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="campana">
+                <th mat-header-cell *matHeaderCellDef> CAMPAÑA </th>
+                <td mat-cell *matCellDef="let element"> {{element.campana}} </td>
+              </ng-container>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef> TIPO </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+              </ng-container>
+  
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="subtipo">
+                <th mat-header-cell *matHeaderCellDef> SUBTIPO </th>
+                <td mat-cell *matCellDef="let element"> {{element.subtipo}} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="observacion">
+                <th mat-header-cell *matHeaderCellDef > OBSERVACIÓN </th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-observacion"> {{element.observacion}} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef> NÚMERO REAL </th>
+                <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="detalleGestionColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: detalleGestionColumns;"></tr>
+            </table>
+  
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" [length]="cantidad"></mat-paginator>
+  
+  
+  
+          </mat-card-content>
+        </mat-card>
+        <br>
+
+        <mat-card class="example-card-cli">
+            <mat-card-header>
+              <div class="center">
+                <mat-card-title>CALIFICACIÓN</mat-card-title>
+                <mat-card-subtitle>gestiones</mat-card-subtitle>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let element">
+                        <mat-checkbox [(ngModel)]="element.checked" (change)="actualizaSuma()"></mat-checkbox>
+                        {{element.name}}
+                      </td> 
+                    </ng-container>
+                  
+                    <!-- Value Column -->
+                    <ng-container matColumnDef="value">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let element"> {{element.value}} </td> 
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+            </mat-card-content>
+            <mat-card-content>
+
+              <form [formGroup]="formGuardar" #frmGuardar="ngForm" (ngSubmit)="guardarGestion()">          
+                <table>
+                  <tr>
+                    <td>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Plan de Acción</mat-label>
+                        <mat-select placeholder="SELECCCION" [(value)]="idPlanAccion" formControlName="planAccion">
+                            @for (p of (  plandeAccion$ | async ); track p) {
+                              <mat-option [value]="p.idPlan"> {{p.plandeAccion}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                      </mat-form-field>
+                    </td>
+          
+                    <td>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Agente</mat-label>
+                        <mat-select placeholder="SELECCIÓN" [(value)]="idUsuario" formControlName="idUsuario">
+                            @for (p of (  usuarios$ | async ); track p) {
+                                <mat-option [value]="p.idUsuario
+                                "> {{p.usuario}}
+                                </mat-option>
+                              }
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Canal de Comunicación</mat-label>
+                        <mat-select placeholder="SELECCCION" [(value)]="canalComu" formControlName="canalComu">
+                            <mat-option value="CHAT">CHAT</mat-option>
+                            <mat-option value="CORREO">CORREO</mat-option>
+                            <mat-option value="LLAMADA">LLAMADA</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+          
+                    <td>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Calificación</mat-label>
+                        <input matInput placeholder="Ingrese calificación" formControlName="califica" >
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                </table>
+          
+          
+                <div>OBSERVACIÓN</div>
+                <div>
+                  <mat-form-field   class="example-full"  appearance="outline">
+                    <mat-label>Observaciones</mat-label>
+                    <textarea matInput placeholder="Observación" formControlName="observacionD"
+                      ></textarea>
+                  </mat-form-field>
+                </div>
+          
+              
+                  
+                <div class="example-button-row">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="formGuardar.invalid || formBuscar.invalid ">
+                      <mat-icon>call</mat-icon>
+                      <span>GUARDAR</span>
+                    </button>
+                
+                  </div>
+          
+                <mat-divider></mat-divider>
+              </form>
+            </mat-card-content>
+          </mat-card>
+
+          <!---->
+<hr>
+  <pre>
+    estado: {{formGuardar.valid}}
+    <br>
+      Status: {{formGuardar.status}}
+    </pre>
+    <pre>
+      {{formGuardar.value | json }}
+    </pre>

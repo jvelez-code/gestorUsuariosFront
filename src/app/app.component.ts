@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver } from '@angular/core';
 import { Menu } from './_model/menu';
 import { AskEstadoExtensionService } from './_services/ask-estado-extension.service';
 import { LoginService } from './_services/login.service';
@@ -58,15 +58,14 @@ export class AppComponent {
     private bnIdle: BnNgIdleService,
     private snackBar: MatSnackBar
     ) {
-      this.bnIdle.startWatching(14400).subscribe((res) => {
-        if(res) {
-          loginService.cerrarSesion();
+      this.bnIdle.startWatching(3000).subscribe((res) => {
+        if (res) {
+          this.snackBar.open('Sesión cerrada por inactividad', 'Cerrar', {
+            duration: 3000
+          });
+          this.loginService.cerrarSesion();
         }
-      })
-
-     
-  
-    
+      })   
   }
 
   ngOnInit() {
@@ -101,10 +100,8 @@ export class AppComponent {
   cerrarApp() {
 
  //   if (this.loginService.agenteDTO.idUsuario) {
-      const askEstadoExtension =
-      {
-        estadoAsk: 1, idExtension: this.idExt, loginAgente: this.usuarioExt,
-        nroDocumento: this.loginService.agenteDTO.nroDocumento
+      const askEstadoExtension ={estadoAsk: 1, idExtension: this.idExt, loginAgente: this.usuarioExt,
+        nroDocumento: this.loginService.agenteDTO.nroDocumento 
       }
       
       this.parametrosDTO = { nroDocumento: this.loginService.agenteDTO.nroDocumento , 
@@ -114,10 +111,7 @@ export class AppComponent {
 
 
      this.askEstadoExtensionService.buscarAgente(this.parametrosDTO).subscribe(data => {
-
       if(data){
-
-
       if(data.askEstado?.idEstado===3){
         this.askEstadoService.setMensajecambio('EN LLAMADA')
       }
@@ -126,7 +120,6 @@ export class AppComponent {
           switchMap(() => this.usuariosMigraService.ultimoLogin(this.parametrosDTO))
         ).subscribe({
           next: () => {
-            // Esto se ejecutará después de que ambas operaciones se completen con éxito
             this.loginService.cerrarSesion();
           },
           error: (error) => {
@@ -136,7 +129,10 @@ export class AppComponent {
 
       }
          } else {
-          this.loginService.cerrarSesion();
+          this.usuariosMigraService.ultimoLogin(this.parametrosDTO).subscribe(()=>{
+            this.loginService.cerrarSesion();
+          })
+          
 
          }
 

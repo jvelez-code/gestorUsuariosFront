@@ -69,15 +69,12 @@ export class FiltroCrmcasosComponent implements OnInit {
     const parametrosDTO = { tipoDoc: this.tipoDocumento, nroDocumento: this.formBuscar.value['nroDocumento'] }
 
     this.clienteService.filtroCliente(parametrosDTO).subscribe(data => {
-      console.log(data,'cliente')
-      //VALIDA SI EL ARREGLO ESTA VACIO
       if (data && data.length > 0) {
         this.clienteService.setClienteCambio(data);       
         this.idCliente = data[0].idCliente;
         this.clienteService.setIdClienteCambio(this.idCliente)
         this.router.navigate(['crmCuentas']);
       } else {
-        console.log('No exixte cliente')
       }
     });
     this.prueba();
@@ -88,7 +85,6 @@ export class FiltroCrmcasosComponent implements OnInit {
 prueba(){
   
   this.clienteService.getClienteCambio().subscribe(data =>{
-    console.log(data,'prueba')
   })
 }
 }

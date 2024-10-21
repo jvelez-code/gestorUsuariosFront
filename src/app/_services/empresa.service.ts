@@ -29,7 +29,6 @@ export class EmpresaService extends GenericService<Empresa>{
     ////////////////// get, set ////////////////
 
     getEmpresaCambio(){
-      console.log('recibo')
       return this.empresaCambio.asObservable();
 
     }

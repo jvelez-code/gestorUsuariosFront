@@ -99,7 +99,7 @@ export class ConsolCiclovidaComponent implements OnInit {
      //parametros son los paramatros que enviamos y node.js los toma en el header
      
       this.reporteService.reporConsolidadoCicloVida(parametros).subscribe(data=>{
-      this.dataSource = new MatTableDataSource(data);
+      //this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
   

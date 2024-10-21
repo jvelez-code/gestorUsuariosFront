@@ -290,7 +290,6 @@ export class EntrantesEmbComponent implements OnInit, OnDestroy {
   crearFormulario() {
 
     this.clienteService.getnumeroReal().subscribe(data => {
-      console.log(data,'numeroreal')
       this.numeroReal = data;
     })
 

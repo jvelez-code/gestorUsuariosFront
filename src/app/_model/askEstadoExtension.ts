@@ -14,6 +14,7 @@ export class AskEstadoExtension {
     id_extension?: number ;
     login_agente?: string ;
     descripcion?: string ;
+    color?: string ;
     tiempoTotal?: string;
     numero_origen ?: number;
     fechahora_inicio_estado?: string;

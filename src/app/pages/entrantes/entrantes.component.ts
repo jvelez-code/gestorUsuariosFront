@@ -20,7 +20,6 @@ import { GestionService } from 'src/app/_services/gestion.service';
 import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
 import { MatPaginator } from '@angular/material/paginator';
 import { LoginService } from 'src/app/_services/login.service';
-import { UsuarioService } from 'src/app/_services/usuario.service';
 import * as moment from 'moment';
 import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 import { Usuario } from 'src/app/_model/usuario';
@@ -54,7 +53,6 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO'; import { RespuestaPila } from 'src/app/_dto/RespuestaPila';
 import { Planilla } from 'src/app/_dto/Planilla';
-;
 
 
 @Component({
@@ -147,6 +145,7 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   detalleGestion: DetalleGestion[] = [];
   contacto: Contacto[] = [];
   agenteDTO!: AgenteDTO;
+  
 
 
 
@@ -211,7 +210,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     private estadoGestionService: EstadoGestionService,
     private contactoService: ContactoService,
     private loginService: LoginService,
-    private usuarioService: UsuarioService,
     private askEstadoExtensionService: AskEstadoExtensionService,
     private pilaenlaceService: PilaenlaceService,
     private dialog: MatDialog,
@@ -219,9 +217,11 @@ export class EntrantesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private mensajeTextoService: MensajeTextoService,
-    private validadoresService: ValidadoresService) {
+    private validadoresService: ValidadoresService
+  ) 
+    {
     this.crearFormulario()
-  }
+    }
 
 
 
@@ -291,7 +291,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   crearFormulario() {
 
     this.clienteService.getnumeroReal().subscribe(data => {
-      console.log(data,'numeroreal')
       this.numeroReal = data;
     })
 
@@ -405,14 +404,6 @@ export class EntrantesComponent implements OnInit, OnDestroy {
   //LISTA DE CONTACTO
 
   contactoUltimo() {
-    // console.log(this.formContacto.status,'hola')
-
-    // if(this.formContacto.valid){
-    //   console.log('munbdo')
-    //   return Object.values(this.formContacto.controls).forEach( control =>{
-    //     control.markAllAsTouched();
-    //   });
-    // }
 
     const parametros = { idCliente: this.idCliente }
 

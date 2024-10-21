@@ -130,7 +130,8 @@ export class ClientesComponent implements OnInit{
   }
 
   guardarCliente(){
-  if ( this.formCliente.invalid ){   
+
+  if (this.formCliente.valid ){   
     let tipo = new TipoDocumento
     tipo.tipoDoc = this.tipoDocumento;
 
@@ -152,7 +153,7 @@ export class ClientesComponent implements OnInit{
     cli.fechaHoraSistema = new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
     cli.ip = this.loginService.agenteDTO.hostIp;
 
-    this.clienteService.guardarCliente(cli).subscribe(() =>{
+    this.clienteService.guardarCliente(cli).subscribe(data =>{
       this.clienteService.setMensajecambio('SE REGISTRÓ');
       this.router.navigate(['filtroEntrante']);
     });

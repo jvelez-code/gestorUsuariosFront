@@ -33,6 +33,8 @@ export class IntroComponent implements OnInit {
 
 
   initAgenteDTO(): void {
+
+    console.log(this.loginService.agenteDTO)
     const agenteDTO = this.loginService.agenteDTO;
     this.nombre = agenteDTO.primerNombre ?? '';
     this.apellido = agenteDTO.primerApellido ?? '';

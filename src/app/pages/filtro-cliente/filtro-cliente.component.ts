@@ -287,6 +287,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
     this.cardCliente = true;
     this.cardManual = false;
     this.clienteService.setDocumentoNuevo(this.formCliente.value['identificacion'])
+    
     this.formBuscar = new FormGroup({
       'nroDocumento': new FormControl(this.formCliente.value['identificacion'])
     });
@@ -308,6 +309,7 @@ export class FiltroClienteComponent implements OnInit, OnDestroy {
 
         this.router.navigate(['gestionEntrante']);
       } else {
+        this.clienteService.setDocumentoNuevo(this.formBuscar.value['nroDocumento'])
         this.router.navigate(['clientes']);
       }
     });

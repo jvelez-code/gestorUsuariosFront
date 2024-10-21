@@ -74,7 +74,6 @@ export class ReporteComponent implements OnInit {
 
   constructor( 
                private reporteService : ReporteService,
-               private loginService :LoginService,
                private empresaService: EmpresaService,
                public route: ActivatedRoute,
                private snackBar: MatSnackBar
@@ -92,6 +91,8 @@ export class ReporteComponent implements OnInit {
     
     const parametros= {empresa:this.empresaparametro }
      this.reporteService.reporEmpresa(parametros).subscribe(data => {
+
+      console.log(data,'reprotes')
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

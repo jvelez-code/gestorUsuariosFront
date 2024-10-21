@@ -16,6 +16,7 @@ import { LlamadasPorHora } from 'src/app/_model/llamadasPorHora';
 import { GraficosService } from 'src/app/_serviceRepo/graficos.service';
 import { ExcelServiceService } from 'src/app/_serviceRepo/excel.service.service';
 import { Tooltip } from 'chart.js';
+import { EmpresaService } from 'src/app/_services/empresa.service';
 
 // Registrar los componentes necesarios
 Chart.register(
@@ -78,7 +79,7 @@ export class LlamadaOnlineComponent implements OnInit, OnDestroy {
   
   constructor(
     private graficosService: GraficosService,
-    private loginService: LoginService,
+    private empresaService: EmpresaService,
     private _excelServiceService : ExcelServiceService ) { 
 
     const today = new Date();
@@ -101,7 +102,9 @@ export class LlamadaOnlineComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
   
-      this.empresaparametro='CONTACT';  
+    this.empresaService.getEmpresaCambio().subscribe(data =>{
+      this.empresaparametro= data;
+    }); 
   }
 
   ngOnDestroy(): void {
@@ -130,7 +133,6 @@ export class LlamadaOnlineComponent implements OnInit, OnDestroy {
     
     this.graficosService.llamadasporHora(parametros).subscribe(data =>{
     this.dataSource = new MatTableDataSource(data);
-    console.log(data);
  
 
     

@@ -10,16 +10,6 @@ import { DivipolaDTO } from 'src/app/_dto/divipolaDTO ';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
 import { Archivo } from 'src/app/_model/archivo';
 import { Campana } from 'src/app/_model/campana';
-import { Cliente } from 'src/app/_model/cliente';
-import { Contacto } from 'src/app/_model/contactos';
-import { Divipola } from 'src/app/_model/divipola';
-import { Empresa } from 'src/app/_model/empresa';
-import { EstadoCampana } from 'src/app/_model/estadoCampana';
-import { EstadoGestion } from 'src/app/_model/estadoGestion';
-import { Gestion } from 'src/app/_model/gestion';
-import { TipoCampana } from 'src/app/_model/tipoCampana';
-import { TipoDocumento } from 'src/app/_model/tipoDocumento';
-import { Usuario } from 'src/app/_model/usuario';
 import { ArchivoService } from 'src/app/_services/archivo.service';
 import { CampanaService } from 'src/app/_services/campana.service';
 import { ClienteService } from 'src/app/_services/cliente.service';
@@ -67,11 +57,8 @@ export class CargueCampanaComponent implements OnInit {
 
   constructor( 
     private gestionService: GestionService,
-    private campanaService: CampanaService,
-    private archivoService: ArchivoService,
     private loginService: LoginService,
     private clienteService: ClienteService,
-    private divipolaService: DivipolaService,
     private snackBar: MatSnackBar,
   )
   {
@@ -187,7 +174,6 @@ export class CargueCampanaComponent implements OnInit {
 
     this.fileName= this.selectedFile.name;
     this.parametroDTO = { idUsuario: this.idUsuario, idEmpresa: this.idEmpresa}
-
     this.gestionService.cargueArchivo(this.selectedFile, this.parametroDTO).subscribe(data =>{
       this.idCampana = data.campanaSal ?? 0;
       this.cantRegistros = data.gestionNuevo
@@ -196,7 +182,7 @@ export class CargueCampanaComponent implements OnInit {
     this.clienteService.setMensajecambio('SE CARGO CAMPAÑA')
     return EMPTY;
   }
-
+  
 
   // async procesarItem(item: any) {
 

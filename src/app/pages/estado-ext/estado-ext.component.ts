@@ -15,6 +15,7 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions } from '@angular/material/card';
+import { AgenteDTO } from 'src/app/_dto/agenteDTO';
 
 
 
@@ -28,12 +29,14 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions }
 export class ExtadoExtComponent implements OnInit {
 
   estadoExt !:number;
+  estadoExtBD !:number;
   idExt !:number | undefined;
   usuarioExt !:string;
   enAsterisk!: boolean;
   enllamada!: boolean;
   documentoExt !:any;
   private fechaActual = moment();
+  agenteDTO!: AgenteDTO;
   
   askEstados$ !: Observable<AskEstado[]>;
 
@@ -54,6 +57,8 @@ export class ExtadoExtComponent implements OnInit {
     
     this.askEstados$=this.askEstadoService.buscar();
 
+    this.agenteDTO = this.loginService.agenteDTO;
+
     this.loginService.getExtensionCambio().subscribe(data =>{
       this.idExt=data;
     });
@@ -73,26 +78,21 @@ export class ExtadoExtComponent implements OnInit {
 
 
   
-  cambioExt(){
+  cambioExt(id:number){
 
     const askEstadoExtension ={ estadoAsk : this.estadoExt, idExtension : this.idExt, 
       loginAgente: this.usuarioExt, 
       nroDocumento: this.loginService.agenteASK.nroDocumento, tipoDoc:this.fechaActual.format('YYYY-MM-DD 01:01:01') }
-      
-    // this.llamadaEntranteService.buscarLlamada(askEstadoExtension).subscribe(data =>{
-    // this.enllamada=data;
-  
-    // if(this.enllamada) {
 
     this.askEstadoExtensionService.buscarxAgentes(askEstadoExtension).subscribe(data => {
-      this.idExt = data.askEstado?.idEstado;
+      this.estadoExtBD = data.askEstado?.idEstado ?? 0;
       
     
-      if(this.idExt===3) {
+      if(this.estadoExtBD===3) {
 
       this.askEstadoService.setMensajecambio('EN LLAMADA')         
     }
-    else{
+    else {
       
           if(this.estadoExt===2){
 
@@ -119,8 +119,8 @@ export class ExtadoExtComponent implements OnInit {
         
               }
         else if ( this.estadoExt == 11 || this.estadoExt == 15 || this.estadoExt == 16 ||
-           this.estadoExt == 17 || this.estadoExt == 18 ){
-
+           this.estadoExt == 17 || this.estadoExt == 18 || this.estadoExt == 19  ){
+            
           this.askEstadoExtensionService.actualizarEstadoExt(askEstadoExtension).subscribe(()=>{});     
           this.askEstadoService.setMensajecambio('SE ACTUALIZÓ')         
         }

@@ -55,6 +55,9 @@ import { PorcentajeComponent } from './pages/reporte/porcentaje/porcentaje.compo
 import { FiltradoSecretariaComponent } from './pages/reporte/filtrado-secretaria/filtrado-secretaria.component';
 import { EmpresasComponent } from './pages/empresas/empresas.component';
 import { IntroComponent } from './pages/intro/intro.component';
+import { AskLogEstadosComponent } from './pages/reporte/ask-log-estados/ask-log-estados.component';
+import { AuditoriaCalidadComponent } from './pages/auditoria-calidad/auditoria-calidad.component';
+import { AsignarCampanaComponent } from './pages/asignar-campana/asignar-campana.component';
 
 
 export const routes: Routes = [
@@ -84,6 +87,8 @@ export const routes: Routes = [
   { path: 'crmCuentas', component: CrmCuentasComponent },//CrmCuentasComponent CasoNuevoComponent
   { path: 'crmCasos', component: CrmAbiertosComponent },
   { path: 'cargueCampana', component: CargueCampanaComponent },
+  { path: 'auditoriaCalidad', component: AuditoriaCalidadComponent},
+  { path: 'asignarCampana', component: AsignarCampanaComponent},
 
   { path: 'empresas', component: EmpresasComponent },
   { path: 'grafico', component: GraficoComponent },  ///GraficoComponent
@@ -116,6 +121,7 @@ export const routes: Routes = [
     { path: 'LlamadasFueraHorarioEventual', component: LlamadasFueraHorarioEventualComponent },
     { path: 'CalificacionDelServicioGDE', component: LlamadasCalificadasGDEComponent },
     { path: 'FacturacionGde', component: FacturacionComponent },
+    { path: 'DetalladoLogEstados', component: AskLogEstadosComponent },
     ]
   },
 

@@ -7,9 +7,9 @@ export const environment = {
   HOST: 'http://localhost:9898',
   HOSTNODE: 'http://localhost:3000',
   CORREO: 'http://localhost:4200',
-  // HOST: 'https://10.1.1.159/gestorUsuarios',
-  // HOSTNODE: 'https://10.1.1.159:3000',
-  // CORREO: 'https://10.1.1.159/gestorfront'
+  // HOST: 'https://10.1.1.175/gestorUsuarios',
+  // HOSTNODE: 'https://10.1.1.175:3000',
+  // CORREO: 'https://10.1.1.175/gestorfront',
   TOKEN_AUTH_USERNAME: 'mitomediapp',
   TOKEN_AUTH_PASSWORD: 'mito89codex',
   TOKEN_NAME: 'access_token',
