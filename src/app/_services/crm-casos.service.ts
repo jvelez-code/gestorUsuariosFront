@@ -29,7 +29,7 @@ export class CrmCasosService extends GenericService<CrmCasos> {
       `${environment.HOST}/crmCasos`
     ) }
 
-    private urlcategoria = `${environment.HOST}/crmCategoria`
+    
     private urlsubcategoria = `${environment.HOST}/crmSubcategoria`
     private urltipologia = `${environment.HOST}/crmTipologia`
     private urlEstados = `${environment.HOST}/crmEstados`

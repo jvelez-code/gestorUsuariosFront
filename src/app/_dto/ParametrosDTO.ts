@@ -5,6 +5,7 @@ export interface ParametrosDTO {
 	idUsuario?: number;
 	nroDocumento?: string;
 	idCliente?: number;
+	idUsuarios?: number[];
 	empresa?: string;
 	idEmpresa?: number;
 	idTipoCampana?: number;
@@ -20,6 +21,7 @@ export interface ParametrosDTO {
 	clienteNuevo?: number;
 	gestionNuevo?: number;
     ultimoLogin?: string;
+	password?: string;
 	idCrmCaso?: number;
 	idCrmDetalle?: number;
 	idCrmEstado?: number;	

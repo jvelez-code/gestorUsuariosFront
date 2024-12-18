@@ -37,6 +37,7 @@ export class PorcentajeComponent {
   empresaparametro !:  string;
   campana !: number;
   idCampana !: number;
+  idEmpresa !: number;
 
   form!: FormGroup;
   reporteName : string ="PORCENTAJE DE TIPIFICACIÓN"
@@ -65,7 +66,6 @@ export class PorcentajeComponent {
                private route: ActivatedRoute,
                private loginService: LoginService,
                private empresaService: EmpresaService,
-               private router: Router,
                private excelPorcentajeDeTipificacionService :ExcelPorcentajeDeTipificacionService )  
                { 
                 const today = new Date();
@@ -86,7 +86,9 @@ export class PorcentajeComponent {
                
              
                ngOnInit(): void {
-                //private empresaService: EmpresaService
+                this.agenteDTO = this.loginService.agenteDTO;
+                this.idEmpresa = this.agenteDTO.idEmpresa ?? 0;
+
                 this.empresaService.getEmpresaCambio().subscribe(data =>{
                   this.empresaparametro= data;
                 });
@@ -96,10 +98,9 @@ export class PorcentajeComponent {
       this.fechaparametro1 = moment(this.fechaInicio).format('YYYY-MM-DD 00:00:01');
       this.fechaparametro2 = moment(this.fechaFin).format('YYYY-MM-DD 23:59:59');
       
-      const ParametrosDTO= { fechaInicial : this.fechaparametro1, fechaFinal : this.fechaparametro2 , empresa:this.empresaparametro,
-                          campana:this.idCampana}
-     //parametros son los paramatros que enviamos y node.js los toma en el header
-     
+      const ParametrosDTO= { fechaInicial : this.fechaparametro1, fechaFinal : this.fechaparametro2 ,
+                              idEmpresa: this.idEmpresa ,campana:this.idCampana, empresa: this.empresaparametro  }
+          
       this.reporteService.reporPorcentaje(ParametrosDTO).subscribe(data=>{
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
@@ -116,9 +117,12 @@ export class PorcentajeComponent {
       fechaini: this.fechaparametro1,
       fechafin: this.fechaparametro2,
       empresa: this.empresaparametro,
+      idEmpresa: this.idEmpresa 
     };
 
-    const ParametrosDTO= { fechaInicial : this.fechaparametro1, fechaFinal : this.fechaparametro2 , empresa:this.empresaparametro,
+    const ParametrosDTO= { fechaInicial : this.fechaparametro1, fechaFinal : this.fechaparametro2 , 
+      empresa:this.empresaparametro,
+      idEmpresa: this.idEmpresa,
       campana:this.idCampana}
     
     this.reporteService.reporPorcentaje(ParametrosDTO).subscribe((data) => {

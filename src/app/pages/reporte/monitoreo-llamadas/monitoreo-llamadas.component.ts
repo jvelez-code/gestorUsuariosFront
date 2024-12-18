@@ -24,7 +24,8 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     templateUrl: './monitoreo-llamadas.component.html',
     styleUrls: ['./monitoreo-llamadas.component.scss'],
     standalone: true,
-    imports: [MatToolbar,  MatCardHeader, 
+    imports: [
+      MatToolbar,  MatCardHeader, 
       MatCardTitle, MatCardSubtitle, 
       MatCardActions ,MatCard, 
       ReactiveFormsModule, FormsModule, 
@@ -36,7 +37,8 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
       MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, 
       MatCellDef, MatCell, 
       MatHeaderRowDef, MatHeaderRow, 
-      MatRowDef, MatRow, MatPaginator, DatePipe]
+      MatRowDef, MatRow, MatPaginator, DatePipe
+    ]
 })
 export class MonitoreoLlamadasComponent implements OnInit {
 
@@ -54,6 +56,7 @@ export class MonitoreoLlamadasComponent implements OnInit {
   fechaparametro2 !:  string;
   empresaparametro !:  string;
   agenteDTO !: AgenteDTO;
+  fechaCapturada!: string;
 
   parametros !: Parametros;
 
@@ -109,13 +112,14 @@ export class MonitoreoLlamadasComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
-  });    }
+  });   
+ }
 
 
 exportarTodo(): void {
   this.reporteService.exportar(this.dataSource.data,this.reporteName);
-
 }
+
 exportarFiltro(): void{
   this.reporteService.exportar(this.dataSource.filteredData,'my_export');
 

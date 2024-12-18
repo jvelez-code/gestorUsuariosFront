@@ -89,7 +89,7 @@ export class ReporteComponent implements OnInit {
     // this.agenteDTO = this.loginService.agenteDTO;
     // this.empresaparametro = this.agenteDTO.pseudonimo || '';
     
-    const parametros= {empresa:this.empresaparametro }
+    const parametros= {empresa : this.empresaparametro }
      this.reporteService.reporEmpresa(parametros).subscribe(data => {
 
       console.log(data,'reprotes')

@@ -11,4 +11,4 @@ export class AgenteCampana {
     activo!: String;
 }
 
-let tipoDocumento : AgenteCampana ;
+let agenteCampana : AgenteCampana ;

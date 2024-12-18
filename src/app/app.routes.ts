@@ -58,6 +58,7 @@ import { IntroComponent } from './pages/intro/intro.component';
 import { AskLogEstadosComponent } from './pages/reporte/ask-log-estados/ask-log-estados.component';
 import { AuditoriaCalidadComponent } from './pages/auditoria-calidad/auditoria-calidad.component';
 import { AsignarCampanaComponent } from './pages/asignar-campana/asignar-campana.component';
+import { PagosDiariosComponent } from './pages/reporte/pagos-diarios/pagos-diarios.component';
 
 
 export const routes: Routes = [
@@ -122,6 +123,7 @@ export const routes: Routes = [
     { path: 'CalificacionDelServicioGDE', component: LlamadasCalificadasGDEComponent },
     { path: 'FacturacionGde', component: FacturacionComponent },
     { path: 'DetalladoLogEstados', component: AskLogEstadosComponent },
+    { path: 'PagosDiarios', component: PagosDiariosComponent },
     ]
   },
 

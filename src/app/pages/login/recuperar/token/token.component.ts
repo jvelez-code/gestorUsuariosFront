@@ -8,6 +8,8 @@ import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
+import { UsuariosMigraService } from 'src/app/_services/usuarios-migra.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -25,6 +27,7 @@ export class TokenComponent implements OnInit {
   error!: string;
   rpta!: number;
   tokenValido!: boolean;
+  idUsuario!: number;
   validacionPass1 = `- Debe tener de 10 a 15 caracteres.`                                      
   validacionPass2 = `- Debe tener una mayuscula.`
   validacionPass3 = `- Debe tener un número.`
@@ -36,11 +39,17 @@ export class TokenComponent implements OnInit {
     private router: Router,
     private validadoresService: ValidadoresService,
     private route: ActivatedRoute,
-    private loginService : LoginService
+    private loginService : LoginService,
+    private usuariosMigraService: UsuariosMigraService,
+    private snackBar: MatSnackBar,
   ) { }
 
 
   ngOnInit() {
+
+    this.usuariosMigraService.getMensajeCambio().subscribe(data => {
+      this.snackBar.open(data, "Aviso", { duration: 2000 });
+    })
 
     const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{10,15}$/;
     const passwordPattern = Validators.pattern(regex);
@@ -58,8 +67,8 @@ export class TokenComponent implements OnInit {
     this.route.params.subscribe((params : Params) => {
       this.token = params['token'];
       this.loginService.verificarTokenReset(this.token).subscribe(data => {
-      
-        if(data === 1){
+        this.idUsuario= data.idUsuario ?? 0;
+        if(data.idCliente === 1){
           this.tokenValido = true;
         }else{
           this.tokenValido = false;
@@ -81,15 +90,27 @@ export class TokenComponent implements OnInit {
     return (pass1===pass2) ? false : true
   }
 
+
+
   onSubmit(){
     let clave: string = this.formRecuperar.value.confirmPassword;
-    this.loginService.restablecer(this.token, clave).subscribe(data => {
-    this.mensaje = 'Se cambio la contraseña';
+    const parametrosDTO = { idUsuario: this.idUsuario, password: clave }
+    this.usuariosMigraService.listarClaves(parametrosDTO).subscribe(data =>{
+      if(data){
+        this.loginService.restablecer(this.token, clave).subscribe(data => {
+          this.mensaje = 'Se cambio la contraseña';
+      
+              setTimeout(() => {          
+                this.router.navigate(['login']);
+              }, 2000);
+          });
 
-        setTimeout(() => {          
-          this.router.navigate(['login']);
-        }, 2000);
-    });
+      }else{
+        this.usuariosMigraService.setMensajecambio('SE CANCELO');
+
+      }
+    
+  });
   }
 
 }

@@ -1,0 +1,21 @@
+<mat-toolbar > <p class="center">REPORTE {{reporteName}} {{empresaparametro}}</p> </mat-toolbar>
+<mat-card class="example-card-cli2">
+  <form method="POST">   
+    <div>
+        
+        <button mat-raised-button color="primary" (click)="aceptar()" >Aceptar</button>
+    </div>  
+  </form>
+</mat-card>
+
+<mat-card class="example-card-cli">
+  <mat-card-header class="center">
+    <mat-card-title>{{reporteName}}</mat-card-title>
+    <mat-card-subtitle>{{empresaparametro}}</mat-card-subtitle>
+
+
+  </mat-card-header>
+<mat-card-actions>
+
+</mat-card-actions>
+</mat-card>

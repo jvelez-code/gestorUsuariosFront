@@ -40,6 +40,20 @@ export class GestionUsuariosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('Hola')
+    const parametrosDTO = { loginAgente: 'HELPVOZ', password:'1234' }
+
+    this.usuariosMigraService.listarClaves(parametrosDTO).subscribe(data =>{
+          if(data){
+            console.log('Hola')
+
+          }else{
+            console.log('Mundo')
+
+          }
+        
+      });
+
 
     this.usuariosMigraService.getUsuariosCambio().subscribe(data =>{
       this.dataSource = new MatTableDataSource(data);

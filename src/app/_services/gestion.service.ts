@@ -29,7 +29,19 @@ export class GestionService extends GenericService<Gestion>{
       );
     }
 
+    gestionCampana(parametrosDTO: ParametrosDTO) :Observable<number> {
+      const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };
+      return this.http.post<number>(`${this.url}/gestionCampana`, parametrosDTO, headers);
+    }  
+
+    gestionCampanaFal(parametrosDTO: ParametrosDTO) :Observable<number> {
+      const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };
+      return this.http.post<number>(`${this.url}/gestionCampanaFal`, parametrosDTO, headers);
+    }  
+
+
     
+ 
 
     gestionHistoricoS(parametros: Parametros):Observable<Gestion>{
       const headers = { headers: new HttpHeaders({ 'content-type': "application/json" }) };  

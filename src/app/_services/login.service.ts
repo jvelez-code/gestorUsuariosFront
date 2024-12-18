@@ -116,7 +116,7 @@ export class LoginService {
   }
 
   verificarTokenReset(token: string) {  
-    return this.http.get<number>(`${environment.HOST}/login/restablecer/verificar/${token}`);
+    return this.http.get<ParametrosDTO>(`${environment.HOST}/login/restablecer/verificar/${token}`);
   }
 
   restablecer(token: string, clave: string) {

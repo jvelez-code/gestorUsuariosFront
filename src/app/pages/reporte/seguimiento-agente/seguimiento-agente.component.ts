@@ -39,6 +39,7 @@ export class SeguimientoAgenteComponent implements OnInit {
   fechaFin : Date = new Date;
   form!: FormGroup;
   reporteName : string ="Seguimiento de Agentes"
+  idEmpresa !: number;
 
   campaignOne!: FormGroup;
   campaignTwo!: FormGroup;
@@ -58,7 +59,8 @@ export class SeguimientoAgenteComponent implements OnInit {
 
   constructor( 
     private reporteService : ReporteService,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private loginService: LoginService,
    ) { 
 
     const today = new Date();
@@ -79,6 +81,8 @@ export class SeguimientoAgenteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.agenteDTO = this.loginService.agenteDTO;
+    this.idEmpresa = this.agenteDTO.idEmpresa ?? 0;
     this.empresaService.getEmpresaCambio().subscribe(data =>{
       this.empresaparametro= data;
     });
@@ -91,7 +95,7 @@ export class SeguimientoAgenteComponent implements OnInit {
 
  
     const parametrosDTO= { fechaInicial : this.fechaparametro1, fechaFinal : this.fechaparametro2, 
-                           empresa : this.empresaparametro }
+                           idEmpresa : this.idEmpresa }
    // parametrosDTO que enviamos y node.js los toma en el header
     this.reporteService.reporSeguimiento(parametrosDTO).subscribe(data=>{
     console.log(data);

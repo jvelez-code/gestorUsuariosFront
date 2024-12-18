@@ -19,13 +19,30 @@ import { DetalleGestion } from 'src/app/_model/detalleGestion';
 import { Parametros } from 'src/app/_model/parametros';
 import { ReporteService } from 'src/app/_serviceRepo/reporte.service';
 import { EmpresaService } from 'src/app/_services/empresa.service';
+import { MatInput } from '@angular/material/input';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-registros-nuevos',
     templateUrl: './registros-nuevos.component.html',
     styleUrls: ['./registros-nuevos.component.scss'],
     standalone: true,
-    imports: [MatFormFieldModule,MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions,MatToolbar, RouterOutlet, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatIcon, MatPaginator]
+    imports: [ 
+      MatToolbar,  MatCardHeader, 
+      MatCardTitle, MatCardSubtitle, 
+      MatCardActions ,MatCard, 
+      ReactiveFormsModule, FormsModule, 
+      MatFormField, MatLabel, 
+      MatDateRangeInput, MatStartDate, 
+      MatEndDate, MatDatepickerToggle, 
+      MatSuffix, MatDateRangePicker, 
+      MatButton, MatIcon, MatInput, MatTable, 
+      MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, 
+      MatCellDef, MatCell, 
+      MatHeaderRowDef, MatHeaderRow, 
+      MatRowDef, MatRow, MatPaginator, DatePipe
+   
+              ]
 })
 export class RegistrosNuevosComponent {
 

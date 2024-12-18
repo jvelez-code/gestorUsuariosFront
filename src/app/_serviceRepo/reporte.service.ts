@@ -28,6 +28,7 @@ const EXCEL_EXT = '.xlsx';
 export class ReporteService {
 
   private mensajeCambio = new Subject<string>();
+  fechaCapturada!: string;
   
   private urlCon:string = `${environment.HOSTNODE}/reporContact`;
   private urlGes:string = `${environment.HOSTNODE}/reporGestor`;
@@ -182,6 +183,9 @@ export class ReporteService {
     }
 
     reporMonitoreoLlamadas(parametros: Parametros):Observable<any>{
+      const fecha = new Date();
+      this.fechaCapturada = fecha.toString();  // Puedes formatearla como quieras
+      console.log('Fecha capturada en tiempo real:', this.fechaCapturada);
       
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(parametros);
@@ -288,7 +292,7 @@ export class ReporteService {
 
     //EXPORTAR A EXCEL
 
-    exportar(json: any[], excelFileName:string): void{
+    exportar(json: any[], excelFileName:string): void {
       const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
       const workbook :  XLSX.WorkBook = {
         Sheets:{'data': worksheet},

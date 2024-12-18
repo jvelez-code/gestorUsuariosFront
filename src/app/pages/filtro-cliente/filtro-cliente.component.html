@@ -1,117 +1,134 @@
 <router-outlet></router-outlet>
-<!-- No olvidar agregar ReactiveFormsModule en App.module.ts, util para trabajar con formularios-->
-<div [hidden]="cardCliente">
-  <!-- Contenido del segundo campo vertical -->
-  <div class="center">
 
-    <mat-card class="example-card" [style.background-color]="colorExt">
-      <mat-card-header>
-        <div class="center">
-          <mat-card-title>CLIENTE</mat-card-title>
-        </div>
-      </mat-card-header>
-      <mat-card-content>
-        <form class="example-form" [formGroup]="formAgente" #frmAgente="ngForm">
-          <mat-form-field class="example-full-width">
-            <mat-label>Agente</mat-label>
-            <input matInput formControlName="agente" readonly>
-          </mat-form-field>
+<mat-card class="example-card-cli">
 
-          <table class="example-full-width" cellspacing="0">
-            <tr>
-              <td><mat-form-field class="example-full-width">
-                <mat-label>Estado</mat-label>
-                <input matInput formControlName="estado" readonly>
-              </mat-form-field></td>
-              <td><mat-form-field class="example-full-width">
-                <mat-label>Número</mat-label>
-                <input matInput formControlName="numeroReal" readonly>
-              </mat-form-field></td>
-            </tr>
-          </table>
-
-          <table class="example-full-width" cellspacing="0">
-            <tr>
-              <td><mat-form-field class="example-full-width">
-                <mat-label>Hora Inicio Estado</mat-label>
-                <input matInput formControlName="horaInicio" readonly>
-              </mat-form-field></td>
-              <td><mat-form-field class="example-full-width">
-                <mat-label>Hora Actual</mat-label>
-                <input matInput formControlName="horaActual" readonly>
-              </mat-form-field></td>
-            </tr>
-          </table>
-        </form>
-
-        <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm">
-          <mat-form-field class="example-full-width">
-            <mat-label>Cliente</mat-label>
-            <input matInput formControlName="cliente" readonly>
-          </mat-form-field>
-
-          <table class="example-full-width" cellspacing="0">
-            <tr>
-              <td><mat-form-field class="example-full-width">
-                <mat-label>Tipo</mat-label>
-                <input matInput formControlName="tipoDoc" readonly>
-              </mat-form-field></td>
-              <td><mat-form-field class="example-full-width">
-                <mat-label>Identificación</mat-label>
-                <input matInput formControlName="identificacion" readonly>
-              </mat-form-field></td>
-            </tr>
-          </table>
-
-        </form>
-
-      </mat-card-content>
-      <mat-card-actions>
-        <div class="button-row">
-          <button mat-raised-button color="primary" (click)="buscarAuto()">Consultar</button>
-          <button mat-raised-button color="accent" (click)="buscarManual()">Manual</button>
-        </div>
-      </mat-card-actions>
-    </mat-card>
+  <!--################################## cartas superiores ############################################-->
+  <div class="card-container">
+    @for (stat of stats; track stat) {
+      <div class="card-item">
+        <mat-card [ngStyle]="{'background-color': stat.color}" class="text-white">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">{{stat.title}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{stat.amount}}</h2>
+            <mtx-progress [value]="stat.progress.value"
+              height="2px"
+              foreground="rgba(255,255,255,1)"
+              background='rgba(0,0,0,.5)'>
+            </mtx-progress>
+            <small class="text-muted">{{this.agenteDTO.usuario}} </small>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
   </div>
 
 
+    <!--################################## formulario pruebas ############################################-->
 
-</div>
+  <!--################################## cartas superiores ############################################-->
+  <mat-card class="example-card-cli2" >
+    <div class="mat-card-content"  >
+      <mat-card class="example-card"  >
+        <div [hidden]="cardCliente"  >
+          <div class="center">
+            <mat-card class="example-card" [style.background-color]="colorExt" >
+              <mat-card-header>
+                <div class="center">
+                  <mat-card-title>CLIENTE</mat-card-title>
+                </div>
+              </mat-card-header>
+              <mat-card-content>
+                <form class="example-form" [formGroup]="formAgente" #frmAgente="ngForm">
+                  <div class="form-grid three-columns">
+                    <mat-form-field>
+                      <mat-label>Estado</mat-label>
+                      <input matInput formControlName="estado" readonly>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Número entrante</mat-label>
+                      <input matInput formControlName="numeroReal" readonly>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Hora Inicio Estado</mat-label>
+                      <input matInput formControlName="horaInicio" readonly>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-grid three-columns">
+                    <mat-form-field>
+                      <mat-label>Hora Actual</mat-label>
+                      <input matInput [value]="formAgente.get('horaActual')?.value" readonly>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Tipo documento</mat-label>
+                      <input matInput [value]="formCliente.get('tipoDoc')?.value" readonly>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Número documento</mat-label>
+                      <input matInput [value]="formCliente.get('identificacion')?.value" readonly>
+                    </mat-form-field>
+                  </div>
+                </form>
+                <form class="example-form" [formGroup]="formCliente" #frmCliente="ngForm">
+                  <div class="form-grid">
+                    <mat-form-field class="full-width">
+                      <mat-label>Razón social</mat-label>
+                      <input matInput formControlName="cliente" readonly>
+                    </mat-form-field>
+                  </div>
+                </form>
+              </mat-card-content>
+              <mat-card-actions class="example-card-actions">
+                <div class="button-row">
+                  <button mat-raised-button color="primary" (click)="buscarAuto()">Consultar</button>
+                  <button mat-raised-button color="accent" (click)="buscarManual()">Manual</button>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+        <div [hidden]="cardManual">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div class="center">
+                <mat-card-title>Consulta manual</mat-card-title>
+                <br>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()" class="form-grid two-columns">
+                <mat-form-field appearance="fill">
+                  <mat-label>Tipo Documento</mat-label>
+                  <mat-select placeholder="SELECCION" [(value)]="tipoDocumento">
+                    <mat-option *ngFor="let p of (tipoDocumento$ | async)" [value]="p.tipoDoc">
+                      {{ p.tipoDoc }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>NúmeroDocumento</mat-label>
+                  <input matInput placeholder="DOCUMENTO" type="number" required formControlName="nroDocumento">
+                </mat-form-field>
 
-<!--  INGRESO MANUAL-->
-<div [hidden]="cardManual">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div class="center">
-        <mat-card-title>CLIENTE</mat-card-title>
-      </div>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="formBuscar" #frmBuscar="ngForm" (ngSubmit)="buscarCliente()">
-        <mat-form-field appearance="fill">
-          <mat-label>Tipo Documento</mat-label>
-          <mat-select placeholder="SELECCCION" [(value)]="tipoDocumento">
-            @for (p of (  tipoDocumento$ | async ); track p) {
-              <mat-option [value]="p.tipoDoc">
-                {{p.tipoDoc}}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+               
 
-        <mat-form-field appearance="fill">
-          <mat-label>Nro Documento</mat-label>
-          <input matInput placeholder="DOCUMENTO" type="number" required formControlName="nroDocumento">
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="formBuscar.invalid">
-          <mat-icon>call</mat-icon>
-          <span>Consultar</span>
-        </button>
-      </form>
-    </mat-card-content>
+              </form>
+              <mat-card-actions class="example-card-actions">
+                <div class="button-row">
+                  <button mat-raised-button color="primary" type="submit" [disabled]="formBuscar.invalid" (click)="buscarCliente()">
+                    <mat-icon>call</mat-icon>
+                    <span>Consultar</span>
+                 </button>
+                </div>
+              </mat-card-actions>
+            </mat-card-content>
+          </mat-card>
+          <mat-card></mat-card>
+        </div>
+      </mat-card>
+    </div>
   </mat-card>
-  <mat-card>
-  </mat-card>
-</div>
+  
+  
+  

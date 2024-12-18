@@ -88,7 +88,7 @@ export class DuracionEstadoComponent implements OnInit {
     this.fechaparametro2 = moment(this.fechaFin).format('YYYY-MM-DD 23:59:59');
     
      
-    const parametros= {fechaini:this.fechaparametro1, fechafin:this.fechaparametro2,empresa:this.empresaparametro }
+    const parametros= {fechaini:this.fechaparametro1, fechafin:this.fechaparametro2, empresa:this.empresaparametro }
    //parametros son los paramatros que enviamos y node.js los toma en el header
    
     this.reporteService.reporDuracionEstado(parametros).subscribe(data=>{

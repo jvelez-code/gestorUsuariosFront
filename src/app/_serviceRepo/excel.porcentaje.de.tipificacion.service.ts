@@ -30,7 +30,7 @@ export class ExcelPorcentajeDeTipificacionService {
 
     this._worbook.xlsx.writeBuffer().then((data) => {
       const blob = new Blob([data]);
-      fs.saveAs(blob, "Reporte_llamadas_recibidas.xlsx");
+      fs.saveAs(blob, "Procentaje_tipificacion.xlsx");
     });
   }
 

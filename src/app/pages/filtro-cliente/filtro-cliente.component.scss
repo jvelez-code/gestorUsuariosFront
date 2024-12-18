@@ -1,144 +1,113 @@
+/* Estilos generales para las tarjetas */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Espacio entre las tarjetas */
+}
 
+.card-item {
+  flex: 1 1 calc(25% - 16px); /* Ajusta el tamaño y espacio entre las tarjetas */
+  box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño total */
+  max-width: calc(25% - 16px); /* Limita el ancho máximo de las tarjetas */
+}
 
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    text-align: center;
-  }
+mat-card {
+  border-radius: 12px; /* Ajusta el radio de redondeo de los bordes */
+  overflow: hidden; /* Asegura que el contenido no se desborde fuera de los bordes redondeados */
+}
 
-  .mat-card-header{
-    background-color: #bbbbd6 ;
-    padding:5px ;
+/* Ajusta el tamaño de las tarjetas en dispositivos más pequeños */
+@media (max-width: 768px) {
+  .card-item {
+    flex: 1 1 calc(50% - 16px); /* 2 tarjetas por fila en dispositivos medianos */
   }
-  
-   .mat-card{
-    padding:0 ;
-  }
-  
-  .mat-card-content{
-    padding:5px ;
-  }
+}
 
-  .mat-mdc-form-field + .mat-mdc-form-field {
-    margin-left: 8px;
+@media (max-width: 576px) {
+  .card-item {
+    flex: 1 1 calc(100% - 16px); /* 1 tarjeta por fila en dispositivos pequeños */
   }
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+/* Estilos para tarjetas específicas */
+.example-card-cli {
+  max-width: 1400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+  padding-: 5px;
+}
 
+.card-busqueda-manual {
+  max-width: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
 
-    Tipifica Gestion
-  .mat-select-content{
-    width: 60%;
-  } 
+/* Estilos para campos de formulario en tarjetas */
+.example-card-cli2 {
+  max-width: 800px;
+  margin: 2rem auto;
+}
 
-  
-  .example-full-width {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  td {
-    padding-right: 8px;
-  }
+.mat-card-content {
+  padding: 20px;
+}
 
-  /*Botones*/
+/* Configuración general para la cuadrícula de formularios */
+.form-grid {
+  display: grid;
+  gap: 16px; /* Espacio entre los campos */
+}
 
-  section {
-    display: table;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 24px;
-    margin-left: 16px;
-    min-width: 180px;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  th {
-    /* row border */
-    border-bottom: 1px solid #ffa600;
-  }
-  
-  td.mat-cell {
-    /* row padding */
-    padding: 20px 0;
-    border: none;
-  }
-  
-  tr.mat-row {
-    /* row border */
-    border: 1px solid #ffa600;
-  }
-  
+/* Configuración para tres columnas */
+.form-grid.three-columns {
+  grid-template-columns: repeat(3, 1fr); /* Tres columnas de ancho igual */
+}
 
-    /*CARD*/
+/* Configuración para dos columnas */
+.form-grid.two-columns {
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas de ancho igual */
+}
 
-  .example-card {
-    max-width: 500px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 3rem;
-  }
+/* Estilo específico para el campo 'Cliente' para que ocupe todo el ancho */
+.full-width {
+  grid-column: span 3; /* Ocupa las tres columnas en una cuadrícula de tres columnas */
+}
 
+/* Ajusta el tamaño de los campos */
+mat-form-field {
+  margin: 0; /* Elimina márgenes laterales innecesarios */
+}
 
-    /*FORM*/
+/* Ajusta para campos en una sola columna en pantallas más pequeñas */
+@media (max-width: 768px) {
+  mat-form-field {
+    flex: 1 1 100%; /* Campos a una columna */
+  }
+}
 
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-  
-  td {
-    padding-right: 8px;
-  }
-  
-     /*BOTTON*/
+/* Estilos para el contenedor de acciones de la tarjeta */
+/* Estilos para el contenedor de acciones de la tarjeta */
+.example-card-actions {
+  display: flex; /* Usa Flexbox para el layout */
+  justify-content: center; /* Centra los elementos dentro del contenedor */
+  padding: 16px; /* Ajusta el padding según tu diseño */
+  margin-top: 16px; /* Espacio superior si es necesario */
+}
 
-  .button-row {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
+/* Estilos para los botones en la fila */
+.button-row {
+  display: flex; /* Usa Flexbox para alinear los botones */
+  gap: 8px; /* Espacio entre botones */
+  justify-content: center; /* Centra los botones dentro de su contenedor */
+}
 
-  /*Dividri pantalla*/
-  .container {
-    display: flex;
-  }
-  
-  .left-column {
-    flex: 1;
-  }
-  
-  .right-column {
-    flex: 1;
-  }
+/* Ajustes para el botón */
+button {
+  margin: 0; /* Quita el margen si es necesario */
+}

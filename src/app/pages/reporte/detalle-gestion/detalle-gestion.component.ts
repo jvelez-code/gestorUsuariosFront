@@ -67,8 +67,8 @@ export class DetalleGestionComponent implements OnInit {
   agenteDTO !: AgenteDTO;
 
 
-  constructor(private reporteService: ReporteService,
-    private route: ActivatedRoute,
+  constructor(
+    private reporteService: ReporteService,
     private loginService: LoginService,
     private empresaService: EmpresaService,
     private exelDetalladoGestionesService: ExelDetalladoGestionesService,
@@ -106,7 +106,9 @@ export class DetalleGestionComponent implements OnInit {
     this.fechaparametro2 = moment(this.fechaFin).format('YYYY-MM-DD 23:59:59');
 
 
-    const parametros = { fechaini: this.fechaparametro1, fechafin: this.fechaparametro2, empresa: this.empresaparametro }
+    const parametros = { fechaini: this.fechaparametro1, fechafin: this.fechaparametro2, idEmpresa: this.idEmpresa,
+      empresa: this.empresaparametro
+     }
 
     //parametros son los paramatros que enviamos y node.js los toma en el header
 
@@ -126,25 +128,17 @@ export class DetalleGestionComponent implements OnInit {
 
     });
 
-    /* this.reporteService.listarCampanas(parametros).subscribe(data =>{
-       console.log('222',parametros)
-       console.log(data)
-    });*/
+
   }
 
 
   exportarTodo(): void {
-    //this.reporteService.exportar(this.dataSource.data,this.reporteName);
-    const parametros = {
-      fechaini: this.fechaparametro1,
-      fechafin: this.fechaparametro2,
-      empresa: this.empresaparametro,
-    };
+    const parametros = { fechaini: this.fechaparametro1, fechafin: this.fechaparametro2, 
+      idEmpresa: this.idEmpresa, empresa: this.empresaparametro,}
+
 
     this.reporteService.reporDetalleGestion(parametros).subscribe((data) => {
       this.exelDetalladoGestionesService.detalladoGestion(data, parametros);
-      console.log(parametros)
-      console.log(data)
     });
   }
 

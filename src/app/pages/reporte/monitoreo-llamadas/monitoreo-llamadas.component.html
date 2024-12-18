@@ -31,14 +31,12 @@
         <mat-label >Filtro</mat-label>
         <input matInput (keyup)="filtro($event)" placeholder="Reportes" #input>
       </mat-form-field>
+
     </mat-card-header>
   
     <mat-card-actions>
-
       <div class="table-container">
-
       <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8 demo-table" >
-
         <ng-container matColumnDef="fecha">
           <th mat-header-cell *matHeaderCellDef> FECHA </th>
           <td mat-cell *matCellDef="let element"> {{element.fecha | date:"shortDate" }} </td>

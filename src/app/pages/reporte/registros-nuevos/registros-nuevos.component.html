@@ -1,6 +1,5 @@
       
 <mat-toolbar > <p class="center">REPORTE {{reporteName}} {{empresaparametro}}</p> </mat-toolbar>
-<router-outlet></router-outlet>
 
 <mat-card class="example-card-cli2">
   <form method="POST">   
@@ -28,7 +27,13 @@
   <mat-card-header class="center">
     <mat-card-title>{{reporteName}}</mat-card-title>
     <mat-card-subtitle>{{empresaparametro}}</mat-card-subtitle>
-    </mat-card-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label >Filtro</mat-label>
+      <input matInput (keyup)="filtro($event)" placeholder="Reportes" #input>
+    </mat-form-field>   
+
+  </mat-card-header>
   
   <mat-card-actions>
     <div class="table-container">
