@@ -33,7 +33,6 @@ export class UsuarioService extends GenericService<Usuario>{
 
     listarCalidad() :Observable<Usuario[]> {
       return this.http.get<Usuario[]>(`${this.url}/listarCalidad`);
-
     }
 
     buscarAsignaciones(parametrosDTO : ParametrosDTO) :Observable<Usuario[]>{

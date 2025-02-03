@@ -60,7 +60,12 @@ export class LoginComponent implements OnInit  {
 
 
   ngOnInit(): void {
-    sessionStorage.clear();
+    console.log('dasdasd1231231')
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'session-active' && event.newValue === 'false') {
+        this.loginService.cerrarSesion();  // Llamamos a cerrar sesión
+      }
+    });
   }
 
   contrasenaVisible(): void {
@@ -92,7 +97,8 @@ export class LoginComponent implements OnInit  {
 
   iniciarSesion() {
     sessionStorage.clear();
-
+    localStorage.removeItem(environment.TOKEN_NAME);
+    localStorage.setItem('session-active', 'false');
 
     this.loginService.setUsuariosCambio(this.usuario);
     
@@ -136,27 +142,30 @@ export class LoginComponent implements OnInit  {
 
     // Función para iniciar sesión del usuario
     iniciarSesionUsuario() {
+
       sessionStorage.clear();
-      
-  
+      localStorage.removeItem(environment.TOKEN_NAME);
+
       this.loginService.login(this.usuario, this.clave).subscribe({
         next: (data) => {
           sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
-          const helper = new JwtHelperService();
+          localStorage.setItem(environment.TOKEN_NAME, data.access_token);
+          localStorage.setItem('session-active', 'true');
+    
 
+          const helper = new JwtHelperService();
           let decodedToken = helper.decodeToken(data.access_token);
           this.loginService.setUsuariosCambio(decodedToken.user_name);
-          const askEstadoExtension = { loginAgente: decodedToken.user_name };
-          const filtroEntranteDTO = { loginAgente: decodedToken.user_name };
+          const nombreUsu = { loginAgente: decodedToken.user_name };
 
           this.askEstadoExtensionService
-            .buscarxAgentes(askEstadoExtension)
+            .buscarxAgentes(nombreUsu)
             .subscribe((data: any) => {
               this.loginService.setExtensionCambio(data.idExtension);
               this.loginService.agenteASK = data;
             });
 
-          this.usuarioService.buscarAgenteCampana(filtroEntranteDTO).subscribe((data) => {
+          this.usuarioService.buscarAgenteCampana(nombreUsu).subscribe((data) => {
               console.log(data,'login dto')
               this.loginService.agenteDTO = data;              
               this.empresaService.setEmpresaCambio(data.pseudonimo ?? '' );
@@ -177,7 +186,7 @@ export class LoginComponent implements OnInit  {
         });
 
          this.loginService.setUltimoCambio(this.fechaActual);
-         this.loginService.actualizarIntento(filtroEntranteDTO).subscribe(()=>{
+         this.loginService.actualizarIntento(nombreUsu).subscribe(()=>{
           
          });
         },

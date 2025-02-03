@@ -19,7 +19,7 @@ import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import { ThisReceiver } from '@angular/compiler';
-import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
+import { FiltroDetalleGestionDTO } from 'src/app/_model/filtroDetalleGestionDTO';
 import { MatPaginator } from '@angular/material/paginator';
 import { LoginService } from 'src/app/_services/login.service';
 import { AgenteCampana } from 'src/app/_model/agenteCampana';

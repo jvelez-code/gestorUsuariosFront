@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { Observable, switchMap } from 'rxjs';
 import { LlamadaEntranteDTO } from 'src/app/_dto/LlamadaEntranteDTO';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
-import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
+import { FiltroDetalleGestionDTO } from 'src/app/_model/filtroDetalleGestionDTO';
 import { Campana } from 'src/app/_model/campana';
 import { Cliente } from 'src/app/_model/cliente';
 import { Contacto } from 'src/app/_model/contactos';

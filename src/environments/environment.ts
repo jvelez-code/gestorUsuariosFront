@@ -5,11 +5,9 @@
 export const environment = {
   production: false,
   HOST: 'http://localhost:9898/apijavabackend',
-  HOSTNODE: 'http://localhost:3000/apinode',
+  HOSTNODE: 'http://localhost:3000/apireporte',
   CORREO: 'http://localhost:4200',
-  // HOST: 'https://10.1.1.164/gestorUsuarios',
-  // HOSTNODE: 'https://10.1.1.164:3000',
-  // CORREO: 'https://10.1.1.164/gestorfront',
+  HOSTCORREO: 'http://127.0.0.1/apicorreo',
   TOKEN_AUTH_USERNAME: 'mitomediapp',
   TOKEN_AUTH_PASSWORD: 'mito89codex',
   TOKEN_NAME: 'access_token',

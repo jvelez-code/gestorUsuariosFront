@@ -199,10 +199,10 @@
                     <td>
                       <mat-form-field class="example-full-width">
                         <mat-label>Agente</mat-label>
-                        <mat-select placeholder="SELECCIÓN" [(value)]="idUsuario" formControlName="idUsuario">
+                        <mat-select placeholder="SELECCIÓN" formControlName="idUsuario" (selectionChange)="onAgenteChange($event)">
                             @for (p of (  usuarios$ | async ); track p) {
-                                <mat-option [value]="p.idUsuario
-                                "> {{p.usuario}}
+                                <mat-option [value]="p"> 
+                                  {{p.usuario}}
                                 </mat-option>
                               }
                         </mat-select>
@@ -255,7 +255,7 @@
             </mat-card-content>
           </mat-card>
 
-          <!--
+          <!---->
 <hr>
   <pre>
     estado: {{formGuardar.valid}}
@@ -264,4 +264,4 @@
     </pre>
     <pre>
       {{formGuardar.value | json }}
-    </pre> -->
+    </pre> 

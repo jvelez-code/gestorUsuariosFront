@@ -9,7 +9,7 @@ import { CantidadGestionDTO } from '../_dto/CantidadGestionDTO ';
 import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { DetalleGestion } from '../_model/detalleGestion';
 import { GenericService } from './generic.service';
-import { FiltroDetalleGestionDTO } from '../_dto/filtroDetalleGestionDTO';
+import { FiltroDetalleGestionDTO } from '../_model/filtroDetalleGestionDTO';
 
 @Injectable({
   providedIn: 'root'

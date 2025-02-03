@@ -22,10 +22,11 @@ import { CustomDateAdapter } from './material/custom-adapter';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 
 export function tokenGetter() {
-  //return sessionStorage.getItem(environment.TOKEN_NAME);
-  const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-  console.log(token,'asdasdas')
-  return token ? token.split('=')[1] : null;
+  console.log('hola mundo');
+  return sessionStorage.getItem(environment.TOKEN_NAME);  
+  // const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+  // console.log(token,'asdasdas')
+  // return token ? token.split('=')[1] : null;
 }
 
 export const appConfig: ApplicationConfig = {

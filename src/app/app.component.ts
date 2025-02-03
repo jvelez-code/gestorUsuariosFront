@@ -18,6 +18,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem, MatMenuModule } from '@angular/ma
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -69,6 +70,28 @@ export class AppComponent {
   }
 
   ngOnInit() {
+
+    console.log('prueba11')
+    if (localStorage.getItem('session-active') === 'true') {
+      console.log('prueba22')
+    const token = localStorage.getItem(environment.TOKEN_NAME);
+    if (token) {
+      // El token está activo, continua con la sesión
+      sessionStorage.setItem(environment.TOKEN_NAME, token);
+    }
+  }
+
+  // Escuchar cambios en el localStorage
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'session-active') {
+      if (event.newValue === 'false') {
+        // Cerrar sesión en esta pestaña si otra sesión ha sido cerrada
+        this.loginService.cerrarSesion();  // Cierra la sesión si 'session-active' es false
+      }
+    }
+  });
+
+    
 
     this.loginService.getExtensionCambio().subscribe(data => {
       this.idExt = data;

@@ -17,13 +17,14 @@ import { RouterOutlet } from '@angular/router';
 import * as moment from 'moment';
 import { Observable, switchMap } from 'rxjs';
 import { AgenteDTO } from 'src/app/_dto/agenteDTO';
-import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
+import { FiltroDetalleGestionDTO } from 'src/app/_model/filtroDetalleGestionDTO';
 import { ParametrosDTO } from 'src/app/_dto/ParametrosDTO';
 import { Cliente } from 'src/app/_model/cliente';
 import { MonitoreoGrabaciones } from 'src/app/_model/monitoreoGrabaciones';
 import { MonitoreoPlandeaccion } from 'src/app/_model/monitoreoPlandeaccion';
 import { TipoDocumento } from 'src/app/_model/tipoDocumento';
 import { Usuario } from 'src/app/_model/usuario';
+import { Usuarios } from 'src/app/_model/usuarios';
 import { ClienteService } from 'src/app/_services/cliente.service';
 import { DetalleGestionService } from 'src/app/_services/detalle-gestion.service';
 import { LoginService } from 'src/app/_services/login.service';
@@ -31,7 +32,9 @@ import { MonitoreoGrabacionesService } from 'src/app/_services/monitoreo-grabaci
 import { MonitoreoPlanService } from 'src/app/_services/monitoreo-plan.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 import { UsuarioService } from 'src/app/_services/usuario.service';
+import { UsuariosMigraService } from 'src/app/_services/usuarios-migra.service';
 import { ValidadoresService } from 'src/app/_services/validadores.service';
+import { EnvioCorreoService } from 'src/app/_services/envio-correo.service';
 
 interface Element {
   name: string;
@@ -76,6 +79,8 @@ export class AuditoriaCalidadComponent implements OnInit{
   formBuscar!: FormGroup;
   tipoDocumento: string = 'CC';
   idCliente   !: number;
+  correo !:string;
+  nombretotal !:string;
   tipoDocumento$ !: Observable<TipoDocumento[]>;
 
   clienteColumns = ['razonSocial', 'tipoDocumento.tipoDoc', 'nroDocumento', 'divipola.nombre',
@@ -96,6 +101,7 @@ export class AuditoriaCalidadComponent implements OnInit{
   calificacion : number = 0;
   plandeAccion$ !: Observable<MonitoreoPlandeaccion[]>;
   usuarios$ !: Observable<Usuario[]>;
+  usuariosMigra$ !: Observable<Usuarios[]>;
   formGuardar!: FormGroup;
 
  
@@ -118,7 +124,9 @@ export class AuditoriaCalidadComponent implements OnInit{
     private monitoreoPlanService: MonitoreoPlanService,
     private monitoreoGrabacionesService: MonitoreoGrabacionesService,
     private usuarioService: UsuarioService,
+    private UsuariosMigraService: UsuariosMigraService,
     private loginService: LoginService,
+    private EnvioCorreoService: EnvioCorreoService,
     private fb: FormBuilder,
     private validadoresService: ValidadoresService,
     private snackBar: MatSnackBar,
@@ -138,8 +146,7 @@ export class AuditoriaCalidadComponent implements OnInit{
 
     this.tipoDocumento$ = this.tipoDocumentoService.listar();
     this.plandeAccion$  = this.monitoreoPlanService.listar();
-    this.usuarios$ =      this.usuarioService.listarCalidad();
-
+    this.usuarios$ = this.usuarioService.listarCalidad();
     this.clienteService.getMensajeCambio().subscribe(data => {
       this.snackBar.open(data, "Aviso", { duration: 2000 });
     })
@@ -178,6 +185,10 @@ export class AuditoriaCalidadComponent implements OnInit{
      this.dataSourceHisto.paginator = this.paginator;
 
     });
+
+    this.formGuardar.patchValue({
+      observacionD: ''
+    });
   }
 
   actualizaSuma() {
@@ -188,8 +199,9 @@ export class AuditoriaCalidadComponent implements OnInit{
   }
 
   guardarGestion() {
-    console.log(this.idUsuario,'fuardar')
-
+    console.log(this.nombretotal,'this.nombretotal' )
+    console.log(this.correo,'this.nombretotal' )
+    console.log(this.idUsuario,'this.nombretotal' )
     let usuarioc = new Usuario();
     usuarioc.idUsuario = this.idUsuarioC;
 
@@ -213,9 +225,38 @@ export class AuditoriaCalidadComponent implements OnInit{
     moni.monitoreoObservacion = this.formGuardar.value['observacionD'];
     moni.calificacionTotal = this.calificacion;
 
+    console.log(moni,'guardar')
     this.monitoreoGrabacionesService.registrar(moni).subscribe(() => {
       this.clienteService.setMensajecambio('SE REGISTRÓ');
+    });
+
+   
+      const EnvioCorreo = {
+        email: 'jaimev_tec@jaimetorres.net',
+        subject: 'Calidad',
+        nombre: 'Jaime vélez',
+        mensaje: 'mensaje',
+        template: 'felicitacion',
+      };
+
+    this.EnvioCorreoService.enviarCalidad(EnvioCorreo).subscribe(data =>{
+      console.log(data,'correos')
+    });
+
+
+   }
+
+   onAgenteChange(event: any) {
+    console.log(event.value.usuario,'Usuario' )
+    this.parametrosDTO = { loginAgente: event.value.usuario };
+    this.UsuariosMigraService.usuariosCalidad(this.parametrosDTO).subscribe( data =>{
+    this.correo = data.email ?? '' ;
+    this.nombretotal = `${event.value.primerNombre ?? ''} ${event.value.primerApellido ?? ''}`;
+    this.idUsuario = event.value.idUsuario
+    console.log(this.nombretotal,'this.nombretotal' )
+
 
     });
-   }
+
+  }
 }

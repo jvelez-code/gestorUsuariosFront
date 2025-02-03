@@ -93,10 +93,7 @@ export class TmoComponent implements OnInit {
     private excelTmoService :ExcelTmoService,
     private empresaService: EmpresaService
   ) {
-    // this.loginService.isLogged.subscribe(data=>{
-    //   console.log('pruebaObservable',data)
-    // })
-
+    
     const today = new Date();
     const month = today.getMonth();
     const year = today.getFullYear();

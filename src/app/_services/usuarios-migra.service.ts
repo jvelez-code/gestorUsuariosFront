@@ -25,7 +25,11 @@ export class UsuariosMigraService extends GenericService<Usuarios> {
   }
   private urlUsu = `${environment.HOST}/UsuariosClaves`
 
-  
+  usuariosCalidad(parametrosDTO : ParametrosDTO):Observable<Usuarios>{
+    const headers = { 'content-type': 'application/json'} 
+    return this.http.post<Usuarios>(`${this.url}/usuariosCalidad`,parametrosDTO,{'headers':headers});
+  }
+
 
   listarClaves(parametrosDTO : ParametrosDTO):Observable<boolean>{
     const headers = { 'content-type': 'application/json'} 

@@ -17,7 +17,7 @@ import { ContactoService } from 'src/app/_services/contacto.service';
 import { DetalleGestionService } from 'src/app/_services/detalle-gestion.service';
 import { EstadoGestionService } from 'src/app/_services/estado-gestion.service';
 import { GestionService } from 'src/app/_services/gestion.service';
-import { FiltroDetalleGestionDTO } from 'src/app/_dto/filtroDetalleGestionDTO';
+import { FiltroDetalleGestionDTO } from 'src/app/_model/filtroDetalleGestionDTO';
 import { MatPaginator } from '@angular/material/paginator';
 import { LoginService } from 'src/app/_services/login.service';
 import * as moment from 'moment';
