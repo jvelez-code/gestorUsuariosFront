@@ -18,26 +18,24 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { ClienteService } from 'src/app/_services/cliente.service';
 
 @Component({
-  selector: 'app-crm-abiertos',
-  standalone: true,
-  imports: [ MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatSelectModule,
-    MatInputModule,
-    MatGridListModule,
-    CommonModule,
-    MatDividerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive
-
-  ],
-  templateUrl: './crm-abiertos.component.html',
-  styleUrl: './crm-abiertos.component.scss'
+    selector: 'app-crm-abiertos',
+    imports: [MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatSelectModule,
+        MatInputModule,
+        MatGridListModule,
+        CommonModule,
+        MatDividerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive
+    ],
+    templateUrl: './crm-abiertos.component.html',
+    styleUrl: './crm-abiertos.component.scss'
 })
 export class CrmAbiertosComponent implements OnInit{
 

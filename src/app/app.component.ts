@@ -25,12 +25,11 @@ import { environment } from 'src/environments/environment';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatIconButton, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatSidenavContainer, MatSidenav, MatDivider, MatSidenavContent, 
-              RouterOutlet,NgxUiLoaderRouterModule,
-              NgxUiLoaderModule,
-              MatMenuModule,
-              MatButtonModule]
+    imports: [MatToolbar, MatIconButton, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatSidenavContainer, MatSidenav, MatDivider, MatSidenavContent,
+        RouterOutlet, NgxUiLoaderRouterModule,
+        NgxUiLoaderModule,
+        MatMenuModule,
+        MatButtonModule]
 })
 
 export class AppComponent {

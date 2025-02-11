@@ -26,23 +26,21 @@ import { DatePipe } from '@angular/common';
     selector: 'app-registros-nuevos',
     templateUrl: './registros-nuevos.component.html',
     styleUrls: ['./registros-nuevos.component.scss'],
-    standalone: true,
-    imports: [ 
-      MatToolbar,  MatCardHeader, 
-      MatCardTitle, MatCardSubtitle, 
-      MatCardActions ,MatCard, 
-      ReactiveFormsModule, FormsModule, 
-      MatFormField, MatLabel, 
-      MatDateRangeInput, MatStartDate, 
-      MatEndDate, MatDatepickerToggle, 
-      MatSuffix, MatDateRangePicker, 
-      MatButton, MatIcon, MatInput, MatTable, 
-      MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, 
-      MatCellDef, MatCell, 
-      MatHeaderRowDef, MatHeaderRow, 
-      MatRowDef, MatRow, MatPaginator, DatePipe
-   
-              ]
+    imports: [
+        MatToolbar, MatCardHeader,
+        MatCardTitle, MatCardSubtitle,
+        MatCardActions, MatCard,
+        ReactiveFormsModule, FormsModule,
+        MatFormField, MatLabel,
+        MatDateRangeInput, MatStartDate,
+        MatEndDate, MatDatepickerToggle,
+        MatSuffix, MatDateRangePicker,
+        MatButton, MatIcon, MatInput, MatTable,
+        MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell,
+        MatCellDef, MatCell,
+        MatHeaderRowDef, MatHeaderRow,
+        MatRowDef, MatRow, MatPaginator, DatePipe
+    ]
 })
 export class RegistrosNuevosComponent {
 

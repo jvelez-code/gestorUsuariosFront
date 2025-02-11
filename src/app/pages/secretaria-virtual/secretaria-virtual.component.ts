@@ -45,11 +45,10 @@ import { DivipolaService } from 'src/app/_services/divipola.service';
     selector: 'app-secretaria-virtual',
     templateUrl: './secretaria-virtual.component.html',
     styleUrls: ['./secretaria-virtual.component.scss'],
-    standalone: true,
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatButton, MatCardContent, 
-      MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, 
-      MatRowDef, MatRow, MatPaginator, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, 
-      MatIcon, MatDivider, AsyncPipe, MatSnackBarModule, CommonModule]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatButton, MatCardContent,
+        MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow,
+        MatRowDef, MatRow, MatPaginator, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption,
+        MatIcon, MatDivider, AsyncPipe, MatSnackBarModule, CommonModule]
 })
 export class SecretariaVirtualComponent implements OnInit {
 

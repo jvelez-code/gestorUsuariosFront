@@ -12,7 +12,6 @@ import { MatFormField } from '@angular/material/form-field';
     selector: 'app-recuperar',
     templateUrl: './recuperar.component.html',
     styleUrls: ['./recuperar.component.scss'],
-    standalone: true,
     imports: [MatFormField, MatInput, ReactiveFormsModule, FormsModule, MatProgressBar, MatButton, MatToolbar, RouterOutlet]
 })
 export class RecuperarComponent {

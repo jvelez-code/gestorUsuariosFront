@@ -54,7 +54,6 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent }
     selector: 'app-saliente',
     templateUrl: './saliente.component.html',
     styleUrl: './saliente.component.scss',
-    standalone: true,
     imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatDivider, AsyncPipe]
 })
 export class SalienteComponent implements OnInit, OnDestroy {

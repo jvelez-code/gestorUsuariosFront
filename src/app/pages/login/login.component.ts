@@ -17,12 +17,11 @@ import { EmpresaService } from "src/app/_services/empresa.service";
     selector: "app-login",
     templateUrl: "./login.component.html",
     styleUrls: ["./login.component.scss"],
-    standalone: true,
     imports: [
         ReactiveFormsModule,
         FormsModule,
         CommonModule
-    ],
+    ]
 })
 export class LoginComponent implements OnInit  {
 

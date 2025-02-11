@@ -15,7 +15,6 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions }
     selector: 'app-filtro-saliente',
     templateUrl: './filtro-saliente.component.html',
     styleUrls: ['./filtro-saliente.component.scss'],
-    standalone: true,
     imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatButton]
 })
 export class FiltroSalienteComponent implements OnInit, OnDestroy {

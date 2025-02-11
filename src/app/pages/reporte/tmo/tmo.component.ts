@@ -27,7 +27,6 @@ import { EmpresaService } from "src/app/_services/empresa.service";
     selector: "app-tmo",
     templateUrl: "./tmo.component.html",
     styleUrls: ["./tmo.component.scss"],
-    standalone: true,
     imports: [
         MatToolbar,
         RouterOutlet,
@@ -62,7 +61,7 @@ import { EmpresaService } from "src/app/_services/empresa.service";
         MatPaginator,
         MatIcon,
         DatePipe,
-    ],
+    ]
 })
 export class TmoComponent implements OnInit {
 

@@ -20,8 +20,7 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, 
     selector: 'app-cambiar-empresa',
     templateUrl: './cambiar-empresa.component.html',
     styleUrls: ['./cambiar-empresa.component.scss'],
-    standalone: true,
-    imports: [ MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatCardActions, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSelect, MatOption, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatCardActions, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSelect, MatOption, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class CambiarEmpresaComponent implements  OnInit {
 

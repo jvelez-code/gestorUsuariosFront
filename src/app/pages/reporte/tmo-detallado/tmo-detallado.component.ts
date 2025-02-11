@@ -36,7 +36,6 @@ const EXCEL_EXT = '.xlsx';
     selector: 'app-tmo-detallado',
     templateUrl: './tmo-detallado.component.html',
     styleUrls: ['./tmo-detallado.component.scss'],
-    standalone: true,
     imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon, DatePipe]
 })
 export class TmoDetalladoComponent implements OnInit {

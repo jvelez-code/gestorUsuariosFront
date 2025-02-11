@@ -30,12 +30,11 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-reporte',
     templateUrl: './reporte.component.html',
     styleUrls: ['./reporte.component.scss'],
-    standalone: true,
-    imports: [MatButtonToggleModule,RouterOutlet, MatToolbar, MatCard, MatCardContent, MatFormField, MatLabel, MatInput, MatSlideToggle, ReactiveFormsModule, FormsModule, NgIf, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatButton, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, NgFor, MatCardSubtitle, MatCardTitle, UpperCasePipe,
-      MatCheckboxModule,
-      MatRippleModule,
-      MatFormFieldModule,
-      MatInputModule]
+    imports: [MatButtonToggleModule, RouterOutlet, MatToolbar, MatCard, MatCardContent, MatFormField, MatLabel, MatInput, MatSlideToggle, ReactiveFormsModule, FormsModule, NgIf, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatButton, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, NgFor, MatCardSubtitle, MatCardTitle, UpperCasePipe,
+        MatCheckboxModule,
+        MatRippleModule,
+        MatFormFieldModule,
+        MatInputModule]
 })
 export class ReporteComponent implements OnInit {
 

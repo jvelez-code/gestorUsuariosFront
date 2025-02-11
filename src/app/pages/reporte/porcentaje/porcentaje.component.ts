@@ -25,7 +25,6 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-porcentaje',
     templateUrl: './porcentaje.component.html',
     styleUrls: ['./porcentaje.component.scss'],
-    standalone: true,
     imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon]
 })
 export class PorcentajeComponent {

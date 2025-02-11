@@ -15,25 +15,24 @@ import { ClienteService } from 'src/app/_services/cliente.service';
 import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
 
 @Component({
-  selector: 'app-filtro-crmcasos',
-  standalone: true,
-  imports: [RouterOutlet,
-            MatCard, 
-            MatCardHeader, 
-            MatCardTitle, 
-            MatCardContent, 
-            ReactiveFormsModule, 
-            MatFormField, 
-            MatLabel, 
-            MatInput, 
-            MatCardActions, 
-            MatButton, 
-            MatSelect, 
-            MatOption, 
-            MatIcon, 
-            AsyncPipe],
-  templateUrl: './filtro-crmcasos.component.html',
-  styleUrl: './filtro-crmcasos.component.scss'
+    selector: 'app-filtro-crmcasos',
+    imports: [RouterOutlet,
+        MatCard,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatCardActions,
+        MatButton,
+        MatSelect,
+        MatOption,
+        MatIcon,
+        AsyncPipe],
+    templateUrl: './filtro-crmcasos.component.html',
+    styleUrl: './filtro-crmcasos.component.scss'
 })
 export class FiltroCrmcasosComponent implements OnInit {
 

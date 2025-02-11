@@ -21,20 +21,20 @@ import { AskLogEstado } from 'src/app/_model/askLogEstado';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-ask-log-estados',
-  standalone: true,
-  imports: [
-    MatToolbar,
-    RouterOutlet,
-    MatCard,
-    ReactiveFormsModule,
-    FormsModule,
-    MatFormField,
-    MatLabel,
-    MatDateRangeInput,
-    MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon],
-  templateUrl: './ask-log-estados.component.html',
-  styleUrl: './ask-log-estados.component.scss'
+    selector: 'app-ask-log-estados',
+    imports: [
+        MatToolbar,
+        RouterOutlet,
+        MatCard,
+        ReactiveFormsModule,
+        FormsModule,
+        MatFormField,
+        MatLabel,
+        MatDateRangeInput,
+        MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon
+    ],
+    templateUrl: './ask-log-estados.component.html',
+    styleUrl: './ask-log-estados.component.scss'
 })
 export class AskLogEstadosComponent implements OnInit {
 

@@ -41,26 +41,25 @@ import { Festivos } from 'src/app/_model/festivo';
 import { FestivosService } from 'src/app/_services/festivos.service';
 
 @Component({
-  selector: 'app-casonuevo',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatToolbar,
-    AsyncPipe,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule
-  ],
-  templateUrl: './caso-nuevo.component.html',
-  styleUrl: './caso-nuevo.component.scss'
+    selector: 'app-casonuevo',
+    imports: [
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatToolbar,
+        AsyncPipe,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule
+    ],
+    templateUrl: './caso-nuevo.component.html',
+    styleUrl: './caso-nuevo.component.scss'
 })
 export class CasoNuevoComponent implements OnInit {
 

@@ -25,10 +25,9 @@ import { ExcelTmoService } from 'src/app/_serviceRepo/excel.tmo.service';
 
 
 @Component({
-  selector: 'app-pagos-diarios',
-  standalone: true,
-  imports: [
-    MatToolbar,
+    selector: 'app-pagos-diarios',
+    imports: [
+        MatToolbar,
         MatCard,
         ReactiveFormsModule,
         FormsModule,
@@ -38,10 +37,10 @@ import { ExcelTmoService } from 'src/app/_serviceRepo/excel.tmo.service';
         MatCardSubtitle,
         MatCardActions,
         MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule,
-        MatIcon,MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule
-  ],
-  templateUrl: './pagos-diarios.component.html',
-  styleUrl: './pagos-diarios.component.scss'
+        MatIcon, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule
+    ],
+    templateUrl: './pagos-diarios.component.html',
+    styleUrl: './pagos-diarios.component.scss'
 })
 export class PagosDiariosComponent implements AfterViewInit {
 

@@ -26,12 +26,11 @@ import { MatIconModule } from '@angular/material/icon';
     selector: 'app-clientes',
     templateUrl: './clientes.component.html',
     styleUrls: ['./clientes.component.scss'],
-    standalone: true,
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent,
-       ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption,
-       MatInput, MatCardActions, MatButton, AsyncPipe,
-       MatButtonModule,
-       MatIconModule]
+        ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption,
+        MatInput, MatCardActions, MatButton, AsyncPipe,
+        MatButtonModule,
+        MatIconModule]
 })
 export class ClientesComponent implements OnInit{
 

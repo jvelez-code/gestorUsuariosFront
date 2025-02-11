@@ -23,7 +23,6 @@ import { AgenteDTO } from 'src/app/_dto/agenteDTO';
     selector: 'app-extado-ext',
     templateUrl: './estado-ext.component.html',
     styleUrls: ['./estado-ext.component.scss'],
-    standalone: true,
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatFormField, MatLabel, MatSelect, MatOption, MatCardActions, MatButton, AsyncPipe]
 })
 export class ExtadoExtComponent implements OnInit {

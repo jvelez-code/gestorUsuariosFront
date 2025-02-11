@@ -34,7 +34,6 @@ const EXCEL_EXT = '.xlsx';
     selector: 'app-llamadas-recibidas',
     templateUrl: './llamadas-recibidas.component.html',
     styleUrls: ['./llamadas-recibidas.component.scss'],
-    standalone: true,
     imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon, DatePipe]
 })
 export class LlamadasRecibidasComponent implements OnInit {

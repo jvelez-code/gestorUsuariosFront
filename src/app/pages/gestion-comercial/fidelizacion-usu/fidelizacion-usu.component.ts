@@ -22,7 +22,6 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions }
     selector: 'app-fidelizacion-usu',
     templateUrl: './fidelizacion-usu.component.html',
     styleUrls: ['./fidelizacion-usu.component.scss'],
-    standalone: true,
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, MatButton]
 })
 export class FidelizacionUsuComponent implements OnInit {

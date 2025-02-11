@@ -13,24 +13,23 @@ import { ReporteService } from 'src/app/_serviceRepo/reporte.service';
 import { EmpresaService } from 'src/app/_services/empresa.service';
 
 @Component({
-  selector: 'app-empresas',
-  standalone: true,
-  imports: [
-     MatToolbar,
-     MatToolbarRow, 
-     MatCard,
-     MatCardContent,
-     MatCardSubtitle,
-     MatSelect,
-     NgFor,
-     MatOption,
-     MatDivider,
-     MatButton,
-     RouterLink, 
-     AsyncPipe
+    selector: 'app-empresas',
+    imports: [
+        MatToolbar,
+        MatToolbarRow,
+        MatCard,
+        MatCardContent,
+        MatCardSubtitle,
+        MatSelect,
+        NgFor,
+        MatOption,
+        MatDivider,
+        MatButton,
+        RouterLink,
+        AsyncPipe
     ],
-  templateUrl: './empresas.component.html',
-  styleUrl: './empresas.component.scss'
+    templateUrl: './empresas.component.html',
+    styleUrl: './empresas.component.scss'
 })
 export class EmpresasComponent implements OnInit {
   [x: string]: any;

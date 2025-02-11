@@ -60,7 +60,6 @@ const year = today.getFullYear();
     selector: 'app-gestion-comercial',
     templateUrl: './gestion-comercial.component.html',
     styleUrls: ['./gestion-comercial.component.scss'],
-    standalone: true,
     imports: [RouterOutlet, MatTabGroup, MatTab, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatError, MatButton, MatIcon, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatSelect, MatOption, MatInput, MatDatepickerInput, MatDatepicker, MatDivider, AsyncPipe]
 })
 export class GestionComercialComponent implements OnInit, OnDestroy {

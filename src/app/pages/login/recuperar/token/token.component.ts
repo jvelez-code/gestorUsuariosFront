@@ -16,7 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     selector: 'app-token',
     templateUrl: './token.component.html',
     styleUrls: ['./token.component.scss'],
-    standalone: true,
     imports: [MatToolbar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, ReactiveFormsModule, MatFormField, MatInput, MatButton]
 })
 export class TokenComponent implements OnInit {

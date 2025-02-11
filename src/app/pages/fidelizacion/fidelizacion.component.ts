@@ -21,7 +21,6 @@ import { RouterOutlet } from '@angular/router';
     selector: 'app-fidelizacion',
     templateUrl: './fidelizacion.component.html',
     styleUrls: ['./fidelizacion.component.scss'],
-    standalone: true,
     imports: [RouterOutlet, ReactiveFormsModule, FormsModule, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatError, MatCardActions, MatButton, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class FidelizacionComponent   implements OnInit {

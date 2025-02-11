@@ -26,7 +26,6 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-llamadas-fuera-horario-eventual',
     templateUrl: './llamadas-fuera-horario-eventual.component.html',
     styleUrls: ['./llamadas-fuera-horario-eventual.component.scss'],
-    standalone: true,
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatToolbar, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatSelect, MatOption, MatButton, MatIcon, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
 })
 

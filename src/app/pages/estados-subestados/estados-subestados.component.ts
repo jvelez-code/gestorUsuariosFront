@@ -12,13 +12,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
-  selector: 'app-estados-subestados',
-  imports: [MatTabsModule,
-     MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatDividerModule, MatButtonModule, MatCardModule, MatCheckboxModule, FormsModule, MatRadioModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './estados-subestados.component.html',
-  styleUrl: './estados-subestados.component.css',
-  standalone: true
+    selector: 'app-estados-subestados',
+    imports: [MatTabsModule,
+        MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatDividerModule, MatButtonModule, MatCardModule, MatCheckboxModule, FormsModule, MatRadioModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './estados-subestados.component.html',
+    styleUrl: './estados-subestados.component.css'
 })
 export class EstadosSubestadosComponent {
   readonly checked = model(false);

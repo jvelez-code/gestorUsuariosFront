@@ -18,7 +18,6 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions }
     selector: 'app-ciclo-vida',
     templateUrl: './ciclo-vida.component.html',
     styleUrls: ['./ciclo-vida.component.scss'],
-    standalone: true,
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatFormField, MatSelect, MatOption, MatDivider, MatCardActions, MatButton, AsyncPipe]
 })
 export class CicloVidaComponent implements OnInit, OnDestroy {

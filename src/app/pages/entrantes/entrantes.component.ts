@@ -56,28 +56,27 @@ import { Planilla } from 'src/app/_dto/Planilla';
 
 
 @Component({
-  selector: 'app-entrantes',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    MatCardModule,
-    MatTableModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatDividerModule,
-    MatExpansionModule,
-    FormsModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatOptionModule,
-    MatToolbarModule,
-    CommonModule
-  ],
-  templateUrl: './entrantes.component.html',
-  styleUrl: './entrantes.component.scss'
+    selector: 'app-entrantes',
+    imports: [
+        RouterOutlet,
+        MatCardModule,
+        MatTableModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatDividerModule,
+        MatExpansionModule,
+        FormsModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatOptionModule,
+        MatToolbarModule,
+        CommonModule
+    ],
+    templateUrl: './entrantes.component.html',
+    styleUrl: './entrantes.component.scss'
 })
 export class EntrantesComponent implements OnInit, OnDestroy {
 

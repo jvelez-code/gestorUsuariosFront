@@ -17,7 +17,6 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
     selector: 'app-gestion-usuarios',
     templateUrl: './gestion-usuarios.component.html',
     styleUrls: ['./gestion-usuarios.component.scss'],
-    standalone: true,
     imports: [RouterOutlet, MatFormField, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, MatPaginator, MatFabButton, DatePipe]
 })
 export class GestionUsuariosComponent implements OnInit {

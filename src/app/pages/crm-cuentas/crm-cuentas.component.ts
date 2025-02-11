@@ -36,25 +36,24 @@ import { FiltroCrmDetallesDTO } from 'src/app/_dto/FiltroCrmDetallesDTO';
 
 
 @Component({
-  selector: 'app-crm-cuentas',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatTableModule,
-    MatGridListModule,
-    CommonModule,
-    FormsModule,
-    MatDividerModule,
-    MatPaginator,
-  ],
-  templateUrl: './crm-cuentas.component.html',
-  styleUrl: './crm-cuentas.component.scss'
+    selector: 'app-crm-cuentas',
+    imports: [
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatTableModule,
+        MatGridListModule,
+        CommonModule,
+        FormsModule,
+        MatDividerModule,
+        MatPaginator,
+    ],
+    templateUrl: './crm-cuentas.component.html',
+    styleUrl: './crm-cuentas.component.scss'
 })
 export class CrmCuentasComponent implements OnInit {
 

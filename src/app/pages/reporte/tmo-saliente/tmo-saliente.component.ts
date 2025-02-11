@@ -26,7 +26,6 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-tmo-saliente',
     templateUrl: './tmo-saliente.component.html',
     styleUrls: ['./tmo-saliente.component.scss'],
-    standalone: true,
     imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon, DatePipe]
 })
 export class TmoSalienteComponent implements OnInit {

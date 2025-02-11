@@ -24,7 +24,6 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-duracion-estado',
     templateUrl: './duracion-estado.component.html',
     styleUrls: ['./duracion-estado.component.scss'],
-    standalone: true,
     imports: [MatToolbar, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon]
 })
 export class DuracionEstadoComponent implements OnInit {

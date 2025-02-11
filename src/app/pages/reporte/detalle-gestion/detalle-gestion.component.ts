@@ -25,11 +25,10 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
 
 
 @Component({
-  selector: 'app-detalle-gestion',
-  templateUrl: './detalle-gestion.component.html',
-  styleUrls: ['./detalle-gestion.component.scss'],
-  standalone: true,
-  imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon]
+    selector: 'app-detalle-gestion',
+    templateUrl: './detalle-gestion.component.html',
+    styleUrls: ['./detalle-gestion.component.scss'],
+    imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon]
 })
 export class DetalleGestionComponent implements OnInit {
 

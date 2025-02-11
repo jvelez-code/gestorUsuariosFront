@@ -7,7 +7,6 @@ import { RouterLink } from '@angular/router';
     selector: 'app-not403',
     templateUrl: './not403.component.html',
     styleUrls: ['./not403.component.scss'],
-    standalone: true,
     imports: [RouterLink]
 })
 export class Not403Component {

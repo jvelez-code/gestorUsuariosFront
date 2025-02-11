@@ -19,7 +19,6 @@ import { MatCard } from '@angular/material/card';
     selector: 'app-usuario-edicion',
     templateUrl: './usuario-edicion.component.html',
     styleUrls: ['./usuario-edicion.component.scss'],
-    standalone: true,
     imports: [MatCard, ReactiveFormsModule, MatFormField, MatInput, MatSelect, MatOption, MatButton, MatIcon, RouterLink, JsonPipe]
 })
 export class UsuarioEdicionComponent implements OnInit {

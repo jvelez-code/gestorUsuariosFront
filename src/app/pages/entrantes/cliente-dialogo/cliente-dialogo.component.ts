@@ -19,17 +19,16 @@ import { MatCard, MatCardContent } from '@angular/material/card';
     selector: 'app-cliente-dialogo',
     templateUrl: './cliente-dialogo.component.html',
     styleUrls: ['./cliente-dialogo.component.scss'],
-    standalone: true,
-    imports: [MatCard, 
-              MatCardContent, 
-              ReactiveFormsModule, 
-              MatFormField, 
-              MatInput, 
-              MatLabel, 
-              MatSelect, 
-              MatOption, 
-              MatButton, 
-              AsyncPipe]
+    imports: [MatCard,
+        MatCardContent,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatButton,
+        AsyncPipe]
 })
 export class ClienteDialogoComponent implements OnInit {
   

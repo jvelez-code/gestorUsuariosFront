@@ -19,7 +19,6 @@ import { MatCard, MatCardContent } from '@angular/material/card';
     selector: 'app-cliente-dial-sal',
     templateUrl: './cliente-dial-sal.component.html',
     styleUrl: './cliente-dial-sal.component.scss',
-    standalone: true,
     imports: [MatCard, MatCardContent, ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatSelect, MatOption, MatButton, AsyncPipe]
 })
 export class ClienteDialSalComponent implements OnInit {

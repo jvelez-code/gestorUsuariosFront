@@ -31,7 +31,6 @@ const EXCEL_EXT = '.xlsx';
     selector: 'app-seguimiento-agente',
     templateUrl: './seguimiento-agente.component.html',
     styleUrls: ['./seguimiento-agente.component.scss'],
-    standalone: true,
     imports: [MatToolbar, RouterOutlet, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, MatInput, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatIcon, DatePipe]
 })
 export class SeguimientoAgenteComponent implements OnInit {

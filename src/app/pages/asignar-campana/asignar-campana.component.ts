@@ -25,32 +25,31 @@ import { ValidadoresService } from 'src/app/_services/validadores.service';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-asignar-campana',
-  standalone: true,
-  imports: [ 
-     MatCard,
-     MatCardHeader,
-     MatCardTitle, MatCardSubtitle,
-     MatCardContent,
-     MatFormField, MatLabel,
-     MatInput, ReactiveFormsModule,
-     FormsModule, MatCardActions,
-     MatButton, MatTable,
-     MatColumnDef, MatHeaderCellDef,
-     MatHeaderCell, MatCellDef,
-     MatCell, MatSelect,
-     MatOption, MatIcon,
-     MatHeaderRowDef, MatHeaderRow,
-     MatRowDef, MatRow,
-     MatListModule,
-     MatListOption,
-     AsyncPipe,
-     CommonModule,
-     MatPaginator,
-     MatPaginatorModule
+    selector: 'app-asignar-campana',
+    imports: [
+        MatCard,
+        MatCardHeader,
+        MatCardTitle, MatCardSubtitle,
+        MatCardContent,
+        MatFormField, MatLabel,
+        MatInput, ReactiveFormsModule,
+        FormsModule, MatCardActions,
+        MatButton, MatTable,
+        MatColumnDef, MatHeaderCellDef,
+        MatHeaderCell, MatCellDef,
+        MatCell, MatSelect,
+        MatOption, MatIcon,
+        MatHeaderRowDef, MatHeaderRow,
+        MatRowDef, MatRow,
+        MatListModule,
+        MatListOption,
+        AsyncPipe,
+        CommonModule,
+        MatPaginator,
+        MatPaginatorModule
     ],
-  templateUrl: './asignar-campana.component.html',
-  styleUrl: './asignar-campana.component.scss'
+    templateUrl: './asignar-campana.component.html',
+    styleUrl: './asignar-campana.component.scss'
 })
 export class AsignarCampanaComponent implements OnInit {
 

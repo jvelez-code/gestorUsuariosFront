@@ -18,16 +18,14 @@ import { GestionService } from 'src/app/_services/gestion.service';
 import { LoginService } from 'src/app/_services/login.service';
 
 @Component({
-  selector: 'app-cargue-campana',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule
-
-  ],
-  templateUrl: './cargue-campana.component.html',
-  styleUrl: './cargue-campana.component.scss'
+    selector: 'app-cargue-campana',
+    imports: [
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule
+    ],
+    templateUrl: './cargue-campana.component.html',
+    styleUrl: './cargue-campana.component.scss'
 })
 export class CargueCampanaComponent implements OnInit {
 

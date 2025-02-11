@@ -20,7 +20,6 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-filtrado-secretaria',
     templateUrl: './filtrado-secretaria.component.html',
     styleUrls: ['./filtrado-secretaria.component.scss'],
-    standalone: true,
     imports: [MatToolbar, RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardActions, MatFormField, MatLabel, MatDateRangeInput, ReactiveFormsModule, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, FormsModule, MatInput, MatButton]
 })
 export class FiltradoSecretariaComponent {

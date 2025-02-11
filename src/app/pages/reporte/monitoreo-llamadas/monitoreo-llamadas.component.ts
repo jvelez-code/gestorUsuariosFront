@@ -23,21 +23,20 @@ import { EmpresaService } from 'src/app/_services/empresa.service';
     selector: 'app-monitoreo-llamadas',
     templateUrl: './monitoreo-llamadas.component.html',
     styleUrls: ['./monitoreo-llamadas.component.scss'],
-    standalone: true,
     imports: [
-      MatToolbar,  MatCardHeader, 
-      MatCardTitle, MatCardSubtitle, 
-      MatCardActions ,MatCard, 
-      ReactiveFormsModule, FormsModule, 
-      MatFormField, MatLabel, 
-      MatDateRangeInput, MatStartDate, 
-      MatEndDate, MatDatepickerToggle, 
-      MatSuffix, MatDateRangePicker, 
-      MatButton, MatIcon, MatInput, MatTable, 
-      MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, 
-      MatCellDef, MatCell, 
-      MatHeaderRowDef, MatHeaderRow, 
-      MatRowDef, MatRow, MatPaginator, DatePipe
+        MatToolbar, MatCardHeader,
+        MatCardTitle, MatCardSubtitle,
+        MatCardActions, MatCard,
+        ReactiveFormsModule, FormsModule,
+        MatFormField, MatLabel,
+        MatDateRangeInput, MatStartDate,
+        MatEndDate, MatDatepickerToggle,
+        MatSuffix, MatDateRangePicker,
+        MatButton, MatIcon, MatInput, MatTable,
+        MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell,
+        MatCellDef, MatCell,
+        MatHeaderRowDef, MatHeaderRow,
+        MatRowDef, MatRow, MatPaginator, DatePipe
     ]
 })
 export class MonitoreoLlamadasComponent implements OnInit {

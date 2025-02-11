@@ -8,11 +8,10 @@ import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-grafico',
-  standalone: true,
-  imports: [ MatCardModule,MatRippleModule,MatToolbarRow,MatToolbar,RouterOutlet, MatCard, MatCardContent, MatCardSubtitle, MatCardTitleGroup, MatCardTitle, MatCardLgImage, MatDivider, MatCardActions, MatButton, RouterLink, MatIcon ],
-  templateUrl: './grafico.component.html',
-  styleUrl: './grafico.component.scss'
+    selector: 'app-grafico',
+    imports: [MatCardModule, MatRippleModule, MatToolbarRow, MatToolbar, RouterOutlet, MatCard, MatCardContent, MatCardSubtitle, MatCardTitleGroup, MatCardTitle, MatCardLgImage, MatDivider, MatCardActions, MatButton, RouterLink, MatIcon],
+    templateUrl: './grafico.component.html',
+    styleUrl: './grafico.component.scss'
 })
 export class GraficoComponent {
 

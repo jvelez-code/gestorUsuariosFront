@@ -37,7 +37,6 @@ Chart.register(
     selector: 'app-llamada-online',
     templateUrl: './llamada-online.component.html',
     styleUrl: './llamada-online.component.scss',
-    standalone: true,
     imports: [MatToolbar, MatToolbarRow, MatCard, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatSuffix, MatDateRangePicker, MatButton, NgClass, MatIcon, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 

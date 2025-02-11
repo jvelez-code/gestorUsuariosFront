@@ -5,15 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginService } from 'src/app/_services/login.service';
 
 @Component({
-  selector: 'app-intro',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule
-  ],
-  templateUrl: './intro.component.html',
-  styleUrl: './intro.component.scss'
+    selector: 'app-intro',
+    imports: [
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule
+    ],
+    templateUrl: './intro.component.html',
+    styleUrl: './intro.component.scss'
 })
 export class IntroComponent implements OnInit {
 

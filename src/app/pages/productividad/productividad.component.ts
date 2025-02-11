@@ -26,7 +26,6 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/m
     selector: 'app-productividad',
     templateUrl: './productividad.component.html',
     styleUrls: ['./productividad.component.scss'],
-    standalone: true,
     imports: [RouterOutlet, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, NgClass, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule]
 })
 export class ProductividadComponent implements OnInit, OnDestroy {
