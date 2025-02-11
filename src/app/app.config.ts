@@ -11,7 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
-import { NgHcaptchaModule } from 'ng-hcaptcha';
 import { ServerErrorsInterceptor } from './shared/server-errors.interceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BnNgIdleService } from 'bn-ng-idle';
@@ -39,10 +38,6 @@ export const appConfig: ApplicationConfig = {
             allowedDomains: [environment.HOST.substring(7)],
             disallowedRoutes: [`http://${environment.HOST.substring(7)}/login/enviarCorreo`],
         },
-    }), NgHcaptchaModule.forRoot({
-        siteKey: '53b9bb7e-49a4-428f-ab81-5935daec8a8a',
-        languageCode: 'es',
-        //theme: 'dark' // añade esta opción para el tema oscuro
     })),
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorsInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },

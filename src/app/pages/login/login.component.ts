@@ -8,7 +8,6 @@ import { UsuarioService } from "src/app/_services/usuario.service";
 import { environment } from "src/environments/environment";
 import * as moment from "moment";
 import { MatCard } from "@angular/material/card";
-import { NgHcaptchaModule } from "ng-hcaptcha";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { FestivosService } from "src/app/_services/festivos.service";
@@ -22,9 +21,6 @@ import { EmpresaService } from "src/app/_services/empresa.service";
     imports: [
         ReactiveFormsModule,
         FormsModule,
-        NgHcaptchaModule,
-        RouterLink,
-        MatCard,
         CommonModule
     ],
 })
