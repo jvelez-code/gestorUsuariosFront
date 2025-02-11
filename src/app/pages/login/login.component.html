@@ -44,16 +44,6 @@
                                     </span>
                                   </div>
 
-                                <ng-hcaptcha (verify)="onVerify($event)"
-                                  (expired)="onExpired($event)"
-                                  (error)="onError($event)">
-                                </ng-hcaptcha>
-                          
-                                <div style="text-align: center">
-                                  @if (mensajecaptcha) {
-                                    <div class="mensajecaptcha">{{mensajecaptcha}}</div>
-                                  }
-                                </div>
                                   
                                   <div class="pt-1 mb-4">
                                       <button class="btn btn-dark btn-lg btn-block" type="button"  (click)="iniciarSesion()"   >Iniciar sesión</button>

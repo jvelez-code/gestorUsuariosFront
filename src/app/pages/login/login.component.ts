@@ -78,22 +78,6 @@ export class LoginComponent implements OnInit  {
 
  
 
-  onVerify(token: string) {
-    console.log("El captcha es valido");
-    this.captchaVerified = true;
-  }
-
-  onExpired(response: any) {
-    console.log("se expiro el captcha");
-  }
-
-  onError(error: any) {
-    console.log("ocurrio un error con el captcha");
-  }
-
-  setMensajeInformativo(mensaje: string) {
-    this.mensajecaptcha = mensaje;
-  }
 
   iniciarSesion() {
     sessionStorage.clear();
@@ -129,12 +113,12 @@ export class LoginComponent implements OnInit  {
         this.mensaje ="Contraseña expirada. Por favor, actualízala para continuar.";
         return;
       }
-      if (this.captchaVerified && this.captchaactivo) {
+      if (true) {
         this.usuarioService.setUsuariosCambio(data);
         this.iniciarSesionUsuario();       
         
       } else {
-        this.setMensajeInformativo("Por favor, complete el captcha.");
+        
       }
     });
   }
