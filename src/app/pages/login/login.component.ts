@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit  {
 
 
   ngOnInit(): void {
-    console.log('dasdasd1231231')
+    sessionStorage.clear();
     window.addEventListener('storage', (event) => {
       if (event.key === 'session-active' && event.newValue === 'false') {
         this.loginService.cerrarSesion();  // Llamamos a cerrar sesión

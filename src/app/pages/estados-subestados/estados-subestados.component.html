@@ -1,0 +1,115 @@
+<mat-tab-group>
+    <mat-tab label="Nuevo Estado">
+        <div class="form-container">
+          <mat-form-field class="selectTipoEstado">
+            <mat-label>Tipo de estado</mat-label>
+            <mat-select>
+              <mat-option value="one">Estado 1</mat-option>
+              <mat-option value="two">Estado 2</mat-option>
+              <mat-option value="tree">Estado 3</mat-option>
+              <mat-option value="four">Estado 4</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="selectTipoLlamada">
+            <mat-label>Tipo de llamada</mat-label>
+            <mat-select>
+              <mat-option value="one">Tipo de llamada 1</mat-option>
+              <mat-option value="two">Tipo de llamada 2</mat-option>
+              <mat-option value="tree">Tipo de llamada 3</mat-option>
+              <mat-option value="four">Tipo de llamada 4</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="nombreEstadoTxtArea">
+            <mat-label>Nombre Estado</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+          <div class="btnAgregarEstado">
+            <button mat-flat-button>Agregar Estado</button>
+          </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Nuevo SubEstado">
+        <div class="form-container">
+            <mat-form-field class="selectEstadoGestion">
+              <mat-label>Estado Gestión</mat-label>
+              <mat-select>
+                <mat-option value="one">Estado Gestión 1</mat-option>
+                <mat-option value="two">Estado Gestión 2</mat-option>
+                <mat-option value="tree">Estado Gestión 3</mat-option>
+                <mat-option value="four">Estado Gestión 4</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="selectTipoGestion">
+              <mat-label>Tipo de Gestión</mat-label>
+              <mat-select>
+                <mat-option value="one">Tipo de gestión 1</mat-option>
+                <mat-option value="two">Tipo de gestión 2</mat-option>
+                <mat-option value="tree">Tipo de gestión 3</mat-option>
+                <mat-option value="four">Tipo de gestión 4</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="nombreSubEstadoTxtArea">
+              <mat-label>Nombre SubEstado</mat-label>
+              <textarea matInput></textarea>
+            </mat-form-field>
+            <div class="btnAgregarSubEstado">
+              <button mat-flat-button>Agregar SubEstado</button>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Activar/Inactivar Estados">
+        <div class="form-container">
+            <mat-form-field class="selectEstadoGestionInOffEstados">
+              <mat-label>Estado Gestión</mat-label>
+              <mat-select>
+                <mat-option value="one">Estado Gestión 1</mat-option>
+                <mat-option value="two">Estado Gestión 2</mat-option>
+                <mat-option value="tree">Estado Gestión 3</mat-option>
+                <mat-option value="four">Estado Gestión 4</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <section class="example-section">
+              <label class="example-margin">Cambiar a:</label>
+              <mat-radio-group [(ngModel)]="labelPosition">
+                <mat-radio-button class="example-margin" value="after">Activo</mat-radio-button>
+                <mat-radio-button class="example-margin" value="before">Inactivo</mat-radio-button>
+              </mat-radio-group>
+            </section>
+            <div class="btnInOffEstados">
+              <button mat-flat-button>Actualizar Estado</button>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Activar/Inactivar SubEstados">
+        <div class="form-container">
+            <mat-form-field class="selectEstadoGestionInOffSubEstados">
+              <mat-label>Estado Gestión</mat-label>
+              <mat-select>
+                <mat-option value="one">Estado Gestión 1</mat-option>
+                <mat-option value="two">Estado Gestión 2</mat-option>
+                <mat-option value="tree">Estado Gestión 3</mat-option>
+                <mat-option value="four">Estado Gestión 4</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="selectSubEstadoGestionInOffSubEstados">
+                <mat-label>Estado Gestión</mat-label>
+                <mat-select>
+                  <mat-option value="one">SubEstado Gestión 1</mat-option>
+                  <mat-option value="two">SubEstado Gestión 2</mat-option>
+                  <mat-option value="tree">SubEstado Gestión 3</mat-option>
+                  <mat-option value="four">SubEstado Gestión 4</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <section class="example-section">
+              <label class="example-margin">Cambiar a:</label>
+              <mat-radio-group [(ngModel)]="labelPosition">
+                <mat-radio-button class="example-margin" value="after">Activo</mat-radio-button>
+                <mat-radio-button class="example-margin" value="before">Inactivo</mat-radio-button>
+              </mat-radio-group>
+            </section>
+            <div class="btnInOffSubEstados">
+              <button mat-flat-button>Actualizar SubEstado</button>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

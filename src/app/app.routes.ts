@@ -59,6 +59,7 @@ import { AskLogEstadosComponent } from './pages/reporte/ask-log-estados/ask-log-
 import { AuditoriaCalidadComponent } from './pages/auditoria-calidad/auditoria-calidad.component';
 import { AsignarCampanaComponent } from './pages/asignar-campana/asignar-campana.component';
 import { PagosDiariosComponent } from './pages/reporte/pagos-diarios/pagos-diarios.component';
+import { EstadosSubestadosComponent } from './pages/estados-subestados/estados-subestados.component';
 
 
 export const routes: Routes = [
@@ -83,13 +84,14 @@ export const routes: Routes = [
   { path: 'productividad', component: ProductividadComponent },
   { path: 'extensiones', component: ExtensionesComponent , canActivate: [GuardService]},
   { path: 'fidelizacion', component: FidelizacionComponent },
-  { path: 'monitoreo', component: MonitoreosComponent },
+  { path: 'monitoreo', component: MonitoreosComponent  },
   { path: 'filtrosCrmCasos', component: FiltroCrmcasosComponent, canActivate: [GuardService] },
   { path: 'crmCuentas', component: CrmCuentasComponent },//CrmCuentasComponent CasoNuevoComponent
   { path: 'crmCasos', component: CrmAbiertosComponent },
   { path: 'cargueCampana', component: CargueCampanaComponent },
   { path: 'auditoriaCalidad', component: AuditoriaCalidadComponent},
   { path: 'asignarCampana', component: AsignarCampanaComponent},
+  { path: 'adminTipificacion', component: EstadosSubestadosComponent},
 
   { path: 'empresas', component: EmpresasComponent },
   { path: 'grafico', component: GraficoComponent },  ///GraficoComponent

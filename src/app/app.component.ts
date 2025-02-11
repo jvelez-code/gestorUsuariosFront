@@ -70,10 +70,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-
-    console.log('prueba11')
     if (localStorage.getItem('session-active') === 'true') {
-      console.log('prueba22')
     const token = localStorage.getItem(environment.TOKEN_NAME);
     if (token) {
       // El token está activo, continua con la sesión

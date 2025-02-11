@@ -22,6 +22,7 @@ export interface ParametrosDTO {
 	gestionNuevo?: number;
     ultimoLogin?: string;
 	password?: string;
+	extension?: string;
 	idCrmCaso?: number;
 	idCrmDetalle?: number;
 	idCrmEstado?: number;	

@@ -1,0 +1,25 @@
+.form-container {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.form-container > * {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.selectTipoEstado, .selectTipoLlamada {
+    width: 50%;
+}
+
+.nombreEstadoTxtArea {
+    height: 150px;
+}
+
+.selectEstadoGestion, .selectTipoGestion {
+    width: 70%;
+}
+
+.nombreSubEstadoTxtArea {
+    height: 150px;
+}
