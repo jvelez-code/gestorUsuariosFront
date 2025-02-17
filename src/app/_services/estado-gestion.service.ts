@@ -6,17 +6,20 @@ import { environment } from 'src/environments/environment';
 import { Parametros } from '../_model/parametros';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { EstadoGestion } from '../_model/estadoGestion';
+import { GenericService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EstadoGestionService {
+export class EstadoGestionService  extends GenericService<EstadoGestion>{
+  
+    constructor(http: HttpClient) {
+      super(
+        http,
+        `${environment.HOST}/estadoGestiones`
+      );
+    }
 
-  private url:string = `${environment.HOST}/estadoGestiones`;
-
-  constructor(
-    private http: HttpClient,
-    private router: Router) { }
 
     estadoGestionPadre(parametros: Parametros) {
       const headers = { 'content-type': 'application/json'}  

@@ -6,6 +6,7 @@ import { AskEstadoExtension } from '../_model/askEstadoExtension';
 import { ParametrosDTO } from '../_dto/ParametrosDTO';
 import { Observable } from 'rxjs';
 import { LlamadaEntranteDTO } from '../_dto/LlamadaEntranteDTO';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,13 @@ export class LlamadaEntranteService {
     private router: Router ) { }
 
 
-    buscarLogin(askEstadoExtension :AskEstadoExtension) {
+    buscarLogin(askEstadoExtension :AskEstadoExtension): Observable < boolean> { 
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(askEstadoExtension);
       return this.http.post<boolean>(`${this.url}/buscarAsterisk`,body,{'headers':headers});
     }
 
-    buscarLlamada(askEstadoExtension :AskEstadoExtension) {
+    buscarLlamada(askEstadoExtension :AskEstadoExtension): Observable < boolean> { 
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(askEstadoExtension);
       return this.http.post<boolean>(`${this.url}/buscarLlamada`,body,{'headers':headers});

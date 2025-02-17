@@ -1,0 +1,164 @@
+/* Estilos básicos para el formulario */
+.form-container.form-container-wide {
+    max-width: 1200px;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f5f3f3;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+input {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #007bff;
+}
+
+button.primary {
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.primary:hover {
+    background-color: #0056b3;
+}
+
+button:focus {
+    outline: none;
+}
+
+select {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('https://img.icons8.com/ios/452/chevron-down.png');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilos para las pestañas */
+::ng-deep .mat-tab-label {
+    font-weight: bold;
+    color: #007bff;
+}
+
+::ng-deep .mat-tab-label-active {
+    color: #0056b3;
+}
+
+/* Estilos para el grupo de botones de extensiones */
+.button-group {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se ajusten a varias líneas */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.button-group button {
+    padding: 15px 12px;
+    font-size: 14px;
+    flex: 1 0 auto; 
+    min-width: 80px;
+}
+
+
+.button-group-edit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.button-group-edit .example-button-container a {
+    padding: 15px 12px;
+    font-size: 14px;
+    min-width: 80px;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+}
+/* paginación */
+#indice {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.mat-paginator {
+    margin-top: 10px;
+}
+
+.paginator-container {
+    width: 100%;
+    background-color: #ecebeb;
+    color: #000000;
+}
+
+//Estilos formulario de informaci{on de extensiones
+.mat-toolbar{
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    height: 30px;
+    
+    
+  }
+  .mat-button{
+     color: white;
+  }
+  .spacer{
+    flex: 1 1 auto;
+  }

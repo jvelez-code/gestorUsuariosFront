@@ -7,20 +7,38 @@ import { Usuarios } from 'src/app/_model/usuarios';
 import { UsuariosMigraService } from 'src/app/_services/usuarios-migra.service';
 import { MatSort } from '@angular/material/sort';
 import { duration } from 'moment';
-import { DatePipe } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TipoDocumentoService } from 'src/app/_services/tipo-documento.service';
+import { TipoDocumento } from 'src/app/_model/tipoDocumento';
+import { Observable } from 'rxjs';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 @Component({
     selector: 'app-gestion-usuarios',
     templateUrl: './gestion-usuarios.component.html',
     styleUrls: ['./gestion-usuarios.component.scss'],
     standalone: true,
-    imports: [RouterOutlet, MatFormField, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, MatPaginator, MatFabButton, DatePipe]
+    imports: [RouterOutlet, MatFormField,
+      MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, 
+      MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, 
+      MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatNoDataRow, MatPaginator, 
+      MatFabButton, DatePipe, MatTabsModule, MatIconModule, ReactiveFormsModule,
+      MatOption, AsyncPipe, MatLabel, MatSelect,
+      MatCard, MatCardContent, MatCardTitle, MatCardHeader ]
 })
 export class GestionUsuariosComponent implements OnInit {
+
+  formUsuario!: FormGroup;
+  tipoDocumento$ !: Observable<TipoDocumento[]>;
+  tipoDocumento : string = 'CC';
 
   
 
@@ -35,12 +53,17 @@ export class GestionUsuariosComponent implements OnInit {
   }
   constructor(
     private usuariosMigraService: UsuariosMigraService,
-    private router: Router,
+    private tipoDocumentoService : TipoDocumentoService,
+    private fb : FormBuilder,
     private snackBar: MatSnackBar
-  ) { }
+  ) { 
+    this.crearFormulario();
+  }
 
   ngOnInit(): void {
-    console.log('Hola')
+
+    this.tipoDocumento$=this.tipoDocumentoService.buscar();
+
     const parametrosDTO = { loginAgente: 'HELPVOZ', password:'1234' }
 
     this.usuariosMigraService.listarClaves(parametrosDTO).subscribe(data =>{
@@ -71,6 +94,26 @@ export class GestionUsuariosComponent implements OnInit {
       this.snackBar.open(data, 'AVISO', { duration : 2000 } )
     });
 
+    }
+
+    crearFormulario(){
+
+      this.formUsuario = this.fb.group({
+           tipoDoc :[],
+          'documento':[],
+          'primerNombre':[],
+          'segundoNombre':[],
+          'primerApellido':[],
+          'segundoApellido':[],
+          'correo':[],
+          'usuario':[],
+          'empresa':[],
+      })
+      
+    }
+
+    guardarUsuario(){
+      console.log('Hola Mundo')
     }
 
 

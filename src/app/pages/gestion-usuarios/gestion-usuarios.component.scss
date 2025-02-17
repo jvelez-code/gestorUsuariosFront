@@ -1,9 +1,30 @@
-/* Structure */
-table {
-    width: 100%;
-  }
-  
-  .mat-mdc-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+ /*CARD*/
+ .example-card-cli {
+  max-width: 1200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 3rem;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: center;
+}
+
+.example-full-width {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}  
+
+td {
+  padding-right: 8px;
+}

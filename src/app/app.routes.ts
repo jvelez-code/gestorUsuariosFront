@@ -59,6 +59,8 @@ import { AskLogEstadosComponent } from './pages/reporte/ask-log-estados/ask-log-
 import { AuditoriaCalidadComponent } from './pages/auditoria-calidad/auditoria-calidad.component';
 import { AsignarCampanaComponent } from './pages/asignar-campana/asignar-campana.component';
 import { PagosDiariosComponent } from './pages/reporte/pagos-diarios/pagos-diarios.component';
+import { AsignarExtensionComponent } from './pages/asignar-extension/asignar-extension.component';
+import { EstadosSubestadosComponent } from './pages/estados-subestados/estados-subestados.component';
 
 
 export const routes: Routes = [
@@ -90,6 +92,8 @@ export const routes: Routes = [
   { path: 'cargueCampana', component: CargueCampanaComponent },
   { path: 'auditoriaCalidad', component: AuditoriaCalidadComponent},
   { path: 'asignarCampana', component: AsignarCampanaComponent},
+  { path: 'adminExtension', component: AsignarExtensionComponent },
+  { path: 'adminTipificacion', component: EstadosSubestadosComponent },
 
   { path: 'empresas', component: EmpresasComponent },
   { path: 'grafico', component: GraficoComponent },  ///GraficoComponent

@@ -1,0 +1,106 @@
+<section class="form-container form-container-wide">
+    <h1>Extensiones</h1>
+    <hr />
+    <section class="form-container">
+        <mat-tab-group headerPosition="above">
+            <!-- Pestaña Creación de Extensiones -->
+            <mat-tab label="Creación de Extensiones">
+                <form class="form" id="formulario">
+                    <div class="form-content">
+                        <br />
+                        <div class="form-item">
+                            <label for="extensiones">Extensiones</label>
+                            <input id="extensiones" type="number" placeholder="Escribe la extensión..." required />
+                        </div>
+
+                        <div class="form-item">
+                            <label for="empresas">Empresa</label>
+                            <select id="empresas" required>
+                                <option value="" disabled selected>Seleccione empresa...</option>
+                                <option value="empresa1">Empresa 1</option>
+                                <option value="empresa2">Empresa 2</option>
+                                <option value="empresa3">Empresa 3</option>
+                            </select>
+                        </div>
+
+                        <div class="form-item">
+                            <button class="primary" type="submit">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-tab>
+
+            <!-- Pestaña Extensiones -->
+            <mat-tab label="Extensiones">
+                <div class="form-content">
+                    <br />
+                    <div class="form-item">
+                        <label>Extensiones</label>
+                    </div>
+
+                    <!-- Botones de extensiones -->
+                    <div class="button-group">
+                        <button *ngFor="let button of paginatedButtons" 
+                                class="primary" 
+                                type="button"
+                                (click)="onExtensionButtonClick(button)">
+                            {{ button }}
+                        </button>
+                    </div>
+
+                    <!-- Paginación -->
+                    <mat-paginator class="paginator-container"
+                        [length]="buttons.length" 
+                        [pageSize]="buttonsPerPage" 
+                        (page)="onPageChange($event)" 
+                        aria-label="Páginas">
+                    </mat-paginator>
+                </div>
+                <br><br>     
+                <!-- Sección de botones de edición -->
+                 <div class="button-group-edit" *ngIf="showHorario">
+                    <div class="example-button-container">
+                         <button mat-fab extended type="button"><mat-icon>edit</mat-icon>
+                            Modificar horario
+                        </button>
+                    </div>   
+                    <div class="example-button-container">
+                        <button mat-fab extended type="button"><mat-icon>delete</mat-icon>
+                            Limpiar horario
+                        </button>
+                    </div>
+                </div>
+                <!-- Sección de horario (solo una instancia) -->
+                <section class="form-container form-container-wide" *ngIf="showHorario">
+                    <mat-toolbar color="primary">
+                        <span>Horario de extensión {{ selectedExtension }}</span>
+                    </mat-toolbar>
+                </section>
+
+                <!-- Sección de edición de horario de extensión -->
+                <section class="form-container form-container-wide" *ngIf="showHorario">
+                    <form class="form" id="formulario">
+                        <div class="form-content">
+                            <br />
+                            <div class="form-item">
+                                <label for="agente">Agente</label>
+                                <input id="agente" type="number" placeholder="Seleccione un agente" required />
+                            </div>
+
+                            <div class="form-item">
+                                <button class="primary" type="submit">Guardar</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </section>
+            </mat-tab>
+
+
+            <!-- Pestaña Contenido -->
+            <mat-tab label="Contenido">
+                <p>Contenido para diseñar más formularios o información aquí.</p>
+            </mat-tab>
+        </mat-tab-group>
+    </section>
+</section>
